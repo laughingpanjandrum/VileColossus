@@ -13,6 +13,7 @@ player::player()
 		_Equipped.push_back(nullptr);
 		_HasNewForSlot.push_back(false);
 	}
+	_triggeredDeath = false;
 
 	//  Attributes
 	_level = 1;

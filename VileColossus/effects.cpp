@@ -181,23 +181,27 @@ void killPlayer(gamedataPtr gdata)
 	}
 
 	//	SET STATE
-	gdata->_state = STATE_ACNKOWLEDGE_DEATH;
-	messages::add(gdata, "# *** YOU DIED ***", { COLOR_NEGATIVE });
-	messages::add(gdata, "#Equipment durability reduced!", { COLOR_WARNING });
-	messages::add(gdata, "Press ENTER to continue...");
-
-	//	Damage equipment
-	for (auto it : gdata->_player->getAllEquippedItems())
+	else if (!gdata->_player->_triggeredDeath)
 	{
-		if (it != nullptr)
-		{
-			it->reduceMaxDurability();
-			it->takePercentDamage(10);
-		}
-	}
+		gdata->_player->_triggeredDeath = true;
+		gdata->_state = STATE_ACKNOWLEDGE_DEATH;
+		messages::add(gdata, "# *** YOU DIED ***", { COLOR_NEGATIVE });
+		messages::add(gdata, "#Equipment durability reduced!", { COLOR_WARNING });
+		messages::add(gdata, "Press ENTER to continue...");
 
-	//	Lose inventory
-	gdata->_carriedItems.clear();
+		//	Damage equipment
+		for (auto it : gdata->_player->getAllEquippedItems())
+		{
+			if (it != nullptr)
+			{
+				it->reduceMaxDurability();
+				it->takePercentDamage(10);
+			}
+		}
+
+		//	Lose inventory
+		gdata->_carriedItems.clear();
+	}
 }
 
 

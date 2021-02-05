@@ -141,6 +141,7 @@ public:
 
 	//	Time passage events
 	virtual void tick();
+	bool _triggeredDeath;
 
 
 protected:

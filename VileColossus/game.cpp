@@ -9,7 +9,6 @@ TODO
 	Show item comparison in inventory
 	Remove LONG up stairs
 	Add LONG down stairs
-	Fix death causing equipment to get damaged multiple times
 	Allow reinforcing item max durability
 	Allow un-equipping memorized spells
 	Add enchantments to spell runes
@@ -348,7 +347,7 @@ void game::processInput()
 
 
 			//	Accept death and proceed
-		case(STATE_ACNKOWLEDGE_DEATH):
+		case(STATE_ACKNOWLEDGE_DEATH):
 			if (_ih->isKeyPressed(TCODK_ENTER))
 				returnToHomeBase();
 			break;
@@ -449,7 +448,7 @@ void game::backOut()
 	}
 
 	//	The default: return to the normal game display
-	else if (_gdata->_state != STATE_ACNKOWLEDGE_DEATH)
+	else if (_gdata->_state != STATE_ACKNOWLEDGE_DEATH)
 		_gdata->_state = STATE_NORMAL;
 }
 
@@ -517,6 +516,7 @@ void game::returnToHomeBase()
 	//	Set depth and automatically replenish health
 	_gdata->_depth = 0;
 	_gdata->_player->healToMax();
+	_gdata->_player->_triggeredDeath = false;
 	_gdata->_state = STATE_NORMAL;
 }
 
