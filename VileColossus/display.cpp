@@ -1,0 +1,1742 @@
+#include "display.h"
+
+
+
+display::display()
+{
+	//	Initialize empty arrays of visible map tiles
+	for (unsigned int x = 0; x < MAP_X_SIZE; x++)
+	{
+		vector<int> xglyphs;
+		vector<colorType> xcols;
+		vector<colorType> xbgcols;
+		for (unsigned int y = 0; y < MAP_Y_SIZE; y++)
+		{
+			xglyphs.push_back(0);
+			xcols.push_back(COLOR_BLACK);
+			xbgcols.push_back(COLOR_BLACK);
+		}
+		_visibleGlyphs.push_back(xglyphs);
+		_visibleColors.push_back(xcols);
+		_visibleBgcolors.push_back(xbgcols);
+	}
+
+	//	percentile colour map
+	int idx[] = { 0, 50, 100 };
+	TCODColor col[] = { TCODColor::darkRed, TCODColor::darkYellow, TCODColor::darkGreen };
+	TCODColor::genMap(_percentColors, 3, col, idx);
+}
+
+
+//	Character info
+void display::drawCharacterSheet(gamedataPtr gdata)
+{
+	auto p = gdata->_player;
+	int x = 6, y = 4;
+
+	//	BASE ATTRIBUTES
+
+	drawBox(x - 2, ++y, 26, 12, COLOR_DARK);
+	_win.write(x, y, "BASE ATTRIBUTES", COLOR_LIGHT);
+
+	y += 2;
+	for (unsigned i = 0; i < ATTR__MAX; i++)
+	{
+		auto attr = static_cast<Attribute>(i);
+		int base = p->getBaseAttribute(attr);
+		auto val = p->getDerivedAttribute(attr);
+
+		//	base value of the stat
+		drawBox(x, y, 3, 2, COLOR_DARK);
+		_win.write(x + 1, y + 1, extendInteger(base, 2), COLOR_WHITE);
+		_win.write(x + 4, y + 1, getAttributeName(attr), COLOR_MEDIUM);
+		y += 3;
+	}
+
+
+	//	VITAL STATISTICS
+
+	y += 2;
+	drawBox(x - 2, ++y, 26, 21, COLOR_DARK);
+	_win.write(x, y, "VITAL STATISTICS", COLOR_LIGHT);
+
+	drawStatWithBox(x, y + 2, to_string(p->getMaxHealth()), "Health", COLOR_HEALTH);
+	drawStatWithBox(x, y + 5, to_string(p->getMaxMagic()), "Magic", COLOR_MAGIC);
+	drawStatWithBox(x, y + 8, to_string(p->getMoveEnergyCost()) + "%", "Move Delay", COLOR_MISC_STAT);
+	drawStatWithBox(x, y + 11, to_string(p->getAttackEnergyCost()) + "%", "Attack Delay", COLOR_MISC_STAT);
+
+
+	//	OFFENCE
+
+	x = 33, y = 4;
+	drawBox(x - 2, ++y, 26, 35, COLOR_DARK);
+	_win.write(x, y, "OFFENSIVE", COLOR_LIGHT);
+
+	int dmgbase = p->getWeaponDamage();
+	int dmgvar = p->getDamageVariance();
+
+	drawStatWithBox(x, y + 2, plusminus(p->getAccuracy()), "Accuracy", COLOR_MISC_STAT);
+	drawStatWithBox(x, y + 5, to_string(dmgbase - dmgvar) + "-" + to_string(dmgbase + dmgvar), "Damage", COLOR_HEALTH);
+	drawStatWithBox(x, y + 8, extendInteger(p->getCriticalChance(), 2) + "%", "Critical Chance", TCODColor::crimson);
+	drawStatWithBox(x, y + 11, plusminus(p->getCriticalMultiplier()) + "%", "Critical Damage", TCODColor::crimson);
+	drawStatWithBox(x, y + 14, plusminus(p->getSpellPower()) + "%", "Spell Power", COLOR_MAGIC);
+
+	y += 18;
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		int dam = p->getWeaponDamageOfType(dt);
+		drawStatWithBox(x, y, extendInteger(dam, 3), getDamageTypeName(dt) + " Damage", (dam > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
+		y += 3;
+	}
+
+
+	//	DEFENSIVE
+	x = 60, y = 4;
+	drawBox(x - 2, ++y, 26, 24, COLOR_DARK);
+	_win.write(x, y, "DEFENSIVE", COLOR_LIGHT);
+	
+	drawStatWithBox(x, y + 2, extendInteger(p->getDefenceValue(), 3), "Defence Value", COLOR_MISC_STAT);
+	drawStatWithBox(x, y + 5, extendInteger(p->getArmourValue(), 3), "Armour Value", COLOR_MISC_STAT);
+
+	y += 10;
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		int res = p->getResistance(dt);
+		drawStatWithBox(x, y, extendInteger(res, 2) + "%", getDamageTypeName(dt) + " Resist", (res > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
+		y += 3;
+	}
+
+
+	//	MISCELLANEOUS
+	y += 4;
+	drawBox(x - 2, ++y, 26, 23, COLOR_DARK);
+	_win.write(x, y, "MISCELLANEOUS", COLOR_LIGHT);
+	drawStatWithBox(x, y + 2, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
+	drawStatWithBox(x, y + 5, plusminus(p->getLeechOnKill()), "Life on Kill", COLOR_HEALTH);
+	drawStatWithBox(x, y + 8, plusminus(p->getManaleech()), "Magic on Kill", COLOR_MAGIC);
+	drawStatWithBox(x, y + 11, plusminus(p->getReprisalDamage()), "Reprisal Damage", COLOR_HEALTH);
+	drawStatWithBox(x, y + 14, to_string(p->getRiposteChance()) + "%", "Riposte Chance", COLOR_LIGHT);
+	drawStatWithBox(x, y + 17, to_string(p->getWrathOnKillChance()) + "%", "Wrath on Kill", COLOR_LIGHT);
+}
+
+
+//	Quick summary of player stats at the bottom of the screen.
+void display::drawCharacterSummary(gamedataPtr gdata)
+{
+	int x = 4, y = 51;
+	drawBox(2, 50, 85, 12, COLOR_DARK);
+	auto p = gdata->_player;
+
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getMaxHealth(), 3) + "@] #Health", { COLOR_HEALTH, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getMaxMagic(), 3) + "@] Magic", { COLOR_MAGIC, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getDefenceValue(), 3) + "@] #Defence Value", { COLOR_MISC_STAT, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getArmourValue(), 3) + "@] #Armour Value", { COLOR_MISC_STAT, COLOR_LIGHT });
+
+	x = 30; y = 51;
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getAccuracy(), 3) + "@] #Accuracy", { COLOR_MISC_STAT, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getWeaponDamage(), 3) + "@] #Damage", { COLOR_HEALTH, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getCriticalChance(), 3) + "@] #Critical Chance", { TCODColor::lightCrimson, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getCriticalMultiplier(), 3) + "@] #Critical Damage", { TCODColor::crimson, COLOR_LIGHT });
+
+	x = 56; y = 51;
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		auto res = p->getResistance(dt);
+		writeFormatted(x, ++y, "[#" + extendInteger(res, 2) + "%@] #" + getDamageTypeName(dt) + " Resist", { getDamageTypeColor(dt), COLOR_LIGHT });
+	}
+}
+
+
+//	Quick summary of a given monster, in the message box
+void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
+{
+	int x = 4, y = 53;
+
+	//	name
+	_win.writec(x, y, mon->getGlyph(), mon->getColor());
+	_win.write(x + 2, y, mon->getName(), mon->getColor());
+	writeFormatted(x + 40, y, "Level #" + to_string(mon->_level), { COLOR_LIGHT });
+	drawProgressDots(x + 50, y, mon->_tier, 5, TCODColor::gold);
+	
+	//	flags
+	++y;
+	string flag_txt = "";
+	if (mon->isUndead())
+		flag_txt += "Undead ";
+	if (mon->isFlying())
+		flag_txt += "Flying ";
+	if (mon->hasFlag("slow"))
+		flag_txt += "Slow ";
+	if (mon->hasFlag("minion"))
+		flag_txt += "Minion ";
+	_win.write(x + 2, y, flag_txt, COLOR_DARK);
+
+
+	//	basic info
+	y += 2;
+	string txt = "HEALTH #" + to_string(mon->getMaxHealth()) + " @: ACCURACY #" + plusminus(mon->getAccuracy()) + " @: DEFENCE #" + to_string(mon->getDefenceValue());
+	txt += " @: DAMAGE #" + to_string(mon->getWeaponDamage()) + " @: PROT #" + to_string(mon->getArmourValue());
+	writeFormatted(x, y, txt, { COLOR_HEALTH, COLOR_MISC_STAT, COLOR_MISC_STAT, COLOR_HEALTH, COLOR_MISC_STAT, });
+
+
+	//	chance to hit
+	int hit_them = get_hit_chance(gdata->_player->getAccuracy(), mon->getDefenceValue());
+	int hit_us = get_hit_chance(mon->getAccuracy(), gdata->_player->getDefenceValue());
+	writeFormatted(x, ++y, "#" + to_string(hit_them) + "% @to hit them; #" + to_string(hit_us) + "% @they hit us", { COLOR_HIGHLIGHT_POS, COLOR_HIGHLIGHT_NEG });
+
+
+	//	relative damage
+	int dam_to_us = calculate_average_damage(mon, gdata->_player);
+	int dam_to_them = calculate_average_damage(gdata->_player, mon);
+	writeFormatted(x, ++y, "#" + to_string(dam_to_them) + " @avg damage to them; #" + to_string(dam_to_us) + " @avg damage to us", { COLOR_HIGHLIGHT_POS, COLOR_HIGHLIGHT_NEG });
+
+
+	//	resistances
+	y += 2;
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		auto res = mon->getResistance(dt);
+		string txt;
+		if (res >= 100)
+			txt = "Immune " + getDamageTypeName(dt);
+		else if (res > 0)
+			txt = "Resists " + getDamageTypeName(dt);
+		if (!txt.empty())
+		{
+			_win.write(x, y, txt, getDamageTypeColor(dt));
+			x += txt.size() + 1;
+		}
+	}
+
+
+	//	status effects
+	x = 4, y += 1;
+	for (unsigned i = 0; i < STATUS__MAX; i++)
+	{
+		auto st = static_cast<StatusEffect>(i);
+		if (mon->hasStatusEffect(st))
+		{
+			auto name = getStatusEffectName(st);
+			_win.write(x, y, name, getStatusEffectColor(st));
+			x += name.size() + 1;
+		}
+	}
+}
+
+
+//	Spend attribute points to improve stats.
+void display::drawAttributePoints(gamedataPtr gdata)
+{
+	drawBox(2, 2, 20, 15, COLOR_DARK);
+	drawBox(23, 2, 40, 15, COLOR_DARK);
+
+	int x = 4, y = 4;
+	auto col = (gdata->_attributePointsLeft > 0) ? COLOR_POSITIVE : COLOR_DARK;
+	writeFormatted(x, y, "#POINTS LEFT [#" + extendInteger(gdata->_attributePointsLeft, 2) + "#]", { COLOR_LIGHT, col, COLOR_LIGHT, });
+
+	//	list stats
+	auto p = gdata->_player;
+	y += 2;
+	for (unsigned i = 0; i < ATTR__MAX; i++)
+	{
+		//	selection
+		auto selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y + 1, '>', COLOR_HIGHLIGHT);
+
+		//	attribute
+		auto attr = static_cast<Attribute>(i);
+		int base = p->getBaseAttribute(attr);
+
+		//	base value of the stat
+		drawBox(x, y, 3, 2, COLOR_DARK);
+		_win.write(x + 1, y + 1, extendInteger(base, 2), COLOR_WHITE);
+		if (selected)
+			_win.write(x + 5, y + 1, getAttributeName(attr), COLOR_BLACK, COLOR_MEDIUM);
+		else
+			_win.write(x + 4, y + 1, getAttributeName(attr), COLOR_MEDIUM);
+		y += 3;
+
+		//	description, if selected
+		int rx = 31, ry = 4;
+		if (selected)
+		{
+			switch (attr)
+			{
+			case(ATTR_DEXTERITY):
+
+				drawStatWithBox(rx, ry, to_string(p->getAccuracy()), "Global Accuracy", { COLOR_MISC_STAT });
+				_win.write(rx - 5, ry + 1, "+1", COLOR_POSITIVE);
+				
+				drawStatWithBox(rx, ry + 3, to_string(p->getDefenceValue()), "Defence Value", { COLOR_MISC_STAT });
+				_win.write(rx - 5, ry + 4, "+0.5", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", { TCODColor::crimson });
+				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)), "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
+				_win.write(rx - 5, ry + 10, "+1%", COLOR_POSITIVE);
+
+				break;
+
+
+			case(ATTR_STRENGTH):
+				
+				drawStatWithBox(rx, ry, to_string(p->getMaxHealth()), "Health", { COLOR_HEALTH });
+				_win.write(rx - 5, ry + 1, "+2", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", { COLOR_HEALTH });
+				_win.write(rx - 5, ry + 4, "+0.3", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", { getDamageTypeColor(DTYPE_POISON) });
+				_win.write(rx - 5, ry + 7, "+1%", COLOR_POSITIVE);
+
+				break;
+
+
+			case(ATTR_WILLPOWER):
+
+				drawStatWithBox(rx, ry, to_string(p->getMaxMagic()), "Magic", { COLOR_MAGIC });
+				_win.write(rx - 5, ry + 1, "+0.5", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 3, plusminus(p->getSpellPower()) + "%", "Spell Power", { COLOR_MAGIC });
+				_win.write(rx - 5, ry + 4, "+5%", COLOR_POSITIVE);
+				
+				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_ARCANE)) + "%", "Arcane Resist", { getDamageTypeColor(DTYPE_ARCANE) });
+				_win.write(rx - 5, ry + 7, "+1%", COLOR_POSITIVE);
+
+				break;
+			}
+		}
+	}
+}
+
+
+
+//	List of items we can pick up
+void display::drawItemPickup(gamedataPtr gdata)
+{
+	int x = 4, y = 4;
+	drawBox(2, 2, 42, 50, COLOR_DARK);
+	_win.write(x, y, "What do you wish to pick up?", COLOR_LIGHT);
+	y++;
+
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		//	is the item selected
+		y++;
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x, y, '>', COLOR_WHITE);
+
+		//	the item itself
+		auto it = gdata->_currentItemList[i];
+		_win.writec(x + 1, y, it->getGlyph(), it->getColor());
+
+		if (selected)
+			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
+		else
+			_win.write(x + 3, y, it->getName(), it->getColor());
+	}
+
+
+	//	Description of selected
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		//	the item itself
+		auto it = gdata->_currentItemList[gdata->_idx];
+		drawItemInfo(gdata, it, 47, 4);
+
+		//	equipped items of this type, if any
+		auto eq = gdata->_player->getItemInSlot(getSlotForCategory(it->_category));
+		if (eq != nullptr)
+		{
+			drawItemInfo(gdata, eq, 47, 25, it);
+			_win.write(46, 24, "EQUIPPED", COLOR_WHITE);
+		}
+	}
+}
+
+
+
+void display::drawEquipment(gamedataPtr gdata)
+{
+	drawBox(2, 2, 42, 18, COLOR_DARK);
+	int x = 4, y = 4;
+
+	_win.write(x, y, "Currently equipped:", COLOR_LIGHT);
+	y++;
+
+	for (unsigned i = 0; i < SLOT__NONE; i++)
+	{
+		auto slot = static_cast<EquipmentSlot>(i);
+		_win.write(x, ++y, getEquipmentSlotName(slot), COLOR_DARK);
+
+		//	selection
+		bool selected = (i == gdata->_idx && gdata->_state == STATE_VIEW_EQUIPMENT) || (slot == gdata->_selectedSlot);
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_WHITE);
+		else if (gdata->_player->hasNewForSlot(slot))
+			_win.writec(x - 1, y, '!', COLOR_POSITIVE);
+
+		//	item
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			if (selected)
+			{
+				_win.writec(x + 9, y, it->getGlyph(), it->getColor());
+				_win.write(x + 11, y, it->getName(), COLOR_BLACK, it->getColor());
+			}
+			else
+			{
+				_win.writec(x + 8, y, it->getGlyph(), it->getColor());
+				_win.write(x + 10, y, it->getName(), it->getColor());
+			}
+		}
+		else
+			_win.write(x + 15, y, "---", TCODColor::darkGrey);
+	}
+
+	//	Our current flask
+	y += 3;
+	if (gdata->_player->_currentFlask != nullptr)
+	{
+		drawItemInfo(gdata, gdata->_player->_currentFlask, 4, y + 5);
+		_win.write(4, y + 3, "CURRENT FLASK", COLOR_LIGHT);
+	}
+
+
+	//	Description of selected
+	if (gdata->_idx < SLOT__NONE)
+	{
+		auto it = gdata->_player->getItemInSlot(static_cast<EquipmentSlot>(gdata->_idx));
+		if (it != nullptr)
+			drawItemInfo(gdata, it, 47, 4);
+	}
+
+	//	Controls
+	writeFormatted(4, 48, "#ENTER @Select an item to equip here", { COLOR_LIGHT });
+	writeFormatted(4, 49, "#  U   @Unequip this item", { COLOR_LIGHT });
+
+	drawCharacterSummary(gdata);
+}
+
+
+//	Items we're carrying with us
+void display::drawInventory(gamedataPtr gdata)
+{
+	int x = 4, y = 4;
+
+	//	Carried items
+	drawBox(2, 2, 42, 40, COLOR_DARK);
+	_win.write(x, y, "Carried with you:", COLOR_LIGHT);
+	_win.write(x + 37, y, "Sz", COLOR_DARK);
+	y++;
+
+	//	list of item carried
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		y += 1;
+		bool selected = i == gdata->_idx;
+
+		auto it = gdata->_currentItemList[i];
+		if (selected)
+		{
+			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
+			it->_isNewItem = false;
+		}
+		else if (it->_isNewItem)
+			_win.writec(x, y, '!', COLOR_POSITIVE);
+
+		//	item title
+		if (selected)
+		{
+			_win.writec(x + 2, y, it->getGlyph(), it->getColor());
+			_win.write(x + 4, y, it->getName(), COLOR_BLACK, it->getColor());
+		}
+		else
+		{
+			_win.writec(x + 1, y, it->getGlyph(), it->getColor());
+			_win.write(x + 3, y, it->getName(), it->getColor());
+		}
+
+		//	weight
+		for (unsigned i = 0; i < it->getSize(); i++)
+			_win.writec(x + 37 + i, y, 254, COLOR_LIGHT);
+	}
+
+	//	the item selected AND the item in the slot we're viewing, if any
+	itemPtr it = nullptr;
+	itemPtr eq = nullptr;
+
+	//	get the two items
+	if (gdata->_idx < gdata->_currentItemList.size())
+		it = gdata->_currentItemList[gdata->_idx];
+	if (gdata->_selectedSlot != SLOT__NONE)
+		eq = gdata->_player->getItemInSlot(gdata->_selectedSlot);
+	else if (it != nullptr && it->_category == ITEM_FLASK)
+		eq = gdata->_player->_currentFlask;
+
+	//	draw their descriptions
+	if (it != nullptr)
+		drawItemInfo(gdata, it, 47, 4, eq);
+	if (eq != nullptr)
+	{
+		drawItemInfo(gdata, eq, 47, 25);
+		_win.write(45, 23, "EQUIPPED:", COLOR_WHITE);
+	}
+
+
+	//	capacity
+	drawInventoryCapacity(gdata, 4, 40);
+
+	//	character info
+	if (gdata->_state == STATE_VIEW_INVENTORY_IN_STASH)
+	{
+		writeFormatted(2, 47, "# TAB  @View stash", { COLOR_LIGHT, COLOR_LIGHT });
+		writeFormatted(2, 48, "#  t   @Transfer item to stash", { COLOR_LIGHT, COLOR_LIGHT });
+		writeFormatted(2, 49, "#  T   @Transfer all to stash", { COLOR_LIGHT, COLOR_LIGHT });
+	}
+	drawCharacterSummary(gdata);
+}
+
+
+//	The ANVIL lets us repair and modify equipment
+void display::drawAnvil(gamedataPtr gdata)
+{
+	int x = 4, y = 4;
+
+	//	Carried items
+	drawBox(2, 2, 42, 40, COLOR_DARK);
+	_win.write(x, y, "Carried with you:", COLOR_LIGHT);
+	_win.write(x + 37, y, "Sz", COLOR_DARK);
+	y++;
+
+
+	//	list of item carried
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		y += 1;
+		bool selected = i == gdata->_idx;
+
+		//	marks
+		auto it = gdata->_currentItemList[i];
+		if (selected)
+		{
+			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
+			it->_isNewItem = false;
+		}
+		if (doesItemHaveUnknownEnchants(gdata, it))
+			_win.writec(x - 1, y, '*', TCODColor::gold);
+
+
+		//	item title
+		if (selected)
+		{
+			_win.writec(x + 2, y, it->getGlyph(), it->getColor());
+			_win.write(x + 4, y, it->getName(), COLOR_BLACK, it->getColor());
+		}
+		else
+		{
+			_win.writec(x + 1, y, it->getGlyph(), it->getColor());
+			_win.write(x + 3, y, it->getName(), it->getColor());
+		}
+	}
+
+
+	//	description of selected
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		drawBox(45, 22, 35, 8, COLOR_DARK);
+		auto it = gdata->_currentItemList[gdata->_idx];
+		drawItemInfo(gdata, it, 47, 4);
+
+		//	Repair?
+		int repair_cost = it->getRepairCost();
+		if (repair_cost > 0)
+			writeFormatted(47, 24, "#r @Repair for #" + to_string(repair_cost) + " @fragments", { COLOR_LIGHT, TCODColor::gold });
+
+		//	Annihilate?
+		writeFormatted(47, 26, "#D @Dismantle for materials", { COLOR_LIGHT });
+		writeFormatted(47, 28, "#x @Extract enchantments", { COLOR_LIGHT });
+	}
+
+
+	//	Other bits.
+	drawStashedMaterials(gdata, 47, 34);
+	drawMessages(gdata);
+}
+
+
+
+void display::drawEnchantedForge(gamedataPtr gdata)
+{
+	drawBox(2, 2, 40, 31, COLOR_DARK);
+	_win.write(3, 2, "ENCHANTED FORGE", COLOR_LIGHT);
+	int x = 4, y = 4;
+
+
+	//	List equipment
+	for (unsigned i = 0; i < SLOT__NONE; i++)
+	{
+		auto slot = static_cast<EquipmentSlot>(i);
+		_win.write(x, ++y, getEquipmentSlotName(slot), COLOR_DARK);
+
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			if (selected)
+			{
+				_win.writec(x + 9, y, it->getGlyph(), it->getColor());
+				_win.write(x + 11, y, it->getName(), COLOR_BLACK, it->getColor());
+			}
+			else
+			{
+				_win.writec(x + 8, y, it->getGlyph(), it->getColor());
+				_win.write(x + 10, y, it->getName(), it->getColor());
+			}
+		}
+		else
+			_win.write(x + 15, y, "---", TCODColor::darkGrey);
+	}
+
+
+	//	Description of selected
+	y += 5;
+	if (gdata->_idx < SLOT__NONE)
+	{
+		auto slot = static_cast<EquipmentSlot>(gdata->_idx);
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			drawItemInfo(gdata, it, 47, 4);
+			writeFormatted(x, ++y, "#r @Repair for #" + to_string(it->getRepairCost()) + " @fragments", { COLOR_LIGHT, TCODColor::gold });
+
+			++y;
+			if (it->_enhancementLevel < it->getMaxEnhancementLevel())
+			{
+				writeFormatted(x, ++y, "#e @Add enchantment", { COLOR_LIGHT });
+				auto mat_cost = it->getEnhanceCost();
+				auto mat_type = it->getEnhanceMaterial();
+				writeFormatted(x + 3, ++y, "Costs #x" + to_string(mat_cost) + " " + getMaterialTypeName(mat_type), { getMaterialTypeColor(mat_type) });
+			}
+		}
+	}
+
+
+	//	Materials
+	drawStashedMaterials(gdata, 47, 25);
+
+	//	other stuff we can do
+	writeFormatted(4, 45, "#R @Spend #" + to_string(getCostToRepairEquipment(gdata)) + " @fragments to repair all equipped items", { COLOR_LIGHT, TCODColor::gold });
+	drawMessages(gdata);
+}
+
+
+//	List of enchantments we can add to an item.
+void display::drawEnchantmentSelect(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 30, COLOR_DARK);
+	_win.write(3, 2, "Known Enchantments", COLOR_LIGHT);
+
+	//	For testing validity
+	auto valid_options = lootgen::getEnchantmentsForItemCategory(gdata->_viewingItem->_category);
+
+	//	Enchantments
+	int x = 4, y = 3;
+	for (unsigned i = 0; i < gdata->_knownEnchants.size(); i++)
+	{
+		++y;
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		auto en = gdata->_knownEnchants[i];
+		auto basecol = (find(valid_options.begin(), valid_options.end(), en) != valid_options.end()) ? TCODColor::gold : TCODColor::darkGrey;
+		if (selected)
+			_win.write(x, y, getItemEnchantmentName(en), COLOR_BLACK, basecol);
+		else
+			_win.write(x, y, getItemEnchantmentName(en), basecol);
+	}
+
+	//	Selected item
+	drawItemInfo(gdata, gdata->_viewingItem, 45, 4);
+	drawMessages(gdata);
+}
+
+
+//	Mess with our flask.
+void display::drawAlchemy(gamedataPtr gdata)
+{
+	drawItemInfo(gdata, gdata->_player->_currentFlask, 4, 4);
+
+	drawBox(48, 2, 35, 5, COLOR_DARK);
+	writeFormatted(50, 4, "#e @Enhance healing potential", { COLOR_LIGHT });
+	auto mat_cost = gdata->_player->_currentFlask->getEnhanceCost();
+	auto mat_type = gdata->_player->_currentFlask->getEnhanceMaterial();
+	writeFormatted(52, 5, "Requires #x" + to_string(mat_cost) + " " + getMaterialTypeName(mat_type), { getMaterialTypeColor(mat_type) });
+
+	drawStashedMaterials(gdata, 50, 13);
+	drawMessages(gdata);
+}
+
+
+//	Allows us to socket/unsocket gems.
+void display::drawGemstonePress(gamedataPtr gdata)
+{
+	drawBox(2, 2, 40, 25, COLOR_DARK);
+	_win.write(3, 2, "GEMSTONE PRESS", COLOR_LIGHT);
+	int x = 4, y = 4;
+
+
+	//	List equipment
+	for (unsigned i = 0; i < SLOT__NONE; i++)
+	{
+		auto slot = static_cast<EquipmentSlot>(i);
+		_win.write(x, ++y, getEquipmentSlotName(slot), COLOR_DARK);
+
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			if (selected)
+			{
+				_win.writec(x + 9, y, it->getGlyph(), it->getColor());
+				_win.write(x + 11, y, it->getName(), COLOR_BLACK, it->getColor());
+			}
+			else
+			{
+				_win.writec(x + 8, y, it->getGlyph(), it->getColor());
+				_win.write(x + 10, y, it->getName(), it->getColor());
+			}
+		}
+		else
+			_win.write(x + 15, y, "---", TCODColor::darkGrey);
+	}
+
+
+	//	Optional actions
+	y = 30;
+	if (gdata->_idx < SLOT__NONE)
+	{
+		auto slot = static_cast<EquipmentSlot>(gdata->_idx);
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			drawItemInfo(gdata, it, 47, 4);
+			if (it->hasFreeSocket())
+				writeFormatted(x, ++y, "#ENTER @Add a gem to an empty socket", { COLOR_LIGHT });
+
+			++y;
+			writeFormatted(x, ++y, "#  x @Remove all socketed gems", { COLOR_LIGHT });
+			++y;
+			writeFormatted(x, ++y, "#  f @Fabricate gems", { COLOR_LIGHT });
+		}
+	}
+
+
+	//	Materials
+	drawStashedGemstones(gdata, 47, 25);
+}
+
+
+//	Select a gemstone to socket.
+void display::drawGemstoneSelect(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 40, COLOR_DARK);
+	int x = 4, y = 4;
+	for (unsigned i = 0; i < gdata->_stashedGems.size(); i++)
+	{
+		y++;
+		auto selected = gdata->_idx == i;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		auto it = gdata->_stashedGems[i];
+		if (selected)
+			_win.write(x + 1, y, it->getName(), COLOR_BLACK, it->getColor());
+		else
+			_win.write(x, y, it->getName(), it->getColor());
+
+		if (selected)
+			drawItemInfo(gdata, it, 45, 25);
+	}
+
+	//	description of item we're socketing something into
+	drawItemInfo(gdata, gdata->_viewingItem, 45, 4);
+}
+
+
+//	Shows all gemstones we can create.
+void display::drawGemstoneFabricator(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 30, COLOR_DARK);
+	_win.write(3, 2, "GEMSTONE FABRICATOR", COLOR_LIGHT);
+	int x = 4, y = 4;
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		++y;
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		//	selected item
+		auto it = gdata->_currentItemList[i];
+		if (selected)
+		{
+			//	show item info
+			_win.write(x + 3, y, it->getName(), COLOR_DARK, it->getColor());
+			drawItemInfo(gdata, it, 47, 4);
+
+			//	requirements to fabricate
+			writeFormatted(45, 23, "#ENTER @Fabricate gemstone", { COLOR_LIGHT });
+			writeFormatted(47, 24, "Requires #x3 " + getGemTypeFullName(it->_gemType, it->_enhancementLevel - 1), { it->getColor() });
+			writeFormatted(47, 25, "Costs #" + to_string(getGemstoneFabricateCost(it)) + " fragments", { TCODColor::gold });
+		}
+		else
+			_win.write(x + 2, y, it->getName(), it->getColor());
+	}
+
+	drawStashedGemstones(gdata, 47, 30);
+	drawMessages(gdata);
+}
+
+
+//	Pick spells to equip.
+void display::drawRuneImprinter(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 50, COLOR_DARK);
+	_win.write(3, 2, "SELECT RUNES TO IMPRINT", COLOR_LIGHT);
+
+	//	Spell runes
+	int x = 4, y = 3;
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		++y;
+		bool selected = gdata->_idx == i;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		//	the spell rune
+		auto it = gdata->_currentItemList[i];
+		_win.writec(x, y, it->getGlyph(), it->getColor());
+
+		if (selected)
+		{
+			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
+			drawSpellInfo(gdata, it->_containsSpell, it->_spellLevel, 47, 4);
+		}
+		else
+			_win.write(x + 2, y, it->getName(), it->getColor());
+	}
+
+	//	Spells known
+	x = 47, y = 30;
+	drawBox(45, 29, 35, 8, COLOR_DARK);
+	_win.write(46, 29, "Spells Memorized", COLOR_LIGHT);
+	for (auto sp : gdata->_player->getAllSpellsKnown())
+	{
+		_win.write(x, ++y, getSpellNameFull(sp, gdata->_player->getSpellLevel(sp)), getSpellColor(sp));
+	}
+}
+
+
+
+void display::drawStash(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 61, COLOR_DARK);
+	_win.write(3, 2, "YOUR STASH", COLOR_LIGHT);
+	int x = 4, y = 4;
+
+	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
+	{
+		y += 1;
+		bool selected = i == gdata->_idx;
+
+		//	highlight selected
+		auto it = gdata->_currentItemList[i];
+		if (selected)
+		{
+			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
+			it->_isNewItem = false;
+		}
+
+		//	item title
+		if (selected)
+		{
+			_win.writec(x + 2, y, it->getGlyph(), it->getColor());
+			_win.write(x + 4, y, it->getName(), COLOR_BLACK, it->getColor());
+		}
+		else
+		{
+			_win.writec(x + 1, y, it->getGlyph(), it->getColor());
+			_win.write(x + 3, y, it->getName(), it->getColor());
+		}
+	}
+
+	//	Selected item description, if any
+	if (gdata->_idx < gdata->_currentItemList.size())
+		drawItemInfo(gdata, gdata->_currentItemList[gdata->_idx], 40, 4);
+
+	//	Stashed materials.
+	x = 40; y = 25;
+	drawStashedMaterials(gdata, x, y);
+	
+	//	Control options
+	y = 40;
+	drawBox(x - 2, y - 1, 35, 10, COLOR_DARK);
+	writeFormatted(x, ++y, "#TAB      @Open inventory", { COLOR_LIGHT, COLOR_LIGHT });
+	writeFormatted(x, ++y, " #g    @Transfer to inventory", { COLOR_LIGHT, COLOR_LIGHT });
+}
+
+
+
+//	Lists all the spells we know.
+void display::drawSpellList(gamedataPtr gdata)
+{
+	drawBox(2, 2, 35, 20, COLOR_DARK);
+	_win.write(3, 2, "SPELLS KNOWN", COLOR_LIGHT);
+	int x = 4, y = 3;
+
+	auto spells = gdata->_player->getAllSpellsKnown();
+	for (unsigned i = 0; i < spells.size(); i++)
+	{
+		++y;
+		auto selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		//	the spell
+		auto sp = spells.at(i);
+		int lvl = gdata->_player->getSpellLevel(sp);
+
+
+		//	spell name
+		if (selected)
+		{
+			_win.write(x + 4, y, getSpellNameFull(sp, lvl), COLOR_BLACK, getSpellColor(sp));
+			drawSpellInfo(gdata, sp, lvl, 47, 4);
+		}
+		else
+			_win.write(x + 3, y, getSpellNameFull(sp, lvl), getSpellColor(sp));
+	}
+
+	drawMessages(gdata);
+}
+
+
+void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, int atx, int aty)
+{
+	drawBox(atx - 2, aty - 2, 35, 20, COLOR_DARK);
+
+	//	name & basic description
+	_win.write(atx, aty, getSpellNameFull(sp, lvl), getSpellColor(sp));
+	_win.write(atx, ++aty, "Tier " + to_string(getSpellTier(sp)) + " Spell", COLOR_DARK);
+	aty = _win.writeWrapped(atx, ++aty, 32, getSpellDescription(sp), COLOR_MEDIUM);
+
+	//	MP cost
+	aty += 1;
+	writeFormatted(atx, ++aty, "MP Cost #" + to_string(getSpellMPCost(sp, lvl)), { COLOR_MAGIC });
+
+	//	base damage
+	aty += 1;
+	if (doesSpellInflictDamage(sp))
+	{
+		//	base damage
+		auto dam = getSpellDamage(sp, lvl);
+		auto dtype = getSpellDamageType(sp);
+		writeFormatted(atx, ++aty, "Base Damage #" + to_string(dam.first) + "-" + to_string(dam.second) + " " + getDamageTypeName(dtype), { getDamageTypeColor(dtype) });
+
+		//	adjusted (spell power)
+		auto spellpower = gdata->_player->getSpellPower();
+		dam.first += (float)dam.first * (float)spellpower / 100.0f;
+		dam.second += (float)dam.second * (float)spellpower / 100.0f;
+		writeFormatted(atx, ++aty, "Adjusted    #" + to_string(dam.first) + "-" + to_string(dam.second) + " " + getDamageTypeName(dtype), { getDamageTypeColor(dtype) });
+	}
+
+	//	Special damage for Smite Evil
+	if (sp == Spell::SMITE_EVIL)
+		writeFormatted(atx, ++aty, "Smite Damage #" + to_string(gdata->_player->getSmiteEvilDamage()), { TCODColor::gold });
+
+	//	range
+	if (isSpellTargeted(sp))
+	{
+		auto sp_range = getSpellRange(sp, lvl);
+		writeFormatted(atx, ++aty, "Attack Range #" + to_string(sp_range), { COLOR_LIGHT });
+	}
+
+	//	duration
+	if (doesSpellHaveDuration(sp))
+	{
+		auto dur = getSpellDuration(sp, lvl);
+		writeFormatted(atx, ++aty, "Lasts #" + to_string(dur) + " @turns.", { COLOR_LIGHT });
+	}
+}
+
+
+
+//	Details of a given item.
+//	If a second item 'compareTo' is given, indicates stat differences between the two items.
+void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, itemPtr compareTo)
+{
+	int topy = aty;
+
+	//	name & glyph
+	_win.writec(atx, aty, it->getGlyph(), it->getColor());
+	_win.write(atx + 2, aty, it->getName(), it->getColor());
+	
+	//	level and tier
+	auto cat_txt = getItemCategoryName(it->_category) + " #[" + to_string(it->_enhancementLevel) + "/" + to_string(it->getMaxEnhancementLevel()) + "]";
+	if (it->_isTwoHanded)
+		cat_txt = "2h " + cat_txt;
+	writeFormatted(atx, ++aty, cat_txt, { COLOR_DARK, COLOR_MEDIUM });
+	drawProgressDots(atx + 20, aty, it->_rarity, 4, TCODColor::gold);
+
+	//	durability, if relevant
+	if (it->subjectToDurabilityLoss())
+	{
+		int dleft = it->_maxDurability - it->_damageTaken;
+		auto dcol = (dleft <= 5) ? COLOR_NEGATIVE : COLOR_LIGHT;
+		writeFormatted(atx + 29, aty, "CND: #" + to_string(dleft) + "@/" + to_string(it->_maxDurability), { dcol });
+	}
+
+	//	armour type
+	if (it->isArmourPiece())
+		_win.write(atx, ++aty, getArmourCategoryName(it->_armourCategory) + " Armour", COLOR_DARK);
+
+	//	info about gems
+	if (it->_category == ITEM_GEM)
+		drawGemTypeEffects(gdata, it->_gemType, it->_enhancementLevel, atx, aty + 2);
+
+	//	list of properties
+	++aty;
+	for (unsigned i = 0; i < PROP__NONE; i++)
+	{
+		auto prop = static_cast<ItemProperty>(i);
+
+		//	stat of this item
+		auto val = it->getProperty(prop);
+
+		//	test comparison
+		if (compareTo != nullptr)
+		{
+			auto cval = compareTo->getProperty(prop);
+			if (val != 0 || cval != 0)
+			{
+				//	stat value
+				_win.write(atx + 5, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
+				_win.write(atx + 12, aty, getItemPropertyName(prop), COLOR_MEDIUM);
+
+				//	difference in values
+				auto diff = val - cval;
+				if (diff != 0)
+				{
+					auto col = (diff < 0) ? COLOR_NEGATIVE : COLOR_POSITIVE;
+					_win.write(atx, aty, plusminus(diff), col);
+				}
+			}
+		}
+
+		//	no comparison; just draw the stat
+		else if (val != 0)
+		{
+			_win.write(atx + 1, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
+			_win.write(atx + 8, aty, getItemPropertyName(prop), COLOR_MEDIUM);
+			//drawDottedLinePair(atx + 1, ++aty, atx + 16, getItemPropertyName(prop), formatItemProperty(prop, val), COLOR_LIGHT, COLOR_MEDIUM);
+		}
+	}
+
+	//	list of enchantments
+	aty++;
+	auto en_list = it->getAllEnchantments();
+	for (auto en : *en_list)
+	{
+		_win.writec(atx, ++aty, 4, TCODColor::gold);
+		writeFormatted(atx + 2, aty, getItemEnchantmentDescription(en) + " #" + plusminus(it->getEnchantmentValue(en)), { COLOR_POSITIVE });
+	}
+
+	//	list of sockets, full or no
+	auto gems = it->getAllSocketedGemTypes();
+	for (unsigned i = 0; i < gems->size(); i++)
+	{
+		auto col = getGemTypeColor(gems->at(i));
+		_win.writec(atx, ++aty, 229, col);
+		if (gems->at(i) != GemType::__NONE)
+			_win.write(atx + 2, aty, getGemTypeFullName(gems->at(i), it->getSocketLevel(i)), col);
+		else
+			_win.write(atx + 2, aty, "Empty Socket", TCODColor::grey);
+	}
+
+	//	info about spells
+	if (it->_containsSpell != Spell::__NONE)
+	{
+		writeFormatted(atx + 2, ++aty, "#" + getSpellName(it->_containsSpell) + " @+" + to_string(it->_spellLevel), { getSpellColor(it->_containsSpell) });
+	}
+	if (it->_category == ITEM_SPELLRUNE)
+	{
+		aty += 1;
+		aty = _win.writeWrapped(atx, ++aty, 30, "Use the Rune Imprinter to learn spell runes.", COLOR_MEDIUM);
+	}
+
+	//	box item in
+	drawBox(atx - 2, topy - 2, 42, 19, COLOR_DARK);
+}
+
+
+//	Effects of a gem of the given type, for each type of socket.
+void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty)
+{
+	string weapon, armour, jewel;
+	switch (gem)
+	{
+	case(GemType::BLACKSTONE):
+		armour = plusminus(tier) + " #Armour Value";
+		jewel = plusminus(tier * 10) + "% #Critical Damage";
+		weapon = plusminus(tier * 2) + " #Physical Damage";
+		break;
+
+	case(GemType::BOLTSTONE):
+		armour = plusminus(tier * 5) + "% #Electric Resist";
+		jewel = plusminus(tier * 5) + "% #Spell Power";
+		weapon = plusminus(tier * 2) + " #Electric Damage";
+		break;
+
+	case(GemType::FLAMESTONE):
+		armour = plusminus(tier * 5) + "% #Fire Resist";
+		jewel = plusminus(tier * 5) + " #Max Health";
+		weapon = plusminus(tier * 2) + " #Fire Damage";
+		break;
+
+	case(GemType::SILVERSTONE):
+		armour = plusminus(tier * 5) + "% #Arcane Resist";
+		jewel = plusminus(tier) + " #Max Magic";
+		weapon = plusminus(tier * 2) + " #Arcane Damage";
+		break;
+
+	case(GemType::SPIDERSTONE):
+		armour = plusminus(tier * 5) + "% #Poison Resist";
+		jewel = plusminus(tier) + "% #Critical Chance";
+		weapon = plusminus(tier * 2) + " #Poison Damage";
+		break;
+	}
+
+	_win.write(atx, aty, "Effect if socketed into:", COLOR_MEDIUM);
+	writeFormatted(atx, ++aty, "#ARMOUR #" + armour, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT, });
+	writeFormatted(atx, ++aty, "#JEWEL  #" + jewel, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+	writeFormatted(atx, ++aty, "#WEAPON #" + weapon, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+}
+
+
+//	Shows how many free inventory slots we have.
+void display::drawInventoryCapacity(gamedataPtr gdata, int x, int y)
+{
+	_win.write(x, y, "CAPACITY", COLOR_LIGHT);
+	int used = getInventorySlotsUsed(gdata);
+	for (unsigned i = 0; i < gdata->_player->getMaxInventorySlots(); i++)
+	{
+		if (i < used)
+			_win.writec(x + i + 9, y, 254, COLOR_LIGHT);
+		else
+			_win.writec(x + i + 9, y, 255, COLOR_DARK);
+	}
+}
+
+
+//	All the gems in our stash.
+void display::drawStashedGemstones(gamedataPtr gdata, int x, int y)
+{
+	drawBox(x - 2, y - 2, 35, 25, COLOR_DARK);
+	_win.write(x - 1, y - 2, "GEMSTONES", COLOR_DARK);
+	for (auto gem : gdata->_stashedGems)
+	{
+		_win.write(x, y, gem->getName(), gem->getColor());
+		y++;
+	}
+}
+
+
+
+//	Materials in our stash.
+void display::drawStashedMaterials(gamedataPtr gdata, int x, int y)
+{
+	drawBox(x - 2, y - 2, 35, 10, COLOR_DARK);
+	_win.write(x - 1, y - 2, "MATERIALS", COLOR_LIGHT);
+	for (auto mat : gdata->_stashedMaterials)
+	{
+		_win.write(x, y, mat->getName(), mat->getColor());
+		y += 1;
+	}
+}
+
+
+
+//	Re-calculates what is visible on the map.
+void display::updateVisibleMapData(gamedataPtr gdata)
+{
+	//	player character is at the centre of the screen.
+	auto ctr = gdata->_player->_pos;
+	gdata->_visibleMonsters.clear();
+	int vis = getActualVisionRadius(gdata);
+
+
+	//	Visible tiles on the map.
+	for (int dx = 0; dx < MAP_X_SIZE; dx++)
+	{
+		for (int dy = 0; dy < MAP_Y_SIZE; dy++)
+		{
+			//	Default display values
+			int gl = 0;
+			colorType col = COLOR_BLACK;
+			colorType bgcol = COLOR_BLACK;
+
+
+			//	Is this in the map boundaries
+			auto mpt = displayToMapCoord(ctr, dx, dy);
+			if (gdata->_map->inBounds(mpt))
+			{
+				//	Distance to point
+				auto dist = hypot(mpt.first - ctr.first, mpt.second - ctr.second);
+
+				//	Derive into from the base tile.
+				auto tl = gdata->_map->getTile(mpt);
+				gl = getMaptileGlyph(tl);
+				col = getMaptileColor(tl);
+				bgcol = COLOR_BLACK;
+
+				//	Is this point in FOV?
+				if ((gdata->_map->isInFov(mpt) && dist <= vis) || gdata->_omniscient)
+				{
+					//	Remember tiles we're seen
+					gdata->_map->addToMemoryMap(mpt.first, mpt.second);
+
+					//	Surfaces override tiles
+					auto sf = gdata->_map->getSurface(mpt);
+					if (sf != Surface::__NONE)
+					{
+						gl = getSurfaceGlyph(sf);
+						col = getSurfaceColor(sf);
+					}
+
+					//	Flickering effect
+					else if (doesMaptileFlicker(tl))
+					{
+						auto f = 1.0f + (float)randint(-3, 3) * 0.1f;
+						col.scaleHSV(1.0f, f);
+					}
+
+					//	Darken tiles that are further away. Stairs don't get darkened because they are IMPORTANT.
+					if (!isMaptileStairs(tl))
+					{
+						auto darken_factor = 1.0f - 0.3f * dist / (float)(vis - dist);
+						if (darken_factor < 0.15f) darken_factor = 0.15f;
+						col.scaleHSV(1.0f, darken_factor);
+					}
+				}
+
+				//	if not, we can still see it if it's in the memory map
+				else if (gdata->_map->inMemoryMap(mpt.first, mpt.second))
+				{
+					//	but it gets darkened (unless it's stairs)
+					if (!isMaptileStairs(tl))
+					{
+						col.scaleHSV(1.0f, 0.15f);
+						bgcol.scaleHSV(1.0f, 0.15f);
+					}
+				}
+
+				//	otherwise, we can't see it at all.
+				else
+				{
+					gl = ' ';
+					col = COLOR_BLACK;
+					bgcol = COLOR_BLACK;
+				}
+			}
+
+			//	Update the map info.
+			_visibleGlyphs[dx][dy] = gl;
+			_visibleColors[dx][dy] = col;
+			_visibleBgcolors[dx][dy] = bgcol;
+		}
+	}
+
+
+	//	Add items.
+	for (auto icp : *gdata->_map->getAllItems())
+	{
+		auto dpt = mapToDisplayCoord(ctr, icp->_pos.first, icp->_pos.second);
+		if (isPointOnDisplay(dpt) && gdata->_map->isInFov(icp->_pos))
+		{
+			//	top item from this container determines its appearance
+			auto it = icp->_items.front();
+			_visibleGlyphs[dpt.first][dpt.second] = it->getGlyph();
+			_visibleColors[dpt.first][dpt.second] = it->getColor();
+		}
+	}
+
+
+	//	Add creatures.
+	for (auto cr : gdata->_map->getAllCreatures())
+	{
+		//	Test whether the monster is currently onscreen
+		auto dpt = mapToDisplayCoord(ctr, cr->_pos.first, cr->_pos.second);
+		if (isPointOnDisplay(dpt))
+		{
+			//	We can always see ourselves; test whether we can see monsters
+			if (getDistanceBetweenCreatures(gdata->_player, cr) <= vis && canPlayerSeeCreature(gdata, cr))
+			{
+				//	map data
+				_visibleGlyphs[dpt.first][dpt.second] = cr->getGlyph();
+				_visibleColors[dpt.first][dpt.second] = cr->getColor();
+
+				//	remember monsters we see
+				if (!cr->isPlayer())
+					gdata->_visibleMonsters.push_back(cr);
+			}
+		}
+	}
+
+
+	//	Animations
+	for (auto anim : gdata->_animations)
+	{
+		auto pts = anim->getPoints();
+		for (unsigned i = 0; i < pts.size(); i++)
+		{
+			auto dpt = mapToDisplayCoord(ctr, pts[i].first, pts[i].second);
+			if (isPointOnDisplay(dpt))
+			{
+				_visibleGlyphs[dpt.first][dpt.second] = anim->getGlyph(i);
+				_visibleColors[dpt.first][dpt.second] = anim->getColor(i);
+			}
+		}
+	}
+
+
+	//	Cursor position
+	if (inCursorState(gdata))
+	{
+		auto dpt = mapToDisplayCoord(ctr, gdata->_cursorPt.first, gdata->_cursorPt.second);
+		_visibleBgcolors[dpt.first][dpt.second] = COLOR_HIGHLIGHT;
+	}
+}
+
+
+//	The MAIN GAME INTERFACE, with the map and such.
+//	Call 'updateVisibleMapData' before this to make sure the map is up-to-date. This just draws map data we remember.
+void display::drawMainInterface(gamedataPtr gdata)
+{
+	drawInterfaceBoxes();
+	_win.write(3, 2, gdata->_map->_name, COLOR_LIGHT);
+
+	//	Draw the map
+	bool danger_filter = gdata->_player->getHealthPercent() <= 20;
+	for (unsigned x = 0; x < MAP_X_SIZE; x++)
+	{
+		for (unsigned y = 0; y < MAP_Y_SIZE; y++)
+		{
+			//	apply filters, if any
+			auto col = _visibleColors[x][y];
+			col.scaleHSV(1.0f, BRIGHTEN_AMOUNT);
+			if (danger_filter)
+				col = TCODColor::lerp(col, TCODColor::crimson, 0.3);
+
+			//	actually show this
+			_win.writec(x + MAP_X_OFFSET, y + MAP_Y_OFFSET, _visibleGlyphs[x][y], col, _visibleBgcolors[x][y]);
+		}
+	}
+
+	//	Other interface elements
+	drawSidebar(gdata);
+
+	////	Hotkeyed spells
+	int x = 3, y = 49;
+	for (unsigned h = 0; h < gdata->_player->_ImprintedRunes.size(); h++)
+	{
+		auto sp = gdata->_player->_ImprintedRunes[h]->_containsSpell;
+		if (sp != Spell::__NONE)
+		{
+			auto name = "[" + to_string(h + 1) + "] #" + getSpellName(sp);
+			writeFormatted(x, y, name, { getSpellColor(sp) });
+			x += name.size() + 2 ;
+		}
+	}
+
+	//	Either messages go in this box, or we show monster info
+	if (gdata->_state == STATE_LOOK)
+	{
+		//	tile here
+		auto tl = gdata->_map->getTile(gdata->_cursorPt);
+		_win.writec(4, 51, getMaptileGlyph(tl), getMaptileColor(tl));
+		_win.write(6, 51, getMaptileName(tl), getMaptileColor(tl));
+
+		//	surface here, if any
+		auto sf = gdata->_map->getSurface(gdata->_cursorPt);
+		if (sf != Surface::__NONE)
+		{
+			_win.writec(30, 51, getSurfaceGlyph(sf), getSurfaceColor(sf));
+			_win.write(32, 51, getSurfaceName(sf), getSurfaceColor(sf));
+		}
+
+		//	monster info
+		auto mon = gdata->_map->getCreature(gdata->_cursorPt);
+		if (mon != nullptr && !mon->isPlayer())
+			drawMonsterSummary(gdata, static_pointer_cast<monster>(mon));
+	}
+	else
+		drawMessages(gdata);
+}
+
+
+//	Display all messages at the appropriate screen position
+void display::drawMessages(gamedataPtr gdata)
+{
+	int x = 3, y = 51;
+	float f = 1.0f;
+	for (auto m : gdata->_messages)
+	{
+		f -= 0.05f;
+		writeFormatted(x, y++, m._txt, m._colors, f);
+	}
+}
+
+
+//	Sidebar showing player state.
+void display::drawSidebar(gamedataPtr gdata)
+{
+	int x = 52, y = 3;
+	auto p = gdata->_player;
+
+
+	//	Level
+
+	_win.write(x, ++y, "LV " + to_string(p->_level), { COLOR_MEDIUM });
+	if (gdata->_attributePointsLeft > 0)
+		_win.writec(x - 1, y, '+', COLOR_POSITIVE);
+	int xp_per = 100.0f * (float)gdata->_xp / (float)XP_PER_LEVEL;
+	drawFilledBar(x + 6, y, xp_per / 5, 20, TCODColor::silver, ' ' + to_string(xp_per) + "%");
+	y++;
+
+
+	//	State
+
+	_win.write(x, ++y, "HEALTH", p->willFlaskWasteHealing() ? COLOR_MEDIUM : COLOR_WHITE);
+	auto hp_per = p->getHealthPercent();
+	drawFilledBar(x + 6, y, hp_per / 5, 20, getPercentColor(hp_per), ' ' + to_string(p->getHealthLeft()) + "/" + to_string(p->getMaxHealth()));
+
+	_win.write(x, ++y, "MAGIC", COLOR_MEDIUM);
+	auto mp_per = p->getMagicPercent();
+	drawFilledBar(x + 6, y, mp_per / 5, 20, COLOR_MAGIC, ' ' + to_string(p->getMagicLeft()) + "/" + to_string(p->getMaxMagic()));
+
+	y += 2;
+	
+	_win.write(x, ++y, "  [T]", isTownPortalCharged(gdata) ? COLOR_WHITE : TCODColor::darkerGrey);
+	drawFilledBar(x + 6, y, gdata->_townPortalCharge / (TOWN_PORTAL_CHARGE_REQ / 20), 20, TCODColor::darkBlue, " Portal Charge");
+
+
+	//	Flask
+	
+	y += 2;
+	drawLineHorizontal(x - 1, y, 36, COLOR_DARK);
+	y += 2;
+
+	if (p->_currentFlask != nullptr)
+	{
+		drawBox(x, y, 2, 2, COLOR_DARK);
+
+		//	icon indicates progress to next charge
+		auto scale = (float)p->_currentFlask->getRegenerationPercent() / 100.0f;
+		auto fl_col = TCODColor::lerp(TCODColor::darkGrey, TCODColor::crimson, scale);
+		_win.writec(x + 1, y + 1, p->_currentFlask->getGlyph(), fl_col);
+
+		//	name of flask
+		writeFormatted(x + 4, y + 1, "#" + p->_currentFlask->getName(), { p->_currentFlask->getColor() });
+		drawProgressDots(x + 5, y + 2, p->_currentFlask->getChargesLeft(), p->_currentFlask->getProperty(PROP_MAX_CHARGES), TCODColor::crimson);
+	}
+
+
+	//	Equipment
+
+	y += 4;
+	drawLineHorizontal(x - 1, y, 36, COLOR_DARK);
+	y += 2;
+	
+	for (auto it : p->getAllEquippedItems())
+	{
+		if (it != nullptr)
+		{
+			_win.writec(x, ++y, it->getGlyph(), it->getColor());
+			_win.write(x + 2, y, it->getName(), it->getColor());
+		}
+		else
+			_win.writec(x, ++y, '-', TCODColor::darkGrey);
+	}
+
+
+	//	Status effects
+	y += 2;
+	for (auto st : ALL_STATUS_EFFECTS)
+	{
+		if (p->hasStatusEffect(st))
+		{
+			_win.write(x, ++y, "[" + extendInteger(p->getStatusEffectDuration(st), 2) + "]", COLOR_MEDIUM);
+			_win.write(x + 5, y, getStatusEffectName(st), getStatusEffectColor(st));
+		}
+	}
+	for (unsigned i = 0; i < BUFF__MAX; i++)
+	{
+		auto bf = static_cast<BuffType>(i);
+		if (p->hasBuff(bf))
+		{
+			_win.write(x, ++y, "[" + extendInteger(p->getBuffDuration(bf), 2) + "]", COLOR_MEDIUM);
+			_win.write(x + 5, y, getBuffName(bf), COLOR_HIGHLIGHT_POS);
+		}
+	}
+}
+
+
+
+//	Checks that a given display coordinate is in the bounds of the display.
+bool display::isPointOnDisplay(const intpair pt)
+{
+	return pt.first >= 0 && pt.first < MAP_X_SIZE && pt.second >= 0 && pt.second < MAP_Y_SIZE;
+}
+
+
+//	Inverse of the function below: this takes a MAP coordinate and returns the coordinate at which it should
+//	appear on the DISPLAY. Both "ctr" and "x","y" are map coordinates.
+//	Make sure to check that the returned coordinate is actually IN the display, as some map coordinates will
+//	be outside the display area if the map is larger than the window.
+intpair display::mapToDisplayCoord(const intpair ctr, int x, int y)
+{
+	intpair pt;
+	pt.first = (MAP_X_SIZE / 2) + (x - ctr.first);
+	pt.second = (MAP_Y_SIZE / 2) + (y - ctr.second);
+	return pt;
+}
+
+
+
+//	This converts a coordinate from the DISPLAY GRID, starting at 0,0 in the top left of the display window
+//	to its corresponding coordinate on the MAP, where the given point "ctr" appears at the CENTRE of the display.
+//	"ctr" is in MAP coordinates. "x" and "y" are the DISPLAY coordinates to convert.
+intpair display::displayToMapCoord(const intpair ctr, int x, int y)
+{
+	intpair pt;
+	pt.first = x + (ctr.first - MAP_X_SIZE / 2);
+	pt.second = y + (ctr.second - MAP_Y_SIZE / 2);
+	return pt;
+}
+
+
+//	A colour that ranged from 0 to 100, spanning from red to yellow to green
+colorType display::getPercentColor(int per) const
+{
+	//	cap at the limits of the percent range
+	if		(per < 0) per = 0;
+	else if (per > 100) per = 100;
+	return _percentColors[per];
+}
+
+
+//	Advances animations, deletes any that have expired.
+void display::tickAnimations(gamedataPtr gdata)
+{
+	vector<animationPtr> toRemove;
+	for (auto anim : gdata->_animations)
+	{
+		anim->tick();
+		if (anim->isComplete())
+			toRemove.push_back(anim);
+	}
+	for (auto anim : toRemove)
+	{
+		auto f = find(gdata->_animations.begin(), gdata->_animations.end(), anim);
+		gdata->_animations.erase(f);
+	}
+}
+
+
+void display::drawBox(const int x, const int y, const int w, const int h, colorType col)
+{
+	//	vertical edges
+	drawLineVertical(x, y, h, col);
+	drawLineVertical(x + w, y, h, col);
+
+	//	horizontal edges
+	drawLineHorizontal(x, y, w, col);
+	drawLineHorizontal(x, y + h, w, col);
+
+	//	corners
+	_win.writec(x + w, y, 191, col);
+	_win.writec(x, y + h, 192, col);
+	_win.writec(x + w, y + h, 217, col);
+	_win.writec(x, y, 218, col);
+}
+
+
+//	The big boxes that outline the normal game interface
+void display::drawInterfaceBoxes()
+{
+	drawBox(2, 2, 46, 46, COLOR_DARK);
+	drawBox(50, 2, 37, 46, COLOR_DARK);
+	drawBox(2, 50, 85, 12, COLOR_DARK);
+}
+
+
+//	Text with colour formatting. Initially uses a default colour.
+//	Upon reaching a '#' character, switches to the next colour in the given colour list.
+//	Upon reaching a '@' character, reverts to the default colour.
+void display::writeFormatted(int atx, int aty, string txt, vector<colorType> colors, float darkenFactor)
+{
+	colorType col = COLOR_MEDIUM;
+	int colIdx = 0;
+	int xp = 0;
+
+	//	if a darkening-factor is given, we adjust all colors by that factor
+	if (darkenFactor != 0.0f)
+		col.scaleHSV(1.0f, darkenFactor);
+
+	//	draw the message
+	for (int i = 0; i < txt.size(); i++)
+	{
+		if (txt[i] == MSG_COLOR_CHANGE_MARK)
+		{
+			if (colIdx < colors.size())
+			{
+				col = colors[colIdx];
+				if (darkenFactor != 0.0f)
+					col.scaleHSV(1.0f, darkenFactor);
+				colIdx++;
+			}
+
+			//	hopefully switching to this awful colour will indicate that there's an error
+			else
+			{
+				//cout << "ERROR: Badly formatted message '" + txt + "'" << endl;
+				col = TCODColor::lightestPink;
+			}
+		}
+		else if (txt[i] == MSG_DEFAULT_COLOR_MARK)
+		{
+			col = COLOR_MEDIUM;
+			if (darkenFactor != 0.0f)
+				col.scaleHSV(1.0f, darkenFactor);
+		}
+		else
+			_win.writec(atx + xp++, aty, txt[i], col);
+	}
+}
+
+
+//	A statistic in a little box, 
+void display::drawStatWithBox(int x, int y, string val, string title, colorType statcol)
+{
+	drawBox(x, y, 6, 2, COLOR_DARK);
+	_win.write(x + 1, y + 1, centreText(val, 6), statcol);
+	_win.write(x + 7, y + 1, title, COLOR_MEDIUM);
+}
+
+
+//	Writes 'title' at x,y and 'val' and x2,y with dots connecting them
+void display::drawDottedLinePair(int x, int y, int x2, const string title, const string val, colorType val_col, colorType title_col)
+{
+	//	the two values
+	_win.write(x, y, title, title_col);
+	_win.write(x2, y, val, val_col);
+
+	//	the dots
+	for (unsigned x3 = x + title.size(); x3 < x2; x3++)
+		_win.writec(x3, y, 249, COLOR_DARK);
+}
+
+
+//	Dot-like glyphs form a progress bar, with current value 'filled', and a total of 'maxval' dots drawn.
+//	'col' is the colour of filled dots; unfilled dots are grey.
+void display::drawProgressDots(int x, int y, int filled, int maxval, colorType col)
+{
+	//	error testing - if filled is <0, we will hang here
+	if (filled < 0)
+		return;
+
+	//	draw normally
+	for (unsigned i = 0; i < filled; i++)
+		_win.writec(x + i, y, 9, col);
+	for (unsigned i = filled; i < maxval; i++)
+		_win.writec(x + i, y, 9, TCODColor::darkGrey);
+}
+
+
+void display::drawFilledBar(int x, int y, int filled, int maxval, colorType col, string text)
+{
+	if (filled < 0 || maxval < 0) return;
+	for (unsigned i = 0; i < filled; i++)
+	{
+		if (i < text.size())
+			_win.writec(x + i, y, text[i], COLOR_BLACK, col);
+		else
+			_win.writec(x + i, y, ' ', COLOR_BLACK, col);
+	}
+	for (unsigned i = filled; i < maxval; i++)
+	{
+		if (i < text.size())
+			_win.writec(x + i, y, text[i], col, TCODColor::darkerGrey);
+		else
+			_win.writec(x + i, y, ' ', col, TCODColor::darkerGrey);
+	}
+}
+
+
+void display::drawLineHorizontal(int x, int y, int width, colorType color)
+{
+	for (int i = 0; i < width; i++)
+		_win.writec(x + i, y, 196, color);
+}
+
+void display::drawLineVertical(int x, int y, int height, colorType color)
+{
+	for (int i = 0; i < height; i++)
+		_win.writec(x, y + i, 179, color);
+}
+
+
+//	Percent chance to hit calculator for when we're inspecting a monster.
+//	Returns the % chance that an attack with the given Accuracy vs the given Defence will hit.
+int display::get_hit_chance(int acc, int def)
+{
+	int roll_req = (def - acc);
+	int total = (20 - roll_req) * 5;
+	if (total < 5) total = 5;
+	else if (total > 100) total = 100;
+	return total;
+}
+
+
+//	Tallies up all types of damage attacker inflicts & accounts for defender's resistances.
+int display::calculate_average_damage(const creaturePtr attacker, const creaturePtr target)
+{
+	//	physical damage
+	int total = MAX(1, attacker->getWeaponDamage() - target->getArmourValue());
+
+	//	special damage types
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		auto dam = attacker->getWeaponDamageOfType(dt);
+		if (dam > 0)
+		{
+			auto res = target->getResistance(dt);
+			dam -= (float)dam * (float)res / 100.0f;
+			if (dam > 0) total += dam;
+		}
+	}
+
+	return total;
+}

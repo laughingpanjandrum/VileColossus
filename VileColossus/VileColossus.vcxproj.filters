@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\interface">
+      <UniqueIdentifier>{94fc627e-7084-4bc6-b446-622750425f83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\interface">
+      <UniqueIdentifier>{649a8de9-4248-494b-b397-be71c68ca55a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\elements">
+      <UniqueIdentifier>{646d0ffe-a4ef-4fa2-bd99-ade20057ed75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\elements">
+      <UniqueIdentifier>{e2f23fff-d92c-443f-ad50-2b28ce978044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\map">
+      <UniqueIdentifier>{c9eb8566-7e67-4404-b868-a317219079ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\map">
+      <UniqueIdentifier>{c6b766d7-e310-4e33-b88c-82da5ca0e928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\interactions">
+      <UniqueIdentifier>{19d24389-1d01-4a52-a90e-8f8b50b884f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\interactions">
+      <UniqueIdentifier>{29b5d732-9760-4dd7-b523-25368ec11e82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="display.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="inputHandler.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="gamedata.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="color_constants.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="enums.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="maptile.h">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="gridmap.h">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="visibility.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="movement.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="mapgen.h">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="lootgen.h">
+      <Filter>Header Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="combat.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="effects.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="messages.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ai.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="monsterdata.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="manageItems.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="progression.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="spells.h">
+      <Filter>Header Files\elements</Filter>
+    </ClInclude>
+    <ClInclude Include="manageMagic.h">
+      <Filter>Header Files\interactions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="display.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="inputHandler.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="enums.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="maptile.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="gridmap.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="visibility.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="movement.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="lootgen.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="mapgen.cpp">
+      <Filter>Source Files\map</Filter>
+    </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="combat.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="messages.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="creature.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="effects.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ai.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="monsterdata.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="manageItems.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="progression.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="manageMagic.cpp">
+      <Filter>Source Files\interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="spells.cpp">
+      <Filter>Source Files\elements</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files\interface</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
