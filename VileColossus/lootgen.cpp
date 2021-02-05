@@ -689,7 +689,7 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
 		enchantItem(it, it->_enhancementLevel);	
 
 	//	Nickname for rares!!
-	if (rarity == 3)
+	if (rarity == 3 && it->_category != ITEM_SPELLRUNE)
 		it->setNickname(generateItemName());
 
 	return it;

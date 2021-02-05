@@ -12,7 +12,6 @@ TODO
 	Allow reinforcing item max durability
 	Allow un-equipping memorized spells
 	Add enchantments to spell runes
-	Don't name purple-tier spellrunes
 	Gem fabrication interface looks kinda weird
 	'x breaks' messages repeat every time you are hit
 	Make sockets more common on higher level items
