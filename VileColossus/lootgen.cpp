@@ -172,7 +172,7 @@ void lootgen::enchantItem(itemPtr it, int count)
 	if (it->_tier > 1)
 	{
 		const int max_sockets = MIN(count, getMaxSocketsForCategory(it->_category));
-		if (max_sockets > 0 && roll_one_in(3))
+		if (max_sockets > 0 && roll_one_in(2))
 		{
 			int sockets = randint(0, max_sockets);
 			it->adjustMaxSockets(sockets);

@@ -628,7 +628,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 
 
 	//	LONG stairs up, making it quicker to get to the surface at deeper levels
-	if (depth % 3 == 0)
+	if (depth == 8)
 		m->setTile(MT_STAIRS_UP_LONG, getRandomFree(m));
 }
 
@@ -1276,6 +1276,8 @@ gridmapPtr mapgen::generate_HomeBase()
 
 	m->setTile(MT_STAIRS_DOWN, 11, 6);
 	m->_startPt = intpair(11, 6);
+
+	m->setTile(MT_STAIRS_DOWN_LONG, 35, 9);
 
 	m->_lightLevel = 5;
 	m->updateTmap();

@@ -31,7 +31,7 @@ enum Maptile
 	MT_WATER,
 
 	MT_STAIRS_DOWN, MT_STAIRS_UP,
-	MT_STAIRS_UP_LONG,
+	MT_STAIRS_UP_LONG, MT_STAIRS_DOWN_LONG,
 };
 
 const string getMaptileName(const Maptile tl);

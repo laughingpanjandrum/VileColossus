@@ -27,6 +27,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_SAND):              return "sand";
 	case(MT_SARCOPHAGUS):		return "sarcophagus";
 	case(MT_STAIRS_DOWN):       return "stairs down";
+	case(MT_STAIRS_DOWN_LONG):	return "stairs down (long)";
 	case(MT_STAIRS_UP):         return "stairs up";
 	case(MT_STAIRS_UP_LONG):	return "stairs up (long)";
 	case(MT_STASH):				return "stash";
@@ -90,6 +91,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return ',';
 
 	case(MT_STAIRS_DOWN):
+	case(MT_STAIRS_DOWN_LONG):
 		return '>';
 	case(MT_STAIRS_UP):
 	case(MT_STAIRS_UP_LONG):
@@ -177,6 +179,7 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_STAIRS_DOWN):
 	case(MT_STAIRS_UP):
 		return TCODColor::lightestBlue;
+	case(MT_STAIRS_DOWN_LONG):
 	case(MT_STAIRS_UP_LONG):
 		return TCODColor::gold;
 
@@ -257,7 +260,7 @@ const bool doesMaptileFlicker(const Maptile tl)
 
 const bool isMaptileStairs(const Maptile tl)
 {
-	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG;
+	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG;
 }
 
 const string getSurfaceName(const Surface sf)

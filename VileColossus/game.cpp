@@ -14,7 +14,6 @@ TODO
 	Add enchantments to spell runes
 	Gem fabrication interface looks kinda weird
 	'x breaks' messages repeat every time you are hit
-	Make sockets more common on higher level items
 
 */
 
@@ -498,7 +497,9 @@ void game::tryUseStairs()
 	else if (tl == MT_STAIRS_UP)
 		moveToNewMap(-1);
 	else if (tl == MT_STAIRS_UP_LONG)
-		moveToNewMap(-3);
+		moveToNewMap(-8);
+	else if (tl == MT_STAIRS_DOWN_LONG)
+		moveToNewMap(8);
 	else
 		messages::error(_gdata, "There are no stairs here!");
 }
