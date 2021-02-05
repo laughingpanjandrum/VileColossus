@@ -9,7 +9,6 @@ TODO
 	Show item comparison in inventory
 	Remove LONG up stairs
 	Add LONG down stairs
-	Carrion Prince gave me 73 poison stacks???!!!
 	Fix death causing equipment to get damaged multiple times
 	Allow reinforcing item max durability
 	Allow un-equipping memorized spells

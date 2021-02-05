@@ -335,7 +335,7 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		{
 		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, 5 * dam, dam * 2); break;
 		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, 5 * dam, dam); break;
-		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam, dam * 5); break;
+		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam, dam); break;
 		}
 	}
 }
