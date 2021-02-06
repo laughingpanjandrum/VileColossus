@@ -798,8 +798,8 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 		if (selected)
 		{
 			//	show item info
-			_win.write(x + 3, y, it->getName(), COLOR_DARK, it->getColor());
-			drawItemInfo(gdata, it, 47, 4);
+			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
+			//drawItemInfo(gdata, it, 47, 4);
 
 			//	requirements to fabricate
 			writeFormatted(45, 23, "#ENTER @Fabricate gemstone", { COLOR_LIGHT });
@@ -810,7 +810,8 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 			_win.write(x + 2, y, it->getName(), it->getColor());
 	}
 
-	drawStashedGemstones(gdata, 47, 30);
+	drawStashedGemstones(gdata, 47, 4);
+	drawStashedMaterials(gdata, 47, 32);
 	drawMessages(gdata);
 }
 
@@ -1158,7 +1159,7 @@ void display::drawInventoryCapacity(gamedataPtr gdata, int x, int y)
 void display::drawStashedGemstones(gamedataPtr gdata, int x, int y)
 {
 	drawBox(x - 2, y - 2, 35, 25, COLOR_DARK);
-	_win.write(x - 1, y - 2, "GEMSTONES", COLOR_DARK);
+	_win.write(x - 1, y - 2, "GEMSTONES", COLOR_LIGHT);
 	for (auto gem : gdata->_stashedGems)
 	{
 		_win.write(x, y, gem->getName(), gem->getColor());

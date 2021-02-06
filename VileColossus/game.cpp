@@ -7,9 +7,7 @@ TODO
 
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
-	Allow un-equipping memorized spells
 	Add enchantments to spell runes
-	Gem fabrication interface looks kinda weird
 	'x breaks' messages repeat every time you are hit
 
 */
