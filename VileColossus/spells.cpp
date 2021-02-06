@@ -61,7 +61,7 @@ const string getSpellDescription(const Spell sp)
 	case(Spell::CONJURE_FLAME):
 		return "Hurl fire in a chosen direction.";
 	case(Spell::SMITE_EVIL):
-		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target.";
+		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target. Lasts for more hits at higher levels.";
 	case(Spell::VENOMFANG):
 		return "Adds poison damage to your attacks for a while.";
 	default:

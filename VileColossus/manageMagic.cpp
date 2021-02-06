@@ -101,7 +101,7 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 		break;
 
 	case(Spell::SMITE_EVIL):
-		caster->setBuffDuration(BUFF_SMITE_EVIL, 1);
+		caster->setBuffDuration(BUFF_SMITE_EVIL, getSpellDuration(sp, lvl));
 		break;
 
 	case(Spell::VENOMFANG):
@@ -155,6 +155,7 @@ void playerCastAimedSpell(gamedataPtr gdata, const intpair vec)
 	gdata->_player->spendActionEnergy();
 	gdata->_state = STATE_NORMAL;
 }
+
 
 
 //	Cast the given spell. Untargeted spells take effect instantly; other spells might require targeting.
@@ -259,7 +260,6 @@ void playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 	if (gdata->_player->_ImprintedRunes.size() < MAX_HOTKEYED_SPELLS)
 		gdata->_player->_ImprintedRunes.push_back(it);
 }
-
 
 
 //	Try to memorize the select spell rune.

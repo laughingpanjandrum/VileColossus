@@ -7,8 +7,6 @@ TODO
 
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
-	Remove LONG up stairs
-	Add LONG down stairs
 	Allow reinforcing item max durability
 	Allow un-equipping memorized spells
 	Add enchantments to spell runes
