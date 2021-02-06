@@ -109,7 +109,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			if (crit)
 			{
 				auto mult = attacker->getCriticalMultiplier();
-				dam += (float)dam * (float)mult / 100.0f;
+				dam = adjustByPercent(dam, mult);
 			}
 
 			//	Apply damage resistance
@@ -131,6 +131,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			for (auto dt : SPECIAL_DAMAGE_TYPES)
 			{
 				auto amt = attacker->getWeaponDamageOfType(dt);
+				amt = adjustByPercent(amt, attacker->getElementalAffinity(dt));
 				if (amt > 0)
 					inflictEnergyDamage(gdata, target, randint(1, amt), dt);
 			}

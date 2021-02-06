@@ -215,6 +215,10 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	switch (en)
 	{
 	case(ENCH_ACCURACY):		return "accuracy";
+	case(ENCH_AFF_ARCANE):		return "sigils";
+	case(ENCH_AFF_ELECTRIC):	return "the griffin";
+	case(ENCH_AFF_FIRE):		return "the dragon";
+	case(ENCH_AFF_POISON):		return "the serpent";
 	case(ENCH_ARCANE):			return "arcane";
 	case(ENCH_ARMOURING):		return "armour";
 	case(ENCH_BURNING):			return "burning";
@@ -253,6 +257,10 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	switch (en)
 	{
 	case(ENCH_ACCURACY):		return "Global Accuracy";
+	case(ENCH_AFF_ARCANE):		return "Arcane Affinity";
+	case(ENCH_AFF_ELECTRIC):	return "Electric Affinity";
+	case(ENCH_AFF_FIRE):		return "Fire Affinity";
+	case(ENCH_AFF_POISON):		return "Poison Affinity";
 	case(ENCH_ARCANE):			return "Arcane Damage";
 	case(ENCH_ARMOURING):		return "Armour Value";
 	case(ENCH_BURNING):			return "Fire Damage";

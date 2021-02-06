@@ -33,6 +33,7 @@ void game::start()
 
 	//	Starting items
 	auto wp = lootgen::generateStartingWeapon();
+
 	_gdata->_player->equipInSlot(wp, SLOT_MAIN_HAND);
 	_gdata->_player->_currentFlask = lootgen::generateStartingFlask();
 

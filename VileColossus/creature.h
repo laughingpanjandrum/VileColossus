@@ -85,6 +85,7 @@ public:
 
 	virtual int getStatusEffectChanceOnHit(const StatusEffect st) const { return 0; }
 	virtual int getWeaponDamageOfType(const DamageType dt) const { return 0; }
+	virtual int getElementalAffinity(const DamageType dt) const { return 0; }
 
 	virtual int getLeechOnKill() const { return 0; }
 	virtual int getReprisalDamage() const { return 0; }

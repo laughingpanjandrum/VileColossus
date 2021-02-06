@@ -69,7 +69,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	//	OFFENCE
 
 	x = 33, y = 4;
-	drawBox(x - 2, ++y, 26, 35, COLOR_DARK);
+	drawBox(x - 2, ++y, 26, 45, COLOR_DARK);
 	_win.write(x, y, "OFFENSIVE", COLOR_LIGHT);
 
 	int dmgbase = p->getWeaponDamage();
@@ -85,8 +85,15 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	for (auto dt : SPECIAL_DAMAGE_TYPES)
 	{
 		int dam = p->getWeaponDamageOfType(dt);
-		drawStatWithBox(x, y, extendInteger(dam, 3), getDamageTypeName(dt) + " Damage", (dam > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
-		y += 3;
+		if (dam > 0)
+			drawStatWithBox(x, y, "1-" + to_string(dam), getDamageTypeName(dt) + " Damage", getDamageTypeColor(dt));
+		else
+			drawStatWithBox(x, y, "00", getDamageTypeName(dt) + " Damage", COLOR_DARK);
+
+		int aff = p->getElementalAffinity(dt);
+		drawStatWithBox(x, y + 3, plusminus(aff) + "%", getDamageTypeName(dt) + " Affinity", (aff > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
+
+		y += 6;
 	}
 
 
@@ -1109,25 +1116,25 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 		break;
 
 	case(GemType::BOLTSTONE):
-		armour = plusminus(tier * 5) + "% #Electric Resist";
+		armour = plusminus(tier * 10) + "% #Electric Affinity";
 		jewel = plusminus(tier * 5) + "% #Spell Power";
 		weapon = plusminus(tier * 2) + " #Electric Damage";
 		break;
 
 	case(GemType::FLAMESTONE):
-		armour = plusminus(tier * 5) + "% #Fire Resist";
+		armour = plusminus(tier * 10) + "% #Fire Affinity";
 		jewel = plusminus(tier * 5) + " #Max Health";
 		weapon = plusminus(tier * 2) + " #Fire Damage";
 		break;
 
 	case(GemType::SILVERSTONE):
-		armour = plusminus(tier * 5) + "% #Arcane Resist";
+		armour = plusminus(tier * 10) + "% #Arcane Affinity";
 		jewel = plusminus(tier) + " #Max Magic";
 		weapon = plusminus(tier * 2) + " #Arcane Damage";
 		break;
 
 	case(GemType::SPIDERSTONE):
-		armour = plusminus(tier * 5) + "% #Poison Resist";
+		armour = plusminus(tier * 10) + "% #Poison Affinity";
 		jewel = plusminus(tier) + "% #Critical Chance";
 		weapon = plusminus(tier * 2) + " #Poison Damage";
 		break;

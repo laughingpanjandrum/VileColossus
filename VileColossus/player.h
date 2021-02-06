@@ -118,6 +118,8 @@ public:
 	void equipSpellRune(itemPtr it);
 	vector<itemPtr> _ImprintedRunes;
 
+	virtual int getElementalAffinity(const DamageType dt) const;
+
 
 	//	Equipment
 

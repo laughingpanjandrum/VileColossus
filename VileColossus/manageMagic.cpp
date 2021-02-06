@@ -69,6 +69,7 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 
 		//	Apply damage
 		auto dtype = getSpellDamageType(sp);
+		dam = adjustByPercent(dam, caster->getElementalAffinity(dtype));
 		inflictEnergyDamage(gdata, target, dam, dtype);
 
 		//	Animation

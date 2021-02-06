@@ -197,24 +197,24 @@ int player::getResistance(const DamageType dt) const
 	{
 	case(DTYPE_ARCANE):
 		total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
-		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 3;
+		//total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 3;
 		total += getDerivedAttribute(ATTR_WILLPOWER) - 10;
 		break;
 
 	case(DTYPE_FIRE):
 		total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
-		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 3;
+		//total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 3;
 		break;
 
 	case(DTYPE_ELECTRIC):
 		total += getTotalEnchantmentBonus(ENCH_STORMWARD);
-		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 3;
+		//total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 3;
 		total += getDerivedAttribute(ATTR_DEXTERITY) - 10;
 		break;
 
 	case(DTYPE_POISON):
 		total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
-		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 3;
+		//total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 3;
 		total += getDerivedAttribute(ATTR_STRENGTH) - 10;
 		break;
 	}
@@ -402,6 +402,36 @@ void player::equipSpellRune(itemPtr it)
 {
 	if (_ImprintedRunes.size() < MAX_HOTKEYED_SPELLS)
 		_ImprintedRunes.push_back(it);
+}
+
+
+//	Percent bonus to spell and weapon damage of the given type that we inflict.
+int player::getElementalAffinity(const DamageType dt) const
+{
+	int total = 0;
+	switch (dt)
+	{
+	case(DTYPE_ARCANE):
+		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 10;
+		total += getTotalEnchantmentBonus(ENCH_AFF_ARCANE);
+		break;
+
+	case(DTYPE_ELECTRIC):
+		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 10;
+		total += getTotalEnchantmentBonus(ENCH_AFF_ELECTRIC);
+		break;
+
+	case(DTYPE_FIRE):
+		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 10;
+		total += getTotalEnchantmentBonus(ENCH_AFF_FIRE);
+		break;
+
+	case(DTYPE_POISON):
+		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 10;
+		total += getTotalEnchantmentBonus(ENCH_AFF_POISON);
+		break;
+	}
+	return total;
 }
 
 
