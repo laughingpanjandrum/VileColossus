@@ -337,6 +337,14 @@ int item::getEnhanceCost() const
 		return (_enhancementLevel + 1) * (_enhancementLevel + 1);
 }
 
+
+//	Increase max durability.
+int item::getReinforceCost() const
+{
+	return _maxDurability * 5;
+}
+
+
 //	Type of material required to enhance this item.
 MaterialType item::getEnhanceMaterial() const
 {

@@ -51,6 +51,8 @@ void openForgeMenu(gamedataPtr gdata);
 bool knowsEnchantmentType(gamedataPtr gdata, const ItemEnchantment en);
 void enhanceItem(gamedataPtr gdata, itemPtr it);
 
+void reinforceSelectedItem(gamedataPtr gdata);
+
 void selectEnchantmentToApply(gamedataPtr gdata);
 void enhanceSelectedItem(gamedataPtr gdata);
 void repairEquipmentItem(gamedataPtr gdata);

@@ -625,6 +625,11 @@ void display::drawEnchantedForge(gamedataPtr gdata)
 				auto mat_type = it->getEnhanceMaterial();
 				writeFormatted(x + 3, ++y, "Costs #x" + to_string(mat_cost) + " " + getMaterialTypeName(mat_type), { getMaterialTypeColor(mat_type) });
 			}
+
+			++y;
+			writeFormatted(x, ++y, "#f @Increase max durability", { COLOR_LIGHT });
+			int cost = it->getReinforceCost();
+			writeFormatted(x + 3, ++y, "Costs #x" + to_string(cost) + " fragments", { getMaterialTypeColor(MaterialType::FRAGMENTS) });
 		}
 	}
 
@@ -842,10 +847,9 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 	x = 47, y = 30;
 	drawBox(45, 29, 35, 8, COLOR_DARK);
 	_win.write(46, 29, "Spells Memorized", COLOR_LIGHT);
+	writeFormatted(53, 37, "#U @Un-inscribe all runes", { COLOR_LIGHT });
 	for (auto sp : gdata->_player->getAllSpellsKnown())
-	{
 		_win.write(x, ++y, getSpellNameFull(sp, gdata->_player->getSpellLevel(sp)), getSpellColor(sp));
-	}
 }
 
 

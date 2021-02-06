@@ -238,8 +238,26 @@ void openRuneImprinter(gamedataPtr gdata)
 }
 
 
+
+//	Remove all memorized spell runes, so we can equip new ones.
+void removeAllSpellRunes(gamedataPtr gdata)
+{
+	//	Place in stash
+	for (auto it : gdata->_player->_ImprintedRunes)
+		addToStash(gdata, it);
+
+	//	Forget
+	gdata->_player->_ImprintedRunes.clear();
+
+	//	Re-populate the visible list
+	populateCurrentItemListWithRunes(gdata);
+}
+
+
+
 //	Memorize this rune, if we have room.
-void playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
+//	If we don't have room, returns False.
+bool playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 {
 	//	If we have this spell equipped already, replace it.
 	for (unsigned i = 0; i < gdata->_player->_ImprintedRunes.size(); i++)
@@ -252,13 +270,21 @@ void playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 
 			//	becase we replaced the item, we need to refresh the list of spells available
 			populateCurrentItemListWithRunes(gdata);
-			return;
+			return true;
 		}
 	}
 
 	//	otherwise, append.
 	if (gdata->_player->_ImprintedRunes.size() < MAX_HOTKEYED_SPELLS)
+	{
 		gdata->_player->_ImprintedRunes.push_back(it);
+		return true;
+	}
+	else
+	{
+		messages::error(gdata, "No free spell slots!");
+		return false;
+	}
 }
 
 
@@ -269,11 +295,12 @@ void imprintSelectedSpellRune(gamedataPtr gdata)
 	{
 		//	Equip it.
 		auto it = gdata->_currentItemList[gdata->_idx];
-		playerImprintSpellRune(gdata, it);
-
-		//	Remove from inventory or stash, whichever it's in.
-		removeFromInventory(gdata, it);
-		removeFromStash(gdata, it);
-		removeFromCurrentItemList(gdata, it);
+		if (playerImprintSpellRune(gdata, it))
+		{
+			//	Remove from inventory or stash, whichever it's in.
+			removeFromInventory(gdata, it);
+			removeFromStash(gdata, it);
+			removeFromCurrentItemList(gdata, it);
+		}
 	}
 }

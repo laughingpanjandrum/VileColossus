@@ -105,6 +105,7 @@ public:
 	int getMaxEnhancementLevel() const;
 
 	int getEnhanceCost() const;
+	int getReinforceCost() const;
 	MaterialType getEnhanceMaterial() const;
 
 

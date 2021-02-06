@@ -7,7 +7,6 @@ TODO
 
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
-	Allow reinforcing item max durability
 	Allow un-equipping memorized spells
 	Add enchantments to spell runes
 	Gem fabrication interface looks kinda weird
@@ -47,11 +46,11 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	/*for (unsigned i = 0; i < 10; i++)
+	for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}*/
+	}
 	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::generateGem(randint(1, 2), 1);
@@ -284,6 +283,8 @@ void game::processInput()
 				repairEquipmentItem(_gdata);
 			else if (_ih->isKeyPressed('e'))
 				enhanceSelectedItem(_gdata);
+			else if (_ih->isKeyPressed('f'))
+				reinforceSelectedItem(_gdata);
 			else if (_ih->isKeyPressed('R'))
 				repairAllEquipped(_gdata);
 			break;
@@ -335,7 +336,9 @@ void game::processInput()
 				playerCastAimedSpell(_gdata, _ih->getVectorFromKeypress());
 			break;
 		case(STATE_LEARN_SPELL):
-			if (_ih->isDirectionalKeyPressed())
+			if (_ih->isKeyPressed('U'))
+				removeAllSpellRunes(_gdata);
+			else if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				imprintSelectedSpellRune(_gdata);

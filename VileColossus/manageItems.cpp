@@ -404,9 +404,7 @@ void repairItem(gamedataPtr gdata, itemPtr it)
 void tryRepairSelected(gamedataPtr gdata)
 {
 	if (gdata->_idx < gdata->_currentItemList.size())
-	{
 		repairItem(gdata, gdata->_currentItemList[gdata->_idx]);
-	}
 }
 
 
@@ -473,6 +471,25 @@ bool doesItemHaveUnknownEnchants(gamedataPtr gdata, itemPtr it)
 }
 
 
+//	Increases the selected item's max durability.
+void reinforceSelectedItem(gamedataPtr gdata)
+{
+	auto it = gdata->_player->getItemInSlot(static_cast<EquipmentSlot>(gdata->_idx));
+	if (it != nullptr)
+	{
+		int cost = it->getReinforceCost();
+		if (hasMaterial(gdata, MaterialType::FRAGMENTS, cost))
+		{
+			it->_maxDurability += 5;
+			spendMaterial(gdata, MaterialType::FRAGMENTS, cost);
+			messages::add(gdata, "Reinforced #" + it->getName() + "@!", { it->getColor() });
+		}
+		else
+			messages::error(gdata, "Insufficient materials to reinforce!");
+	}
+}
+
+
 //	Returns True if we have extracted the given enchantment type already.
 bool knowsEnchantmentType(gamedataPtr gdata, const ItemEnchantment en)
 {
@@ -486,7 +503,6 @@ void enhanceItem(gamedataPtr gdata, itemPtr it)
 	//	Is it enchantable?
 	if (it->_enhancementLevel < it->getMaxEnhancementLevel())
 	{
-
 		//	Can we afford it?
 		auto mat_cost = it->getEnhanceCost();
 		auto mat_type = it->getEnhanceMaterial();

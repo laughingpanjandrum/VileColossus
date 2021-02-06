@@ -34,5 +34,6 @@ void openSpellList(gamedataPtr gdata);
 void populateCurrentItemListWithRunes(gamedataPtr gdata);
 void openRuneImprinter(gamedataPtr gdata);
 
-void playerImprintSpellRune(gamedataPtr gdata, itemPtr it);
+void removeAllSpellRunes(gamedataPtr gdata);
+bool playerImprintSpellRune(gamedataPtr gdata, itemPtr it);
 void imprintSelectedSpellRune(gamedataPtr gdata);
