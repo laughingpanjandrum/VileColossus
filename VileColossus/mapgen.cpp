@@ -64,6 +64,8 @@ intpair mapgen::getRandomFree(gridmapPtr m)
 	return pt;
 }
 
+
+
 //	Random walkable square with no item on it.
 intpair mapgen::getRandomForItem(gridmapPtr m)
 {
@@ -81,7 +83,7 @@ intpair mapgen::getRandomForStairs(gridmapPtr m)
 	intpair pt;
 	do {
 		pt = getRandomSafe(m);
-	} while (false);
+	} while (isMaptileStairs(m->getTile(pt)));
 	return pt;
 }
 
@@ -609,7 +611,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 	//	stairs back up
 	while (count-- > 0)
 	{
-		auto pt = getRandomFree(m);
+		auto pt = getRandomForStairs(m);
 		m->setTile(MT_STAIRS_UP, pt);
 		if (descending)
 			m->_startPt = pt;
@@ -620,7 +622,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 	count = randint(2, 4);
 	while (count-- > 0)
 	{
-		auto pt = getRandomFree(m);
+		auto pt = getRandomForStairs(m);
 		m->setTile(MT_STAIRS_DOWN, pt);
 		if (!descending)
 			m->_startPt = pt;
@@ -629,7 +631,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 
 	//	LONG stairs up, making it quicker to get to the surface at deeper levels
 	if (depth == 8)
-		m->setTile(MT_STAIRS_UP_LONG, getRandomFree(m));
+		m->setTile(MT_STAIRS_UP_LONG, getRandomForStairs(m));
 }
 
 

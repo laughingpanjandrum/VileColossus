@@ -9,6 +9,7 @@ TODO
 	Show item comparison in inventory
 	Add enchantments to spell runes
 	'x breaks' messages repeat every time you are hit
+	Add legendary item enchantments
 
 */
 
@@ -26,7 +27,7 @@ void game::start()
 
 	//	create elements
 	_ih = inputHandlerPtr(new inputHandler());
-	_gdata = gamedataPtr(new gamedata());
+	_gdata = gamedataPtr(new gamedata()); 
 
 	//	starting character
 	_gdata->_player = playerPtr(new player());
@@ -45,11 +46,11 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	for (unsigned i = 0; i < 10; i++)
+	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}
+	}*/
 	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::generateGem(randint(1, 2), 1);
