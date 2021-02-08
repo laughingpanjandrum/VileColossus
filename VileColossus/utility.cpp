@@ -163,6 +163,18 @@ intpair get2dVector(intpair v1, intpair v2)
 	return intpair(get1dVector(v1.first, v2.first), get1dVector(v1.second, v2.second));
 }
 
+
+
+//	Adjusts 'val' by 'per/100' of its value. Uses floats, converts back to int afterward.
+int adjustByPercent(int val, int per)
+{
+	if (per == 0) return val;
+	val += (float)val * (float)per / 100.0f;
+	return val;
+}
+
+
+
 /*
 Returns the given text with whitespace preceding it, so that it will be centred on a line of the given length.
 */

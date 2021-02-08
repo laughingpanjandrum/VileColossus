@@ -250,15 +250,6 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 }
 
 
-//	Adjusts 'val' by 'per/100' of its value. Uses floats, converts back to int afterward.
-int adjustByPercent(int val, int per)
-{
-	if (per == 0) return val;
-	val += (float)val * (float)per / 100.0f;
-	return val;
-}
-
-
 //	It says 'radius', but it's actually a square-shaped region.
 void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg)
 {

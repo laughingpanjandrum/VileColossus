@@ -28,6 +28,9 @@ int		weightedRandom(vector<int> vals);
 
 intpair	getRandomVector();
 
+
+int adjustByPercent(int val, int per);
+
 int		constrain(int n, int minValue, int maxValue);
 int		get1dVector(int ourPt, int destination);
 intpair	get2dVector(intpair v1, intpair v2);

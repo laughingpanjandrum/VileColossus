@@ -629,6 +629,52 @@ const vector<Spell> lootgen::rollSpellsToLearn(const int tier)
 	return spells;
 }
 
+//	These are special items from a distinct pool of enchants, which are otherwise generated like normal songs.
+itemPtr lootgen::generateLegendaryItem(const int maxTier)
+{
+	itemPtr it;
+	auto en = LEGENDARY_ENCHANTS[randrange(LEGENDARY_ENCHANTS.size())];
+	switch (en)
+	{
+	case(ENCH_ARCANE_SHIELD):
+		it = itemPtr(new item("shield", ITEM_SHIELD, 4));
+		it->setProperty(PROP_DEFENCE, 3);
+		it->addEnchantment(ENCH_ARCANE_SHIELD, randint(5, 15));
+		it->setNickname("Arcane Mirror");
+		break;
+
+	case(ENCH_BLACKBLOOD):
+		it = generateWeaponOfType(BaseWeaponType::STILETTO);
+		it->addEnchantment(ENCH_BLACKBLOOD, randint(30, 50));
+		it->setNickname("Black Blood");
+		break;
+
+	case(ENCH_CUNNING):
+		it = generateWeaponOfType(BaseWeaponType::CLUB);
+		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
+		it->setNickname("Cunning Rat");
+		break;
+
+	case(ENCH_WEIGHT):
+		it = generateWeaponOfType(BaseWeaponType::GREATHAMMER);
+		it->addEnchantment(ENCH_WEIGHT, randint(20, 30) * 10);
+		it->setNickname("Dragon's Tooth");
+		break;
+
+
+		//	THIS IS BAD, DON'T LET IT HAPPEN
+	default:
+		cout << "ERROR: Generated bad unique item enchantment " << en << endl;
+		it = itemPtr(new item());
+		break;
+	}
+
+	//	remaining enchants
+	it->_rarity = 4;
+	it->_enhancementLevel = randint(3, 4);
+	return it;
+}
+
 
 //	3 tiers of items; better ones drop at higher levels
 int lootgen::getLootTierForMonsterLevel(const int lvl)
@@ -673,14 +719,22 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
 	int rarity = rollRarity(bestRarityAllowed);
 
 
-	//	Generate the base item
+	//	Legendary items use a special generator
 	itemPtr it;
-	int r = randint(1, 100);
-	if		(r <= 40)	it = generateArmourPiece(tier, rarity);
-	else if (r <= 80)	it = generateWeapon(tier, rarity);
-	else if (r <= 90)	it = generateSpellrune(tier, rarity);
-	else if (r <= 95)	it = generateJewel(tier, rarity);
-	else				it = generateFlask(tier, rarity);
+	if (rarity == 4)
+		it = generateLegendaryItem(maxTier);
+
+
+	//	Generate the base item
+	else
+	{
+		int r = randint(1, 100);
+		if (r <= 40)	it = generateArmourPiece(tier, rarity);
+		else if (r <= 80)	it = generateWeapon(tier, rarity);
+		else if (r <= 90)	it = generateSpellrune(tier, rarity);
+		else if (r <= 95)	it = generateJewel(tier, rarity);
+		else				it = generateFlask(tier, rarity);
+	}
 
 
 	//	Random enchantments.

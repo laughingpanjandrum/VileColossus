@@ -111,6 +111,7 @@ const string getItemQualityName(const ItemQuality qual);
 
 enum ItemEnchantment
 {
+	//	Standard enchantments
 	ENCH_ACCURACY, ENCH_ARCANE, ENCH_ARMOURING,
 	ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON,
 	ENCH_BURNING,
@@ -126,6 +127,14 @@ enum ItemEnchantment
 	ENCH_THORNS,
 	ENCH_VENOM,
 	ENCH_WOUNDING, ENCH_WRATH,
+
+
+	//	Legendary enchants
+	ENCH_ARCANE_SHIELD,
+	ENCH_BLACKBLOOD,
+	ENCH_CUNNING,
+	ENCH_WEIGHT,
+
 	ENCH__NONE,
 };
 

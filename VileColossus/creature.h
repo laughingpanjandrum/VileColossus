@@ -45,7 +45,7 @@ public:
 	int getHealthLeft() const { return getMaxHealth() - _damageTaken; }
 	int getHealthPercent() const { return 100.0f - 100.0f * (float)_damageTaken / (float)getMaxHealth(); }
 
-	void takeDamage(int amt) { _damageTaken += amt; }
+	virtual void takeDamage(int amt) { _damageTaken += amt; }
 
 	void healToMax();
 	void healDamage(int amt);

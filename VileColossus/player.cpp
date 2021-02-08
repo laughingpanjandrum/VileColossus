@@ -22,6 +22,26 @@ player::player()
 		_Attributes.push_back(10);
 }
 
+
+//	Arcane Shield intercepts damage if we have Magic left.
+void player::takeDamage(int amt)
+{
+	//	Apply Arcane Shield
+	int per = getTotalEnchantmentBonus(ENCH_ARCANE_SHIELD);
+	if (per > 0)
+	{
+		int pts_req = amt / per;
+		pts_req = MIN(pts_req, getMagicLeft());
+		expendMagic(pts_req);
+		amt -= per * pts_req;
+	}
+
+	//	Actually take the damage
+	if (amt > 0)
+		_damageTaken += amt;
+}
+
+
 int player::getBaseAttribute(const Attribute attr) const
 {
 	return _Attributes[attr];
@@ -133,8 +153,13 @@ int player::getWeaponDamage() const
 	
 	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) * 0.3f;
 	total += getTotalEnchantmentBonus(ENCH_WOUNDING);
+	if (_damageTaken >= (float)getMaxHealth() * 0.7)
+		total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_CUNNING));
+	total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_WEIGHT));
+	
 	if (hasBuff(BUFF_WRATH))
 		total += 1 + total / 4;
+
 	total += getTotalGemBonusFromWeapons(GemType::BLACKSTONE) * 2;
 	
 	return total;
@@ -151,6 +176,8 @@ int player::getCriticalChance() const
 	int total = getEquipmentPropertySum(PROP_CRITICAL_CHANCE);
 	total += getTotalEnchantmentBonus(ENCH_SHARPNESS);
 	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE);
+	if (hasStatusEffect(STATUS_POISON))
+		total += getTotalEnchantmentBonus(ENCH_BLACKBLOOD);
 	return total;
 }
 
@@ -176,9 +203,11 @@ int player::getMoveEnergyCost() const
 int player::getAttackEnergyCost() const
 {
 	auto total = ENERGY_COST_BASE;
-	if (usingOffhandWeapon())
-		total *= 2;
-	if (hasBuff(BUFF_HASTE))
+	if (usingOffhandWeapon())		
+		total += 100;
+	if (getTotalEnchantmentBonus(ENCH_WEIGHT) > 0)
+		total += 100;
+	if (hasBuff(BUFF_HASTE))		
 		total -= total / 4;
 	return total;
 }

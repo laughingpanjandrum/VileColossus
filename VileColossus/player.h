@@ -17,6 +17,8 @@ public:
 
 	virtual bool isPlayer() const { return true; }
 
+	virtual void takeDamage(int amt);
+
 
 	//	Attributes
 

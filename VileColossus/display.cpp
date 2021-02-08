@@ -1119,7 +1119,7 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 	for (auto en : *it->getAllEnchantments())
 	{
 		auto txt = getItemEnchantmentVerbose(en, it->getEnchantmentValue(en));
-		_win.write(x - 1, ++y, getItemEnchantmentName(en), TCODColor::gold);
+		_win.write(x - 1, ++y, getItemEnchantmentDescription(en), TCODColor::gold);
 		y = _win.writeWrapped(x, ++y, 40, txt, COLOR_MEDIUM);
 		y += 2;
 	}

@@ -32,13 +32,11 @@ namespace lootgen
 
 	const vector<ItemCategory> ARMOUR_CATEGORIES = { ITEM_BOOTS, ITEM_BRACERS, ITEM_CHESTPIECE, ITEM_GLOVES, ITEM_HELMET, ITEM_SHOULDERS, ITEM_SHIELD, };
 
-	const vector<ItemEnchantment> FLASK_BUFFS = { ENCH_HASTE, ENCH_STONESKIN, ENCH_WRATH, };
+	const vector<ItemEnchantment> LEGENDARY_ENCHANTS = { ENCH_ARCANE_SHIELD, ENCH_BLACKBLOOD, ENCH_CUNNING, ENCH_WEIGHT, };
 
 	const vector<GemType> BASIC_GEM_TYPES = { GemType::BLACKSTONE, GemType::BOLTSTONE, GemType::FLAMESTONE, GemType::SILVERSTONE, GemType::SPIDERSTONE };
 
-	const vector<Spell> SPELLS_TIER_1 = {
-		Spell::ARCANE_EMANATION, Spell::BLINK, Spell::CALL_LIGHTNING, Spell::CONJURE_FLAME, Spell::SMITE_EVIL, Spell::VENOMFANG,
-	};
+	const vector<Spell> SPELLS_TIER_1 = { Spell::ARCANE_EMANATION, Spell::BLINK, Spell::CALL_LIGHTNING, Spell::CONJURE_FLAME, Spell::SMITE_EVIL, Spell::VENOMFANG, };
 
 	const vector<BaseWeaponType> getWeaponTypesOfTier(const int tier);
 	const vector<ItemEnchantment> getEnchantmentsForItemCategory(const ItemCategory cat);
@@ -105,6 +103,8 @@ namespace lootgen
 
 
 	//	General drops
+
+	itemPtr generateLegendaryItem(const int maxTier);
 
 	int getLootTierForMonsterLevel(const int dl);
 	int getGemTierForMonsterLevel(const int dl);

@@ -214,6 +214,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 {
 	switch (en)
 	{
+		//	Standard enchantments
 	case(ENCH_ACCURACY):		return "accuracy";
 	case(ENCH_AFF_ARCANE):		return "sigils";
 	case(ENCH_AFF_ELECTRIC):	return "the griffin";
@@ -247,6 +248,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_VENOM):			return "venom";
 	case(ENCH_WOUNDING):		return "wounding";
 	case(ENCH_WRATH):			return "wrath";
+
 	default:
 		return "enchantment_" + to_string(en);
 	}
@@ -289,6 +291,13 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_VENOM):			return "Poison Damage";
 	case(ENCH_WOUNDING):		return "Weapon Damage";
 	case(ENCH_WRATH):			return "Wrath Duration";
+
+		//	Legendary enchants
+	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
+	case(ENCH_BLACKBLOOD):		return "Blackblood";
+	case(ENCH_CUNNING):			return "Cunning";
+	case(ENCH_WEIGHT):			return "Massive";
+
 	default:
 		return "enchantment_" + to_string(en);
 	}
@@ -331,6 +340,15 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_VENOM):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Poison damage.";
 	case(ENCH_WOUNDING):		return "Weapon attacks inflict up to " + to_string(val) + " bonus physical damage.";
 	case(ENCH_WRATH):			return "When quaffed, gain Wrath for " + to_string(val) + " rounds. Wrath increases weapon damage dealt.";
+
+
+		//	Legendary enchants
+
+	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
+	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
+	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
+	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + " more damage, but attack speed is slowed.";
+
 	default:
 		return "enchantment_" + to_string(en);
 	}

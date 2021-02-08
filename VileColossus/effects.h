@@ -20,8 +20,6 @@ void killCreature(gamedataPtr gdata, creaturePtr target);
 
 //	Status effects / damage
 
-int adjustByPercent(int val, int per);
-
 void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg);
 
 int getDefaultStatusEffectDuration(const StatusEffect st);

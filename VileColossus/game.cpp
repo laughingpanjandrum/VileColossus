@@ -12,8 +12,6 @@ TODO
 	What gives a spellrune the right to be called 'major' lol
 	'x breaks' messages repeat every time you are hit
 	Add legendary item enchantments
-	Get more glowing dust and let blue dust
-	Make sockets more common, less exclusive, & adjust max amount downward
 
 */
 
@@ -54,10 +52,10 @@ void game::start()
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}*/
-	/*for (unsigned i = 0; i < 30; i++)
+	}*//*
+	for (unsigned i = 0; i < 30; i++)
 	{
-		auto it = lootgen::generateGem(randint(1, 2), 1);
+		auto it = lootgen::rollItemDrop(3, 4);
 		addToInventory(_gdata, it);
 	}*/
 	/*_gdata->_player->addSpellLevel(Spell::ARCANE_EMANATION, 1);
