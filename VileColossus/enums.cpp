@@ -296,6 +296,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CUNNING):			return "Cunning";
+	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
 	case(ENCH_WEIGHT):			return "Massive";
 
 	default:
@@ -347,6 +348,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
+	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
 	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + " more damage, but attack speed is slowed.";
 
 	default:

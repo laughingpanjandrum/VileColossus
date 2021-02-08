@@ -59,13 +59,19 @@ public:
 	//	Crafting/stashing/etc
 
 	void drawAnvil(gamedataPtr gdata);
+	
 	void drawEnchantedForge(gamedataPtr gdata);
 	void drawEnchantmentSelect(gamedataPtr gdata);
+	
 	void drawAlchemy(gamedataPtr gdata);
+	
 	void drawGemstonePress(gamedataPtr gdata);
 	void drawGemstoneSelect(gamedataPtr gdata);
 	void drawGemstoneFabricator(gamedataPtr gdata);
+
 	void drawRuneImprinter(gamedataPtr gdata);
+	void drawRuneEnhancer(gamedataPtr gdata);
+	
 	void drawStash(gamedataPtr gdata);
 
 

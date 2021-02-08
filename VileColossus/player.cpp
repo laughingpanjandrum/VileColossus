@@ -176,6 +176,8 @@ int player::getCriticalChance() const
 	int total = getEquipmentPropertySum(PROP_CRITICAL_CHANCE);
 	total += getTotalEnchantmentBonus(ENCH_SHARPNESS);
 	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE);
+	if (getVisionRadius() <= 6)
+		total += getTotalEnchantmentBonus(ENCH_SHADOWSTRIKE);
 	if (hasStatusEffect(STATUS_POISON))
 		total += getTotalEnchantmentBonus(ENCH_BLACKBLOOD);
 	return total;

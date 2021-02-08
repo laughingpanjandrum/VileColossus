@@ -200,6 +200,33 @@ void castSpellFromHotkey(gamedataPtr gdata, const int hotkey)
 }
 
 
+//	Level up runes.
+void openRuneEnhancer(gamedataPtr gdata)
+{
+	populateCurrentItemListWithRunes(gdata);
+	gdata->_state = STATE_RUNE_ENHANCER;
+}
+
+
+//	Raise level of selected rune.
+void tryEnhanceRune(gamedataPtr gdata)
+{
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		auto it = gdata->_currentItemList[gdata->_idx];
+		auto cost = it->getEnhanceCost();
+		if (hasMaterial(gdata, MaterialType::RUNE_SHARD, cost))
+		{
+			spendMaterial(gdata, MaterialType::RUNE_SHARD, cost);
+			it->_spellLevel++;
+			messages::add(gdata, "Enhanced #" + it->getName() + " to level #" + to_string(it->_spellLevel) + "@!", { it->getColor(), COLOR_POSITIVE });
+		}
+		else
+			messages::error(gdata, "Insufficient materials!");
+	}
+}
+
+
 //	Gives us a random selection of new spells we can learn.
 void openMeditationShrine(gamedataPtr gdata, int dl)
 {

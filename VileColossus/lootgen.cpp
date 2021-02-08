@@ -644,19 +644,25 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier)
 		break;
 
 	case(ENCH_BLACKBLOOD):
-		it = generateWeaponOfType(BaseWeaponType::STILETTO);
+		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_BLACKBLOOD, randint(30, 50));
 		it->setNickname("Black Blood");
 		break;
 
 	case(ENCH_CUNNING):
-		it = generateWeaponOfType(BaseWeaponType::CLUB);
+		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
 		it->setNickname("Cunning Rat");
 		break;
 
+	case(ENCH_SHADOWSTRIKE):
+		it = generateWeapon(maxTier, 4);
+		it->addEnchantment(ENCH_SHADOWSTRIKE, randint(5, 10));
+		it->setNickname("Shade");
+		break;
+
 	case(ENCH_WEIGHT):
-		it = generateWeaponOfType(BaseWeaponType::GREATHAMMER);
+		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_WEIGHT, randint(20, 30) * 10);
 		it->setNickname("Dragon's Tooth");
 		break;

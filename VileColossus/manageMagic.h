@@ -27,6 +27,12 @@ void castSpellFromHotkey(gamedataPtr gdata, const int hotkey);
 
 
 
+//	Enhance spellrunes
+
+void openRuneEnhancer(gamedataPtr gdata);
+void tryEnhanceRune(gamedataPtr gdata);
+
+
 //	Learning new spells
 
 void openSpellList(gamedataPtr gdata);

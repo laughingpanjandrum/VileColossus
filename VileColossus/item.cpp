@@ -328,11 +328,14 @@ int item::getMaxEnhancementLevel() const
 		return _rarity + 1;
 }
 
+
 //	Amount of material required to enhance this item.
 int item::getEnhanceCost() const
 {
 	if (_category == ITEM_FLASK)
 		return _rarity;
+	else if (_category == ITEM_SPELLRUNE)
+		return _spellLevel + 1;
 	else
 		return (_enhancementLevel + 1) * (_enhancementLevel + 1);
 }
@@ -341,7 +344,7 @@ int item::getEnhanceCost() const
 //	Increase max durability.
 int item::getReinforceCost() const
 {
-	return _maxDurability * _maxDurability * 5;
+	return _maxDurability * 10;
 }
 
 
