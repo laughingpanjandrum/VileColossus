@@ -185,7 +185,12 @@ int player::getCriticalChance() const
 
 int player::getCriticalMultiplier() const
 {
+	//	Base (From weapons); averaged if dualwielding.
 	int total = getEquipmentPropertySum(PROP_CRITICAL_DAMAGE);
+	if (usingOffhandWeapon())
+		total /= 2;
+
+	//	Other adjustments.
 	total += getTotalEnchantmentBonus(ENCH_SLAYING);
 	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 10;
 	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
