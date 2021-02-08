@@ -505,6 +505,7 @@ void display::drawInventory(gamedataPtr gdata)
 		writeFormatted(2, 48, "#  t   @Transfer item to stash", { COLOR_LIGHT, COLOR_LIGHT });
 		writeFormatted(2, 49, "#  T   @Transfer all to stash", { COLOR_LIGHT, COLOR_LIGHT });
 	}
+	writeFormatted(2, 50, "#  v  @View item details", { COLOR_LIGHT });
 	drawCharacterSummary(gdata);
 }
 
@@ -1012,6 +1013,7 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 	writeFormatted(atx, ++aty, cat_txt, { COLOR_DARK, COLOR_MEDIUM });
 	drawProgressDots(atx + 20, aty, it->_rarity, 4, TCODColor::gold);
 
+
 	//	durability, if relevant
 	if (it->subjectToDurabilityLoss())
 	{
@@ -1020,13 +1022,16 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 		writeFormatted(atx + 29, aty, "CND: #" + to_string(dleft) + "@/" + to_string(it->_maxDurability), { dcol });
 	}
 
+
 	//	armour type
 	if (it->isArmourPiece())
 		_win.write(atx, ++aty, getArmourCategoryName(it->_armourCategory) + " Armour", COLOR_DARK);
 
+
 	//	info about gems
 	if (it->_category == ITEM_GEM)
 		drawGemTypeEffects(gdata, it->_gemType, it->_enhancementLevel, atx, aty + 2);
+
 
 	//	list of properties
 	++aty;
@@ -1100,6 +1105,25 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 
 	//	box item in
 	drawBox(atx - 2, topy - 2, 42, 19, COLOR_DARK);
+}
+
+
+//	Item info takes over the whole screen.
+void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
+{
+	//	Basic info
+	drawItemInfo(gdata, it, 4, 4);
+	
+	//	Enchantment details
+	int x = 6, y = 24;
+	for (auto en : *it->getAllEnchantments())
+	{
+		auto txt = getItemEnchantmentVerbose(en, it->getEnchantmentValue(en));
+		_win.write(x - 1, ++y, getItemEnchantmentName(en), TCODColor::gold);
+		y = _win.writeWrapped(x, ++y, 40, txt, COLOR_MEDIUM);
+		y += 2;
+	}
+	drawBox(2, 23, 45, y - 20, COLOR_DARK);
 }
 
 

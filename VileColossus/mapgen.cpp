@@ -105,7 +105,7 @@ intpair mapgen::getRandomInCircle(gridmapPtr m, intpair ctr, int r)
 //	Returns true if the Maptile is considered 'safe' & thus eligible for items, stairs, etcs
 bool mapgen::isSafeTile(const Maptile tl)
 {
-	return tl == MT_FLOOR_STONE;
+	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS;
 }
 
 //	A random point that is some type of 'safe' floor-type tile: ie no surface, no deep water, etc

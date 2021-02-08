@@ -294,6 +294,48 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	}
 }
 
+const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
+{
+	switch (en)
+	{
+	case(ENCH_ACCURACY):		return "Adjusts the accuracy of all attacks by " + plusminus(val) + ". Each point increases your chance to hit by about 5%.";
+	case(ENCH_AFF_ARCANE):		return "Inflict " + to_string(val) + "% more Arcane damage with spells and weapon attacks.";
+	case(ENCH_AFF_ELECTRIC):	return "Inflict " + to_string(val) + "% more Electric damage with spells and weapon attacks.";
+	case(ENCH_AFF_FIRE):		return "Inflict " + to_string(val) + "% more Fire damage with spells and weapon attacks.";
+	case(ENCH_AFF_POISON):		return "Inflict " + to_string(val) + "% more Poison damage with spells and weapon attacks.";
+	case(ENCH_ARCANE):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Arcane damage.";
+	case(ENCH_ARMOURING):		return "Adjusts your Armour Value by " + plusminus(val) + ". This directly reduces physical damage taken.";
+	case(ENCH_BURNING):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
+	case(ENCH_CAPACITY):		return "The flask has " + to_string(val) + " additional charges.";
+	case(ENCH_CHARGING):		return "Kills add " + to_string(val) + "% more charge to the flask.";
+	case(ENCH_CURING):			return "Immediately removes poison status effect when quaffed.";
+	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
+	case(ENCH_FLAMEWARD):		return "Reduces Fire damage taken by " + to_string(val) + "%.";
+	case(ENCH_HASTE):			return "Temporarily increases your movement and attack speed.";
+	case(ENCH_LEECHING):		return "Heal " + to_string(val) + " damage when you kill something.";
+	case(ENCH_LIFE):			return "Adjusts your maximum health by " + plusminus(val) + ".";
+	case(ENCH_LIGHT):			return "Adjusts your maximum vision radius by " + plusminus(val) + ".";
+	case(ENCH_LIGHTNING):		return "Weapon attacks inflict up to " + to_string(val) + " bonus Electric damage.";
+	case(ENCH_MAGIC):			return "Adjusts your maximum Magic by " + plusminus(val) + ". You expend this to cast spells.";
+	case(ENCH_MAGIC_RESTORE):	return "Replenishes " + to_string(val) + " Magic when quaffed.";
+	case(ENCH_MANALEECH):		return "Recover " + to_string(val) + " Magic when you kill something.";
+	case(ENCH_POISON_WARD):		return "Reduces Poison damage taken by " + to_string(val) + "%.";
+	case(ENCH_RAGE):			return "Increases chance to gain the Wrath buff when you kill something by " + to_string(val) + "%. Wrath temporarily increases weapon damage you inflict.";
+	case(ENCH_SHARPNESS):		return "Weapon attacks are " + to_string(val) + "% more likely to be critical hits.";
+	case(ENCH_SLAYING):			return "Critical hits inflict " + to_string(val) + " extra damage.";
+	case(ENCH_SPELLPOWER):		return "Adjusts damage inflicted by spells by " + plusminus(val) + ".";
+	case(ENCH_SPELLWARD):		return "Reduces Arcane damage taken by " + to_string(val) + "%.";;
+	case(ENCH_STONESKIN):		return "Grants Stoneskin when quaffed for " + to_string(val) + " rounds, which increases your Armour Value by 2 points per level.";
+	case(ENCH_STORMWARD):		return "Reduces Electric damage taken by " + to_string(val) + "%.";;
+	case(ENCH_THORNS):			return "A melee attacker that damages you takes " + to_string(val) + " damage in return.";
+	case(ENCH_VENOM):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Poison damage.";
+	case(ENCH_WOUNDING):		return "Weapon attacks inflict up to " + to_string(val) + " bonus physical damage.";
+	case(ENCH_WRATH):			return "When quaffed, gain Wrath for " + to_string(val) + " rounds. Wrath increases weapon damage dealt.";
+	default:
+		return "enchantment_" + to_string(en);
+	}
+}
+
 string getDamageTypeName(const DamageType dt)
 {
 	switch (dt)

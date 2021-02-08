@@ -341,7 +341,7 @@ int item::getEnhanceCost() const
 //	Increase max durability.
 int item::getReinforceCost() const
 {
-	return _maxDurability * 5;
+	return _maxDurability * _maxDurability * 5;
 }
 
 

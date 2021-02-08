@@ -8,8 +8,12 @@ TODO
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
 	Add enchantments to spell runes
+	Allow spellrune enhancement
+	What gives a spellrune the right to be called 'major' lol
 	'x breaks' messages repeat every time you are hit
 	Add legendary item enchantments
+	Get more glowing dust and let blue dust
+	Make sockets more common, less exclusive, & adjust max amount downward
 
 */
 
@@ -108,6 +112,9 @@ void game::drawScreen()
 	case(STATE_VIEW_INVENTORY):
 		_disp.drawInventory(_gdata);
 		break;
+	case(STATE_VIEW_ITEM_DETAILS):
+		_disp.drawItemInfoDetailed(_gdata, _gdata->_viewingItem);
+		break;
 
 	case(STATE_PICKING_UP_ITEMS):
 		_disp.drawItemPickup(_gdata);
@@ -202,6 +209,8 @@ void game::processInput()
 				selectItemFromInventory(_gdata);
 			else if (_ih->isKeyPressed('d'))
 				dropSelectedItem(_gdata);
+			else if (_ih->isKeyPressed('v'))
+				viewItemDetails(_gdata);
 			break;
 		case(STATE_VIEW_EQUIPMENT):
 			if (_ih->isKeyPressed('U'))
@@ -446,6 +455,10 @@ void game::backOut()
 		_gdata->_state = STATE_NORMAL;
 	}
 
+	//	From item details, return to inventory
+	else if (_gdata->_state == STATE_VIEW_ITEM_DETAILS)
+		_gdata->_state = STATE_VIEW_INVENTORY;
+
 	//	The default: return to the normal game display
 	else if (_gdata->_state != STATE_ACKNOWLEDGE_DEATH)
 		_gdata->_state = STATE_NORMAL;
@@ -462,6 +475,8 @@ void game::awaitDebugCommand()
 		_gdata->_invincible = !_gdata->_invincible;
 	else if (txt == "level")
 		playerGainLevel(_gdata);
+	else if (txt == "home")
+		returnToHomeBase();
 }
 
 

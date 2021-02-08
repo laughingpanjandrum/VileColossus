@@ -809,6 +809,15 @@ void selectItemFromInventory(gamedataPtr gdata)
 	}
 }
 
+void viewItemDetails(gamedataPtr gdata)
+{
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		gdata->_viewingItem = gdata->_currentItemList[gdata->_idx];
+		gdata->_state = STATE_VIEW_ITEM_DETAILS;
+	}
+}
+
 
 //	When we drop an item from inventory/transfer it from stash/etc, we need to remove it from the list of visible items.
 //	We also need to update the current item index (to make sure it stays valid).
