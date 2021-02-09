@@ -96,6 +96,26 @@ void explodeOnDeath(gamedataPtr gdata, monsterPtr target, string flag)
 }
 
 
+
+//	Dead monster spawns several of its minion-type monsters on death.
+void spawnOnDeath(gamedataPtr gdata, monsterPtr target)
+{
+	auto ctr = target->_pos;
+	for (int x = ctr.first - 1; x <= ctr.first + 1; x++)
+	{
+		for (int y = ctr.second - 1; y <= ctr.second + 1; y++)
+		{
+			if (gdata->_map->inBounds(x, y) && gdata->_map->isPointClear(x, y) && roll_one_in(2))
+			{
+				auto mon = monsterdata::generate(target->rollMonsterToSpawn(), target->_level);
+				mon->addFlag("minion");
+				gdata->_map->addCreature(mon, x, y);
+			}
+		}
+	}
+}
+
+
 void trySetSurface(gamedataPtr gdata, const intpair pt, const Surface sf)
 {
 	if (gdata->_map->inBounds(pt) && gdata->_map->canCoverWithSurface(pt.first, pt.second))
@@ -238,6 +258,8 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 				explodeOnDeath(gdata, mon, "fire_burst");
 			else
 				tryDropCorpse(gdata, mon->getCorpseType(), mon->_pos);
+			if (mon->hasFlag("infested"))
+				spawnOnDeath(gdata, mon);
 
 			//	effects on the player
 			gdata->_player->healDamage(gdata->_player->getLeechOnKill());

@@ -145,7 +145,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::CULTIST):
 		return { "less_health", "less_damage" };
 	case(MonsterType::CULTIST_INFESTED):
-		return { "less_health", "spawner" };
+		return { "less_health", "spawner", "infested", };
 	case(MonsterType::CULTIST_MUTTERING):
 		return { "less_health", "casts_arcane_bolt" };
 

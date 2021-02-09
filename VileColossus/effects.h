@@ -4,6 +4,7 @@
 #include "messages.h"
 #include "monster.h"
 #include "progression.h"
+#include "monsterdata.h"
 
 
 
@@ -13,6 +14,7 @@ void tryDropCorpse(gamedataPtr gdata, const Surface corpse, const intpair at);
 void doDeathDrops(gamedataPtr gdata, monsterPtr target);
 
 void explodeOnDeath(gamedataPtr gdata, monsterPtr target, string flag);
+void spawnOnDeath(gamedataPtr gdata, monsterPtr target);
 
 void killPlayer(gamedataPtr gdata);
 void killCreature(gamedataPtr gdata, creaturePtr target);

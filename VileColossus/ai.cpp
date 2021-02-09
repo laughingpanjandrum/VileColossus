@@ -61,6 +61,7 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 }
 
 
+//	Spawn something adjacent to us.
 bool ai::spawnMinion(gamedataPtr gdata, monsterPtr spawner, const MonsterType spawn_id, const intpair pt)
 {
 	//	Find an adjacent point to spawn.
