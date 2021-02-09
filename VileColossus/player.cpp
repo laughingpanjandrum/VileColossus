@@ -296,6 +296,11 @@ int player::getStaggerAttackDuration() const
 	return getEquipmentPropertySum(PROP_STAGGER_DURATION);
 }
 
+int player::getKnockbackChance() const
+{
+	return getEquipmentPropertySum(PROP_KNOCKBACK_CHANCE);
+}
+
 bool player::usingRangedWeapon() const
 {
 	return _Equipped[SLOT_MAIN_HAND] != nullptr && _Equipped[SLOT_MAIN_HAND]->isRangedWeapon();

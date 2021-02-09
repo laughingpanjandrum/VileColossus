@@ -368,7 +368,7 @@ void display::drawItemPickup(gamedataPtr gdata)
 
 void display::drawEquipment(gamedataPtr gdata)
 {
-	drawBox(2, 2, 42, 18, COLOR_DARK);
+	drawBox(2, 2, 42, 19, COLOR_DARK);
 	int x = 4, y = 4;
 
 	_win.write(x, y, "Currently equipped:", COLOR_LIGHT);

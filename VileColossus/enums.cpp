@@ -149,6 +149,7 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_DEFENCE):					return "Defence";
 	case(PROP_HASTE_BUFF):				return "Haste Duration";
 	case(PROP_HEAL_ON_USE):				return "Heals";
+	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
 	case(PROP_MOVE_SPEED_ADJUST):		return "Move Speed";
 	case(PROP_RIPOSTE_CHANCE):			return "Riposte Chance";
@@ -186,6 +187,7 @@ const string formatItemProperty(const ItemProperty prop, int val)
 	case(PROP_SPELLSHIELD_PERCENT):
 		return plusminus(val) + "%";
 
+	case(PROP_KNOCKBACK_CHANCE):
 	case(PROP_RIPOSTE_CHANCE):
 	case(PROP_RIPOSTE_DAMAGE):
 	case(PROP_STAGGER_CHANCE):

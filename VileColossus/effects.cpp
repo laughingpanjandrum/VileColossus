@@ -371,6 +371,24 @@ void testForDamageEquipment(gamedataPtr gdata, creaturePtr attacker, creaturePtr
 }
 
 
+//	Push target away from the given coordinate.
+void knockback(gamedataPtr gdata, creaturePtr t, const intpair awayFrom, int dist)
+{
+	auto vec = get2dVector(awayFrom, t->_pos);
+	auto at = t->_pos;
+	while (dist-- > 0)
+	{
+		intpair_add(&at, &vec);
+		if (gdata->_map->inBounds(at) && gdata->_map->isPointClear(at))
+			t->_pos = at;
+		else
+			break;
+	}
+	if (t->isPlayer())
+		setPlayerPosition(gdata, at);
+}
+
+
 //	Effects of standing on a tile
 void standOnTile(gamedataPtr gdata, creaturePtr cr)
 {

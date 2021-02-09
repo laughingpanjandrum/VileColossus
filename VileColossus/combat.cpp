@@ -140,6 +140,10 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			if (attacker->isPlayer())
 				gdata->_player->chargeFlaskOnHit();
 
+			//	Knockback chance
+			if (roll_percent(attacker->getKnockbackChance()))
+				knockback(gdata, target, attacker->_pos, 2);
+
 			//	attack animations
 			addAnimation(gdata, anim_FlashGlyph(target->_pos, '/', TCODColor::crimson));
 			if (!target->isPlayer())

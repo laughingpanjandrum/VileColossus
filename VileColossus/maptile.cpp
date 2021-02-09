@@ -149,7 +149,7 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_CHEST_SMALL):
 		return TCODColor::lightSepia;
 	case(MT_CHEST_GLOWING):
-		return TCODColor::brass;
+		return TCODColor::lighterBlue;
 
 	case(MT_FLOOR_CARPET):
 		return TCODColor::darkRed;

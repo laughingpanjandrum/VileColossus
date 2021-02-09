@@ -519,7 +519,8 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::CROSSBOW):
 	case(BaseWeaponType::HEAVY_CROSSBOW):
 	case(BaseWeaponType::DOUBLE_CROSSBOW):
-		it->setProperty(PROP_ATTACK_RANGE, randint(5, 9));
+		it->setProperty(PROP_ATTACK_RANGE, randint(4, 8));
+		it->setProperty(PROP_KNOCKBACK_CHANCE, randint(30, 75));
 		break;
 	}
 

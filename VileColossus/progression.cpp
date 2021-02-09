@@ -7,6 +7,7 @@ void playerGainLevel(gamedataPtr gdata)
 	gdata->_player->_level++;
 	gdata->_attributePointsLeft += 3;
 	gdata->_player->healToMax();
+	gdata->_player->restoreAllMagic();
 	messages::add(gdata, " #*** YOU HAVE ATTAINED LEVEL " + to_string(gdata->_player->_level) + "! ***", { COLOR_POSITIVE });
 }
 

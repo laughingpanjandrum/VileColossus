@@ -90,6 +90,8 @@ public:
 	virtual int getStaggerChance() const;
 	virtual int getStaggerAttackDuration() const;
 
+	virtual int getKnockbackChance() const;
+
 	virtual bool usingRangedWeapon() const;
 	virtual int getMaxAttackRange() const;
 

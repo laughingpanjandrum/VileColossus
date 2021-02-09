@@ -10,7 +10,11 @@ TODO
 	Add enchantments to spell runes
 	What gives a spellrune the right to be called 'major' lol
 	'x breaks' messages repeat every time you are hit
-	Nerf critical damage when dualwielding 
+	Make ranged attacks destroy objects
+	Rune enhancer should target EQUIPPED spells
+	Make generate for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
+	Add quivers for bows
+	Show enchantment descriptions when adding enchants to items
 
 */
 
@@ -47,11 +51,11 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	for (unsigned i = 0; i < 10; i++)
+	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}
+	}*/
 	/*
 	for (unsigned i = 0; i < 30; i++)
 	{
@@ -255,7 +259,7 @@ void game::processInput()
 				openInventory(_gdata);
 				_gdata->_state = STATE_VIEW_INVENTORY_IN_STASH;
 			}
-			else if (_ih->isKeyPressed(TCODK_ENTER))
+			else if (_ih->isKeyPressed('g'))
 				takeSelectedFromStash(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
@@ -297,6 +301,8 @@ void game::processInput()
 				reinforceSelectedItem(_gdata);
 			else if (_ih->isKeyPressed('R'))
 				repairAllEquipped(_gdata);
+			else if (_ih->isKeyPressed('w'))
+				swapToSecondaryEquipment(_gdata);
 			break;
 		case(STATE_SELECT_ENCHANTMENT):
 			if (_ih->isDirectionalKeyPressed())

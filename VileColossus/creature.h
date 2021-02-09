@@ -83,6 +83,8 @@ public:
 	virtual int getStaggerChance() const { return 0; }
 	virtual int getStaggerAttackDuration() const { return 0; }
 
+	virtual int getKnockbackChance() const { return 0; }
+
 	virtual int getStatusEffectChanceOnHit(const StatusEffect st) const { return 0; }
 	virtual int getWeaponDamageOfType(const DamageType dt) const { return 0; }
 	virtual int getElementalAffinity(const DamageType dt) const { return 0; }
