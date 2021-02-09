@@ -11,7 +11,7 @@ enum class MonsterType
 	CARRION_PRINCE,
 	CORPSE_COLOSSUS,
 	CORPSEFLY,
-	CULTIST, CULTIST_INFESTED, CULTIST_MUTTERING,
+	CULTIST, CULTIST_INFESTED, CULTIST_MUTTERING, CULTIST_WINGED,
 	OOZE_ELECTRIC, OOZE_SLUDGE,
 	GRIM_KNIGHT,
 	ROACH,
@@ -111,6 +111,8 @@ protected:
 
 	vector<string> _flags;
 	MonsterType _type;
+
+	vector<string> _spells;
 
 };
 typedef shared_ptr<monster> monsterPtr;

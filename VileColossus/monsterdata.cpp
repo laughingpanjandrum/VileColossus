@@ -112,6 +112,12 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 {
 	switch (id)
 	{
+	case(MonsterType::CULTIST):
+	case(MonsterType::CULTIST_INFESTED):
+		if (dl > 3)
+			return MonsterType::CULTIST_WINGED;
+		break;
+
 	case(MonsterType::SKELETON):	
 		return MonsterType::SKELETON_GIANT;
 	
@@ -148,6 +154,8 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "less_health", "spawner", "infested", };
 	case(MonsterType::CULTIST_MUTTERING):
 		return { "less_health", "casts_arcane_bolt" };
+	case(MonsterType::CULTIST_WINGED):
+		return { "casts_arcane_bolt", "flying", "flits", "casts_poison_spit" };
 
 	case(MonsterType::GRIM_KNIGHT):
 		return { "protected_heavy", "arcane_attack", "more_damage", "slow", "defended", };
@@ -217,6 +225,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
 
+	case(MonsterType::CULTIST_WINGED):
 	case(MonsterType::SKELETON_GIANT):
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
@@ -241,6 +250,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CULTIST):				return make_tuple("cultist", 'u', TCODColor::pink);
 	case(MonsterType::CULTIST_INFESTED):	return make_tuple("infested cultist", 'u', TCODColor::lime);
 	case(MonsterType::CULTIST_MUTTERING):	return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
+	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);
 	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'K', TCODColor::lightPurple);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);

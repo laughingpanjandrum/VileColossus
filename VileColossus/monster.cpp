@@ -131,15 +131,11 @@ const Surface monster::getCorpseType() const
 
 
 //	Randomly selects a ray spell to cast. If we don't know any, returns an empty string.
-//	IF we know more than one, picks on at random.
+//	IF we know more than one, picks one at random.
 const string monster::rollRaySpellToCast() const
 {
-	if (hasFlag("casts_arcane_bolt"))
-		return "arcane_bolt";
-	else if (hasFlag("casts_lightning"))
-		return "lightning";
-	else if (hasFlag("spits_sludge"))
-		return "sludge";
+	if (!_spells.empty())
+		return _spells[randrange(_spells.size())];
 	return "";
 }
 
@@ -221,6 +217,17 @@ void monster::addFlag(const string flag)
 			_baseDamage /= 2;
 		else if (flag == "poison_attack")
 			_baseDamage /= 2;
+
+
+		//	Indicates that we know a spell
+		else if (flag == "casts_poison_spit")
+			_spells.push_back("poison_spit");
+		else if (flag == "casts_arcane_bolt")
+			_spells.push_back("arcane_bolt");
+		else if (flag == "casts_lightning")
+			_spells.push_back("lightning");
+		else if (flag == "spits_sludge")
+			_spells.push_back("sludge");
 	}
 }
 

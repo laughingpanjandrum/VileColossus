@@ -15,8 +15,6 @@ TODO
 	Make generate for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Add quivers for bows
 	Show enchantment descriptions when adding enchants to items
-	Make the lakes more chaotic
-	Make infested cultists spawn roaches on death
 
 */
 
