@@ -103,6 +103,7 @@ public:
 	virtual int getSmiteEvilDamage() const;
 
 	int getWrathOnKillChance() const { return getTotalEnchantmentBonus(ENCH_RAGE); }
+	int getWrathDamageBonus() const { return 25 + getTotalEnchantmentBonus(ENCH_FURY); }
 
 
 	//	Bonuses from socketed gems

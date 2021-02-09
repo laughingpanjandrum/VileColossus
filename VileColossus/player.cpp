@@ -151,15 +151,20 @@ int player::getWeaponDamage() const
 {
 	int total = getEquipmentPropertySum(PROP_BASE_DAMAGE);
 	
+	//	stats/basic enchantments
 	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) * 0.3f;
 	total += getTotalEnchantmentBonus(ENCH_WOUNDING);
+
+	//	special enchantments
 	if (_damageTaken >= (float)getMaxHealth() * 0.7)
 		total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_CUNNING));
 	total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_WEIGHT));
 	
+	//	wrath bonus
 	if (hasBuff(BUFF_WRATH))
 		total += 1 + total / 4;
 
+	//	gem bonuses
 	total += getTotalGemBonusFromWeapons(GemType::BLACKSTONE) * 2;
 	
 	return total;

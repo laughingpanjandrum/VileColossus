@@ -949,6 +949,7 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 	int gridx = randint(3, 4), gridy = randint(3, 4);
 	auto m = gridmapPtr(new gridmap(2 + grid_size * gridx, 2 + grid_size * gridy));
 	fillMap(m, { MT_WALL_STONE });
+	m->_name = "Cathedral [Depth " + to_string(dl) + "]";
 
 	//	Make a 2d node map.
 	vector<vector<metanode*>> nodes;
@@ -991,6 +992,17 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 	scatterOnMap(m, MT_BUSH, 0.05);
 	scatterOnMap(m, MT_GRASS, 0.05);
 	scatterOnMap(m, MT_WATER, 0.05);
+
+	//	Bigger messes at lower depth
+	if (dl >= 6)
+	{
+		int lcount = randint(1, 4);
+		while (lcount-- > 0)
+		{
+			int r = randint(4, 8);
+			addLake(m, getRandomWithPad(m, r + 1), r, MT_WATER, MT_FLOOR_STONE);
+		}
+	}
 
 	//	Treasures
 	int chest_count = randint(1, 5);
@@ -1217,7 +1229,6 @@ void mapgen::style_Tomblands(gridmapPtr m, int dl)
 gridmapPtr mapgen::generate(int dl, bool descending)
 {
 	auto m = generate_Cathedral(dl, descending);
-	m->_name = "Cathedral [Depth " + to_string(dl) + "]";
 	
 	//style_Rooms(m, "cathedral", dl);
 	//style_Tomblands(m, dl);
