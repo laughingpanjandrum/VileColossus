@@ -988,11 +988,6 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 		tcod_nodes.push_back(new TCODBsp(n->x, n->y, n->w, n->h));
 	}
 
-	//	Chaos
-	scatterOnMap(m, MT_BUSH, 0.05);
-	scatterOnMap(m, MT_GRASS, 0.05);
-	scatterOnMap(m, MT_WATER, 0.05);
-
 	//	Bigger messes at lower depth
 	if (dl >= 6)
 	{
@@ -1003,6 +998,11 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 			addLake(m, getRandomWithPad(m, r + 1), r, MT_WATER, MT_FLOOR_STONE);
 		}
 	}
+
+	//	Chaos
+	scatterOnMap(m, MT_BUSH, 0.05);
+	scatterOnMap(m, MT_GRASS, 0.05);
+	scatterOnMap(m, MT_WATER, 0.05); 
 
 	//	Treasures
 	int chest_count = randint(1, 5);

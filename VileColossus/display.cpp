@@ -64,7 +64,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	drawStatWithBox(x, y + 5, to_string(p->getMaxMagic()), "Magic", COLOR_MAGIC);
 	drawStatWithBox(x, y + 8, to_string(p->getMoveEnergyCost()) + "%", "Move Delay", COLOR_MISC_STAT);
 	drawStatWithBox(x, y + 11, to_string(p->getAttackEnergyCost()) + "%", "Attack Delay", COLOR_MISC_STAT);
-	drawStatWithBox(x, y + 13, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
+	drawStatWithBox(x, y + 14, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
 
 
 	//	OFFENCE

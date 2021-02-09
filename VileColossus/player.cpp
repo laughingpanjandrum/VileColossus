@@ -155,14 +155,16 @@ int player::getWeaponDamage() const
 	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) * 0.3f;
 	total += getTotalEnchantmentBonus(ENCH_WOUNDING);
 
-	//	special enchantments
+	//	tally up total percentage bonus
+	int percent_adjust = 0;
 	if (_damageTaken >= (float)getMaxHealth() * 0.7)
-		total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_CUNNING));
-	total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_WEIGHT));
-	
-	//	wrath bonus
+		percent_adjust +=  getTotalEnchantmentBonus(ENCH_CUNNING);
 	if (hasBuff(BUFF_WRATH))
-		total += 1 + total / 4;
+		percent_adjust += getTotalEnchantmentBonus(ENCH_FURY);
+	percent_adjust += getTotalEnchantmentBonus(ENCH_WEIGHT);
+
+	//	Apply the percent bonus
+	total = adjustByPercent(total, percent_adjust);
 
 	//	gem bonuses
 	total += getTotalGemBonusFromWeapons(GemType::BLACKSTONE) * 2;
