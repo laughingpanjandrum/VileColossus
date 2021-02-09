@@ -44,6 +44,14 @@ monster::monster(string name, int glyph, colorType color, int lvl, int tier, Mon
 }
 
 
+int monster::getKnockbackChance() const
+{
+	if (hasFlag("knockback"))
+		return 50;
+	else
+		return 0;
+}
+
 int monster::getMoveEnergyCost() const
 {
 	int cost = ENERGY_COST_BASE;
@@ -184,6 +192,7 @@ void monster::addFlag(const string flag)
 	{
 		//	Remember that we have this flag
 		_flags.push_back(flag);
+
 
 		//	Apply stat-altering effects if necessary
 		if (flag == "inaccurate")

@@ -17,6 +17,7 @@ enum class MonsterType
 	ROACH,
 	SKELETON, SKELETON_ARCHER, SKELETON_BURNING, SKELETON_GOLD_PLATED, SKELETON_KNIGHT, SKELETON_MAGE, SKELETON_GIANT,
 	SKULL_EXPLODING, SKULL_FLAMING, SKULL_FLOATING, SKULL_PILE,
+	SKINLESS_KNIGHT,
 	WALKING_SKULL_PILE,
 	ZOMBIE, ZOMBIE_INFUSED, ZOMBIE_LARGE, ZOMBIE_MASS, ZOMBIE_ROTTED,
 	__NONE,
@@ -47,6 +48,8 @@ public:
 	virtual int getWeaponDamage() const { return _baseDamage; }
 	virtual int getCriticalChance() const { return 0; }
 	virtual int getCriticalMultiplier() const { return 0; }
+
+	virtual int getKnockbackChance() const;
 
 	virtual int getMoveEnergyCost() const;
 

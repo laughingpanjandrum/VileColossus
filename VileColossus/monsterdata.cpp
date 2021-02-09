@@ -9,6 +9,7 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	{
 	case(MonsterType::CARRION_PRINCE):
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::ZOMBIE_MASS):
@@ -39,11 +40,13 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 
 const MonsterType monsterdata::rollBossForLevel(const int dl)
 {
-	int r = randint(1, 2);
-	if (r == 1)
-		return MonsterType::CORPSE_COLOSSUS;
-	else
-		return MonsterType::CARRION_PRINCE;
+	//	Assemble list of options.
+	vector<MonsterType> ops = { MonsterType::CORPSE_COLOSSUS, MonsterType::CARRION_PRINCE, };
+	if (dl > 4)
+		ops.push_back(MonsterType::SKINLESS_KNIGHT);
+
+	//	Pick one.
+	return ops[randrange(ops.size())];
 }
 
 
@@ -183,6 +186,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SKELETON_GIANT):
 		return { "protected_heavy", "more_damage", "bones", "immune_poison", "undead" };
 
+	case(MonsterType::SKINLESS_KNIGHT):
+		return { "protected_heavy", "electric_attack", "more_damage", "resists_electric", "knockback", };
+
 	case(MonsterType::SKULL_EXPLODING):
 		return { "flits", "less_health", "protected", "less_damage", "immune_poison", "undead", "flying", "fire_burst" };
 	case(MonsterType::SKULL_FLAMING):
@@ -218,6 +224,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	{
 	case(MonsterType::CARRION_PRINCE):
 	case(MonsterType::CORPSE_COLOSSUS):
+	case(MonsterType::SKINLESS_KNIGHT):
 		return 4;
 
 	case(MonsterType::GRIM_KNIGHT):
@@ -262,6 +269,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SKELETON_GOLD_PLATED):return make_tuple("gold-plated skeleton", 'k', TCODColor::gold);
 	case(MonsterType::SKELETON_MAGE):		return make_tuple("skeleton mage", 'k', TCODColor::fuchsia);
 	case(MonsterType::SKELETON_GIANT):		return make_tuple("giant skeleton", 'K', TCODColor::desaturatedYellow);
+	case(MonsterType::SKINLESS_KNIGHT):		return make_tuple("skinless knight", 'K', TCODColor::lighterOrange);
 	case(MonsterType::SKULL_EXPLODING):		return make_tuple("exploding skull", 's', TCODColor::lightOrange);
 	case(MonsterType::SKULL_FLAMING):		return make_tuple("flaming skull", 's', TCODColor::darkFlame);
 	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
