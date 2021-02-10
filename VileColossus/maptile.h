@@ -41,6 +41,8 @@ const colorType getMaptileColor(const Maptile tl);
 const bool isMaptileWalkable(const Maptile tl);
 const bool isMaptileTransparent(const Maptile tl);
 
+const bool isMaptileBreakable(const Maptile tl);
+
 const bool doesMaptileFlicker(const Maptile tl);
 const bool isMaptileStairs(const Maptile tl);
 

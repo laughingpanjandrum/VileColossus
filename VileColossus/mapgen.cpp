@@ -581,7 +581,7 @@ void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptio
 	}
 
 	//	Chance of BOSS
-	else if (roll_one_in(2) && dl > 1)
+	else if (roll_one_in(3) && dl > 1)
 	{
 		auto boss_id = monsterdata::rollBossForLevel(dl);
 		if (boss_id != MonsterType::__NONE)

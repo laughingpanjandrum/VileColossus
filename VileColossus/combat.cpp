@@ -214,7 +214,7 @@ void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec)
 		//	Walk along the line
 		intpair_add(&pt, &vec);
 		pts.push_back(pt);
-		if (gdata->_map->inBounds(pt) && gdata->_map->isWalkable(pt))
+		if (gdata->_map->inBounds(pt))
 		{
 			//	Test for target
 			auto t = gdata->_map->getCreature(pt);
@@ -224,8 +224,17 @@ void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec)
 				break;
 			}
 
+			//	Break smashable tiles
+			else if (isMaptileBreakable(gdata->_map->getTile(pt)))
+			{
+				addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(gdata->_map->getTile(pt))));
+				gdata->_map->setTile(MT_RUBBLE, pt);
+				gdata->_map->updateTmapAtPoint(pt.first, pt.second);
+				break;
+			}
+
 			//	Stop if we hit a non-transparent tile
-			if (!gdata->_map->isTransparent(pt))
+			else if (!gdata->_map->isTransparent(pt) || !gdata->_map->isWalkable(pt))
 				break;
 		}
 

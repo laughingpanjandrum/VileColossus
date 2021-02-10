@@ -253,6 +253,11 @@ const bool isMaptileTransparent(const Maptile tl)
 	}
 }
 
+const bool isMaptileBreakable(const Maptile tl)
+{
+	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN;;
+}
+
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE;
