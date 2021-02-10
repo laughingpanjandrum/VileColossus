@@ -172,13 +172,13 @@ void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
 	++y;
 	string flag_txt = "";
 	if (mon->isUndead())
-		flag_txt += "Undead ";
+		flag_txt += "Undead  ";
 	if (mon->isFlying())
-		flag_txt += "Flying ";
+		flag_txt += "Flying  ";
 	if (mon->hasFlag("slow"))
-		flag_txt += "Slow ";
+		flag_txt += "Slow  ";
 	if (mon->hasFlag("minion"))
-		flag_txt += "Minion ";
+		flag_txt += "Minion  ";
 	_win.write(x + 2, y, flag_txt, COLOR_DARK);
 
 
@@ -672,12 +672,13 @@ void display::drawEnchantmentSelect(gamedataPtr gdata)
 		if (selected)
 			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
 
+		//	highlight whether enchantment is valid
 		auto en = gdata->_knownEnchants[i];
 		auto basecol = (find(valid_options.begin(), valid_options.end(), en) != valid_options.end()) ? TCODColor::gold : TCODColor::darkGrey;
 		if (selected)
-			_win.write(x, y, getItemEnchantmentName(en), COLOR_BLACK, basecol);
+			_win.write(x, y, getItemEnchantmentDescription(en), COLOR_BLACK, basecol);
 		else
-			_win.write(x, y, getItemEnchantmentName(en), basecol);
+			_win.write(x, y, getItemEnchantmentDescription(en), basecol);
 	}
 
 	//	Selected item
@@ -1372,7 +1373,7 @@ void display::updateVisibleMapData(gamedataPtr gdata)
 		if (isPointOnDisplay(dpt))
 		{
 			//	We can always see ourselves; test whether we can see monsters
-			if (getDistanceBetweenCreatures(gdata->_player, cr) <= vis && canPlayerSeeCreature(gdata, cr))
+			if ((getDistanceBetweenCreatures(gdata->_player, cr) <= vis && canPlayerSeeCreature(gdata, cr)) || gdata->_omniscient)
 			{
 				//	map data
 				_visibleGlyphs[dpt.first][dpt.second] = cr->getGlyph();

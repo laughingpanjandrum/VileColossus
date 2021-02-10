@@ -128,10 +128,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 		if (dl > 1)
 			return MonsterType::ZOMBIE_LARGE;
 		break;
-
-	default:
-		return MonsterType::__NONE;
 	}
+
+	return MonsterType::__NONE;
 }
 
 //  List of flags that a monster with the given ID has by default.

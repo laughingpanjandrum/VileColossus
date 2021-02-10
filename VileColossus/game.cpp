@@ -9,11 +9,11 @@ TODO
 	Show item comparison in inventory
 	Add enchantments to spell runes
 	What gives a spellrune the right to be called 'major' lol
-	'x breaks' messages repeat every time you are hit
-	Make ranged attacks destroy objects
 	Rune enhancer should target EQUIPPED spells
 	Make generate for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Show enchantment descriptions when adding enchants to items
+
+	***	Why are multiple bosses spawning at depth 1???
 
 */
 

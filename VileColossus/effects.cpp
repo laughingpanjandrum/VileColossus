@@ -381,7 +381,7 @@ void testForDamageEquipment(gamedataPtr gdata, creaturePtr attacker, creaturePtr
 	for (auto slot : toTest)
 	{
 		auto it = gdata->_player->getItemInSlot(slot);
-		if (it != nullptr)
+		if (it != nullptr && !it->isBroken())
 		{
 			it->rollDurabilityLoss();
 			if (it->isBroken())
