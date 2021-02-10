@@ -49,6 +49,7 @@ bool item::canEquipInSlot(const EquipmentSlot slot) const
 	case(ITEM_CHESTPIECE):	return slot == SLOT_BODY;
 	case(ITEM_GLOVES):		return slot == SLOT_GLOVES;
 	case(ITEM_HELMET):		return slot == SLOT_HELMET;
+	case(ITEM_QUIVER):		return slot == SLOT_OFFHAND;
 	case(ITEM_RING):		return slot == SLOT_LEFT_RING || slot == SLOT_RIGHT_RING;
 	case(ITEM_SHIELD):		return slot == SLOT_OFFHAND;
 	case(ITEM_SHOULDERS):	return slot == SLOT_SHOULDERS;

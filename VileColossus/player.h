@@ -129,6 +129,7 @@ public:
 	//	Equipment
 
 	bool usingOffhandWeapon() const;
+	bool isHandednessValid() const;
 
 	int getTotalEnchantmentBonus(const ItemEnchantment en) const;
 	int getEquipmentPropertySum(const ItemProperty prop) const;

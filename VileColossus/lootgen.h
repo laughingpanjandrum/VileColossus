@@ -89,6 +89,8 @@ namespace lootgen
 	itemPtr generateWeaponOfType(const BaseWeaponType bwt);
 	itemPtr generateWeapon(const int tier, const int rarity);
 
+	itemPtr generateQuiver(const int tier, const int rarity);
+
 
 	//	Jewelry
 

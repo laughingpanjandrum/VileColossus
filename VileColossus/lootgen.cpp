@@ -67,6 +67,10 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 			ENCH_MAGIC, ENCH_POISON_WARD, ENCH_RAGE, ENCH_SLAYING,
 			ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
+	case(ITEM_QUIVER):
+		return { ENCH_ACCURACY, ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_ARCANE, ENCH_BURNING, ENCH_FURY, ENCH_LEECHING, ENCH_LIGHTNING,
+					ENCH_MANALEECH, ENCH_SHARPNESS, ENCH_SLAYING, ENCH_WOUNDING, ENCH_WRATH };
+
 	case(ITEM_SHIELD):
 		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_FLAMEWARD,  ENCH_FURY,
 			ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_POISON_WARD, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
@@ -559,10 +563,29 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 //	Create a random weapon of the given rarity and tier.
 itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 {
-	auto wtable = getWeaponTypesOfTier(tier);
-	auto it = generateWeaponOfType(wtable[randrange(wtable.size())]);
+	//	chance of quiver instead
+	itemPtr it;
+	if (roll_one_in(6))
+		it = generateQuiver(tier, rarity);
+	else
+	{
+		auto wtable = getWeaponTypesOfTier(tier);
+		it = generateWeaponOfType(wtable[randrange(wtable.size())]);
+	}
+
+	//	complete item
 	it->_rarity = rarity;
 	it->_enhancementLevel = 1 + randint(0, it->_rarity);
+	return it;
+}
+
+
+//	Secondary shield-like item to go alongside bows.
+itemPtr lootgen::generateQuiver(const int tier, const int rarity)
+{
+	auto it = itemPtr(new item("quiver", ITEM_QUIVER, rarity));
+	it->setProperty(PROP_ACCURACY_MOD, randint(1, tier + 1));
+	it->setProperty(PROP_BASE_DAMAGE, randint(1, tier + 1));
 	return it;
 }
 
@@ -740,7 +763,7 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
 	else
 	{
 		int r = randint(1, 100);
-		if (r <= 40)	it = generateArmourPiece(tier, rarity);
+		if		(r <= 40)	it = generateArmourPiece(tier, rarity);
 		else if (r <= 80)	it = generateWeapon(tier, rarity);
 		else if (r <= 90)	it = generateSpellrune(tier, rarity);
 		else if (r <= 95)	it = generateJewel(tier, rarity);

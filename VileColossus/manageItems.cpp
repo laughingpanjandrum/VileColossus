@@ -266,16 +266,12 @@ void tryEquipCurrentItemInSlot(gamedataPtr gdata)
 			removeFromInventory(gdata, it);
 
 			//	if we equipped a 2h weapon, we have to unequip our offhand item
-			if (it->_isTwoHanded)
+			if (old_idx == SLOT_MAIN_HAND && !gdata->_player->isHandednessValid())
 				unequipFromSlot(gdata, SLOT_OFFHAND);
 
 			//	if we equip an item in the offhand, unequip a 2-handed item in main hand
-			else if (old_idx == SLOT_OFFHAND)
-			{
-				auto mh = gdata->_player->getItemInSlot(SLOT_MAIN_HAND);
-				if (mh != nullptr && mh->_isTwoHanded)
-					unequipFromSlot(gdata, SLOT_MAIN_HAND);
-			}
+			else if (old_idx == SLOT_OFFHAND && !gdata->_player->isHandednessValid())
+				unequipFromSlot(gdata, SLOT_MAIN_HAND);
 
 			//	takes time
 			gdata->_player->spendActionEnergy();

@@ -513,6 +513,17 @@ bool player::usingOffhandWeapon() const
 	return _Equipped[SLOT_OFFHAND] != nullptr && _Equipped[SLOT_OFFHAND]->_category != ITEM_SHIELD;
 }
 
+//	Tests whether our main and offhand items can be equipped together.
+//	Returns True if valid, False otherwise. The calling function decides which to unequip.
+bool player::isHandednessValid() const
+{
+	auto mh = _Equipped[SLOT_MAIN_HAND];
+	auto oh = _Equipped[SLOT_OFFHAND];
+	if (mh != nullptr && oh != nullptr && mh->_isTwoHanded)
+		return (mh->isRangedWeapon() && oh->_category == ITEM_QUIVER);
+	return true;
+}
+
 //  Total value of all enchantment bonuses of the given type.
 //  We only need this for enchantments that do not directly adjust an item's statistics.
 int player::getTotalEnchantmentBonus(const ItemEnchantment en) const

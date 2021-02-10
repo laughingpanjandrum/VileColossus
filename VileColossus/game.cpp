@@ -13,7 +13,6 @@ TODO
 	Make ranged attacks destroy objects
 	Rune enhancer should target EQUIPPED spells
 	Make generate for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
-	Add quivers for bows
 	Show enchantment descriptions when adding enchants to items
 
 */
@@ -56,8 +55,7 @@ void game::start()
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
 	}*/
-	/*
-	for (unsigned i = 0; i < 30; i++)
+	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::rollItemDrop(3, 4);
 		addToInventory(_gdata, it);
