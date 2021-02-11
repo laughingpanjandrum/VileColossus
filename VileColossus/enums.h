@@ -131,6 +131,7 @@ enum ItemEnchantment
 
 
 	//	Legendary enchants
+	ENCH_AFFINITY,
 	ENCH_ARCANE_SHIELD,
 	ENCH_BLACKBLOOD,
 	ENCH_CUNNING,

@@ -970,6 +970,7 @@ void display::drawSpellList(gamedataPtr gdata)
 }
 
 
+//	Info about a particular spell (NOT the rune/item that grants the spell, but the spell's actual effect when cast)
 void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, int atx, int aty)
 {
 	drawBox(atx - 2, aty - 2, 35, 20, COLOR_DARK);

@@ -235,29 +235,26 @@ int player::getVisionRadius() const
 int player::getResistance(const DamageType dt) const
 {
 	int total = 0;
+	total += MIN(getTotalEnchantmentBonus(ENCH_AFFINITY), getElementalAffinity(dt));
 	
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):
 		total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
-		//total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 3;
 		total += getDerivedAttribute(ATTR_WILLPOWER) - 10;
 		break;
 
 	case(DTYPE_FIRE):
 		total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
-		//total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 3;
 		break;
 
 	case(DTYPE_ELECTRIC):
 		total += getTotalEnchantmentBonus(ENCH_STORMWARD);
-		//total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 3;
 		total += getDerivedAttribute(ATTR_DEXTERITY) - 10;
 		break;
 
 	case(DTYPE_POISON):
 		total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
-		//total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 3;
 		total += getDerivedAttribute(ATTR_STRENGTH) - 10;
 		break;
 	}

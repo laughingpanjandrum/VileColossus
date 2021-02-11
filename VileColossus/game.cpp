@@ -7,9 +7,7 @@ TODO
 
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
-	Add enchantments to spell runes
 	What gives a spellrune the right to be called 'major' lol
-	Rune enhancer should target EQUIPPED spells
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Show enchantment descriptions when adding enchants to items
 
@@ -50,6 +48,7 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_AFFINITY));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
@@ -367,6 +366,7 @@ void game::processInput()
 			if (_ih->isKeyPressed(TCODK_ENTER))
 				returnToHomeBase();
 			break;
+
 
 			//	Normal input
 		case(STATE_NORMAL):

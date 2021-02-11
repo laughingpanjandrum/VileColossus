@@ -297,6 +297,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_WRATH):			return "Wrath Duration";
 
 		//	Legendary enchants
+	case(ENCH_AFFINITY):		return "Affinity Resist";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CUNNING):			return "Cunning";
@@ -350,6 +351,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 
 		//	Legendary enchants
 
+	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated Affinity.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";

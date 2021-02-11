@@ -662,13 +662,24 @@ const vector<Spell> lootgen::rollSpellsToLearn(const int tier)
 	return spells;
 }
 
+
 //	These are special items from a distinct pool of enchants, which are otherwise generated like normal songs.
-itemPtr lootgen::generateLegendaryItem(const int maxTier)
+itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 {
+	//	pick an enchantment if none is given
 	itemPtr it;
-	auto en = LEGENDARY_ENCHANTS[randrange(LEGENDARY_ENCHANTS.size())];
+	if(en == ENCH__NONE)
+		en = LEGENDARY_ENCHANTS[randrange(LEGENDARY_ENCHANTS.size())];
+
+	//	generate the associated item
 	switch (en)
 	{
+	case(ENCH_AFFINITY):
+		it = generateArmourPiece(maxTier, 4);
+		it->addEnchantment(ENCH_AFFINITY, randint(10, 40));
+		it->setNickname("Affinity");
+		break;
+
 	case(ENCH_ARCANE_SHIELD):
 		it = itemPtr(new item("shield", ITEM_SHIELD, 4));
 		it->setProperty(PROP_DEFENCE, 3);

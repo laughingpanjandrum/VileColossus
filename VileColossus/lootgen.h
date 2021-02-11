@@ -32,7 +32,7 @@ namespace lootgen
 
 	const vector<ItemCategory> ARMOUR_CATEGORIES = { ITEM_BOOTS, ITEM_BRACERS, ITEM_CHESTPIECE, ITEM_GLOVES, ITEM_HELMET, ITEM_SHOULDERS, ITEM_SHIELD, };
 
-	const vector<ItemEnchantment> LEGENDARY_ENCHANTS = { ENCH_ARCANE_SHIELD, ENCH_BLACKBLOOD, ENCH_CUNNING, ENCH_SHADOWSTRIKE, ENCH_WEIGHT, };
+	const vector<ItemEnchantment> LEGENDARY_ENCHANTS = { ENCH_AFFINITY, ENCH_ARCANE_SHIELD, ENCH_BLACKBLOOD, ENCH_CUNNING, ENCH_SHADOWSTRIKE, ENCH_WEIGHT, };
 
 	const vector<GemType> BASIC_GEM_TYPES = { GemType::BLACKSTONE, GemType::BOLTSTONE, GemType::FLAMESTONE, GemType::SILVERSTONE, GemType::SPIDERSTONE };
 
@@ -106,7 +106,7 @@ namespace lootgen
 
 	//	General drops
 
-	itemPtr generateLegendaryItem(const int maxTier);
+	itemPtr generateLegendaryItem(const int maxTier, ItemEnchantment en = ENCH__NONE);
 
 	int getLootTierForMonsterLevel(const int dl);
 	int getGemTierForMonsterLevel(const int dl);
