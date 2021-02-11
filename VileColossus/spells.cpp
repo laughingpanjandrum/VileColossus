@@ -20,6 +20,8 @@ const string getSpellName(const Spell sp)
 	case(Spell::ARCANE_PULSE):			return "Arcane Pulse";
 	case(Spell::CHAIN_LIGHTNING):		return "Chain Lightning";
 	case(Spell::FIREBALL):				return "Fireball";
+	case(Spell::TOXIC_RADIANCE):		return "Toxic Radiance";
+
 	default:
 		return "unknown_spell_name";
 	}
@@ -44,6 +46,7 @@ const colorType getSpellColor(const Spell sp)
 	case(Spell::FIREBALL):
 		return getDamageTypeColor(DTYPE_FIRE);
 
+	case(Spell::TOXIC_RADIANCE):
 	case(Spell::VENOMFANG):
 		return getDamageTypeColor(DTYPE_POISON);
 
@@ -75,6 +78,8 @@ const string getSpellDescription(const Spell sp)
 		return "Hurl an exploding ball of flame.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target. Lasts for more hits at higher levels.";
+	case(Spell::TOXIC_RADIANCE):
+		return "Inflicts poison damage in a radius around you and temporarily buffs your Poison Affinity.";
 	case(Spell::VENOMFANG):
 		return "Adds poison damage to your attacks for a while.";
 	default:
@@ -105,6 +110,7 @@ int getSpellTier(const Spell sp)
 	case(Spell::ARCANE_PULSE):
 	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::FIREBALL):
+	case(Spell::TOXIC_RADIANCE):
 		return 2;
 
 	default:
@@ -142,13 +148,16 @@ const int getSpellRange(const Spell sp, const int lvl)
 		return 3 + lvl / 2;
 
 	case(Spell::CHAIN_LIGHTNING):
-		return 10;
+		return MAX(10, lvl - 5);
 
 	case(Spell::CONJURE_FLAME):
 		return 6;
 
 	case(Spell::FIREBALL):
-		return 8;
+		return 8 + lvl / 5;
+
+	case(Spell::TOXIC_RADIANCE):
+		return 4;
 
 	default:
 		return 0;
@@ -161,6 +170,7 @@ bool doesSpellHaveDuration(const Spell sp)
 	{
 	case(Spell::ARCANE_PULSE):
 	case(Spell::SMITE_EVIL):
+	case(Spell::TOXIC_RADIANCE):
 	case(Spell::VENOMFANG):
 		return true;
 
@@ -173,9 +183,10 @@ const int getSpellDuration(const Spell sp, const int lvl)
 {
 	switch (sp)
 	{
-	case(Spell::ARCANE_PULSE):	return lvl * 2;
-	case(Spell::SMITE_EVIL):	return 1 + lvl / 2;
-	case(Spell::VENOMFANG):		return 2 + lvl;
+	case(Spell::ARCANE_PULSE):		return lvl * 2;
+	case(Spell::SMITE_EVIL):		return 1 + lvl / 2;
+	case(Spell::TOXIC_RADIANCE):	return lvl * 5;
+	case(Spell::VENOMFANG):			return 2 + lvl;
 
 	default:
 		return 0;
@@ -213,6 +224,9 @@ const DamageType getSpellDamageType(const Spell sp)
 	case(Spell::FIREBALL):
 		return DTYPE_FIRE;
 
+	case(Spell::TOXIC_RADIANCE):
+		return DTYPE_POISON;
+
 	default:
 		return DTYPE_NORMAL;
 	}
@@ -228,6 +242,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::CHAIN_LIGHTNING):	return intpair(3 + lvl, 3 + lvl * 3);
 	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
 	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
+	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 4);
 	default:
 		return intpair(0, 0);
 	}

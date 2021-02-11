@@ -13,6 +13,7 @@
 
 void blinkInDirection(gamedataPtr gdata, creaturePtr caster, const intpair vec, const int dist);
 void chainDamage(gamedataPtr gdata, creaturePtr t, const DamageType dtype, const intpair drange, int chains_left);
+void radiateSpellDamage(gamedataPtr gdata, creaturePtr caster, const intpair ctr, const int r, const Spell sp, const int lvl);
 
 creaturePtr findRandomSpellTarget(gamedataPtr gdata, creaturePtr caster);
 

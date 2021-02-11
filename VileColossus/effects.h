@@ -22,7 +22,7 @@ void killCreature(gamedataPtr gdata, creaturePtr target);
 
 //	Status effects / damage
 
-void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg);
+void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg, bool ignore_centre = false);
 
 int getDefaultStatusEffectDuration(const StatusEffect st);
 void tryInflictStatusEffect(gamedataPtr gdata, creaturePtr target, const StatusEffect st, const int odds, const int stacks = 0);

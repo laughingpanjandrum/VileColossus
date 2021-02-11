@@ -18,6 +18,7 @@ enum class Spell
 	ARCANE_PULSE,
 	CHAIN_LIGHTNING,
 	FIREBALL,
+	TOXIC_RADIANCE,
 
 	__NONE,
 };

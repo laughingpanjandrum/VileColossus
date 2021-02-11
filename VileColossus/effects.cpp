@@ -273,13 +273,14 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 
 
 //	It says 'radius', but it's actually a square-shaped region.
-void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg)
+//	If ignore_centre is set, the central point (ctr) is unaffected; this is for, eg, spells that 'burst out' from a caster
+void inflictDamageInRadius(gamedataPtr gdata, const intpair ctr, const int r, const DamageType dt, const intpair dmg, bool ignore_centre)
 {
 	for (unsigned x = ctr.first - r; x <= ctr.first + r; x++)
 	{
 		for (unsigned y = ctr.second - r; y <= ctr.second + r; y++)
 		{
-			if (gdata->_map->inBounds(x, y))
+			if (gdata->_map->inBounds(x, y) && (!ignore_centre || !(x == ctr.first && y == ctr.second)))
 			{
 				auto t = gdata->_map->getCreature(x, y);
 				if (t != nullptr)

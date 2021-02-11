@@ -73,6 +73,24 @@ void chainDamage(gamedataPtr gdata, creaturePtr t, const DamageType dtype, const
 }
 
 
+//	Radiates a spell effect outward from the given point. All creatures within the range are affected. (The caster is not.)
+void radiateSpellDamage(gamedataPtr gdata, creaturePtr caster, const intpair ctr, const int r, const Spell sp, const int lvl)
+{
+	for (unsigned x = ctr.first - r; x <= ctr.first + r; x++)
+	{
+		for (unsigned y = ctr.second - r; y <= ctr.second + r; y++)
+		{
+			if (gdata->_map->inBounds(x, y))
+			{
+				auto t = gdata->_map->getCreature(x, y);
+				if (t != nullptr && t != caster)
+					hitTargetWithSpell(gdata, caster, t, sp, lvl);
+			}
+		}
+	}
+}
+
+
 //	For spells with random targets.
 creaturePtr findRandomSpellTarget(gamedataPtr gdata, creaturePtr caster)
 {
@@ -153,6 +171,11 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 
 	case(Spell::SMITE_EVIL):
 		caster->setBuffDuration(BUFF_SMITE_EVIL, getSpellDuration(sp, lvl));
+		break;
+
+	case(Spell::TOXIC_RADIANCE):
+		caster->setBuffDuration(BUFF_TOXIC_RADIANCE, getSpellDuration(sp, lvl));
+		radiateSpellDamage(gdata, caster, caster->_pos, getSpellRange(sp, lvl), sp, lvl);
 		break;
 
 	case(Spell::VENOMFANG):

@@ -482,6 +482,8 @@ int player::getElementalAffinity(const DamageType dt) const
 	case(DTYPE_POISON):
 		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 10;
 		total += getTotalEnchantmentBonus(ENCH_AFF_POISON);
+		if (hasBuff(BUFF_TOXIC_RADIANCE))
+			total += 25 + getSpellPower() / 5;
 		break;
 	}
 	return total;
