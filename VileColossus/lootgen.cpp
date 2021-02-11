@@ -646,13 +646,12 @@ itemPtr lootgen::generateSpellrune(const int tier, const int rarity)
 
 	//	Enchantments.
 	it->_enhancementLevel = it->getMaxEnhancementLevel();
-	enchantItem(it, it->_enhancementLevel);
 
 	return it;
 }
 
 
-//	Rolls 3 random spells we can gain a level in.
+//	Rolls 3 random spells we can gain a level in.   ***	NO LONGER USED, DELETE ***
 const vector<Spell> lootgen::rollSpellsToLearn(const int tier)
 {
 	const vector<Spell>* options = &SPELLS_TIER_1;

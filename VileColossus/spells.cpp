@@ -209,6 +209,7 @@ bool doesSpellInflictDamage(const Spell sp)
 	case(Spell::ARCANE_PULSE):
 	case(Spell::BLINK):
 	case(Spell::SMITE_EVIL):
+	case(Spell::TELEPORT):
 	case(Spell::VENOMFANG):
 		return false;
 
