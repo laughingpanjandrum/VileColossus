@@ -13,11 +13,6 @@ TODO
 
 	Forbid equipping quivers except alongside bows
 
-	RUNE INSCRIPTION INTERFACE ADJUSTMENTS:
-		shorten main box by 2
-		move control info down 1
-		move 'materials' display up 2
-
 	***	Why are multiple bosses spawning at depth 1???
 
 */

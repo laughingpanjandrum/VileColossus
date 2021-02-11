@@ -519,8 +519,17 @@ bool player::isHandednessValid() const
 {
 	auto mh = _Equipped[SLOT_MAIN_HAND];
 	auto oh = _Equipped[SLOT_OFFHAND];
-	if (mh != nullptr && oh != nullptr && mh->_isTwoHanded)
-		return (mh->isRangedWeapon() && oh->_category == ITEM_QUIVER);
+
+	if (mh != nullptr && oh != nullptr)
+	{
+		//	Quivers can ONLY be equipped alongside bows.
+		if (oh->_category == ITEM_QUIVER)
+			return mh->isRangedWeapon();
+
+		//	2h weapons CAN NEVER be equipped alongside another item, EXCEPT in the case of bow+quiver.
+		else if (mh->_isTwoHanded)
+			return (mh->isRangedWeapon() && oh->_category == ITEM_QUIVER);
+	}
 	return true;
 }
 
