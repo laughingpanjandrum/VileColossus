@@ -17,6 +17,7 @@ const string getSpellName(const Spell sp)
 	case(Spell::SMITE_EVIL):			return "Smite Evil";
 	case(Spell::VENOMFANG):				return "Venomfang";
 
+	case(Spell::CHAIN_LIGHTNING):		return "Chain Lightning";
 	case(Spell::FIREBALL):				return "Fireball";
 	default:
 		return "unknown_spell_name";
@@ -34,6 +35,7 @@ const colorType getSpellColor(const Spell sp)
 		return TCODColor::fuchsia;
 	
 	case(Spell::CALL_LIGHTNING):		
+	case(Spell::CHAIN_LIGHTNING):
 		return getDamageTypeColor(DTYPE_ELECTRIC);
 
 	case(Spell::CONJURE_FLAME):
@@ -61,6 +63,8 @@ const string getSpellDescription(const Spell sp)
 		return "Teleport in a chosen direction. Cannot pass through solid walls or creatures.";
 	case(Spell::CALL_LIGHTNING):
 		return "Strikes a random visible enemy with a bolt of lightning.";
+	case(Spell::CHAIN_LIGHTNING):
+		return "Hurl lightning in a chosen direction; it then arcs to additional nearby enemies.";
 	case(Spell::CONJURE_FLAME):
 		return "Hurl fire in a chosen direction.";
 	case(Spell::FIREBALL):
@@ -94,6 +98,7 @@ int getSpellTier(const Spell sp)
 	case(Spell::VENOMFANG):
 		return 1;
 
+	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::FIREBALL):
 		return 2;
 
@@ -114,6 +119,7 @@ bool isSpellTargeted(const Spell sp)
 	switch (sp)
 	{
 	case(Spell::BLINK):
+	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::CONJURE_FLAME):
 	case(Spell::FIREBALL):
 		return true;
@@ -129,6 +135,9 @@ const int getSpellRange(const Spell sp, const int lvl)
 	{
 	case(Spell::BLINK):
 		return 3 + lvl / 2;
+
+	case(Spell::CHAIN_LIGHTNING):
+		return 10;
 
 	case(Spell::CONJURE_FLAME):
 		return 6;
@@ -188,6 +197,7 @@ const DamageType getSpellDamageType(const Spell sp)
 		return DTYPE_ARCANE;
 
 	case(Spell::CALL_LIGHTNING):	
+	case(Spell::CHAIN_LIGHTNING):
 		return DTYPE_ELECTRIC;
 
 	case(Spell::CONJURE_FLAME):
@@ -206,6 +216,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	{
 	case(Spell::ARCANE_EMANATION):	return intpair(1, lvl * 5 + 1);
 	case(Spell::CALL_LIGHTNING):	return intpair(1 + lvl, 2 + lvl * 2);
+	case(Spell::CHAIN_LIGHTNING):	return intpair(3 + lvl, 3 + lvl * 3);
 	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
 	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
 	default:

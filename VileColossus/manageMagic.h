@@ -12,6 +12,7 @@
 
 
 void blinkInDirection(gamedataPtr gdata, creaturePtr caster, const intpair vec, const int dist);
+void chainDamage(gamedataPtr gdata, creaturePtr t, const DamageType dtype, const intpair drange, int chains_left);
 
 creaturePtr findRandomSpellTarget(gamedataPtr gdata, creaturePtr caster);
 

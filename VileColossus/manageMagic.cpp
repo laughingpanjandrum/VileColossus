@@ -38,6 +38,41 @@ void blinkInDirection(gamedataPtr gdata, creaturePtr caster, const intpair vec, 
 }
 
 
+//	Damage recursively jumps to nearby targets. It's possible for it to jump back and forth between the same two
+//	(though it will never just cycle across the same one, nor can it target the player)
+void chainDamage(gamedataPtr gdata, creaturePtr t, const DamageType dtype, const intpair drange, int chains_left)
+{
+	//	Make a list of nearby candidates.
+	const int r = 3;
+	const intpair ctr = t->_pos;
+	vector<creaturePtr> targets;
+	for (int x = ctr.first - r; x <= ctr.first + r; x++)
+	{
+		for (int y = ctr.second - r; y <= ctr.second + r; y++)
+		{
+			if (gdata->_map->inBounds(x, y))
+			{
+				auto cr = gdata->_map->getCreature(x, y);
+				if (cr != nullptr && cr != t && !cr->isPlayer())
+					targets.push_back(cr);
+			}
+		}
+	}
+
+	//	If we found a target, they take damage, and we jump again.
+	if (!targets.empty())
+	{
+		auto cr = targets[randrange(targets.size())];
+		inflictEnergyDamage(gdata, cr, randint(drange.first, drange.second), dtype);
+		addAnimation(gdata, anim_BulletPath(getBresenhamLine(ctr, cr->_pos), getDamageTypeColor(dtype)));
+
+		//	Chain again, unless we ran out.
+		if (chains_left > 1)
+			chainDamage(gdata, cr, dtype, drange, chains_left - 1);
+	}
+}
+
+
 //	For spells with random targets.
 creaturePtr findRandomSpellTarget(gamedataPtr gdata, creaturePtr caster)
 {
@@ -75,6 +110,8 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 		//	Special effects
 		if (sp == Spell::FIREBALL)
 			inflictDamageInRadius(gdata, target->_pos, 2, DTYPE_FIRE, intpair(1, dam));
+		else if (sp == Spell::CHAIN_LIGHTNING)
+			chainDamage(gdata, target, dtype, intpair(1, dam), lvl);
 
 		//	Animation
 		switch (sp)
