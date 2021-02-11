@@ -173,7 +173,7 @@ colorType getStatusEffectColor(const StatusEffect st);
 
 //	Buffs
 
-enum BuffType { BUFF_HASTE, BUFF_SMITE_EVIL, BUFF_STONESKIN, BUFF_VENOMFANG, BUFF_WRATH, BUFF__MAX, };
+enum BuffType { BUFF_ARCANE_PULSE, BUFF_HASTE, BUFF_SMITE_EVIL, BUFF_STONESKIN, BUFF_VENOMFANG, BUFF_WRATH, BUFF__MAX, };
 
 string getBuffName(const BuffType bf);
 

@@ -102,6 +102,7 @@ public:
 	virtual int getManaleech() const;
 	virtual int getReprisalDamage() const;
 	virtual int getSmiteEvilDamage() const;
+	virtual int getArcanePulseDamage() const;
 
 	int getWrathOnKillChance() const { return getTotalEnchantmentBonus(ENCH_RAGE); }
 	int getWrathDamageBonus() const { return 25 + getTotalEnchantmentBonus(ENCH_FURY); }

@@ -1003,6 +1003,8 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 	//	Special damage for Smite Evil
 	if (sp == Spell::SMITE_EVIL)
 		writeFormatted(atx, ++aty, "Smite Damage #" + to_string(gdata->_player->getSmiteEvilDamage()), { TCODColor::gold });
+	else if (sp == Spell::ARCANE_PULSE)
+		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(gdata->_player->getArcanePulseDamage()), { getDamageTypeColor(DTYPE_ARCANE) });
 
 	//	range
 	if (isSpellTargeted(sp))

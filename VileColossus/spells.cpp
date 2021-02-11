@@ -17,6 +17,7 @@ const string getSpellName(const Spell sp)
 	case(Spell::SMITE_EVIL):			return "Smite Evil";
 	case(Spell::VENOMFANG):				return "Venomfang";
 
+	case(Spell::ARCANE_PULSE):			return "Arcane Pulse";
 	case(Spell::CHAIN_LIGHTNING):		return "Chain Lightning";
 	case(Spell::FIREBALL):				return "Fireball";
 	default:
@@ -29,6 +30,7 @@ const colorType getSpellColor(const Spell sp)
 	switch (sp)
 	{
 	case(Spell::ARCANE_EMANATION):		
+	case(Spell::ARCANE_PULSE):
 		return getDamageTypeColor(DTYPE_ARCANE);
 
 	case(Spell::BLINK):
@@ -59,6 +61,8 @@ const string getSpellDescription(const Spell sp)
 	{
 	case(Spell::ARCANE_EMANATION):
 		return "Hurls a bolt of arcane damage at a random visible enemy.";
+	case(Spell::ARCANE_PULSE):
+		return "You release pulses of arcane damage for a short duration, damaging everything adjacent to you.";
 	case(Spell::BLINK):
 		return "Teleport in a chosen direction. Cannot pass through solid walls or creatures.";
 	case(Spell::CALL_LIGHTNING):
@@ -98,6 +102,7 @@ int getSpellTier(const Spell sp)
 	case(Spell::VENOMFANG):
 		return 1;
 
+	case(Spell::ARCANE_PULSE):
 	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::FIREBALL):
 		return 2;
@@ -154,6 +159,7 @@ bool doesSpellHaveDuration(const Spell sp)
 {
 	switch (sp)
 	{
+	case(Spell::ARCANE_PULSE):
 	case(Spell::SMITE_EVIL):
 	case(Spell::VENOMFANG):
 		return true;
@@ -167,6 +173,7 @@ const int getSpellDuration(const Spell sp, const int lvl)
 {
 	switch (sp)
 	{
+	case(Spell::ARCANE_PULSE):	return lvl * 2;
 	case(Spell::SMITE_EVIL):	return 1 + lvl / 2;
 	case(Spell::VENOMFANG):		return 2 + lvl;
 
@@ -179,6 +186,7 @@ bool doesSpellInflictDamage(const Spell sp)
 {
 	switch (sp)
 	{
+	case(Spell::ARCANE_PULSE):
 	case(Spell::BLINK):
 	case(Spell::SMITE_EVIL):
 	case(Spell::VENOMFANG):
@@ -194,6 +202,7 @@ const DamageType getSpellDamageType(const Spell sp)
 	switch (sp)
 	{
 	case(Spell::ARCANE_EMANATION):	
+	case(Spell::ARCANE_PULSE):
 		return DTYPE_ARCANE;
 
 	case(Spell::CALL_LIGHTNING):	

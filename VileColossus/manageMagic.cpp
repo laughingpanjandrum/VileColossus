@@ -147,6 +147,10 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 		hitTargetWithSpell(gdata, caster, findRandomSpellTarget(gdata, caster), sp, lvl);
 		break;
 
+	case(Spell::ARCANE_PULSE):
+		caster->setBuffDuration(BUFF_ARCANE_PULSE, getSpellDuration(sp, lvl));
+		break;
+
 	case(Spell::SMITE_EVIL):
 		caster->setBuffDuration(BUFF_SMITE_EVIL, getSpellDuration(sp, lvl));
 		break;

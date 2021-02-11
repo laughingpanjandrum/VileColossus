@@ -15,6 +15,7 @@ enum class Spell
 
 
 	//	Tier 2
+	ARCANE_PULSE,
 	CHAIN_LIGHTNING,
 	FIREBALL,
 

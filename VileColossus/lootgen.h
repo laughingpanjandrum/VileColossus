@@ -38,7 +38,7 @@ namespace lootgen
 
 	const vector<Spell> SPELLS_TIER_1 = { Spell::ARCANE_EMANATION, Spell::BLINK, Spell::CALL_LIGHTNING, Spell::CONJURE_FLAME, Spell::SMITE_EVIL, Spell::VENOMFANG, };
 
-	const vector<Spell> SPELLS_TIER_2 = { Spell::CHAIN_LIGHTNING, Spell::FIREBALL, };
+	const vector<Spell> SPELLS_TIER_2 = { Spell::ARCANE_PULSE, Spell::CHAIN_LIGHTNING, Spell::FIREBALL, };
 
 	const vector<BaseWeaponType> getWeaponTypesOfTier(const int tier);
 	const vector<ItemEnchantment> getEnchantmentsForItemCategory(const ItemCategory cat);

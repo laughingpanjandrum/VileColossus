@@ -379,6 +379,11 @@ int player::getSmiteEvilDamage() const
 	return 10 + getSpellPower() / 10;
 }
 
+int player::getArcanePulseDamage() const
+{
+	return 10 + getSpellPower() / 5;
+}
+
 
 //	Sums up gem levels from equipped weapons.
 int player::getTotalGemBonusFromWeapons(const GemType gem) const

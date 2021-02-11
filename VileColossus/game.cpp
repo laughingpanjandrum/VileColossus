@@ -565,6 +565,18 @@ void game::doCreatureTick(creaturePtr cr)
 	if (cr->hasStatusEffect(STATUS_POISON))
 		creatureTakeDamage(_gdata, cr, 1 + cr->getMaxHealth() / 30);
 
+	//	PULSE
+	if (cr->isPlayer() && cr->hasBuff(BUFF_ARCANE_PULSE))
+	{
+		auto dam = _gdata->_player->getArcanePulseDamage();
+		for (auto t : getAdjacentCreatures(_gdata, cr->_pos))
+		{
+			if (t != cr)
+				inflictEnergyDamage(_gdata, t, randint(1, dam), DTYPE_ARCANE);
+		}
+		addAnimation(_gdata, anim_Explosion(cr->_pos, 1, '#', getDamageTypeColor(DTYPE_ARCANE)));
+	}
+
 	//	Progress creature state
 	cr->tick();
 

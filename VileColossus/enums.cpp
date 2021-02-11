@@ -480,11 +480,12 @@ string getBuffName(const BuffType bf)
 {
 	switch (bf)
 	{
-	case(BUFF_HASTE):		return "Haste";
-	case(BUFF_SMITE_EVIL):	return "Smite Evil";
-	case(BUFF_STONESKIN):	return "Stoneskin";
-	case(BUFF_VENOMFANG):	return "Venomfang";
-	case(BUFF_WRATH):		return "Wrath";
+	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
+	case(BUFF_HASTE):			return "Haste";
+	case(BUFF_SMITE_EVIL):		return "Smite Evil";
+	case(BUFF_STONESKIN):		return "Stoneskin";
+	case(BUFF_VENOMFANG):		return "Venomfang";
+	case(BUFF_WRATH):			return "Wrath";
 	default:
 		return "buff_" + to_string(bf);
 	}
