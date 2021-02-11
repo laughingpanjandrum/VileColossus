@@ -150,9 +150,6 @@ void game::drawScreen()
 	case(STATE_LEARN_SPELL):
 		_disp.drawRuneImprinter(_gdata);
 		break;
-	case(STATE_RUNE_ENHANCER):
-		_disp.drawRuneEnhancer(_gdata);
-		break;
 
 	case(STATE_GEMSTONE_PRESS):
 		_disp.drawGemstonePress(_gdata);

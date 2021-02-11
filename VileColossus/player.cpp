@@ -534,6 +534,10 @@ int player::getTotalEnchantmentBonus(const ItemEnchantment en) const
 		if (it != nullptr)
 			total += it->getEnchantmentValue(en);
 	}
+	for (auto it : _ImprintedRunes)
+	{
+		total += it->getEnchantmentValue(en);
+	}
 	return total;
 }
 

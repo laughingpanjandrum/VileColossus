@@ -101,7 +101,7 @@ string item::getName() const
 		name = "the " + name + " '" + _nickname + "'";
 
 	//	Enchantments
-	else if (!_Enchants.empty())
+	else if (!_Enchants.empty() && _category != ITEM_SPELLRUNE)
 		name += " of " + getItemEnchantmentName(_Enchants[0]);
 	
 	return name;
@@ -323,10 +323,13 @@ void item::gainCharge()
 //	Maximum number of enchants (for gear); maximum upgrade level (for gems)
 int item::getMaxEnhancementLevel() const
 {
-	if (_category == ITEM_GEM)
-		return 5;
-	else
-		return _rarity + 1;
+	switch(_category)
+	{
+	case(ITEM_FLASK):		return _rarity;
+	case(ITEM_GEM):			return 5;
+	case(ITEM_SPELLRUNE):	return _rarity - 1;
+	default:				return _rarity + 1;
+	}
 }
 
 

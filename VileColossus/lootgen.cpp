@@ -57,6 +57,9 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 	case(ITEM_FLASK):
 		return { ENCH_CAPACITY, ENCH_CHARGING, ENCH_CURING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
 
+	case(ITEM_SPELLRUNE):
+		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_MAGIC, ENCH_MANALEECH, };
+
 	case(ITEM_BOOTS):
 	case(ITEM_BRACERS):
 	case(ITEM_CHESTPIECE):
@@ -638,6 +641,10 @@ itemPtr lootgen::generateSpellrune(const int tier, const int rarity)
 	auto it = itemPtr(new item(name, ITEM_SPELLRUNE, rarity));
 	it->_containsSpell = sp;
 	it->_spellLevel = lvl;
+
+	//	Enchantments.
+	it->_enhancementLevel = it->getMaxEnhancementLevel();
+	enchantItem(it, it->_enhancementLevel);
 
 	return it;
 }

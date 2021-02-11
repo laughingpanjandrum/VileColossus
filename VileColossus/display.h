@@ -51,6 +51,7 @@ public:
 	void drawItemInfoDetailed(gamedataPtr gdata, itemPtr it);
 	void drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty);
 	void drawInventoryCapacity(gamedataPtr gdata, int x, int y);
+	int drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int aty);
 
 	void drawStashedGemstones(gamedataPtr gdata, int x, int y);
 	void drawStashedMaterials(gamedataPtr gdata, int x, int y);
@@ -70,8 +71,7 @@ public:
 	void drawGemstoneFabricator(gamedataPtr gdata);
 
 	void drawRuneImprinter(gamedataPtr gdata);
-	void drawRuneEnhancer(gamedataPtr gdata);
-	
+
 	void drawStash(gamedataPtr gdata);
 
 
