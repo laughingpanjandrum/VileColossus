@@ -252,6 +252,17 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_WOUNDING):		return "wounding";
 	case(ENCH_WRATH):			return "wrath";
 
+		//	Unique enchantments
+	case(ENCH_AFFINITY):		return "Affinity";
+	case(ENCH_ARCANE_SHIELD):	return "Arcane Mirror";
+	case(ENCH_BLACKBLOOD):		return "Blackblood";
+	case(ENCH_CUNNING):			return "Rat's Cunning";
+	case(ENCH_FIREBURST):		return "Fireburst";
+	case(ENCH_SHADOWSTRIKE):	return "Shade";
+	case(ENCH_STORMBURST):		return "Stormburst";
+	case(ENCH_VENOMBURST):		return "Venomburst";
+	case(ENCH_WEIGHT):			return "Dragonbone";
+
 	default:
 		return "enchantment_" + to_string(en);
 	}
@@ -301,7 +312,10 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CUNNING):			return "Cunning";
+	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
+	case(ENCH_STORMBURST):		return "Stormburst";
+	case(ENCH_VENOMBURST):		return "Venomburst";
 	case(ENCH_WEIGHT):			return "Massive";
 
 	default:
@@ -355,7 +369,10 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
+	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
+	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";
+	case(ENCH_VENOMBURST):		return "Increases maximum poison damage by " + plusminus(val) + ".";
 	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + "% damage, but attack speed is slowed.";
 
 	default:

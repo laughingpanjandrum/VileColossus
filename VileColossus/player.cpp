@@ -326,22 +326,25 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):     
-		total += getTotalEnchantmentBonus(ENCH_ARCANE); 
+		total += getTotalEnchantmentBonus(ENCH_ARCANE);
 		total += getTotalGemBonusFromWeapons(GemType::SILVERSTONE) * 2;
 		break;
 	
 	case(DTYPE_ELECTRIC):   
-		total += getTotalEnchantmentBonus(ENCH_LIGHTNING); 
+		total += getTotalEnchantmentBonus(ENCH_LIGHTNING);
+		total += getTotalEnchantmentBonus(ENCH_STORMBURST);
 		total += getTotalGemBonusFromWeapons(GemType::BOLTSTONE) * 2;
 		break;
 	
 	case(DTYPE_FIRE):       
 		total += getTotalEnchantmentBonus(ENCH_BURNING); 
+		total += getTotalEnchantmentBonus(ENCH_FIREBURST);
 		total += getTotalGemBonusFromWeapons(GemType::FLAMESTONE) * 2;
 		break;
 	
 	case(DTYPE_POISON):     
 		total += getTotalEnchantmentBonus(ENCH_VENOM); 
+		total += getTotalEnchantmentBonus(ENCH_VENOMBURST);
 		total += getTotalGemBonusFromWeapons(GemType::SPIDERSTONE) * 2;
 		if (hasBuff(BUFF_VENOMFANG))
 			total += 1 + 5.0f * (float)getSpellPower() / 100.0f;

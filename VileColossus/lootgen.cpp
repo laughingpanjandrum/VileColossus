@@ -677,38 +677,39 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_AFFINITY):
 		it = generateArmourPiece(maxTier, 4);
 		it->addEnchantment(ENCH_AFFINITY, randint(10, 40));
-		it->setNickname("Affinity");
 		break;
 
 	case(ENCH_ARCANE_SHIELD):
 		it = itemPtr(new item("shield", ITEM_SHIELD, 4));
 		it->setProperty(PROP_DEFENCE, 3);
 		it->addEnchantment(ENCH_ARCANE_SHIELD, randint(5, 15));
-		it->setNickname("Arcane Mirror");
 		break;
 
 	case(ENCH_BLACKBLOOD):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_BLACKBLOOD, randint(30, 50));
-		it->setNickname("Black Blood");
 		break;
 
 	case(ENCH_CUNNING):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
-		it->setNickname("Cunning Rat");
+		break;
+
+	case(ENCH_FIREBURST):
+	case(ENCH_STORMBURST):
+	case(ENCH_VENOMBURST):
+		it = generateWeapon(maxTier, 4);
+		it->addEnchantment(en, randint(10, 13));
 		break;
 
 	case(ENCH_SHADOWSTRIKE):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_SHADOWSTRIKE, randint(5, 10));
-		it->setNickname("Shade");
 		break;
 
 	case(ENCH_WEIGHT):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_WEIGHT, randint(20, 30) * 10);
-		it->setNickname("Dragon's Tooth");
 		break;
 
 
@@ -720,6 +721,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	}
 
 	//	remaining enchants
+	it->setNickname(getItemEnchantmentName(en));
 	it->_rarity = 4;
 	it->_enhancementLevel = randint(3, 4);
 	return it;
