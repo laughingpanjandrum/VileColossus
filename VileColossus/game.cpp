@@ -11,8 +11,6 @@ TODO
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Show enchantment descriptions when adding enchants to items
 
-	Forbid equipping quivers except alongside bows
-
 	***	Why are multiple bosses spawning at depth 1???
 
 */
@@ -51,20 +49,16 @@ void game::start()
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_VENOMBURST));
-	/*for (unsigned i = 0; i < 10; i++)
+	for (unsigned i = 0; i < 10; i++)
 	{
-		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
+		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}*/
+	}
 	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::rollItemDrop(3, 4);
 		addToInventory(_gdata, it);
 	}*/
-	/*_gdata->_player->addSpellLevel(Spell::ARCANE_EMANATION, 1);
-	_gdata->_player->addSpellLevel(Spell::CALL_LIGHTNING, 5);
-	_gdata->_player->addSpellLevel(Spell::VENOMFANG, 2);
-	_gdata->_player->addSpellLevel(Spell::CONJURE_FLAME, 2);*/
 
 	//	begin the main game
 	_gdata->_state = STATE_NORMAL;

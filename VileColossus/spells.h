@@ -5,12 +5,18 @@
 
 enum class Spell
 {
+	//	Tier 1
 	ARCANE_EMANATION,
 	BLINK,
 	CALL_LIGHTNING,
 	CONJURE_FLAME,
 	SMITE_EVIL,
 	VENOMFANG,
+
+
+	//	Tier 2
+	FIREBALL,
+
 	__NONE,
 };
 

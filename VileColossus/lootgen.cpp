@@ -618,7 +618,12 @@ itemPtr lootgen::generateJewel(const int tier, const int rarity)
 itemPtr lootgen::generateSpellrune(const int tier, const int rarity)
 {
 	//	Pick a spell (based on tier)
-	const vector<Spell>* options = &SPELLS_TIER_1;
+	const vector<Spell>* options;
+	switch (tier)
+	{
+	case(2):	options = &SPELLS_TIER_2; break;
+	default:	options = &SPELLS_TIER_1; break;
+	}
 	auto sp = options->at(randrange(options->size()));
 
 	//	Spell level (determined by rarity)
@@ -631,11 +636,8 @@ itemPtr lootgen::generateSpellrune(const int tier, const int rarity)
 	case(4):	lvl = randint(11, 14); break;
 	}
 
-	//	name depends on tier
-	string name = " rune of " + getSpellName(sp);
-	if		(tier == 1)	name = "minor" + name;
-	else if (tier == 2)	name = "major" + name;
-	else				name = "grand" + name;
+	//	name
+	string name = "rune of " + getSpellName(sp);
 
 	//	Generate the item.
 	auto it = itemPtr(new item(name, ITEM_SPELLRUNE, rarity));

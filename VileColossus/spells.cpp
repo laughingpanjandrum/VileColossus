@@ -16,6 +16,8 @@ const string getSpellName(const Spell sp)
 	case(Spell::CONJURE_FLAME):			return "Conjure Flame";
 	case(Spell::SMITE_EVIL):			return "Smite Evil";
 	case(Spell::VENOMFANG):				return "Venomfang";
+
+	case(Spell::FIREBALL):				return "Fireball";
 	default:
 		return "unknown_spell_name";
 	}
@@ -35,6 +37,7 @@ const colorType getSpellColor(const Spell sp)
 		return getDamageTypeColor(DTYPE_ELECTRIC);
 
 	case(Spell::CONJURE_FLAME):
+	case(Spell::FIREBALL):
 		return getDamageTypeColor(DTYPE_FIRE);
 
 	case(Spell::VENOMFANG):
@@ -60,6 +63,8 @@ const string getSpellDescription(const Spell sp)
 		return "Strikes a random visible enemy with a bolt of lightning.";
 	case(Spell::CONJURE_FLAME):
 		return "Hurl fire in a chosen direction.";
+	case(Spell::FIREBALL):
+		return "Hurl an exploding ball of flame.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target. Lasts for more hits at higher levels.";
 	case(Spell::VENOMFANG):
@@ -89,6 +94,9 @@ int getSpellTier(const Spell sp)
 	case(Spell::VENOMFANG):
 		return 1;
 
+	case(Spell::FIREBALL):
+		return 2;
+
 	default:
 		return 0;
 	}
@@ -107,6 +115,7 @@ bool isSpellTargeted(const Spell sp)
 	{
 	case(Spell::BLINK):
 	case(Spell::CONJURE_FLAME):
+	case(Spell::FIREBALL):
 		return true;
 
 	default:
@@ -123,6 +132,9 @@ const int getSpellRange(const Spell sp, const int lvl)
 
 	case(Spell::CONJURE_FLAME):
 		return 6;
+
+	case(Spell::FIREBALL):
+		return 8;
 
 	default:
 		return 0;
@@ -179,6 +191,7 @@ const DamageType getSpellDamageType(const Spell sp)
 		return DTYPE_ELECTRIC;
 
 	case(Spell::CONJURE_FLAME):
+	case(Spell::FIREBALL):
 		return DTYPE_FIRE;
 
 	default:
@@ -194,6 +207,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::ARCANE_EMANATION):	return intpair(1, lvl * 5 + 1);
 	case(Spell::CALL_LIGHTNING):	return intpair(1 + lvl, 2 + lvl * 2);
 	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
+	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
 	default:
 		return intpair(0, 0);
 	}

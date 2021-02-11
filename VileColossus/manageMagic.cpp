@@ -72,6 +72,10 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 		dam = adjustByPercent(dam, caster->getElementalAffinity(dtype));
 		inflictEnergyDamage(gdata, target, dam, dtype);
 
+		//	Special effects
+		if (sp == Spell::FIREBALL)
+			inflictDamageInRadius(gdata, target->_pos, 2, DTYPE_FIRE, intpair(1, dam));
+
 		//	Animation
 		switch (sp)
 		{
@@ -85,6 +89,11 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 
 		case(Spell::CONJURE_FLAME):
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '*', getDamageTypeColor(dtype)));
+			break;
+
+		case(Spell::FIREBALL):
+			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '*', getDamageTypeColor(dtype)));
+			addAnimation(gdata, padAnimationFront(anim_Explosion(target->_pos, 2, '#', TCODColor::flame), 5));
 			break;
 		}
 	}
