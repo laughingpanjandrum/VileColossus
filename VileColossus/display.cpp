@@ -831,7 +831,7 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 //	Pick spells to equip.
 void display::drawRuneImprinter(gamedataPtr gdata)
 {
-	drawBox(2, 2, 40, 50, COLOR_DARK);
+	drawBox(2, 2, 40, 48, COLOR_DARK);
 	_win.write(3, 2, "SELECT RUNES TO IMPRINT", COLOR_LIGHT);
 
 	//	Spell runes
@@ -862,9 +862,9 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 
 			//	Other options
 			if (gdata->_player->isRuneEquipped(it))
-				writeFormatted(47, 23, "#u @Unequip this rune", { COLOR_LIGHT });
-			writeFormatted(47, 24, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
-			writeFormatted(49, 25, "(Requires #" + to_string(it->getEnhanceCost()) + " Rune Shards@)", { getMaterialTypeColor(MaterialType::RUNE_SHARD) });
+				writeFormatted(47, 24, "#u @Unequip this rune", { COLOR_LIGHT });
+			writeFormatted(47, 25, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
+			writeFormatted(49, 26, "(Requires #" + to_string(it->getEnhanceCost()) + " Rune Shards@)", { getMaterialTypeColor(MaterialType::RUNE_SHARD) });
 		}
 		else
 			_win.write(x + 2, y, it->getName(), it->getColor());
@@ -881,7 +881,7 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 
 
 	//	mats/messages
-	drawStashedMaterials(gdata, 47, 44);
+	drawStashedMaterials(gdata, 47, 42);
 	drawMessages(gdata);
 }
 

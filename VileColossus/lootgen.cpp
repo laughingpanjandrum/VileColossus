@@ -740,10 +740,10 @@ int lootgen::getLootTierForMonsterLevel(const int lvl)
 //	Gems have more tiers than normal items, so they use a different table
 int lootgen::getGemTierForMonsterLevel(const int lvl)
 {
-	if		(lvl < 6)	return 1;
-	else if (lvl < 12)	return 2;
-	else if (lvl < 18)	return 3;
-	else if (lvl < 24)	return 4;
+	if		(lvl < 12)	return 1;
+	else if (lvl < 18)	return 2;
+	else if (lvl < 24)	return 3;
+	else if (lvl < 30)	return 4;
 	else				return 5;
 }
 
@@ -793,6 +793,7 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
 	it->_tier = tier;
 	if (it->_enhancementLevel > 0)
 		enchantItem(it, it->_enhancementLevel);	
+
 
 	//	Nickname for rares!!
 	if (rarity == 3 && it->_category != ITEM_SPELLRUNE)

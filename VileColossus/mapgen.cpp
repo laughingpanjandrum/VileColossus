@@ -1000,9 +1000,13 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 	}
 
 	//	Chaos
-	scatterOnMap(m, MT_BUSH, 0.05);
-	scatterOnMap(m, MT_GRASS, 0.05);
-	scatterOnMap(m, MT_WATER, 0.05); 
+	float density = 0.05;
+	if		(dl >= 6)	density = 0.20f;
+	else if (dl >= 4)	density = 0.15f;
+	else if (dl >= 2)	density = 0.10f;
+	scatterOnMap(m, MT_BUSH, density);
+	scatterOnMap(m, MT_GRASS, density);
+	scatterOnMap(m, MT_WATER, density);
 
 	//	Treasures
 	int chest_count = randint(1, 5);

@@ -91,6 +91,10 @@ animationPtr anim_Projectile(const vector<intpair> path, const int glyph, const 
 {
 	auto a = animationPtr(new animation());
 
+	//	IF we're given an empty path, we just add an emergency frame so the game doesn't crash.
+	if (path.empty())
+		a->addFrame();
+
 	//	Add each point to the animation.
 	for (unsigned i = 0; i < path.size(); i++)
 	{
@@ -115,6 +119,10 @@ animationPtr padAnimationFront(animationPtr anim, int frames)
 animationPtr anim_BulletPath(const vector<intpair> path, const colorType col)
 {
 	auto a = animationPtr(new animation());
+
+	//	IF we're given an empty path, we just add an emergency frame so the game doesn't crash.
+	if (path.empty())
+		a->addFrame();
 
 	//	Add each point to the animation.
 	for (unsigned i = 0; i < path.size(); i++)
