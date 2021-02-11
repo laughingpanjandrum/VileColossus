@@ -1210,7 +1210,7 @@ int display::drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int at
 	for (auto en : *en_list)
 	{
 		_win.writec(atx, ++aty, 4, TCODColor::gold);
-		writeFormatted(atx + 2, aty, getItemEnchantmentDescription(en) + " #" + plusminus(it->getEnchantmentValue(en)), { COLOR_POSITIVE });
+		writeFormatted(atx + 2, aty, formatItemEnchantment(en, it->getEnchantmentValue(en)), { COLOR_POSITIVE });
 	}
 	return aty;
 }

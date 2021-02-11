@@ -143,6 +143,7 @@ enum ItemEnchantment
 const string getItemEnchantmentName(const ItemEnchantment en);
 const string getItemEnchantmentDescription(const ItemEnchantment en);
 const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val);
+const string formatItemEnchantment(const ItemEnchantment en, const int val);
 
 
 

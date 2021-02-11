@@ -271,7 +271,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_BURNING):			return "Fire Damage";
 	case(ENCH_CAPACITY):		return "Max Charges";
 	case(ENCH_CHARGING):		return "Charges/Kill";
-	case(ENCH_CURING):			return "Cure Poison";
+	case(ENCH_CURING):			return "Cure Afflictions";
 	case(ENCH_DEFENCE):			return "Defence Value";
 	case(ENCH_FLAMEWARD):		return "Fire Resistance";
 	case(ENCH_FURY):			return "Wrath Damage";
@@ -322,7 +322,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_BURNING):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
 	case(ENCH_CAPACITY):		return "The flask has " + to_string(val) + " additional charges.";
 	case(ENCH_CHARGING):		return "Kills add " + to_string(val) + "% more charge to the flask.";
-	case(ENCH_CURING):			return "Immediately removes poison status effect when quaffed.";
+	case(ENCH_CURING):			return "Immediately removes Burn, Poison, and Shock status effects when quaffed.";
 	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
 	case(ENCH_FLAMEWARD):		return "Reduces Fire damage taken by " + to_string(val) + "%.";
 	case(ENCH_FURY):			return "Inflict +" + to_string(val) + "% damage when buffed with Wrath.";
@@ -354,12 +354,50 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
-	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + " more damage, but attack speed is slowed.";
+	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + "% damage, but attack speed is slowed.";
 
 	default:
 		return "enchantment_" + to_string(en);
 	}
 }
+
+
+//	The verbose name displayed in the item's description. Adds little formatting niceties.
+const string formatItemEnchantment(const ItemEnchantment en, const int val)
+{
+	auto name = getItemEnchantmentDescription(en);
+	switch (en)
+	{
+		//	Numeric value is irrelevant
+	case(ENCH_CURING):
+		return name;
+
+		//	Plus percent
+	case(ENCH_AFF_ARCANE):
+	case(ENCH_AFF_ELECTRIC):
+	case(ENCH_AFF_FIRE):
+	case(ENCH_AFF_POISON):
+	case(ENCH_BLACKBLOOD):
+	case(ENCH_CHARGING):
+	case(ENCH_CUNNING):
+	case(ENCH_FLAMEWARD):
+	case(ENCH_FURY):
+	case(ENCH_POISON_WARD):
+	case(ENCH_RAGE):
+	case(ENCH_SHADOWSTRIKE):
+	case(ENCH_SHARPNESS):
+	case(ENCH_SLAYING):
+	case(ENCH_SPELLPOWER):
+	case(ENCH_SPELLWARD):
+	case(ENCH_STORMWARD):
+		return name + " #" + plusminus(val) + "%";
+		
+		//	Just the +bonus
+	default:
+		return name + " #" + plusminus(val);
+	}
+}
+
 
 string getDamageTypeName(const DamageType dt)
 {

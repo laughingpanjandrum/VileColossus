@@ -8,7 +8,11 @@ void applyFlaskEffect(gamedataPtr gdata, itemPtr it)
 	if (it->hasProperty(PROP_HEAL_ON_USE))
 		gdata->_player->healDamage(it->getProperty(PROP_HEAL_ON_USE));
 	if (it->hasEnchantment(ENCH_CURING))
+	{
+		gdata->_player->cureStatusEffect(STATUS_BURN);
 		gdata->_player->cureStatusEffect(STATUS_POISON);
+		gdata->_player->cureStatusEffect(STATUS_SHOCK);
+	}
 	if (it->hasEnchantment(ENCH_MAGIC_RESTORE))
 		gdata->_player->restoreMagic(it->getEnchantmentValue(ENCH_MAGIC_RESTORE));
 	if (it->hasProperty(PROP_HASTE_BUFF))
