@@ -831,13 +831,14 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 //	Pick spells to equip.
 void display::drawRuneImprinter(gamedataPtr gdata)
 {
-	drawBox(2, 2, 35, 50, COLOR_DARK);
+	drawBox(2, 2, 40, 50, COLOR_DARK);
 	_win.write(3, 2, "SELECT RUNES TO IMPRINT", COLOR_LIGHT);
 
 	//	Spell runes
-	int x = 4, y = 3;
+	int x = 5, y = 3;
 	for (unsigned i = 0; i < gdata->_currentItemList.size(); i++)
 	{
+		//	test if this rune is selected
 		++y;
 		bool selected = gdata->_idx == i;
 		if (selected)
@@ -846,18 +847,24 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 		//	the spell rune
 		auto it = gdata->_currentItemList[i];
 		_win.writec(x, y, it->getGlyph(), it->getColor());
+		if (gdata->_player->isRuneEquipped(it))
+			_win.writec(x - 2, y, '#', COLOR_WHITE);
 
+		//	actual rune name
 		if (selected)
 		{
+			//	highlight rune
 			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
 			drawSpellInfo(gdata, it->_containsSpell, it->_spellLevel, 47, 4);
+
+			//	Other options
+			writeFormatted(47, 24, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
+			writeFormatted(49, 25, "(Requires #" + to_string(it->getEnhanceCost()) + " Rune Shards@)", { getMaterialTypeColor(MaterialType::RUNE_SHARD) });
 		}
 		else
 			_win.write(x + 2, y, it->getName(), it->getColor());
 	}
 
-	//	Other options
-	writeFormatted(x, y + 4, "#e @Open rune enhancer", { COLOR_LIGHT });
 
 	//	Spells known
 	x = 47, y = 30;
@@ -866,6 +873,10 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 	writeFormatted(53, 37, "#U @Un-inscribe all runes", { COLOR_LIGHT });
 	for (auto sp : gdata->_player->getAllSpellsKnown())
 		_win.write(x, ++y, getSpellNameFull(sp, gdata->_player->getSpellLevel(sp)), getSpellColor(sp));
+
+	//	mats/messages
+	drawStashedMaterials(gdata, 47, 44);
+	drawMessages(gdata);
 }
 
 
@@ -888,6 +899,8 @@ void display::drawRuneEnhancer(gamedataPtr gdata)
 		//	the spell rune
 		auto it = gdata->_currentItemList[i];
 		_win.writec(x, y, it->getGlyph(), it->getColor());
+		if (gdata->_player->isRuneEquipped(it))
+			_win.writec(x - 2, y, '#', COLOR_WHITE);
 
 		if (selected)
 		{
@@ -895,15 +908,13 @@ void display::drawRuneEnhancer(gamedataPtr gdata)
 			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
 			drawSpellInfo(gdata, it->_containsSpell, it->_spellLevel, 47, 4);
 
-			//	Enhancement info
-			writeFormatted(47, 24, "#e @Increases spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
-			writeFormatted(48, 25, "Requires #" + to_string(it->getEnhanceCost()) + " Rune Shards", { getMaterialTypeColor(MaterialType::RUNE_SHARD) });
+			
 		}
 		else
 			_win.write(x + 2, y, it->getName(), it->getColor());
 	}
 
-	drawStashedMaterials(gdata, 47, 30);
+	
 	drawMessages(gdata);
 }
 

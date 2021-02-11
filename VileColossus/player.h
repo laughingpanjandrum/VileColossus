@@ -96,6 +96,7 @@ public:
 	virtual int getMaxAttackRange() const;
 
 	virtual int getWeaponDamageOfType(const DamageType dt) const;
+	virtual int getElementalAffinity(const DamageType dt) const;
 
 	virtual int getLeechOnKill() const;
 	virtual int getManaleech() const;
@@ -121,9 +122,8 @@ public:
 	int getSpellLevel(const Spell sp) const;
 
 	void equipSpellRune(itemPtr it);
+	bool isRuneEquipped(const itemPtr it) const { return find(_ImprintedRunes.begin(), _ImprintedRunes.end(), it) != _ImprintedRunes.end(); }
 	vector<itemPtr> _ImprintedRunes;
-
-	virtual int getElementalAffinity(const DamageType dt) const;
 
 
 	//	Equipment

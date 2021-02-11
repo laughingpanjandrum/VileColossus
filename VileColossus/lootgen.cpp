@@ -549,12 +549,6 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		it->_isTwoHanded = true;
 		break;
 	}
-
-
-	//	Roll durability.
-	it->setMaxDurability(dieRoll(4, 6) + 10);
-	it->_damageTaken = randint(0, it->_maxDurability / 2);
-
 	return it;
 }
 
@@ -572,9 +566,14 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 		it = generateWeaponOfType(wtable[randrange(wtable.size())]);
 	}
 
+	//	Roll durability.
+	it->setMaxDurability(dieRoll(4, 6) + 10);
+	it->_damageTaken = randint(0, it->_maxDurability / 2);
+
 	//	complete item
 	it->_rarity = rarity;
 	it->_enhancementLevel = 1 + randint(0, it->_rarity);
+
 	return it;
 }
 

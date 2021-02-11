@@ -251,6 +251,8 @@ void populateCurrentItemListWithRunes(gamedataPtr gdata)
 		if (it->_category == ITEM_SPELLRUNE)
 			gdata->_currentItemList.push_back(it);
 	}
+	for (auto it : gdata->_player->_ImprintedRunes)
+		gdata->_currentItemList.push_back(it);
 }
 
 
@@ -287,7 +289,11 @@ void removeAllSpellRunes(gamedataPtr gdata)
 //	If we don't have room, returns False.
 bool playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 {
-	//	If we have this spell equipped already, replace it.
+	//	We can't equip the exact same rune twice!
+	if (gdata->_player->isRuneEquipped(it))
+		return false;
+
+	//	If we have a different version of this spell equipped already, replace it.
 	for (unsigned i = 0; i < gdata->_player->_ImprintedRunes.size(); i++)
 	{
 		if (gdata->_player->_ImprintedRunes[i]->_containsSpell == it->_containsSpell)
@@ -295,9 +301,6 @@ bool playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 			//	replace!
 			addToStash(gdata, gdata->_player->_ImprintedRunes[i]);
 			gdata->_player->_ImprintedRunes[i] = it;
-
-			//	becase we replaced the item, we need to refresh the list of spells available
-			populateCurrentItemListWithRunes(gdata);
 			return true;
 		}
 	}
@@ -328,7 +331,29 @@ void imprintSelectedSpellRune(gamedataPtr gdata)
 			//	Remove from inventory or stash, whichever it's in.
 			removeFromInventory(gdata, it);
 			removeFromStash(gdata, it);
-			removeFromCurrentItemList(gdata, it);
+			
+			//	Re-populate the list of runes, as we've changed which ones are available.
+			populateCurrentItemListWithRunes(gdata);
 		}
 	}
+}
+
+
+//	If the selected rune is equipped, we un-equip it.
+void removeSelectedRune(gamedataPtr gdata)
+{
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		auto it = gdata->_currentItemList[gdata->_idx];
+		for (unsigned i = 0; i < gdata->_player->_ImprintedRunes.size(); i++)
+		{
+			if (gdata->_player->_ImprintedRunes[i] == it)
+			{
+				gdata->_player->_ImprintedRunes.erase(gdata->_player->_ImprintedRunes.begin() + i);
+				addToStash(gdata, it);
+				break;
+			}
+		}
+	}
+	populateCurrentItemListWithRunes(gdata);
 }

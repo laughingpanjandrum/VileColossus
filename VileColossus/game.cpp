@@ -10,7 +10,7 @@ TODO
 	Add enchantments to spell runes
 	What gives a spellrune the right to be called 'major' lol
 	Rune enhancer should target EQUIPPED spells
-	Make generate for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
+	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Show enchantment descriptions when adding enchants to items
 
 	***	Why are multiple bosses spawning at depth 1???
@@ -50,11 +50,11 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	/*for (unsigned i = 0; i < 10; i++)
+	for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(1, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}*/
+	}
 	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::rollItemDrop(3, 4);
@@ -354,18 +354,14 @@ void game::processInput()
 		case(STATE_LEARN_SPELL):
 			if (_ih->isKeyPressed('U'))
 				removeAllSpellRunes(_gdata);
+			else if (_ih->isKeyPressed('u'))
+				removeSelectedRune(_gdata);
 			else if (_ih->isKeyPressed('e'))
-				openRuneEnhancer(_gdata);
+				tryEnhanceRune(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				imprintSelectedSpellRune(_gdata);
-			break;
-		case(STATE_RUNE_ENHANCER):
-			if (_ih->isDirectionalKeyPressed())
-				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
-			else if (_ih->isKeyPressed('e'))
-				tryEnhanceRune(_gdata);
 			break;
 
 
