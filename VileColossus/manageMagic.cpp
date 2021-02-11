@@ -91,6 +91,45 @@ void radiateSpellDamage(gamedataPtr gdata, creaturePtr caster, const intpair ctr
 }
 
 
+//	Like Blink, but can pass through creatures. Cannot end on the same square as a creature, however!
+void teleportInDirection(gamedataPtr gdata, creaturePtr caster, const intpair vec, const int dist)
+{
+	//	Find the final blink point
+	vector<intpair> pts;
+	auto at = caster->_pos;
+	for (unsigned i = 0; i < dist; i++)
+	{
+		auto last = at;
+		intpair_add(&at, &vec);
+		if (gdata->_map->inBounds(at) && gdata->_map->isWalkable(at) && gdata->_map->isTransparent(at))
+			pts.push_back(at);
+		else
+		{
+			at = last;
+			break;
+		}
+	}
+
+	//	Walk backwards through the points, erasing each one that contains a creature.
+	//	This way the path ACTUALLY ends at the furthest point NOT containing a creature.
+	while (!pts.empty())
+	{
+		if (gdata->_map->getCreature(pts.back()) == nullptr)
+			break;
+		else
+			pts.pop_back();
+	}
+
+	//	The actual teleport.
+	if (!pts.empty())
+	{
+		addAnimation(gdata, anim_Projectile(pts, '*', TCODColor::fuchsia));
+		if (caster->isPlayer())
+			setPlayerPosition(gdata, at);
+	}
+}
+
+
 //	For spells with random targets.
 creaturePtr findRandomSpellTarget(gamedataPtr gdata, creaturePtr caster)
 {
@@ -200,6 +239,8 @@ void playerCastAimedSpell(gamedataPtr gdata, const intpair vec)
 	//	Special spell effects
 	if (sp == Spell::BLINK)
 		blinkInDirection(gdata, gdata->_player, vec, max_range);
+	else if (sp == Spell::TELEPORT)
+		teleportInDirection(gdata, gdata->_player, vec, max_range);
 
 	//	Standard spell effects
 	else

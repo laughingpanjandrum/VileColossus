@@ -20,6 +20,7 @@ const string getSpellName(const Spell sp)
 	case(Spell::ARCANE_PULSE):			return "Arcane Pulse";
 	case(Spell::CHAIN_LIGHTNING):		return "Chain Lightning";
 	case(Spell::FIREBALL):				return "Fireball";
+	case(Spell::TELEPORT):				return "Teleport";
 	case(Spell::TOXIC_RADIANCE):		return "Toxic Radiance";
 
 	default:
@@ -36,6 +37,7 @@ const colorType getSpellColor(const Spell sp)
 		return getDamageTypeColor(DTYPE_ARCANE);
 
 	case(Spell::BLINK):
+	case(Spell::TELEPORT):
 		return TCODColor::fuchsia;
 	
 	case(Spell::CALL_LIGHTNING):		
@@ -67,7 +69,7 @@ const string getSpellDescription(const Spell sp)
 	case(Spell::ARCANE_PULSE):
 		return "You release pulses of arcane damage for a short duration, damaging everything adjacent to you.";
 	case(Spell::BLINK):
-		return "Teleport in a chosen direction. Cannot pass through solid walls or creatures.";
+		return "Warp in a chosen direction. Cannot pass through solid walls or creatures.";
 	case(Spell::CALL_LIGHTNING):
 		return "Strikes a random visible enemy with a bolt of lightning.";
 	case(Spell::CHAIN_LIGHTNING):
@@ -78,6 +80,8 @@ const string getSpellDescription(const Spell sp)
 		return "Hurl an exploding ball of flame.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target. Lasts for more hits at higher levels.";
+	case(Spell::TELEPORT):
+		return "Teleport in a chosen direction. Can pass through monsters, but not solid walls or doors.";
 	case(Spell::TOXIC_RADIANCE):
 		return "Inflicts poison damage in a radius around you and temporarily buffs your Poison Affinity.";
 	case(Spell::VENOMFANG):
@@ -110,6 +114,7 @@ int getSpellTier(const Spell sp)
 	case(Spell::ARCANE_PULSE):
 	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::FIREBALL):
+	case(Spell::TELEPORT):
 	case(Spell::TOXIC_RADIANCE):
 		return 2;
 
@@ -133,6 +138,7 @@ bool isSpellTargeted(const Spell sp)
 	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::CONJURE_FLAME):
 	case(Spell::FIREBALL):
+	case(Spell::TELEPORT):
 		return true;
 
 	default:
@@ -155,6 +161,9 @@ const int getSpellRange(const Spell sp, const int lvl)
 
 	case(Spell::FIREBALL):
 		return 8 + lvl / 5;
+
+	case(Spell::TELEPORT):
+		return 3 + lvl / 2;
 
 	case(Spell::TOXIC_RADIANCE):
 		return 4;
