@@ -37,8 +37,8 @@ monster::monster(string name, int glyph, colorType color, int lvl, int tier, Mon
 	//	other default attributes
 	_attackRange = 0;
 	_protection = 0;
-	_defence = lootgen::getBaseDefenceForLevel(lvl);
-	_accuracy = lootgen::getBaseAccuracyForLevel(lvl);
+	_defence = lootgen::getBaseDefenceForLevel(lvl) * 2 / 3;
+	_accuracy = lootgen::getBaseAccuracyForLevel(lvl) * 2 / 3;
 	_attackSpeed = 10;
 	_spawnDelay = 0;
 }

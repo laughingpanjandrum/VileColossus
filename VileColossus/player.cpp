@@ -347,7 +347,7 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 		total += getTotalEnchantmentBonus(ENCH_VENOMBURST);
 		total += getTotalGemBonusFromWeapons(GemType::SPIDERSTONE) * 2;
 		if (hasBuff(BUFF_VENOMFANG))
-			total += 1 + 5.0f * (float)getSpellPower() / 100.0f;
+			total += 6 + 10.0f * (float)getSpellPower() / 100.0f;
 		break;
 	}
 

@@ -49,11 +49,11 @@ void game::start()
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_VENOMBURST));
-	for (unsigned i = 0; i < 10; i++)
+	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
 		addToInventory(_gdata, it);
-	}
+	}*/
 	/*for (unsigned i = 0; i < 30; i++)
 	{
 		auto it = lootgen::rollItemDrop(3, 4);

@@ -143,7 +143,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_AFF_POISON):		return randint(5, 10) * 5;
 	case(ENCH_ARMOURING):		return randint(1, 5);
 	case(ENCH_BURNING):			return randint(1, 6);
-	case(ENCH_CAPACITY):		return randint(3, 5);
+	case(ENCH_CAPACITY):		return randint(3, 4);
 	case(ENCH_CHARGING):		return randint(4, 8) * 5;
 	case(ENCH_CURING):			return 100;
 	case(ENCH_DEFENCE):			return randint(1, 3);
@@ -179,7 +179,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 void lootgen::enchantItem(itemPtr it, int count)
 {
 	//	sockets?
-	if (it->_tier > 1)
+	if (it->_tier > 1 || roll_one_in(10))
 	{
 		const int max_sockets = getMaxSocketsForCategory(it->_category);
 		if (max_sockets > 0 && roll_one_in(2))
@@ -189,7 +189,6 @@ void lootgen::enchantItem(itemPtr it, int count)
 			//count -= sockets;
 		}
 	}
-
 
 	//	enchants
 	auto options = getEnchantmentsForItemCategory(it->_category);
@@ -260,7 +259,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 	//	Generate the actual item
 	auto it = itemPtr(new item(name, ITEM_FLASK, rarity));
 	it->setProperty(PROP_HEAL_ON_USE, randint(5, 25) + getBaseHealthForLevel(10 * tier) / 2);
-	it->setProperty(PROP_MAX_CHARGES, randint(2, 5));
+	it->setProperty(PROP_MAX_CHARGES, randint(2, 3));
 	it->setProperty(PROP_CHARGES_ON_HIT, randint(2, 5 + tier + rarity));
 	it->setProperty(PROP_CHARGE_REGAIN_RATE, randint(10, 25));
 
@@ -741,10 +740,10 @@ int lootgen::getLootTierForMonsterLevel(const int lvl)
 //	Gems have more tiers than normal items, so they use a different table
 int lootgen::getGemTierForMonsterLevel(const int lvl)
 {
-	if		(lvl < 12)	return 1;
-	else if (lvl < 18)	return 2;
-	else if (lvl < 24)	return 3;
-	else if (lvl < 30)	return 4;
+	if		(lvl < 18)	return 1;
+	else if (lvl < 24)	return 2;
+	else if (lvl < 30)	return 3;
+	else if (lvl < 36)	return 4;
 	else				return 5;
 }
 
