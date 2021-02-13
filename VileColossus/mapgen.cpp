@@ -4,8 +4,8 @@
 
 intpair mapgen::getRandomPoint(gridmapPtr m)
 {
-	int x = randint(1, m->_xsize - 1);
-	int y = randint(1, m->_ysize - 1);
+	int x = randint(1, m->_xsize - 2);
+	int y = randint(1, m->_ysize - 2);
 	return intpair(x, y);
 }
 
