@@ -29,7 +29,7 @@ monster::monster(string name, int glyph, colorType color, int lvl, int tier, Mon
 		_baseDamage = base_dam + base_dam / 2;
 		break;
 	case(5):
-		_maxHealth = base_hp * 6;
+		_maxHealth = base_hp * 8;
 		_baseDamage = base_dam + base_dam / 2;
 		break;
 	}

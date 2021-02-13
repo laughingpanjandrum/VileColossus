@@ -262,7 +262,7 @@ int item::getRepairCost() const
 	case(1):	return _damageTaken;
 	case(2):	return _damageTaken * 3;
 	case(3):	return _damageTaken * 10;
-	case(4):	return _damageTaken * 100;
+	case(4):	return _damageTaken * 25;
 	default:
 		return 0;
 	}

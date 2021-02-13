@@ -9,6 +9,16 @@ TODO
 	Show item comparison in inventory
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 
+	Get more shards from scrapping runes
+	Cap impact of stats on resistances?
+	Change chests to drop smaller tiers of gems initially also
+	Add Defence/Armouring as valid shield enchants
+	Return to same index after selecting an enchantment
+	Scale drop chance with level difference, just like xp
+	Amulets might need a slightly higher drop chance??
+	Make dualwielded riposte chance averaged instead of additive
+	Add 'Material Drop Up' enchantment
+
 	***	Why are multiple bosses spawning at depth 1???
 	***	It's still possible to spawn in a wall at the edge of the map, for some reason
 
