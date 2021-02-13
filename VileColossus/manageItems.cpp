@@ -383,6 +383,14 @@ void dismantleFromInventory(gamedataPtr gdata)
 		else if (it->_category == ITEM_SPELLRUNE)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, dieRoll(it->_rarity, 3)));
 
+		//	Save any gems in the item.
+		auto gems = it->getAllSocketedGemTypes();
+		for (unsigned i = 0; i < gems->size(); i++)
+		{
+			auto lvl = it->getSocketLevel(i);
+			addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+		}
+
 		//	Destroy the item.
 		removeFromInventory(gdata, it);
 		removeFromCurrentItemList(gdata, it);
