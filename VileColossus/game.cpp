@@ -9,7 +9,6 @@ TODO
 	Show item comparison in inventory
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 
-	Get more shards from scrapping runes
 	Cap impact of stats on resistances?
 	Change chests to drop smaller tiers of gems initially also
 	Add Defence/Armouring as valid shield enchants

@@ -381,7 +381,7 @@ void dismantleFromInventory(gamedataPtr gdata)
 		if (it->_category == ITEM_FLASK)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity));
 		else if (it->_category == ITEM_SPELLRUNE)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity));
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, dieRoll(it->_rarity, 3)));
 
 		//	Destroy the item.
 		removeFromInventory(gdata, it);
