@@ -267,7 +267,13 @@ int player::getResistance(const DamageType dt) const
 //  Chance/100 to riposte on a successful dodge.
 int player::getRiposteChance() const
 {
-	return getEquipmentPropertySum(PROP_RIPOSTE_CHANCE);
+	int total = getEquipmentPropertySum(PROP_RIPOSTE_CHANCE);
+
+	//	Average if dual-wielding.
+	if (usingOffhandWeapon())
+		total /= 2;
+
+	return total;
 }
 
 //  Percent of our base damage a riposte attack inflicts.

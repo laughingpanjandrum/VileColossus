@@ -11,11 +11,9 @@ TODO
 
 	Cap impact of stats on resistances?
 	Change chests to drop smaller tiers of gems initially also
-	Add Defence/Armouring as valid shield enchants
 	Return to same index after selecting an enchantment
 	Scale drop chance with level difference, just like xp
 	Amulets might need a slightly higher drop chance??
-	Make dualwielded riposte chance averaged instead of additive
 	Add 'Material Drop Up' enchantment
 
 	***	Why are multiple bosses spawning at depth 1???
