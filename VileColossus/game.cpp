@@ -6,7 +6,6 @@
 TODO
 
 	Show item comparison in inventory
-	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 	Cap impact of stats on resistances?
 
 */

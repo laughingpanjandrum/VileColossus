@@ -56,6 +56,7 @@ const string getMaterialTypeName(const MaterialType mat)
 	case(MaterialType::GLASS_SHARD):	return "glass shards";
 	case(MaterialType::GLOWING_POWDER):	return "glowing powder";
 	case(MaterialType::MAGIC_DUST):		return "magic dust";
+	case(MaterialType::RADIANT_ASH):	return "radiant ash";
 	case(MaterialType::RUNE_SHARD):		return "rune shards";
 	default:
 		return "material";
@@ -70,6 +71,7 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 	case(MaterialType::GLASS_SHARD):	return TCODColor::silver;
 	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightYellow;
 	case(MaterialType::MAGIC_DUST):		return TCODColor::lightBlue;
+	case(MaterialType::RADIANT_ASH):	return TCODColor::lightOrange;
 	case(MaterialType::RUNE_SHARD):		return TCODColor::lightFuchsia;
 	default:
 		return COLOR_WHITE;

@@ -378,6 +378,8 @@ void dismantleFromInventory(gamedataPtr gdata)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
 		if (it->_rarity > 2)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
+		if (it->_rarity > 1)
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 		if (it->_category == ITEM_FLASK)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity));
 		else if (it->_category == ITEM_SPELLRUNE)

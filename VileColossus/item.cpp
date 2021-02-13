@@ -341,7 +341,17 @@ int item::getEnhanceCost() const
 	else if (_category == ITEM_SPELLRUNE)
 		return _spellLevel + 1;
 	else
-		return (_enhancementLevel + 1) * (_enhancementLevel + 1);
+	{
+		switch (_enhancementLevel)
+		{
+		case(0):	return 4;
+		case(1):	return 9;
+		case(2):	return 15;
+		case(3):	return 25;
+		case(4):	return 1;
+		default:	return 0;
+		}
+	}
 }
 
 
@@ -362,8 +372,10 @@ MaterialType item::getEnhanceMaterial() const
 	{
 		if (_enhancementLevel < 3)
 			return MaterialType::MAGIC_DUST;
-		else
+		else if (_enhancementLevel < 5)
 			return MaterialType::GLOWING_POWDER;
+		else
+			return MaterialType::RADIANT_ASH;
 	}
 }
 

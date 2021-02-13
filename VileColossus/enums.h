@@ -47,7 +47,7 @@ string getArmourCategoryName(const ArmourCategory cat);
 
 //	Item material subtypes
 
-enum class MaterialType { FRAGMENTS, GLASS_SHARD, GLOWING_POWDER, MAGIC_DUST, RUNE_SHARD, __NONE, };
+enum class MaterialType { FRAGMENTS, GLASS_SHARD, GLOWING_POWDER, MAGIC_DUST, RADIANT_ASH, RUNE_SHARD, __NONE, };
 
 const string getMaterialTypeName(const MaterialType mat);
 const colorType getMaterialTypeColor(const MaterialType mat);
