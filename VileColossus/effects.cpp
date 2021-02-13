@@ -218,7 +218,7 @@ void killPlayer(gamedataPtr gdata)
 		{
 			if (it != nullptr)
 			{
-				it->reduceMaxDurability();
+				it->reduceMaxDurability(1 + it->_maxDurability / 10);
 				it->takePercentDamage(10);
 			}
 		}
