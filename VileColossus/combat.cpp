@@ -123,6 +123,13 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 				attacker->reduceBuffDuration(BUFF_SMITE_EVIL);
 			}
 
+			//	Player-only damage bonuses
+			if (attacker->isPlayer())
+			{
+				if (target->isUndead())
+					dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
+			}
+
 			//	Actually inflict the damage
 			creatureTakeDamage(gdata, target, dam);
 

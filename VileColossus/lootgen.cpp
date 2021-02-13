@@ -682,7 +682,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		break;
 
 	case(ENCH_ARCANE_SHIELD):
-		it = itemPtr(new item("shield", ITEM_SHIELD, 4));
+		it = generateArmourPieceOfType(ITEM_SHIELD, maxTier);
 		it->setProperty(PROP_DEFENCE, 3);
 		it->addEnchantment(ENCH_ARCANE_SHIELD, randint(5, 15));
 		break;
@@ -695,6 +695,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_CUNNING):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
+		break;
+
+	case(ENCH_DIVINE):
+		it = generateWeapon(maxTier, 4);
+		it->addEnchantment(ENCH_DIVINE, randint(2, 4));
 		break;
 
 	case(ENCH_FIREBURST):
