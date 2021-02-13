@@ -11,7 +11,6 @@ TODO
 
 	Cap impact of stats on resistances?
 	Return to same index after selecting an enchantment
-	Scale drop chance with level difference, just like xp
 	Add 'Material Drop Up' enchantment
 
 	***	Why are multiple bosses spawning at depth 1???

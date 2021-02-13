@@ -21,8 +21,20 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	//	Determine number of drops & their best possible quality
 	int drop_amt = 0;
 	int rarity = target->_tier;
-	switch (target->_tier)
+
+	//	At higher level diffs, monsters drop loot as though they were a lower tier.
+	int tier = target->_tier;
+	const int ldiff = target->_level - gdata->_player->_level;
+	if (ldiff < 0)
+		tier = MAX(0, tier + ldiff);
+
+	//	Determine drop amounts & quality.
+	switch (tier)
 	{
+	case(0):
+		if (roll_one_in(6)) drop_amt++;
+		break;
+
 	case(1):
 		if (roll_one_in(3)) drop_amt++;
 		if (roll_one_in(12)) rarity++;
