@@ -538,7 +538,15 @@ void selectEnchantmentToApply(gamedataPtr gdata)
 				//	add enchantment
 				gdata->_viewingItem->addEnchantment(en, lootgen::rollEnchantmentBonus(en));
 				gdata->_viewingItem->_enhancementLevel++;
+
+				//	return to the forge menu, but set index to selected item
 				openForgeMenu(gdata);
+				auto eq = gdata->_player->getAllEquippedItems();
+				for (gdata->_idx = 0; gdata->_idx < eq.size(); gdata->_idx++)
+				{
+					if (eq[gdata->_idx] == gdata->_viewingItem)
+						break;
+				}
 			}
 			else
 				messages::error(gdata, "This item can't have that enchantment.");

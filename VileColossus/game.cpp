@@ -5,12 +5,9 @@
 /*
 TODO
 
-	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
-
 	Cap impact of stats on resistances?
-	Return to same index after selecting an enchantment
 
 	***	Why are multiple bosses spawning at depth 1???
 	***	It's still possible to spawn in a wall at the edge of the map, for some reason
