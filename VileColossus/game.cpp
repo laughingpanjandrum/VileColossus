@@ -12,7 +12,6 @@ TODO
 	Cap impact of stats on resistances?
 	Return to same index after selecting an enchantment
 	Scale drop chance with level difference, just like xp
-	Amulets might need a slightly higher drop chance??
 	Add 'Material Drop Up' enchantment
 
 	***	Why are multiple bosses spawning at depth 1???
