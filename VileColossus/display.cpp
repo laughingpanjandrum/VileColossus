@@ -1290,8 +1290,13 @@ void display::updateVisibleMapData(gamedataPtr gdata)
 					auto sf = gdata->_map->getSurface(mpt);
 					if (sf != Surface::__NONE)
 					{
-						gl = getSurfaceGlyph(sf);
-						col = getSurfaceColor(sf);
+						if (drawMaptileOverSurface(tl))
+							bgcol = getSurfaceColor(sf);
+						else
+						{
+							gl = getSurfaceGlyph(sf);
+							col = getSurfaceColor(sf);
+						}
 					}
 
 					//	Flickering effect

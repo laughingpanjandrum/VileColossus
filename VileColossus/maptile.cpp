@@ -268,6 +268,12 @@ const bool isMaptileStairs(const Maptile tl)
 	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG;
 }
 
+//	Returns True if a maptile should have draw priority over surfaces.
+const bool drawMaptileOverSurface(const Maptile tl)
+{
+	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL;
+}
+
 const string getSurfaceName(const Surface sf)
 {
 	switch (sf)

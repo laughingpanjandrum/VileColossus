@@ -45,6 +45,7 @@ const bool isMaptileBreakable(const Maptile tl);
 
 const bool doesMaptileFlicker(const Maptile tl);
 const bool isMaptileStairs(const Maptile tl);
+const bool drawMaptileOverSurface(const Maptile tl);
 
 
 //	SURFACES
