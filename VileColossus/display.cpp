@@ -57,16 +57,16 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	//	VITAL STATISTICS
 
 	y += 2;
-	drawBox(x - 2, ++y, 26, 21, COLOR_DARK);
+	drawBox(x - 2, ++y, 26, 36, COLOR_DARK);
 	_win.write(x, y, "VITAL STATISTICS", COLOR_LIGHT);
 
 	drawStatWithBox(x, y + 2, to_string(p->getMaxHealth()), "Health", COLOR_HEALTH);
 	drawStatWithBox(x, y + 5, to_string(p->getMaxMagic()), "Magic", COLOR_MAGIC);
-	drawStatWithBox(x, y + 8, to_string(p->getMoveEnergyCost()) + "%", "Move Delay", COLOR_MISC_STAT);
-	drawStatWithBox(x, y + 11, to_string(p->getAttackEnergyCost()) + "%", "Attack Delay", COLOR_MISC_STAT);
-	drawStatWithBox(x, y + 14, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
-	drawStatWithBox(x, y + 18, plusminus(p->getLeechOnKill()), "Life on Kill", COLOR_HEALTH);
-	drawStatWithBox(x, y + 21, plusminus(p->getManaleech()), "Magic on Kill", COLOR_MAGIC);
+	drawStatWithBox(x, y + 9, to_string(p->getMoveEnergyCost()) + "%", "Move Delay", COLOR_MISC_STAT);
+	drawStatWithBox(x, y + 12, to_string(p->getAttackEnergyCost()) + "%", "Attack Delay", COLOR_MISC_STAT);
+	drawStatWithBox(x, y + 15, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
+	drawStatWithBox(x, y + 19, plusminus(p->getLeechOnKill()), "Life on Kill", COLOR_HEALTH);
+	drawStatWithBox(x, y + 22, plusminus(p->getManaleech()), "Magic on Kill", COLOR_MAGIC);
 
 
 	//	OFFENCE
@@ -118,11 +118,11 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 
 
 	//	MISCELLANEOUS
-	y += 4;
-	drawBox(x - 2, ++y, 26, 23, COLOR_DARK);
+	y += 3;
+	drawBox(x - 2, ++y, 26, 24, COLOR_DARK);
 	_win.write(x, y, "MISCELLANEOUS", COLOR_LIGHT);
 	
-	drawStatWithBox(x, y + 2, to_string(p->getGreedBonus()) + "%", "Fragments Gained", TCODColor::gold);
+	drawStatWithBox(x, y + 2, plusminus(p->getGreedBonus()) + "%", "Fragments Gained", TCODColor::gold);
 	drawStatWithBox(x, y + 5, plusminus(p->getReprisalDamage()), "Reprisal Damage", COLOR_HEALTH);
 	drawStatWithBox(x, y + 8, to_string(p->getRiposteChance()) + "%", "Riposte Chance", COLOR_LIGHT);
 	drawStatWithBox(x, y + 11, plusminus(p->getCleaveDamageBonus()), "Cleave Damage", TCODColor::crimson);

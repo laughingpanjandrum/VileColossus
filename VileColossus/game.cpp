@@ -11,7 +11,6 @@ TODO
 
 	Cap impact of stats on resistances?
 	Return to same index after selecting an enchantment
-	Add 'Material Drop Up' enchantment
 
 	***	Why are multiple bosses spawning at depth 1???
 	***	It's still possible to spawn in a wall at the edge of the map, for some reason
@@ -490,6 +489,13 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "home")
 		returnToHomeBase();
+	else if (txt == "drop")
+		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
+	else if (txt == "drop10")
+	{
+		for (unsigned i = 0; i < 10; i++)
+			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
+	}
 }
 
 
