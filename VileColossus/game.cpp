@@ -10,7 +10,6 @@ TODO
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 
 	Cap impact of stats on resistances?
-	Change chests to drop smaller tiers of gems initially also
 	Return to same index after selecting an enchantment
 	Scale drop chance with level difference, just like xp
 	Amulets might need a slightly higher drop chance??

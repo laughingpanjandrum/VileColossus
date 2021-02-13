@@ -161,6 +161,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	gdata->_map->setTile(MT_FLOOR_STONE, pt);
 	gdata->_map->updateTmapAtPoint(pt.first, pt.second);
 
+
 	//	Drop items in random nearby spots
 	auto pts = getAdjacentWalkable(gdata, pt);
 	int amt = randint(1, 2 + quality);
@@ -169,6 +170,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		auto it = lootgen::rollItemDrop(quality, quality);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
+
 
 	//	And MONEY
 	amt = (quality - 1) + randint(0, quality);
@@ -184,11 +186,12 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 
+
 	//	And GEM(s)?
 	if (quality > 1)
 	{
 		amt = randint(1, quality);
-		auto it = lootgen::generateGem(quality, 1);
+		auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(quality * 12), 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 }
