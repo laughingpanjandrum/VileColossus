@@ -10,7 +10,6 @@ TODO
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
 
 	Some maptiles, eg chests/stairs, should have visual priority over surfaces like sludge/poison
-	Add defence debuff when staggered
 	Increase gear damage on death
 
 	***	Why are multiple bosses spawning at depth 1???

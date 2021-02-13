@@ -48,6 +48,14 @@ monster::monster(string name, int glyph, colorType color, int lvl, int tier, Mon
 }
 
 
+int monster::getDefenceValue() const
+{
+	int total = _defence;
+	if (hasStatusEffect(STATUS_STAGGER))
+		total -= total / 3;
+	return total;
+}
+
 int monster::getKnockbackChance() const
 {
 	if (hasFlag("knockback"))

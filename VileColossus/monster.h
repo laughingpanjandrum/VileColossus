@@ -44,7 +44,7 @@ public:
 	virtual int getMaxSpellShield() const { return _maxSpellShield; }
 
 	virtual int getAccuracy() const { return _accuracy; }
-	virtual int getDefenceValue() const { return _defence; }
+	virtual int getDefenceValue() const;
 	virtual int getArmourValue() const { return _protection; }
 
 	virtual int getAttackSpeed() const { return _attackSpeed; }
