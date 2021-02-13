@@ -79,7 +79,9 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	drop_amt = (target->_tier - 1) + randint(0, target->_tier);
 	while (drop_amt-- > 0)
 	{
-		auto it = lootgen::generateMaterial(MaterialType::FRAGMENTS, dieRoll(3, target->_level));
+		int amt = dieRoll(3, target->_level);
+		amt = adjustByPercent(amt, gdata->_player->getGreedBonus());
+		auto it = lootgen::generateMaterial(MaterialType::FRAGMENTS, amt);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 
@@ -132,6 +134,7 @@ void spawnOnDeath(gamedataPtr gdata, monsterPtr target)
 }
 
 
+//	Places a surface in the given place, if that would be valid.
 void trySetSurface(gamedataPtr gdata, const intpair pt, const Surface sf)
 {
 	if (gdata->_map->inBounds(pt) && gdata->_map->canCoverWithSurface(pt.first, pt.second))

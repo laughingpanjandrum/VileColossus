@@ -231,6 +231,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_DEFENCE):			return "defence";
 	case(ENCH_FLAMEWARD):		return "flameguard";
 	case(ENCH_FURY):			return "fury";
+	case(ENCH_GREED):			return "greed";
 	case(ENCH_HASTE):			return "haste";
 	case(ENCH_LEECHING):		return "leeching";
 	case(ENCH_LIFE):			return "life";
@@ -286,6 +287,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_DEFENCE):			return "Defence Value";
 	case(ENCH_FLAMEWARD):		return "Fire Resistance";
 	case(ENCH_FURY):			return "Wrath Damage";
+	case(ENCH_GREED):			return "Fragments Dropped";
 	case(ENCH_HASTE):			return "Haste";
 	case(ENCH_LEECHING):		return "Health on Kill";
 	case(ENCH_LIFE):			return "Health";
@@ -341,6 +343,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
 	case(ENCH_FLAMEWARD):		return "Reduces Fire damage taken by " + to_string(val) + "%.";
 	case(ENCH_FURY):			return "Inflict +" + to_string(val) + "% damage when buffed with Wrath.";
+	case(ENCH_GREED):			return "Monsters drop +" + to_string(val) + "% more fragments.";
 	case(ENCH_HASTE):			return "Temporarily increases your movement and attack speed.";
 	case(ENCH_LEECHING):		return "Heal " + to_string(val) + " damage when you kill something.";
 	case(ENCH_LIFE):			return "Adjusts your maximum health by " + plusminus(val) + ".";
@@ -401,6 +404,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_CUNNING):
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
+	case(ENCH_GREED):
 	case(ENCH_POISON_WARD):
 	case(ENCH_RAGE):
 	case(ENCH_SHADOWSTRIKE):

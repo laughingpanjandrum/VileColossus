@@ -51,14 +51,14 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 	case(ITEM_AMULET):
 	case(ITEM_RING):
 		return { ENCH_ACCURACY, ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON,
-			ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FLAMEWARD, ENCH_FURY, ENCH_LEECHING, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_MANALEECH, ENCH_POISON_WARD, ENCH_RAGE,
+			ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FLAMEWARD, ENCH_FURY, ENCH_GREED, ENCH_LEECHING, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_MANALEECH, ENCH_POISON_WARD, ENCH_RAGE,
 			ENCH_SHARPNESS, ENCH_SLAYING, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_FLASK):
 		return { ENCH_CAPACITY, ENCH_CHARGING, ENCH_CURING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
 
 	case(ITEM_SPELLRUNE):
-		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_MAGIC, ENCH_MANALEECH, ENCH_FLAMEWARD, ENCH_POISON_WARD, ENCH_SPELLWARD, ENCH_STORMWARD, };
+		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON,  ENCH_GREED, ENCH_MAGIC, ENCH_MANALEECH, ENCH_FLAMEWARD, ENCH_POISON_WARD, ENCH_SPELLWARD, ENCH_STORMWARD, };
 
 	case(ITEM_BOOTS):
 	case(ITEM_BRACERS):
@@ -66,7 +66,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 	case(ITEM_GLOVES):
 	case(ITEM_HELMET):
 	case(ITEM_SHOULDERS):
-		return { ENCH_ACCURACY, ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_FLAMEWARD, ENCH_FURY, ENCH_LIFE, ENCH_LIGHT, 
+		return { ENCH_ACCURACY, ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_FLAMEWARD, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_LIGHT,
 			ENCH_MAGIC, ENCH_POISON_WARD, ENCH_RAGE, ENCH_SLAYING,
 			ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
@@ -75,7 +75,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 					ENCH_MANALEECH, ENCH_RAGE, ENCH_SHARPNESS, ENCH_SLAYING, ENCH_WOUNDING, };
 
 	case(ITEM_SHIELD):
-		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FLAMEWARD, ENCH_FURY, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_POISON_WARD, 
+		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FLAMEWARD, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_POISON_WARD,
 			ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_WEAPON):
@@ -150,6 +150,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_DEFENCE):			return randint(1, 3);
 	case(ENCH_FLAMEWARD):		return randint(5, 25);
 	case(ENCH_FURY):			return randint(5, 15) * 5;
+	case(ENCH_GREED):			return randint(3, 7) * 10;
 	case(ENCH_HASTE):			return randint(5, 12);
 	case(ENCH_LEECHING):		return randint(1, 10);
 	case(ENCH_LIFE):			return randint(1, 10) * 4;
@@ -254,7 +255,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 	{
 	case(1):	name = "minor " + name; break;
 	case(2):	name = "major " + name; break;
-	case(3):	name = "great " + name; break;
+	case(3):	name = "grand " + name; break;
 	}
 
 	//	Generate the actual item
@@ -753,9 +754,7 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 const int lootgen::rollRarity(const int maxRarity)
 {
 	int r = randint(1, 100);
-	if (r <= 10 && maxRarity > 4)
-		return 4;	//	there's no Rarity 5, but a max rarity of 5 makes rarity 4 items more likely to drop
-	else if (r <= 4 && maxRarity > 3)
+	if (r <= 3 && maxRarity > 3)
 		return 4;
 	else if (r <= 20 && maxRarity > 2)
 		return 3;
