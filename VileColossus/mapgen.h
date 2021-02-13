@@ -133,7 +133,12 @@ namespace mapgen
 
 	void mazecarve(vector<vector<metanode*>>* grid, int cellx, int celly);
 	void linkNodes(metanode* n1, metanode* n2, const intpair cell1, const intpair cell2);
-	gridmapPtr generate_Cathedral(int dl, bool descending);
+	gridmapPtr generate_Cathedral(int dl, bool descending, bool add_monsters = true);
+
+
+	//		Boss maps
+
+	gridmapPtr generate_PallidRotking(int dl, bool descending);
 
 
 	//		Map generation

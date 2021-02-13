@@ -943,7 +943,7 @@ void mapgen::linkNodes(metanode* n1, metanode* n2, const intpair cell1, const in
 
 //	THE CATHEDRAL MAP
 //	This generates a new Cathedral map.
-gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
+gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters)
 {
 	int grid_size = 12;
 	int gridx = randint(3, 4), gridy = randint(3, 4);
@@ -1022,10 +1022,30 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending)
 	}
 
 	//	Monsters
-	addMonsters(m, dl, &tcod_nodes);
+	if (add_monsters)
+		addMonsters(m, dl, &tcod_nodes);
 
 	//	Exits/entrances
 	addStairsToMap(m, dl, descending);
+
+	return m;
+}
+
+
+//	BOSS MAP: The Pallid Rotking
+gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending)
+{
+	auto m = generate_Cathedral(1, descending, false);
+	m->_name = "Rotten Throne";
+	const int r = MIN(m->_xsize / 3, m->_ysize / 3);
+	const intpair ctr = intpair(m->_xsize / 2, m->_ysize / 2);
+
+	addLake(m, ctr, r, MT_WATER, MT_FLOOR_CARPET);
+	scatterOnMap(m, MT_BUSH, 0.3);
+	scatterOnMap(m, MT_BARREL, 0.05);
+	scatterSurface(m, Surface::SLUDGE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.3);
+
+	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl), ctr);
 
 	return m;
 }
@@ -1232,7 +1252,13 @@ void mapgen::style_Tomblands(gridmapPtr m, int dl)
 //	The 'descending' flag determines whether start position is set to the upstairs or downstairs.
 gridmapPtr mapgen::generate(int dl, bool descending)
 {
-	auto m = generate_Cathedral(dl, descending);
+	gridmapPtr m;
+	
+	//	Type depends on depth
+	if (dl == 9)
+		m = generate_PallidRotking(dl, descending);
+	else
+		m = generate_Cathedral(dl, descending);
 	
 	//style_Rooms(m, "cathedral", dl);
 	//style_Tomblands(m, dl);
@@ -1253,6 +1279,7 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 	m->updateTmap();
 	return m;
 }
+
 
 gridmapPtr mapgen::generate_HomeBase()
 {

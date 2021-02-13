@@ -38,6 +38,7 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 	}
 }
 
+//	Tier-4 boss monster
 const MonsterType monsterdata::rollBossForLevel(const int dl)
 {
 	//	Assemble list of options.
@@ -210,6 +211,10 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::ZOMBIE_ROTTED):
 		return { "slow", "inaccurate", "poison_attack", "undead" };
 
+
+	case(MonsterType::BOSS_PALLID_ROTKING):
+		return { "slow", "poison_attack", "undead", "spawner", "spit_sludge", "casts_poison_spit", "more_health" };
+
 	default:
 		return {};
 	}
@@ -221,6 +226,9 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 {
 	switch (id)
 	{
+	case(MonsterType::BOSS_PALLID_ROTKING):
+		return 5;
+
 	case(MonsterType::CARRION_PRINCE):
 	case(MonsterType::CORPSE_COLOSSUS):
 	case(MonsterType::SKINLESS_KNIGHT):
@@ -279,6 +287,9 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::ZOMBIE_LARGE):		return make_tuple("large zombie", 'Z', TCODColor::lightGreen);
 	case(MonsterType::ZOMBIE_MASS):			return make_tuple("Zombie Mass", 'Z', TCODColor::lightPink);
 	case(MonsterType::ZOMBIE_ROTTED):		return make_tuple("rotted zombie", 'z', TCODColor::darkLime);
+
+	case(MonsterType::BOSS_PALLID_ROTKING):	return make_tuple("THE PALLID ROTKING", 'R', TCODColor::lightLime);
+
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);
 	}

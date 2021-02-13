@@ -42,6 +42,10 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	case(4):
 		drop_amt = randint(3, 6);
 		break;
+
+	case(5):
+		drop_amt = randint(8, 12);
+		break;
 	}
 
 	//	Get free points in the vicinity.

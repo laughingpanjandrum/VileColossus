@@ -7,11 +7,14 @@ TODO
 
 	Bows only take time to fire if they hit a target
 	Show item comparison in inventory
-	What gives a spellrune the right to be called 'major' lol
 	Make generator for specific armour type [eg shield/bracer/etc] that the legendary item generator can use
-	Show enchantment descriptions when adding enchants to items
+
+	Some maptiles, eg chests/stairs, should have visual priority over surfaces like sludge/poison
+	Add defence debuff when staggered
+	Increase gear damage on death
 
 	***	Why are multiple bosses spawning at depth 1???
+	***	It's still possible to spawn in a wall at the edge of the map, for some reason
 
 */
 
@@ -155,6 +158,7 @@ void game::drawScreen()
 	case(STATE_FABRICATE_GEMS):
 		_disp.drawGemstoneFabricator(_gdata);
 		break;
+
 
 		//	The normal game screen
 	default:
@@ -479,6 +483,11 @@ void game::awaitDebugCommand()
 		_gdata->_invincible = !_gdata->_invincible;
 	else if (txt == "level")
 		playerGainLevel(_gdata);
+	else if (txt == "level10")
+	{
+		for (unsigned i = 0; i < 10; i++)
+			playerGainLevel(_gdata);
+	}
 	else if (txt == "home")
 		returnToHomeBase();
 }

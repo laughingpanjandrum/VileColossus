@@ -58,7 +58,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 		return { ENCH_CAPACITY, ENCH_CHARGING, ENCH_CURING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
 
 	case(ITEM_SPELLRUNE):
-		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_MAGIC, ENCH_MANALEECH, };
+		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON, ENCH_MAGIC, ENCH_MANALEECH, ENCH_FLAMEWARD, ENCH_POISON_WARD, ENCH_SPELLWARD, ENCH_STORMWARD, };
 
 	case(ITEM_BOOTS):
 	case(ITEM_BRACERS):
@@ -75,7 +75,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 					ENCH_MANALEECH, ENCH_RAGE, ENCH_SHARPNESS, ENCH_SLAYING, ENCH_WOUNDING, };
 
 	case(ITEM_SHIELD):
-		return { ENCH_FLAMEWARD,  ENCH_FURY, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_POISON_WARD, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
+		return { ENCH_FLAMEWARD, ENCH_FURY, ENCH_LIFE, ENCH_LIGHT, ENCH_MAGIC, ENCH_POISON_WARD, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_WEAPON):
 		return { ENCH_ACCURACY, ENCH_ARCANE, ENCH_BURNING, ENCH_DEFENCE, ENCH_FURY,
@@ -752,7 +752,9 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 const int lootgen::rollRarity(const int maxRarity)
 {
 	int r = randint(1, 100);
-	if (r <= 4 && maxRarity > 3)
+	if (r <= 10 && maxRarity > 4)
+		return 4;	//	there's no Rarity 5, but a max rarity of 5 makes rarity 4 items more likely to drop
+	else if (r <= 4 && maxRarity > 3)
 		return 4;
 	else if (r <= 20 && maxRarity > 2)
 		return 3;
