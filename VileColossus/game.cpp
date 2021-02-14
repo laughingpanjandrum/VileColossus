@@ -7,7 +7,6 @@ TODO
 
 	Show item comparison in inventory
 
-	make base armour stats static by tier, not randomized
 	reduce the 'fragments dropped' enchant bonus a bit
 	a nonexistent gem type has dropped???
 	reduce amt of blue material gained?? or give it some kind of sink?

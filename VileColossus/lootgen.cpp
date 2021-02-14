@@ -291,8 +291,8 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(2):	name = "hard " + name; break;
 			case(3):	name = "demon " + name; break;
 			}
-			dv = randint(1, 1 + tier * 3);
-			av = randint(1, tier);
+			dv = tier * 3;
+			av = tier;
 			break;
 		case(2):
 			name = "mail";
@@ -301,7 +301,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(2):	name = "gothic " + name; break;
 			case(3):	name = "titan " + name; break;
 			}
-			av = 2 + randint(1, 2 * tier);
+			av = 2 + 2 * tier;
 			break;
 		}
 	}
@@ -311,13 +311,13 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 		{
 		case(1):
 			name = "shield";
-			dv = randint(1, 3 + tier);
+			dv = 3 + tier;
 			break;
 
 		case(2):
 			name = "heavy shield";
-			dv = randint(1, tier);
-			av = randint(1, tier);
+			dv = tier;
+			av = tier;
 			acc = -(dv + av);
 			break;
 		}
@@ -335,7 +335,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(ITEM_HELMET):		name = "hood"; break;
 			case(ITEM_SHOULDERS):	name = "cloak"; break;
 			}
-			dv = randint(1, tier);
+			dv = tier;
 			break;
 
 		case(2):
@@ -347,7 +347,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(ITEM_HELMET):		name = "helm"; break;
 			case(ITEM_SHOULDERS):	name = "pauldrons"; break;
 			}
-			av = randint(1, tier);
+			av = tier;
 			break;
 		}
 		
