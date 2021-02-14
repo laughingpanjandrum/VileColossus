@@ -8,7 +8,6 @@ TODO
 	Show item comparison in inventory
 	Cap impact of stats on resistances?
 
-	Factor affinities into damage numbers
 	make base armour stats static by tier, not randomized
 	reduce the 'fragments dropped' enchant bonus a bit
 	a nonexistent gem type has dropped???

@@ -88,14 +88,15 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	for (auto dt : SPECIAL_DAMAGE_TYPES)
 	{
 		int dam = p->getWeaponDamageOfType(dt);
-		if (dam > 0)
-			drawStatWithBox(x, y, "1-" + to_string(dam), getDamageTypeName(dt) + " Damage", getDamageTypeColor(dt));
-		else
-			drawStatWithBox(x, y, "00", getDamageTypeName(dt) + " Damage", COLOR_DARK);
-
 		int aff = p->getElementalAffinity(dt);
-		drawStatWithBox(x, y + 3, plusminus(aff) + "%", getDamageTypeName(dt) + " Affinity", (aff > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
 
+		dam = adjustByPercent(dam, aff);
+		auto min_dmg = adjustByPercent(1, aff);
+		if (dam > 0)	drawStatWithBox(x, y, to_string(min_dmg) + "-" + to_string(dam), getDamageTypeName(dt) + " Damage", getDamageTypeColor(dt));
+		else			drawStatWithBox(x, y, "00", getDamageTypeName(dt) + " Damage", COLOR_DARK);
+
+		//	affinity is already factored in above
+		drawStatWithBox(x, y + 3, plusminus(aff) + "%", getDamageTypeName(dt) + " Affinity", (aff > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
 		y += 7;
 	}
 
@@ -999,8 +1000,9 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 
 		//	adjusted (spell power)
 		auto spellpower = gdata->_player->getSpellPower();
-		dam.first += (float)dam.first * (float)spellpower / 100.0f;
-		dam.second += (float)dam.second * (float)spellpower / 100.0f;
+		auto affinity = gdata->_player->getElementalAffinity(dtype);
+		dam.first = adjustByPercent(dam.first, spellpower + affinity);
+		dam.second = adjustByPercent(dam.second, spellpower + affinity);
 		writeFormatted(atx, ++aty, "Adjusted    #" + to_string(dam.first) + "-" + to_string(dam.second) + " " + getDamageTypeName(dtype), { getDamageTypeColor(dtype) });
 	}
 
