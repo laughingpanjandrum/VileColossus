@@ -7,8 +7,6 @@ TODO
 
 	Show item comparison in inventory
 	a nonexistent gem type has dropped???
-
-	5th enchantment should require special material
 	reduce amt of blue material gained?? or give it some kind of sink?
 
 */
