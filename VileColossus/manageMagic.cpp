@@ -329,9 +329,10 @@ void tryEnhanceRune(gamedataPtr gdata)
 	{
 		auto it = gdata->_currentItemList[gdata->_idx];
 		auto cost = it->getEnhanceCost();
-		if (hasMaterial(gdata, MaterialType::RUNE_SHARD, cost))
+		auto mat = it->_spellLevel > 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
+		if (hasMaterial(gdata, mat, cost))
 		{
-			spendMaterial(gdata, MaterialType::RUNE_SHARD, cost);
+			spendMaterial(gdata, mat, cost);
 			it->_spellLevel++;
 			messages::add(gdata, "Enhanced #" + it->getName() + " to level #" + to_string(it->_spellLevel) + "@!", { it->getColor(), COLOR_POSITIVE });
 		}

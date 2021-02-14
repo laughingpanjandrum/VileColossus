@@ -52,6 +52,7 @@ const string getMaterialTypeName(const MaterialType mat)
 {
 	switch (mat)
 	{
+	case(MaterialType::BRIGHT_RUNE):	return "bright rune";
 	case(MaterialType::FRAGMENTS):		return "fragments";
 	case(MaterialType::GLASS_SHARD):	return "glass shards";
 	case(MaterialType::GLOWING_POWDER):	return "glowing powder";
@@ -67,6 +68,7 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 {
 	switch (mat)
 	{
+	case(MaterialType::BRIGHT_RUNE):	return TCODColor::lightPurple;
 	case(MaterialType::FRAGMENTS):		return TCODColor::gold;
 	case(MaterialType::GLASS_SHARD):	return TCODColor::silver;
 	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightYellow;

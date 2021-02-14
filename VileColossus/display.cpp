@@ -659,7 +659,7 @@ void display::drawEnchantedForge(gamedataPtr gdata)
 //	List of enchantments we can add to an item.
 void display::drawEnchantmentSelect(gamedataPtr gdata)
 {
-	drawBox(2, 2, 35, 30, COLOR_DARK);
+	drawBox(2, 2, 35, 40, COLOR_DARK);
 	_win.write(3, 2, "Known Enchantments", COLOR_LIGHT);
 
 	//	For testing validity
@@ -866,7 +866,9 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 			if (gdata->_player->isRuneEquipped(it))
 				writeFormatted(47, 24, "#u @Unequip this rune", { COLOR_LIGHT });
 			writeFormatted(47, 25, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
-			writeFormatted(49, 26, "(Requires #" + to_string(it->getEnhanceCost()) + " Rune Shards@)", { getMaterialTypeColor(MaterialType::RUNE_SHARD) });
+
+			auto mat = it->_spellLevel > 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
+			writeFormatted(49, 26, "(Requires #" + to_string(it->getEnhanceCost()) + " " + getMaterialTypeName(mat) + "@)", { getMaterialTypeColor(mat) });
 		}
 		else
 			_win.write(x + 2, y, it->getName(), it->getColor());

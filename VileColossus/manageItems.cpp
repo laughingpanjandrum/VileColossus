@@ -378,12 +378,17 @@ void dismantleFromInventory(gamedataPtr gdata)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
 		if (it->_rarity > 2)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
-		if (it->_rarity > 1)
+		if (it->_rarity > 3)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
+
 		if (it->_category == ITEM_FLASK)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity));
 		else if (it->_category == ITEM_SPELLRUNE)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, dieRoll(it->_rarity, 3)));
+		{
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
+			if (it->_spellLevel >= 10)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
+		}
 
 		//	Save any gems in the item.
 		auto gems = it->getAllSocketedGemTypes();
