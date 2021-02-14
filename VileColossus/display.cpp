@@ -288,7 +288,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)), "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
-				_win.write(rx - 5, ry + 10, "+1%", COLOR_POSITIVE);
+				_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
 
 				break;
 
@@ -302,7 +302,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				_win.write(rx - 5, ry + 4, "+0.3", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", { getDamageTypeColor(DTYPE_POISON) });
-				_win.write(rx - 5, ry + 7, "+1%", COLOR_POSITIVE);
+				_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
 
 				break;
 
@@ -316,7 +316,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				_win.write(rx - 5, ry + 4, "+5%", COLOR_POSITIVE);
 				
 				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_ARCANE)) + "%", "Arcane Resist", { getDamageTypeColor(DTYPE_ARCANE) });
-				_win.write(rx - 5, ry + 7, "+1%", COLOR_POSITIVE);
+				_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
 
 				break;
 			}

@@ -6,7 +6,6 @@
 TODO
 
 	Show item comparison in inventory
-	Cap impact of stats on resistances?
 
 	make base armour stats static by tier, not randomized
 	reduce the 'fragments dropped' enchant bonus a bit
