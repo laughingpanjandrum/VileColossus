@@ -10,7 +10,6 @@ TODO
 	reduce the 'fragments dropped' enchant bonus a bit
 	a nonexistent gem type has dropped???
 	reduce amt of blue material gained?? or give it some kind of sink?
-	reduce qty of gems that drop
 	raise superboss level?????
 
 */

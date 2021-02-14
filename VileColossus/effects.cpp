@@ -88,13 +88,20 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	//	Chance of GEM(s) at higher levels.
 	if (target->_level >= 12)
 	{
+		//	decide how many
 		int gems = 0;
 		if (target->_tier == 1 && roll_one_in(50))
 			gems = 1;
-		else if (target->_tier == 2)
+		else if (target->_tier == 2 && roll_one_in(10))
 			gems = randint(1, 2);
-		else if (target->_tier == 3)
-			gems = randint(2, 5);
+		else if (target->_tier == 3 && roll_one_in(2))
+			gems = randint(1, 2);
+		else if (target->_tier == 4)
+			gems = randint(2, 3);
+		else if (target->_tier == 5)
+			gems = randint(3, 5);
+
+		//	generate the gems
 		while (gems-- > 0)
 		{
 			auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(target->_level), 1);
