@@ -1021,12 +1021,12 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters
 		m->setTile(ctype, getRandomWalkable(m));
 	}
 
-	//	Monsters
+	//	Monsters, exits, entrances
 	if (add_monsters)
+	{
 		addMonsters(m, dl, &tcod_nodes);
-
-	//	Exits/entrances
-	addStairsToMap(m, dl, descending);
+		addStairsToMap(m, dl, descending);
+	}
 
 	return m;
 }
@@ -1045,11 +1045,14 @@ gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending)
 	scatterOnMap(m, MT_BARREL, 0.05);
 	scatterSurface(m, Surface::SLUDGE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.3);
 
-	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl * 2 + 1), ctr);
+	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl * 2), ctr);
+
+	auto spt = getRandomForStairs(m);
+	m->setTile(MT_STAIRS_UP, spt);
+	m->_startPt = spt;
 
 	return m;
 }
-
 
 
 //	Randomly rolls one dimensional axis for a map. Larger maps are increasingly unlikely.

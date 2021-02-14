@@ -296,6 +296,10 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 			gdata->_player->chargeFlaskOnKill();
 			if (roll_percent(gdata->_player->getWrathOnKillChance()))
 				gdata->_player->addBuff(BUFF_WRATH, 1 + mon->_tier * 2);
+
+			//	bosses turn into downstairs on death
+			if (mon->_tier == 5)
+				gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
 		}
 	}
 }
