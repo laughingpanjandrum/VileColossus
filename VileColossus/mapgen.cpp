@@ -1045,7 +1045,7 @@ gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending)
 	scatterOnMap(m, MT_BARREL, 0.05);
 	scatterSurface(m, Surface::SLUDGE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.3);
 
-	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl), ctr);
+	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl * 2 + 1), ctr);
 
 	return m;
 }
