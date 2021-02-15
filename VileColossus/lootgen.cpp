@@ -350,6 +350,12 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			av = tier;
 			break;
 		}
+
+		switch (tier)
+		{
+		case(2):	name = "great " + name; break;
+		case(3):	name = "grand " + name; break;
+		}
 		
 	}
 

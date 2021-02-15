@@ -136,6 +136,16 @@ namespace mapgen
 	gridmapPtr generate_Cathedral(int dl, bool descending, bool add_monsters = true);
 
 
+	//		The HELLFORT
+
+	gridmapPtr generate_Hellfort(int dl, bool descending, bool add_monsters = true);
+
+
+	//		Abyssal swamps
+
+	gridmapPtr generate_Swamp(int dl, bool descending, bool add_monsters = true);
+
+
 	//		Boss maps
 
 	gridmapPtr generate_PallidRotking(int dl, bool descending);
@@ -144,12 +154,6 @@ namespace mapgen
 	//		Map generation
 
 	int rollMapDimension();
-
-	void style_Cave(gridmapPtr m);
-	void style_Rooms(gridmapPtr m, string zone, int dl);
-
-	void style_DryRoad(gridmapPtr m, int dl);
-	void style_Tomblands(gridmapPtr m, int dl);
 
 	gridmapPtr generate(int dl, bool descending = true);
 	gridmapPtr generate_HomeBase();

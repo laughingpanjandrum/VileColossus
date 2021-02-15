@@ -940,7 +940,6 @@ void mapgen::linkNodes(metanode* n1, metanode* n2, const intpair cell1, const in
 }
 
 
-
 //	THE CATHEDRAL MAP
 //	This generates a new Cathedral map.
 gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters)
@@ -1032,6 +1031,152 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters
 }
 
 
+//	The SECOND TIER of horror levels
+gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, bool add_monsters)
+{
+	const int MIN_NODE_SIZE = 8;
+	auto m = gridmapPtr(new gridmap(2 + MIN_NODE_SIZE * randint(5, 8), 2 + MIN_NODE_SIZE * randint(5, 8)));
+	fillMap(m, { MT_WALL_BLOODY });
+	m->_name = "The Hellfort [Depth " + to_string(dl) + "]";
+
+	//	Make a 2d node map.
+	auto tcod_nodes = createNodeMap(m, MIN_NODE_SIZE, 15);
+
+
+	//	Connect nodes to each other.
+	for (unsigned i = 0; i < tcod_nodes.size() - 1; i++)
+		tunnelBetweenNodes(m, tcod_nodes[i], tcod_nodes[i + 1], MT_FLOOR_HOT);
+
+
+	//	Make nodes into rooms.
+	for (auto n : tcod_nodes)
+	{
+		//	room shape
+		fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_HOT, }, n->x + 1, n->y + 1, n->w - 2, n->h - 2);
+
+		//	room details
+		int r = randint(1, 12);
+		if (r == 1)
+		{
+			const int rad = MIN(n->w / 2, n->h / 2) - 1;
+			addLake(m, intpair(n->x + n->w / 2, n->y + n->h / 2), rad, MT_LAVA, MT_FLOOR_HOT);
+		}
+		else if (r == 2)
+		{
+			for (int x = n->x + 2; x < n->x + n->w - 2; x += 2)
+			{
+				for (int y = n->y + 2; y < n->y + n->h - 2; y += 2)
+					m->setTile(MT_TABLE_WOODEN, x, y);
+			}
+		}
+		else if (r == 3)
+		{
+			fillRegion(m, { MT_THORNS, MT_BUSH }, n->x + 1, n->y + 1, n->w - 1, n->h - 1);
+		}
+	}
+
+
+	//	Chaos
+	scatterOnMap(m, MT_SAND, 0.05);
+
+
+	//	Treasures
+	int chest_count = randint(1, 5);
+	while (chest_count-- > 0)
+	{
+		//	roll type
+		auto ctype = MT_CHEST_SMALL;
+		int r = randint(1, 100);
+		if (r <= 30 && dl > 2)	ctype = MT_CHEST_GLOWING;
+
+		//	emplace it
+		m->setTile(ctype, getRandomWalkable(m));
+	}
+
+	//	Monsters, exits, entrances
+	if (add_monsters)
+	{
+		//addMonsters(m, dl, &tcod_nodes);
+		addStairsToMap(m, dl, descending);
+	}
+
+	return m;
+}
+
+
+//	The second map type. EVIL SWAMP. Yuck
+gridmapPtr mapgen::generate_Swamp(int dl, bool descending, bool add_monsters)
+{
+	//	Roll a random size.
+	const int MIN_NODE_SIZE = 10;
+	const int xsize = MIN_NODE_SIZE * randint(5, 8) + 2;
+	const int ysize = MIN_NODE_SIZE * randint(5, 8) + 2;
+
+
+	//	Generate the base map.
+	auto m = gridmapPtr(new gridmap(xsize, ysize));
+	fillMap(m, { MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_BUSH, });
+	m->_name = "Abyssal Swamps [Depth " + to_string(dl) + "]";
+
+
+	//	Random deformations
+	scatterOnMap(m, MT_BUSH, 0.05);
+	scatterOnMap(m, MT_WATER, 0.05);
+	scatterOnMap(m, MT_TREE_DEAD, 0.05);
+
+	
+	//	BSP nodes.
+	auto tcod_nodes = createNodeMap(m, MIN_NODE_SIZE, 15);
+	for (auto n : tcod_nodes)
+	{
+		int r = randint(1, 8);
+		if (r == 1)
+		{
+			const int rad = MIN(n->w / 2, n->y / 2) - 1;
+			addLake(m, intpair(n->x + n->w / 2, n->y + n->h / 2), rad, MT_WATER, MT_GRASS);
+		}
+		else if (r == 2)
+		{
+			scatterSurface(m, Surface::SLUDGE, n->x, n->y, n->w, n->h, 0.4);
+		}
+		else if (r == 3)
+		{
+			scatterSurface(m, Surface::CORPSE, n->x, n->y, n->w, n->h, 0.2);
+			scatterSurface(m, Surface::BONES, n->x, n->y, n->w, n->h, 0.2);
+		}
+		else if (r == 4)
+		{
+			addBuilding(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2, MT_WALL_STONE, MT_FLOOR_STONE, MT_DOOR_WOODEN);
+			scatterTile(m, MT_BARREL, n->x + 3, n->y + 3, n->w - 5, n->h - 5, 0.1);
+		}
+	}
+
+
+	//	Treasures
+	int chest_count = randint(1, 5);
+	while (chest_count-- > 0)
+	{
+		//	roll type
+		auto ctype = MT_CHEST_SMALL;
+		int r = randint(1, 100);
+		if		(r <= 30)	ctype = MT_CHEST_GLOWING;
+		else if (r <= 35)	ctype = MT_CHEST_RADIANT;
+
+		//	emplace it
+		m->setTile(ctype, getRandomWalkable(m));
+	}
+
+	//	Monsters, exits, entrances
+	if (add_monsters)
+	{
+		//addMonsters(m, dl, &tcod_nodes);
+		addStairsToMap(m, dl, descending);
+	}
+
+	return m;
+}
+
+
 //	BOSS MAP: The Pallid Rotking
 gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending)
 {
@@ -1065,192 +1210,6 @@ int mapgen::rollMapDimension()
 }
 
 
-//	Cellular-automata based.
-void mapgen::style_Cave(gridmapPtr m)
-{
-	//	basic geometry
-	auto cmap = rollCellAutomata(m->_xsize, m->_ysize, 2, 4, 3, 5);
-	for (unsigned x = 0; x < m->_xsize; x++)
-	{
-		for (unsigned y = 0; y < m->_ysize; y++)
-		{
-			if (!cmap[x][y])
-				m->setTile(MT_FLOOR_STONE, x, y);
-			else
-				m->setTile(MT_WALL_STONE, x, y);
-		}
-	}
-
-}
-
-
-//	Rooms of different sizes joined together by passages.
-void mapgen::style_Rooms(gridmapPtr m, string zone, int dl)
-{
-	fillMap(m, { MT_WALL_STONE });
-
-	//	sometimes vary the min room size & the recursion depth to create a slightly different feel
-	int min_size = 8, recurse = 10;
-	int r = randint(1, 100);
-	if (r <= 30)
-	{
-		min_size = 5;
-		recurse = 15;
-	}
-	auto leaves = createNodeMap(m, min_size, recurse);
-
-
-	//	make each node into a room
-	for (auto leaf : leaves)
-	{
-		//	shape the room
-		leaf->resize(leaf->x + 1, leaf->y + 1, leaf->w - 2, leaf->h - 2);
-		fillRegion(m, MT_FLOOR_STONE, leaf->x, leaf->y, leaf->w, leaf->h);
-	}
-
-
-	//	connect random nodes together
-	vector<TCODBsp*> toConnect;
-	for (auto l : leaves)
-		toConnect.push_back(l);
-	for (auto leaf : leaves)
-	{
-		//	if only one leaf remains to connect & it the same as the last leaf in the list, just quit
-		//	averts an endless loop here
-		if (toConnect.size() == 1 && leaf == toConnect[0])
-			break;
-
-		//	pick a DIFFERENT node to link to
-		unsigned n;
-		do {
-			n = randrange(toConnect.size());
-		} while (toConnect[n] == leaf);
-
-		//	link to it
-		tunnelBetweenNodes(m, leaf, toConnect[n], MT_FLOOR_STONE);
-
-		//	remove the linked node so we don't link to it again
-		toConnect.erase(toConnect.begin() + n);
-	}
-
-	addDoorsToMap(m);
-}
-
-
-//	The DRY ROADS
-void mapgen::style_DryRoad(gridmapPtr m, int dl)
-{
-	fillMap(m, { MT_SAND, MT_SAND, MT_GRASS, });
-	m->_name = "Dry Tombs";
-
-	//	Tombstones
-	for (unsigned x = 3; x < m->_xsize - 6; x += 2)
-	{
-		for (unsigned y = 3; y <= m->_ysize - 6; y += 2)
-		{
-			if (roll_one_in(3))
-				m->setTile(MT_TOMBSTONE, x, y);
-		}
-	}
-
-	//	TOMBS
-	auto nodes = createNodeMap(m, 8, 20);
-	for (auto n : nodes)
-	{
-		if (roll_one_in(3))
-		{
-			//	building
-			addBuilding(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2, MT_WALL_SANDSTONE, MT_FLOOR_STONE, MT_DOOR_STONE);
-			m->setTile(MT_STATUE_MARBLE, n->x + n->w / 2, n->y + n->h / 2);
-
-			//	chance of item inside
-			//if (roll_one_in(4))
-				//m->addItem(lootgen::generateFlask(dl, 1), getRandomWalkableInNode(m, n));
-		}
-	}
-
-	//	Dry desert and a big road
-	int x = m->_xsize / 2 - 2;
-	int xmax = x + 8, xmin = x - 8;
-	int y = 0;
-	while (y < m->_ysize)
-	{
-		//	statues
-		if (roll_one_in(8))
-		{
-			m->setTile(MT_STATUE_MARBLE, x - 1, y);
-			m->setTile(MT_STATUE_MARBLE, x + 3, y);
-		}
-
-		//	road segment
-		fillRegion(m, MT_FLOOR_STONE, x, y, 3, 1);
-		y += 1;
-		x += randint(-1, 1);
-		if (x > xmax) x = xmax;
-		else if (x < xmin) x = xmin;
-	}
-
-	//	Other junk
-	scatterOnMap(m, MT_BUSH, 0.05);
-
-	//	Stairs at bottom and top
-	m->setTile(MT_STAIRS_UP, x + 1, m->_ysize - 2);
-	m->setTile(MT_STAIRS_DOWN, m->_xsize / 2 - 2, 1);
-	m->_startPt = intpair(x + 1, m->_ysize - 2);
-
-	//	Bright!
-	m->_lightLevel = 6;
-
-	//	MONSTRUM
-	addMonsters(m, dl, &nodes);
-}
-
-
-//	The TOMB SWAMPS
-void mapgen::style_Tomblands(gridmapPtr m, int dl)
-{
-	fillMap(m, { MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_WATER });
-	m->_name = "Tomb Swamp";
-	scatterOnMap(m, MT_BUSH, 0.05);
-
-	auto nodes = createNodeMap(m, 10, 8);
-	for (auto n : nodes)
-	{
-		int r = randint(1, 100);
-		
-		if (r <= 5)
-			addLake(m, intpair(n->x + n->w / 2, n->y + n->h / 2), MIN(n->w / 2, n->h / 2), MT_WATER, MT_GRASS);
-
-		else if (r <= 10)
-		{
-			addBuilding(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2, MT_WALL_STONE, MT_FLOOR_STONE, MT_DOOR_STONE);
-			scatterTile(m, MT_TABLE_WOODEN, n->x + 3, n->y + 3, n->w - 7, n->h - 7, 0.05);
-		}
-
-		else if (r <= 15)
-		{
-			for (unsigned x = n->x + 1; x <= n->x + n->w - 1; x += 2)
-			{
-				for (unsigned y = n->y + 1; y <= n->y + n->h - 1; y += 2)
-				{
-					if (!roll_one_in(6))
-						m->setTile(MT_WALL_STONE, x, y);
-				}
-			}
-		}
-
-		else if (r <= 20)
-			scatterTile(m, MT_WALL_STONE, n->x + 1, n->y + 1, n->w - 2, n->h - 2, 0.05);
-
-		else if (r <= 25)
-		{
-			addBuilding(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2, MT_WALL_STONE, MT_FLOOR_CARPET, MT_DOOR_STONE);
-			scatterTile(m, MT_SAND, n->x + 1, n->y + 1, n->w - 4, n->h - 4, 0.3);
-		}
-	}
-}
-
-
 //	Generate a random map for the given danger level.
 //	The 'descending' flag determines whether start position is set to the upstairs or downstairs.
 gridmapPtr mapgen::generate(int dl, bool descending)
@@ -1260,6 +1219,8 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 	//	Type depends on depth
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending);
+	else if (dl > 0)
+		m = generate_Hellfort(dl, descending);
 	else
 		m = generate_Cathedral(dl, descending);
 	

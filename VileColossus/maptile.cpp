@@ -14,12 +14,14 @@ const string getMaptileName(const Maptile tl)
 	case(MT_DOOR_WOODEN):		return "wooden door";
 	case(MT_DRAINED_SHRINE):	return "drained shrine";
 	case(MT_FLOOR_CARPET):      return "carpet";
+	case(MT_FLOOR_HOT):			return "hellstone floor";
 	case(MT_FLOOR_STONE):       
 	case(MT_FLOOR_STONE2):		return "stone floor";
 	case(MT_FORGE):				return "enchanted forge";
 	case(MT_GEMSTONE_PRESS):	return "gemstone press";
 	case(MT_GRASS):				return "grass";
 	case(MT_HEALING_FOUNTAIN):	return "fountain of life";
+	case(MT_LAVA):				return "lava";
 	case(MT_MEDITATION_SHRINE):	return "Shrine of Meditation";
 	case(MT_PEW_WOODEN):        return "wooden pew";
 	case(MT_RUBBLE):            return "rubble";
@@ -33,7 +35,10 @@ const string getMaptileName(const Maptile tl)
 	case(MT_STASH):				return "stash";
 	case(MT_STATUE_MARBLE):     return "marble statue";
 	case(MT_TABLE_WOODEN):      return "wooden table";
+	case(MT_THORNS):			return "hellthorns";
 	case(MT_TOMBSTONE):			return "tombstone";
+	case(MT_TREE_DEAD):			return "dead tree";
+	case(MT_WALL_BLOODY):		return "bloody wall";
 	case(MT_WALL_SANDSTONE):	return "sandstone wall";
 	case(MT_WALL_STONE):        return "stone wall";
 	case(MT_WALL_SUPER):        return "unbreakable wall";
@@ -78,6 +83,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_FLOOR_STONE2):
 		return ',';
 
+	case(MT_FLOOR_HOT):
 	case(MT_FLOOR_STONE):
 	case(MT_GRASS):
 	case(MT_SAND):
@@ -107,13 +113,18 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_TOMBSTONE):
 		return 239;
 
+	case(MT_WALL_BLOODY):
 	case(MT_WALL_SANDSTONE):
 	case(MT_WALL_STONE):
 	case(MT_WALL_SUPER):
 		return '#';
 
+	case(MT_LAVA):
 	case(MT_WATER):
 		return 247;
+
+	case(MT_TREE_DEAD):
+		return 5;
 
 	case(MT_STASH):
 		return 254;
@@ -121,6 +132,9 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_DRAINED_SHRINE):
 	case(MT_MEDITATION_SHRINE):
 		return 244;
+
+	case(MT_THORNS):
+		return 15;
 
 	default:
 		return '?';
@@ -187,8 +201,18 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_TOMBSTONE):
 		return TCODColor::lighterGrey;
 
+	case(MT_TREE_DEAD):
+		return TCODColor::lightGreen;
+
 	case(MT_WALL_SUPER):
 		return TCODColor::darkGrey;
+
+	case(MT_WALL_BLOODY):
+		return TCODColor::darkCrimson;
+
+	case(MT_FLOOR_HOT):
+	case(MT_LAVA):
+		return TCODColor::flame;
 
 	case(MT_WATER):
 		return TCODColor::lightBlue;
@@ -201,6 +225,9 @@ const colorType getMaptileColor(const Maptile tl)
 		return TCODColor::lightPurple;
 	case(MT_DRAINED_SHRINE):
 		return TCODColor::grey;
+
+	case(MT_THORNS):
+		return TCODColor::lighterFlame;
 
 	default:
 		return COLOR_WHITE;
@@ -227,6 +254,8 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_STATUE_MARBLE):
 	case(MT_TABLE_WOODEN):
 	case(MT_TOMBSTONE):
+	case(MT_TREE_DEAD):
+	case(MT_WALL_BLOODY):
 	case(MT_WALL_SANDSTONE):
 	case(MT_WALL_STONE):
 	case(MT_WALL_SUPER):
@@ -243,6 +272,8 @@ const bool isMaptileTransparent(const Maptile tl)
 	{
 	case(MT_DOOR_STONE):
 	case(MT_DOOR_WOODEN):
+	case(MT_TREE_DEAD):
+	case(MT_WALL_BLOODY):
 	case(MT_WALL_SANDSTONE):
 	case(MT_WALL_STONE):
 	case(MT_WALL_SUPER):
@@ -255,12 +286,12 @@ const bool isMaptileTransparent(const Maptile tl)
 
 const bool isMaptileBreakable(const Maptile tl)
 {
-	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN;;
+	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN || tl == MT_TREE_DEAD;
 }
 
 const bool doesMaptileFlicker(const Maptile tl)
 {
-	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE;
+	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS;
 }
 
 const bool isMaptileStairs(const Maptile tl)
@@ -271,7 +302,7 @@ const bool isMaptileStairs(const Maptile tl)
 //	Returns True if a maptile should have draw priority over surfaces.
 const bool drawMaptileOverSurface(const Maptile tl)
 {
-	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL;
+	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL || tl == MT_THORNS || tl == MT_LAVA || tl == MT_WATER;
 }
 
 const string getSurfaceName(const Surface sf)
