@@ -21,6 +21,8 @@ const string getMaptileName(const Maptile tl)
 	case(MT_GEMSTONE_PRESS):	return "gemstone press";
 	case(MT_GRASS):				return "grass";
 	case(MT_HEALING_FOUNTAIN):	return "fountain of life";
+	case(MT_HELLPORTAL_DOWN):	return "ascending hellportal";
+	case(MT_HELLPORTAL_UP):		return "descending hellportal";
 	case(MT_LAVA):				return "lava";
 	case(MT_MEDITATION_SHRINE):	return "Shrine of Meditation";
 	case(MT_PEW_WOODEN):        return "wooden pew";
@@ -61,6 +63,8 @@ const int getMaptileGlyph(const Maptile tl)
 		return 251;
 
 	case(MT_BARREL):
+	case(MT_HELLPORTAL_DOWN):
+	case(MT_HELLPORTAL_UP):
 		return '0';
 
 	case(MT_FORGE):
@@ -229,6 +233,11 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_THORNS):
 		return TCODColor::lighterFlame;
 
+	case(MT_HELLPORTAL_DOWN):
+		return TCODColor::orange;
+	case(MT_HELLPORTAL_UP):
+		return TCODColor::lightBlue;
+
 	default:
 		return COLOR_WHITE;
 	}
@@ -291,12 +300,13 @@ const bool isMaptileBreakable(const Maptile tl)
 
 const bool doesMaptileFlicker(const Maptile tl)
 {
-	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS;
+	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP;
 }
 
 const bool isMaptileStairs(const Maptile tl)
 {
-	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG;
+	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG || tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP;
 }
 
 //	Returns True if a maptile should have draw priority over surfaces.

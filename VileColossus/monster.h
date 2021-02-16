@@ -7,6 +7,7 @@
 
 enum class MonsterType
 {
+	//	Cathedral monsters
 	BLOAT,
 	CARRION_PRINCE,
 	CORPSE_COLOSSUS,
@@ -22,6 +23,12 @@ enum class MonsterType
 	ZOMBIE, ZOMBIE_INFUSED, ZOMBIE_LARGE, ZOMBIE_MASS, ZOMBIE_ROTTED,
 
 	BOSS_PALLID_ROTKING,
+
+
+	//	Hellfort monsters
+	IMP,
+	WRETCH, WRETCH_PUKING,
+
 
 	__NONE,
 };

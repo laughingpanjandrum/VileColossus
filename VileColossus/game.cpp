@@ -534,6 +534,10 @@ void game::tryUseStairs()
 		moveToNewMap(-8);
 	else if (tl == MT_STAIRS_DOWN_LONG)
 		moveToNewMap(8);
+	else if (tl == MT_HELLPORTAL_DOWN)
+		moveToNewMap(10);
+	else if (tl == MT_HELLPORTAL_UP)
+		moveToNewMap(-10);
 	else
 		messages::error(_gdata, "There are no stairs here!");
 }

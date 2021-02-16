@@ -612,7 +612,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 	int count = randint(1, 3);
 
 	//	stairs back up
-	while (count-- > 0)
+	while (count-- > 0 && depth != 10)
 	{
 		auto pt = getRandomForStairs(m);
 		m->setTile(MT_STAIRS_UP, pt);
@@ -635,6 +635,12 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 	//	LONG stairs up, making it quicker to get to the surface at deeper levels
 	if (depth == 8)
 		m->setTile(MT_STAIRS_UP_LONG, getRandomForStairs(m));
+	else if (depth == 10)
+	{
+		auto spt = getRandomForStairs(m);
+		m->setTile(MT_HELLPORTAL_UP, spt);
+		m->_startPt = spt;
+	}
 }
 
 
@@ -656,6 +662,7 @@ string mapgen::countAdjacentWalls(gridmapPtr m, int x, int y)
 	}
 	return txt;
 }
+
 
 //	Decides whether a door should go here, based on the configuration of walls surrounding the point.
 bool mapgen::verifyPointOkayForDoor(gridmapPtr m, int x, int y)
@@ -1223,7 +1230,7 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 	//	Type depends on depth
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending);
-	else if (dl > 0)
+	else if (dl > 9)
 		m = generate_Hellfort(dl, descending);
 	else
 		m = generate_Cathedral(dl, descending);
@@ -1289,7 +1296,11 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_STAIRS_DOWN, 11, 6);
 	m->_startPt = intpair(11, 6);
 
+	//	additional stairs down
 	m->setTile(MT_STAIRS_DOWN_LONG, 35, 9);
+
+	//	stairs to hell
+	m->setTile(MT_HELLPORTAL_DOWN, 35, 12);
 
 	m->_lightLevel = 5;
 	m->updateTmap();
