@@ -1107,7 +1107,7 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, bool add_monsters)
 	//	Monsters, exits, entrances
 	if (add_monsters)
 	{
-		//addMonsters(m, dl, &tcod_nodes);
+		addMonsters(m, dl, &tcod_nodes);
 		addStairsToMap(m, dl, descending);
 	}
 

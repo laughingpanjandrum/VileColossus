@@ -45,6 +45,12 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 		inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_ARCANE);
 		return true;
 	}
+	else if (spell == "firebolt")
+	{
+		addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+		inflictEnergyDamage(gdata, target, dieRoll(3, ai->_level), DTYPE_FIRE);
+		return true;
+	}
 	else if (spell == "lightning")
 	{
 		addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ELECTRIC)));
@@ -109,6 +115,7 @@ bool ai::trySpawn(gamedataPtr gdata, monsterPtr ai)
 	}
 	return false;
 }
+
 
 //	Returns True if we decide to cast a special ability.
 bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)

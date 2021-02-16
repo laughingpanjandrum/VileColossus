@@ -61,8 +61,11 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 		return { MonsterType::BLOAT, MonsterType::CORPSEFLY, MonsterType::CULTIST, MonsterType::SKULL_FLOATING,
 				MonsterType::OOZE_ELECTRIC, MonsterType::SKELETON, MonsterType::SKULL_PILE, MonsterType::ZOMBIE };
 
-	else if (dl < 11)
+	else if (dl < 10)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
+
+	else
+		return { MonsterType::IMP, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
@@ -97,6 +100,10 @@ const vector<MonsterType> monsterdata::getAltVersions(const MonsterType id, cons
 			alts.push_back(MonsterType::SKELETON_BURNING);
 		if (dl > 5)
 			alts.push_back(MonsterType::SKELETON_GOLD_PLATED);
+		break;
+
+	case(MonsterType::WRETCH):
+		alts.push_back(MonsterType::WRETCH_PUKING);
 		break;
 
 	case(MonsterType::ZOMBIE):
@@ -163,6 +170,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::GRIM_KNIGHT):
 		return { "protected_heavy", "arcane_attack", "more_damage", "slow", "defended", };
 
+	case(MonsterType::IMP):
+		return { "protected", "less_health", "resists_fire", "casts_firebolt" };
+
 	case(MonsterType::OOZE_ELECTRIC):
 		return { "slow", "electric_attack", "immune_electric", };
 	case(MonsterType::OOZE_SLUDGE):
@@ -199,6 +209,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected", "more_health", "no_attack", "immobile", "spawner", "undead", };
 	case(MonsterType::WALKING_SKULL_PILE):
 		return { "flits", "protected", "throws_bones", "immune_poison", "undead", };
+
+	case(MonsterType::WRETCH):
+		return { "slow", "more_health", "undead", };
+	case(MonsterType::WRETCH_PUKING):
+		return { "slow", "more_health", "undead", "casts_poison_spit", "poison_attack", "resists_poison" };
 
 	case(MonsterType::ZOMBIE):
 		return { "slow", "more_damage", "inaccurate", "undead", };
@@ -266,6 +281,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CULTIST_MUTTERING):	return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
 	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);
 	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'K', TCODColor::lightPurple);
+	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
 	case(MonsterType::ROACH):				return make_tuple("roach", 'r', TCODColor::sepia);
@@ -282,6 +298,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
 	case(MonsterType::SKULL_PILE):			return make_tuple("skull pile", 234, TCODColor::lightestYellow);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
+	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
+	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
 	case(MonsterType::ZOMBIE):				return make_tuple("zombie", 'z', TCODColor::green);
 	case(MonsterType::ZOMBIE_INFUSED):		return make_tuple("infused zombie", 'z', TCODColor::fuchsia);
 	case(MonsterType::ZOMBIE_LARGE):		return make_tuple("large zombie", 'Z', TCODColor::lightGreen);

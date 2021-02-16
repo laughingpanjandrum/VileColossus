@@ -33,6 +33,7 @@ TABLE OF ALL MONSTER FLAGS
 	spawner					Spawns monsters (based on its type)
 
 	casts_arcane_bolt		Ranged arcane damage.
+	casts_firebolt			Ranged fire damage.
 	casts_lightning			Ranged electric damage.
 	spit_sludge				Hurls sludge pools.
 	throws_bones			Ranged attack that can spawn a skull.

@@ -252,6 +252,8 @@ void monster::addFlag(const string flag)
 			_spells.push_back("poison_spit");
 		else if (flag == "casts_arcane_bolt")
 			_spells.push_back("arcane_bolt");
+		else if (flag == "casts_firebolt")
+			_spells.push_back("firebolt");
 		else if (flag == "casts_lightning")
 			_spells.push_back("lightning");
 		else if (flag == "spits_sludge")
