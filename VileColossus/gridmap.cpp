@@ -33,7 +33,7 @@ gridmap::gridmap(const int xsize, const int ysize) :
 //	We don't put surfaces on stairs, doors, or non-walkable points.
 bool gridmap::canCoverWithSurface(const int x, const int y) const
 {
-	return isTransparent(x, y) && isWalkable(x, y) && !isMaptileStairs(_tiles[x][y]);
+	return isTransparent(x, y) && isWalkable(x, y) && !isMaptileStairs(_tiles[x][y]) && _tiles[x][y] != MT_LAVA;
 }
 
 

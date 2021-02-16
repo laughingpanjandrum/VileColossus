@@ -305,6 +305,8 @@ const bool drawMaptileOverSurface(const Maptile tl)
 	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL || tl == MT_THORNS || tl == MT_LAVA || tl == MT_WATER;
 }
 
+
+
 const string getSurfaceName(const Surface sf)
 {
 	switch (sf)

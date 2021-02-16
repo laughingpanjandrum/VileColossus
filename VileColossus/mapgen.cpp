@@ -381,6 +381,8 @@ void mapgen::scatterOnMap(gridmapPtr m, Maptile tl, float density)
 	scatterTile(m, tl, 0, 0, m->_xsize - 1, m->_ysize - 1, density);
 }
 
+
+//	Randomly spread surfaces around.
 void mapgen::scatterSurface(gridmapPtr m, const Surface sf, int x, int y, int w, int h, float density)
 {
 	auto node = new TCODBsp(x, y, w, h);
@@ -388,7 +390,8 @@ void mapgen::scatterSurface(gridmapPtr m, const Surface sf, int x, int y, int w,
 	while (amt-- >= 0)
 	{
 		auto pt = getRandomWalkableInNode(m, node);
-		m->setSurface(sf, pt);
+		if (m->canCoverWithSurface(x, y))
+			m->setSurface(sf, pt);
 	}
 }
 
@@ -1078,6 +1081,7 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, bool add_monsters)
 
 	//	Chaos
 	scatterOnMap(m, MT_SAND, 0.05);
+	scatterSurface(m, Surface::BONES, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
 
 
 	//	Treasures
