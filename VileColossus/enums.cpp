@@ -522,12 +522,12 @@ string getGemTypeFullName(const GemType gem, const int tier)
 	string name = getGemTypeName(gem);
 	switch (tier)
 	{
-	case(0):	return "cracked " + name;
-	case(1):	return "chipped " + name;
-	case(2):	return name + " shard";
-	case(3):	return name + " chunk";
-	case(4):	return "whole " + name;
-	case(5):	return "pure " + name;
+	case(1):	return "cracked " + name;
+	case(2):	return "chipped " + name;
+	case(3):	return name + " shard";
+	case(4):	return name + " chunk";
+	case(5):	return "whole " + name;
+	case(6):	return "pure " + name;
 	default:
 		return "error_tier " + name;
 	}
