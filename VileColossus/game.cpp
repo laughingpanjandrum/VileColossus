@@ -10,7 +10,6 @@ TODO
 
 	show venomfang damage in spell description
 	RAT KING needs a buff
-	fix spellrune enhance cost (free upgrade to level 9 right now!!)
 	prioritize items in stacks
 
 */
