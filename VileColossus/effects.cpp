@@ -162,7 +162,6 @@ void fillRegionWithSurface(gamedataPtr gdata, const intpair ctr, int sz, Surface
 }
 
 
-
 //	Get loot from a location
 void openLootChest(gamedataPtr gdata, const intpair pt)
 {
@@ -171,6 +170,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(tl)));
 	messages::add(gdata, "You smash open the #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
 
+
 	//	Quality determined by type of chest
 	int quality = 1;
 	switch (tl)
@@ -178,6 +178,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	case(MT_CHEST_GLOWING):		quality = 2; break;
 	case(MT_CHEST_RADIANT):		quality = 3; break;
 	}
+
 
 	//	Delete the chest
 	gdata->_map->setTile(MT_FLOOR_STONE, pt);
@@ -202,6 +203,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		MaterialType mt = MaterialType::FRAGMENTS;
 		int r = randint(1, 100);
 		if (r <= 50 && quality > 1)	mt = MaterialType::MAGIC_DUST;
+		else if (r <= 75 && quality > 2) mt = MaterialType::GLOWING_POWDER;
 
 		//	generate the item
 		auto it = lootgen::generateMaterial(mt, dieRoll(3, 6 + quality));
@@ -213,7 +215,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	if (quality > 1)
 	{
 		amt = randint(1, quality);
-		auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(quality * 12), 1);
+		auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(6 + quality * 6), 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 }

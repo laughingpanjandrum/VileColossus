@@ -753,10 +753,11 @@ int lootgen::getLootTierForMonsterLevel(const int lvl)
 //	Gems have more tiers than normal items, so they use a different table
 int lootgen::getGemTierForMonsterLevel(const int lvl)
 {
-	if		(lvl <= 18)	return 1;
-	else if (lvl <= 24)	return 2;
-	else if (lvl <= 30)	return 3;
-	else if (lvl <= 36)	return 4;
+	if		(lvl <= 18)	return 0;
+	else if (lvl <= 24)	return 1;
+	else if (lvl <= 30)	return 2;
+	else if (lvl <= 36)	return 3;
+	else if (lvl <= 42) return 4;
 	else				return 5;
 }
 
