@@ -104,8 +104,12 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		//	generate the gems
 		while (gems-- > 0)
 		{
-			auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(target->_level), 1);
-			gdata->_map->addItem(it, pts[randrange(pts.size())]);
+			auto tier = lootgen::getGemTierForMonsterLevel(target->_level);
+			if (tier >= 0)
+			{
+				auto it = lootgen::generateGem(tier, 1);
+				gdata->_map->addItem(it, pts[randrange(pts.size())]);
+			}
 		}
 	}
 }
