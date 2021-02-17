@@ -329,7 +329,7 @@ void tryEnhanceRune(gamedataPtr gdata)
 	{
 		auto it = gdata->_currentItemList[gdata->_idx];
 		auto cost = it->getEnhanceCost();
-		auto mat = it->_spellLevel > 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
+		auto mat = it->_spellLevel >= 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
 		if (hasMaterial(gdata, mat, cost))
 		{
 			spendMaterial(gdata, mat, cost);

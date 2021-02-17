@@ -9,10 +9,8 @@ TODO
 	a nonexistent gem type has dropped???
 	reduce amt of blue material gained?? or give it some kind of sink?
 
-	NOW REQUIRED: post-first boss content
-		-	Add new area type
-		-	Add Transmutation option to turn mat types into better types?
-		-	Add a new shortcut method for descending to the post-boss zone
+	needs more monster types in the deeper cathedral zones
+	damage numbers kinda make weapon damage irrelevant?
 
 */
 

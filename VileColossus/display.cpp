@@ -868,7 +868,7 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 				writeFormatted(47, 24, "#u @Unequip this rune", { COLOR_LIGHT });
 			writeFormatted(47, 25, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
 
-			auto mat = it->_spellLevel > 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
+			auto mat = it->_spellLevel >= 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
 			writeFormatted(49, 26, "(Requires #" + to_string(it->getEnhanceCost()) + " " + getMaterialTypeName(mat) + "@)", { getMaterialTypeColor(mat) });
 		}
 		else

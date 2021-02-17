@@ -339,7 +339,7 @@ int item::getEnhanceCost() const
 	if (_category == ITEM_FLASK)
 		return _rarity;
 	else if (_category == ITEM_SPELLRUNE)
-		return _spellLevel + 1;
+		return (_spellLevel + 1) % 10;
 	else
 	{
 		switch (_enhancementLevel)

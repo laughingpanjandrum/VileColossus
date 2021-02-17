@@ -301,7 +301,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(2):	name = "gothic " + name; break;
 			case(3):	name = "titan " + name; break;
 			}
-			av = 2 + 2 * tier;
+			av = 3 + 3 * tier;
 			break;
 		}
 	}
@@ -317,7 +317,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 		case(2):
 			name = "heavy shield";
 			dv = tier;
-			av = tier;
+			av = tier * 2;
 			acc = -(dv + av);
 			break;
 		}
@@ -335,7 +335,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(ITEM_HELMET):		name = "hood"; break;
 			case(ITEM_SHOULDERS):	name = "cloak"; break;
 			}
-			dv = tier;
+			dv = tier + MAX(tier - 1, 0);
 			break;
 
 		case(2):
@@ -347,7 +347,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(ITEM_HELMET):		name = "helm"; break;
 			case(ITEM_SHOULDERS):	name = "pauldrons"; break;
 			}
-			av = tier;
+			av = tier + MAX(tier - 1, 0);
 			break;
 		}
 
@@ -506,7 +506,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::DOUBLE_AXE):
 	case(BaseWeaponType::GREAT_AXE):
 	case(BaseWeaponType::WAR_AXE):
-		it->setProperty(PROP_CLEAVE_DAMAGE, randint(3, 6));
+		it->setProperty(PROP_CLEAVE_DAMAGE, randint(8, 13));
 		break;
 
 	case(BaseWeaponType::DEMON_BLADE):
