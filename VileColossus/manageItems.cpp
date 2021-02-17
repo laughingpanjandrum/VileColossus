@@ -394,8 +394,11 @@ void dismantleFromInventory(gamedataPtr gdata)
 		auto gems = it->getAllSocketedGemTypes();
 		for (unsigned i = 0; i < gems->size(); i++)
 		{
-			auto lvl = it->getSocketLevel(i);
-			addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+			if (gems->at(i) != GemType::__NONE)
+			{
+				auto lvl = it->getSocketLevel(i);
+				addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+			}
 		}
 
 		//	Destroy the item.

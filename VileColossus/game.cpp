@@ -10,11 +10,9 @@ TODO
 
 	change 'affinity' to 'bonus', makes more sense
 	show venomfang damage in spell description
-	still getting nonexistent gems?? check transfer from inventory to stash
 	abbreviate 'shoulders' when showing equipment
 	RAT KING needs a buff
-	fix gemstone tiers & names: tier 0 has no effect but has a name
-	fix gemstone enhance cost (free upgrade to level 9 right now!!)
+	fix spellrune enhance cost (free upgrade to level 9 right now!!)
 	prioritize items in stacks
 
 */
