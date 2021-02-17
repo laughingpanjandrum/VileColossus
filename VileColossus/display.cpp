@@ -79,7 +79,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	int dmgvar = p->getDamageVariance();
 
 	drawStatWithBox(x, y + 2, plusminus(p->getAccuracy()), "Accuracy", COLOR_MISC_STAT);
-	drawStatWithBox(x, y + 5, to_string(dmgbase - dmgvar) + "-" + to_string(dmgbase + dmgvar), "Damage", COLOR_HEALTH);
+	drawStatWithBox(x, y + 5, to_string(dmgbase), "Weapon Damage", COLOR_HEALTH);
 	drawStatWithBox(x, y + 8, extendInteger(p->getCriticalChance(), 2) + "%", "Critical Chance", TCODColor::crimson);
 	drawStatWithBox(x, y + 11, plusminus(p->getCriticalMultiplier()) + "%", "Critical Damage", TCODColor::crimson);
 	drawStatWithBox(x, y + 14, plusminus(p->getSpellPower()) + "%", "Spell Power", COLOR_MAGIC);
@@ -1070,37 +1070,40 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 	++aty;
 	for (unsigned i = 0; i < PROP__NONE; i++)
 	{
+		//	we don't display EVERY property
 		auto prop = static_cast<ItemProperty>(i);
-
-		//	stat of this item
-		auto val = it->getProperty(prop);
-
-		//	test comparison
-		if (compareTo != nullptr)
+		if (!(prop == PROP_DAMAGE_VARIANCE))
 		{
-			auto cval = compareTo->getProperty(prop);
-			if (val != 0 || cval != 0)
-			{
-				//	stat value
-				_win.write(atx + 5, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
-				_win.write(atx + 12, aty, getItemPropertyName(prop), COLOR_MEDIUM);
+			//	stat of this item
+			auto val = it->getProperty(prop);
 
-				//	difference in values
-				auto diff = val - cval;
-				if (diff != 0)
+			//	test comparison
+			if (compareTo != nullptr)
+			{
+				auto cval = compareTo->getProperty(prop);
+				if (val != 0)
 				{
-					auto col = (diff < 0) ? COLOR_NEGATIVE : COLOR_POSITIVE;
-					_win.write(atx, aty, plusminus(diff), col);
+					//	stat value
+					_win.write(atx + 5, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
+					_win.write(atx + 12, aty, getItemPropertyName(prop), COLOR_MEDIUM);
+
+					//	difference in values
+					auto diff = val - cval;
+					if (diff != 0)
+					{
+						auto col = (diff < 0) ? COLOR_NEGATIVE : COLOR_POSITIVE;
+						_win.write(atx, aty, plusminus(diff), col);
+					}
 				}
 			}
-		}
 
-		//	no comparison; just draw the stat
-		else if (val != 0)
-		{
-			_win.write(atx + 1, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
-			_win.write(atx + 8, aty, getItemPropertyName(prop), COLOR_MEDIUM);
-			//drawDottedLinePair(atx + 1, ++aty, atx + 16, getItemPropertyName(prop), formatItemProperty(prop, val), COLOR_LIGHT, COLOR_MEDIUM);
+			//	no comparison; just draw the stat
+			else if (val != 0)
+			{
+				_win.write(atx + 1, ++aty, formatItemProperty(prop, val), COLOR_LIGHT);
+				_win.write(atx + 8, aty, getItemPropertyName(prop), COLOR_MEDIUM);
+				//drawDottedLinePair(atx + 1, ++aty, atx + 16, getItemPropertyName(prop), formatItemProperty(prop, val), COLOR_LIGHT, COLOR_MEDIUM);
+			}
 		}
 	}
 
