@@ -96,7 +96,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 		else			drawStatWithBox(x, y, "00", getDamageTypeName(dt) + " Damage", COLOR_DARK);
 
 		//	affinity is already factored in above
-		drawStatWithBox(x, y + 3, plusminus(aff) + "%", getDamageTypeName(dt) + " Affinity", (aff > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
+		drawStatWithBox(x, y + 3, plusminus(aff) + "%", getDamageTypeName(dt) + " Bonus", (aff > 0) ? getDamageTypeColor(dt) : COLOR_DARK);
 		y += 7;
 	}
 
@@ -1169,25 +1169,25 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 		break;
 
 	case(GemType::BOLTSTONE):
-		armour = plusminus(tier * 10) + "% #Electric Affinity";
+		armour = plusminus(tier * 10) + "% #Electric Bonus";
 		jewel = plusminus(tier * 5) + "% #Spell Power";
 		weapon = plusminus(tier * 2) + " #Electric Damage";
 		break;
 
 	case(GemType::FLAMESTONE):
-		armour = plusminus(tier * 10) + "% #Fire Affinity";
+		armour = plusminus(tier * 10) + "% #Fire Bonus";
 		jewel = plusminus(tier * 5) + " #Max Health";
 		weapon = plusminus(tier * 2) + " #Fire Damage";
 		break;
 
 	case(GemType::SILVERSTONE):
-		armour = plusminus(tier * 10) + "% #Arcane Affinity";
+		armour = plusminus(tier * 10) + "% #Arcane Bonus";
 		jewel = plusminus(tier) + " #Max Magic";
 		weapon = plusminus(tier * 2) + " #Arcane Damage";
 		break;
 
 	case(GemType::SPIDERSTONE):
-		armour = plusminus(tier * 10) + "% #Poison Affinity";
+		armour = plusminus(tier * 10) + "% #Poison Bonus";
 		jewel = plusminus(tier) + "% #Critical Chance";
 		weapon = plusminus(tier * 2) + " #Poison Damage";
 		break;

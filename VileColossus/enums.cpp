@@ -28,7 +28,7 @@ string getItemCategoryName(const ItemCategory cat)
 	case(ITEM_QUIVER):			return "Quiver";
 	case(ITEM_RING):			return "Ring";
 	case(ITEM_SHIELD):			return "Shield";
-	case(ITEM_SHOULDERS):		return "Shoulders";
+	case(ITEM_SHOULDERS):		return "Shoulder";
 	case(ITEM_SPELLRUNE):		return "Spellrune";
 	case(ITEM_WEAPON):			return "Weapon";
 	default:
@@ -279,10 +279,10 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	switch (en)
 	{
 	case(ENCH_ACCURACY):		return "Global Accuracy";
-	case(ENCH_AFF_ARCANE):		return "Arcane Affinity";
-	case(ENCH_AFF_ELECTRIC):	return "Electric Affinity";
-	case(ENCH_AFF_FIRE):		return "Fire Affinity";
-	case(ENCH_AFF_POISON):		return "Poison Affinity";
+	case(ENCH_AFF_ARCANE):		return "Arcane Bonus";
+	case(ENCH_AFF_ELECTRIC):	return "Electric Bonus";
+	case(ENCH_AFF_FIRE):		return "Fire Bonus";
+	case(ENCH_AFF_POISON):		return "Poison Bonus";
 	case(ENCH_ARCANE):			return "Arcane Damage";
 	case(ENCH_ARMOURING):		return "Armour Value";
 	case(ENCH_BURNING):			return "Fire Damage";
@@ -374,7 +374,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 
 		//	Legendary enchants
 
-	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated Affinity.";
+	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated bonus.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
