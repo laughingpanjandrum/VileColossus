@@ -12,6 +12,7 @@ TABLE OF ALL MONSTER FLAGS
 	
 	defended				Has +50% Defence Value.
 	electric_attack			Deals 50% of damage as electric.
+	fast					Reduced move energy cost.
 	fire_attack				Deals 50% of damage as fire.
 	flits					Moves erratically.
 	flying					Ignores stuff on the ground, like poison pools.

@@ -8,9 +8,6 @@ TODO
 	Show item comparison in inventory
 	reduce amt of blue material gained?? or give it some kind of sink?
 
-	needs more monster types in the deeper cathedral zones
-	damage numbers kinda make weapon damage irrelevant?
-
 */
 
 

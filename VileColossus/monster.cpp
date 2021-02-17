@@ -69,6 +69,8 @@ int monster::getMoveEnergyCost() const
 	int cost = ENERGY_COST_BASE;
 	if (hasFlag("slow"))
 		cost += cost / 2;
+	else if (hasFlag("fast"))
+		cost -= cost / 2;
 	return cost;
 }
 
@@ -187,6 +189,9 @@ const MonsterType monster::rollMonsterToSpawn() const
 
 	case(MonsterType::CULTIST_INFESTED):
 		return MonsterType::ROACH;
+
+	case(MonsterType::RAT_KING):
+		return MonsterType::RAT_GIANT;
 
 	case(MonsterType::SKULL_PILE):
 		return MonsterType::SKULL_FLOATING;

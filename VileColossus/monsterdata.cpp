@@ -28,11 +28,12 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 		return MonsterType::__NONE;
 	else
 	{
-		int r = randint(1, 3);
+		int r = randint(1, 4);
 		switch (r)
 		{
 		case(1):	return MonsterType::ZOMBIE_MASS;
 		case(2):	return MonsterType::GRIM_KNIGHT;
+		case(3):	return MonsterType::RAT_KING;
 		default:	return MonsterType::WALKING_SKULL_PILE;
 		}
 	}
@@ -62,7 +63,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 				MonsterType::OOZE_ELECTRIC, MonsterType::SKELETON, MonsterType::SKULL_PILE, MonsterType::ZOMBIE };
 
 	else if (dl < 10)
-		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
+		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else
 		return { MonsterType::IMP, MonsterType::WRETCH, };
@@ -178,6 +179,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::OOZE_SLUDGE):
 		return { "flits", "spits_sludge", "more_health", "resists_electric" };
 
+	case(MonsterType::RAT_GIANT):
+		return { "less_health", "poison_attack", "fast", "defended", };
+	case(MonsterType::RAT_KING):
+		return { "spawner", "less_health", "inaccurate", "flits" };
+
 	case(MonsterType::ROACH):
 		return { "fast", "flits", "poison_attack", "less_damage", "less_health", "less_defence" };
 
@@ -250,6 +256,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 		return 4;
 
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::RAT_KING):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
@@ -284,6 +291,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
+	case(MonsterType::RAT_GIANT):			return make_tuple("giant rat", 'r', TCODColor::darkGreen);
+	case(MonsterType::RAT_KING):			return make_tuple("Rat King", 'R', TCODColor::lightSepia);
 	case(MonsterType::ROACH):				return make_tuple("roach", 'r', TCODColor::sepia);
 	case(MonsterType::SKELETON):			return make_tuple("skeleton", 'k', TCODColor::desaturatedYellow);
 	case(MonsterType::SKELETON_ARCHER):		return make_tuple("skeleton archer", 'k', TCODColor::yellow);
@@ -306,7 +315,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::ZOMBIE_MASS):			return make_tuple("Zombie Mass", 'Z', TCODColor::lightPink);
 	case(MonsterType::ZOMBIE_ROTTED):		return make_tuple("rotted zombie", 'z', TCODColor::darkLime);
 
-	case(MonsterType::BOSS_PALLID_ROTKING):	return make_tuple("THE PALLID ROTKING", 'R', TCODColor::lightLime);
+	case(MonsterType::BOSS_PALLID_ROTKING):	return make_tuple("= THE PALLID ROTKING =", 'A', TCODColor::lightLime);
 
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);
