@@ -88,7 +88,7 @@ bool ai::spawnMinion(gamedataPtr gdata, monsterPtr spawner, const MonsterType sp
 
 		//	AI spends costs.
 		spawner->spendActionEnergy();
-		spawner->_spawnDelay = randint(6, 12);
+		spawner->_spawnDelay = mon->hasFlag("megaspawner") ? randint(3, 6) : randint(6, 12);
 		return true;
 	}
 	return false;
@@ -108,9 +108,7 @@ bool ai::trySpawn(gamedataPtr gdata, monsterPtr ai)
 		{
 			auto id = ai->rollMonsterToSpawn();
 			if (id != MonsterType::__NONE)
-			{
 				return spawnMinion(gdata, ai, id, ai->_pos);
-			}
 		}
 	}
 	return false;

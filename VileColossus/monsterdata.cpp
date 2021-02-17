@@ -182,7 +182,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::RAT_GIANT):
 		return { "less_health", "poison_attack", "fast", "defended", };
 	case(MonsterType::RAT_KING):
-		return { "spawner", "less_health", "inaccurate", "flits" };
+		return { "spawner", "more_health", "inaccurate", "flits", "megaspawner", };
 
 	case(MonsterType::ROACH):
 		return { "fast", "flits", "poison_attack", "less_damage", "less_health", "less_defence" };

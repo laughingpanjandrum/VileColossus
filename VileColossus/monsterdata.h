@@ -21,6 +21,7 @@ TABLE OF ALL MONSTER FLAGS
 	less_damage				Inflicts -50% damage.
 	less_defence			Defence Value reduced by 50%.
 	less_health				-50% health.
+	megaspawner				Spawns more frequently.
 	minion					Grants no XP and doesn't drop anything. (Added to monsters spawned by other monsters.)
 	more_health				+50% health.
 	more_damage				Inflicts +50% damage.
