@@ -12,9 +12,9 @@ const string getSpellName(const Spell sp)
 	{
 	case(Spell::ARCANE_EMANATION):      return "Arcane Bolt";
 	case(Spell::BLINK):					return "Blink";
-	case(Spell::CALL_LIGHTNING):        return "Call Lightning";
+	case(Spell::CALL_LIGHTNING):        return "Lightning Strike";
 	case(Spell::CONJURE_FLAME):			return "Conjure Flame";
-	case(Spell::SMITE_EVIL):			return "Smite Evil";
+	case(Spell::SMITE_EVIL):			return "Smite Undead";
 	case(Spell::VENOMFANG):				return "Venomfang";
 
 	case(Spell::ARCANE_PULSE):			return "Arcane Pulse";

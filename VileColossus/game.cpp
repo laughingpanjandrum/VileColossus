@@ -13,9 +13,7 @@ TODO
 	add 'spellpower buff' flask effect
 	remove 'charging' buff & just make charge gain more variable
 	up other gemstone effects at low tiers
-	spell renames:
-		'Smite Evil' to 'Smite Undead'
-		'Call Lightning' to 'Lightning Strike'
+
 
 */
 
