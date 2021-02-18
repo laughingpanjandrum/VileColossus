@@ -144,6 +144,8 @@ void doAutomove(gamedataPtr gdata)
 	if (doPlayerMove(gdata, gdata->_automoveVec, false))
 	{
 		gdata->_automoveDist--;
+		if (!gdata->_visibleMonsters.empty())
+			gdata->_automoveDist = 0;
 	}
 
 	//	If we fail to move, cancel the automove.

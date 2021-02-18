@@ -7,12 +7,7 @@ TODO
 
 	Show item comparison in inventory
 	reduce amt of blue material gained?? or give it some kind of sink?
-
-	halt quickmoving if we see an enemy
 	allow 'v' to view from equipment list and pickup menus
-	add 'spellpower buff' flask effect
-	remove 'charging' buff & just make charge gain more variable
-
 
 */
 
