@@ -1285,6 +1285,7 @@ gridmapPtr mapgen::generate_HomeBase()
 	fillRegion(m, MT_SAND, 16, 33, 2, 11);
 	fillRegionCircular(m, MT_WATER, 12, 9, 1);
 
+	//	features in main structure
 	m->setTile(MT_HEALING_FOUNTAIN, 12, 9);
 	m->setTile(MT_STASH, 13, 5);
 	m->setTile(MT_ANVIL, 16, 6);
@@ -1297,10 +1298,16 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->_startPt = intpair(11, 6);
 
 	//	additional stairs down
-	m->setTile(MT_STAIRS_DOWN_LONG, 35, 9);
+	fillRegion(m, MT_WALL_STONE, 28, 11, 7, 8);
+	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_BUSH }, 29, 12, 5, 6);
+	m->setTile(MT_FLOOR_HOT, 28, 15);
+	m->setTile(MT_STAIRS_DOWN_LONG, 31, 15);
 
 	//	stairs to hell
-	m->setTile(MT_HELLPORTAL_DOWN, 35, 12);
+	scatterSurface(m, Surface::BONES, 16, 16, 4, 4, 0.8);
+	scatterSurface(m, Surface::CORPSE, 16, 16, 4, 4, 0.8);
+	m->setSurface(Surface::__NONE, 18, 18);
+	m->setTile(MT_HELLPORTAL_DOWN, 18, 18);
 
 	m->_lightLevel = 5;
 	m->updateTmap();
