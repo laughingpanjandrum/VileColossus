@@ -177,6 +177,8 @@ struct itemContainer
 	itemContainer() {}
 	itemContainer(const intpair pos) : _pos(pos) {}
 
+	void addItem(itemPtr it);
+
 	vector<itemPtr> _items;
 	intpair _pos;
 };

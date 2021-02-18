@@ -72,7 +72,7 @@ void gridmap::addItem(itemPtr it, const intpair pt)
 		icp = itemContainerPtr(new itemContainer(pt));
 		_items.push_back(icp);
 	}
-	icp->_items.push_back(it);
+	icp->addItem(it);
 }
 
 

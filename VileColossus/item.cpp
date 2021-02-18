@@ -481,3 +481,18 @@ int item::getQualityAdjustment(const ItemProperty prop, int val) const
 	int mod = MAX(1, (int)((double)val * f));
 	return mod;
 }
+
+
+//	Items are prioritized based on rarity/type
+void itemContainer::addItem(itemPtr it)
+{
+	for (auto f = _items.begin(); f != _items.end(); f++)
+	{
+		if (it->_rarity > (*f)->_rarity)
+		{
+			_items.insert(f, it);
+			return;
+		}
+	}
+	_items.push_back(it);
+}
