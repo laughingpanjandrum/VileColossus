@@ -56,7 +56,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		break;
 
 	case(5):
-		drop_amt = randint(8, 12);
+		drop_amt = 8 + dieRoll(4, 2);
 		break;
 	}
 

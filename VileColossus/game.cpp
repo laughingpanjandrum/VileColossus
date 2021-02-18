@@ -13,7 +13,6 @@ TODO
 	make self-fireballing kill you properly
 	make BIG DOWN STAIRS fit better into the surface map
 	possible to somehow not die at zero health? just stay invincible??
-	crank up amount of stuff dropped by SUPERBOSSES
 	make status effect duration logarithmic instead of linear with damage amount?
 
 */
