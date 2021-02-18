@@ -69,6 +69,7 @@ int item::getSize() const
 	case(ITEM_BOOTS):
 	case(ITEM_BRACERS):
 	case(ITEM_FLASK):
+	case(ITEM_GEM):
 	case(ITEM_GLOVES):
 	case(ITEM_HELMET):
 	case(ITEM_RING):

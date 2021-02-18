@@ -50,7 +50,7 @@ public:
 
 	//	Equipment slots
 
-	int getMaxInventorySlots() const { return 24; }
+	int getMaxInventorySlots() const { return 30; }
 
 	bool hasNewForSlot(const EquipmentSlot slot) const { return _HasNewForSlot[slot]; }
 	void markNewForSlot(const EquipmentSlot slot);
