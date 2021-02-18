@@ -10,7 +10,6 @@ TODO
 
 	halt quickmoving if we see an enemy
 	allow 'v' to view from equipment list and pickup menus
-	first blue enchantment costs more than the second??!!
 	add 'spellpower buff' flask effect
 	remove 'charging' buff & just make charge gain more variable
 	up other gemstone effects at low tiers

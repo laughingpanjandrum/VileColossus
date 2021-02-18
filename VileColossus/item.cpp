@@ -344,9 +344,9 @@ int item::getEnhanceCost() const
 	{
 		switch (_enhancementLevel)
 		{
-		case(0):	return 10;
-		case(1):	return 20;
-		case(2):	return 10;
+		case(0):	return 5;
+		case(1):	return 10;
+		case(2):	return 20;
 		case(3):	return 20;
 		case(4):	return 1;
 		default:	return 0;
