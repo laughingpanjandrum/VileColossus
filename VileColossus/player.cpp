@@ -353,7 +353,7 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 		total += getTotalEnchantmentBonus(ENCH_VENOMBURST);
 		total += getTotalGemBonusFromWeapons(GemType::SPIDERSTONE) * 3;
 		if (hasBuff(BUFF_VENOMFANG))
-			total += 6 + 10.0f * (float)getSpellPower() / 100.0f;
+			total += getVenomfangDamage();
 		break;
 	}
 
@@ -382,7 +382,13 @@ int player::getReprisalDamage() const
 //	Bonus damage inflicted by the Smite Evil buff.
 int player::getSmiteEvilDamage() const
 {
-	return 10 + getSpellPower() / 10;
+	return 10 + getSpellPower() / 5;
+}
+
+//	Added to max poison damage when casting the spell.
+int player::getVenomfangDamage() const
+{
+	return 6 + 10.0f * (float)getSpellPower() / 100.0f;
 }
 
 int player::getArcanePulseDamage() const

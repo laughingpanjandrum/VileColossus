@@ -416,11 +416,11 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::DEMON_GREATBLADE):
 		name = "ultrablade";
-		dam = 42; var = 14; crit = 5; mult = 100; acc = -1;
+		dam = 60; var = 18; crit = 5; mult = 100; acc = -1;
 		break;
 	case(BaseWeaponType::DOUBLE_AXE):
 		name = "double axe";
-		dam = 21; var = 6; crit = 3; mult = 150; acc = -4;
+		dam = 45; var = 6; crit = 3; mult = 150; acc = -4;
 		break;
 	case(BaseWeaponType::DOUBLE_CROSSBOW):
 		name = "double crossbow";
@@ -428,7 +428,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::GREAT_AXE):
 		name = "great-axe";
-		dam = 20; var = 5; crit = 3; mult = 150; acc - -5;
+		dam = 30; var = 5; crit = 3; mult = 150; acc - -5;
 		break;
 	case(BaseWeaponType::GREATBOW):
 		name = "greatbow";
@@ -436,15 +436,15 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::GREATHAMMER):
 		name = "greathammer";
-		dam = 20; var = 3; crit = 1; mult = 50; acc = -4;
+		dam = 30; var = 6; crit = 1; mult = 50; acc = -4;
 		break;
 	case(BaseWeaponType::GREATMAUL):
 		name = "greatmaul";
-		dam = 51; var = 14; crit = 1; mult = 50; acc = -4;
+		dam = 75; var = 14; crit = 1; mult = 50; acc = -4;
 		break;
 	case(BaseWeaponType::GREATSWORD):
 		name = "greatsword";
-		dam = 20; var = 7; crit = 5; mult = 100;
+		dam = 30; var = 7; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::HEAVY_CROSSBOW):
 		name = "heavy crossbow";
