@@ -113,9 +113,15 @@ int player::getMaxMagic() const
 
 int player::getSpellPower() const
 {
+	//	from items
 	int total = (getDerivedAttribute(ATTR_WILLPOWER) - 10) * 5;
 	total += getTotalEnchantmentBonus(ENCH_SPELLPOWER);
 	total += getTotalGemBonusFromJewels(GemType::BOLTSTONE) * 25;
+
+	//	from buffs
+	if (hasBuff(BUFF_EMPOWERED))
+		total += (total / 2) + 50;
+
 	return total;
 }
 

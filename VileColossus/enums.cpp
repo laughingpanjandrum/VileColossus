@@ -233,6 +233,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_CHARGING):		return "charging";
 	case(ENCH_CURING):			return "curing";
 	case(ENCH_DEFENCE):			return "defence";
+	case(ENCH_EMPOWERING):		return "empowering";
 	case(ENCH_FLAMEWARD):		return "flameguard";
 	case(ENCH_FURY):			return "fury";
 	case(ENCH_GREED):			return "greed";
@@ -290,6 +291,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_CHARGING):		return "Charges/Kill";
 	case(ENCH_CURING):			return "Cure Afflictions";
 	case(ENCH_DEFENCE):			return "Defence Value";
+	case(ENCH_EMPOWERING):		return "Empower Duration";
 	case(ENCH_FLAMEWARD):		return "Fire Resistance";
 	case(ENCH_FURY):			return "Wrath Damage";
 	case(ENCH_GREED):			return "Fragments Dropped";
@@ -347,6 +349,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_CHARGING):		return "Kills add " + to_string(val) + "% more charge to the flask.";
 	case(ENCH_CURING):			return "Immediately removes Burn, Poison, and Shock status effects when quaffed.";
 	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
+	case(ENCH_EMPOWERING):		return "Buffs your Spell Power by 50%, plus half of its base value, for " + to_string(val) + " turns.";
 	case(ENCH_FLAMEWARD):		return "Reduces Fire damage taken by " + to_string(val) + "%.";
 	case(ENCH_FURY):			return "Inflict +" + to_string(val) + "% damage when buffed with Wrath.";
 	case(ENCH_GREED):			return "Monsters drop +" + to_string(val) + "% more fragments.";
@@ -421,6 +424,13 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_SPELLWARD):
 	case(ENCH_STORMWARD):
 		return name + " #" + plusminus(val) + "%";
+
+		//	Duration
+	case(ENCH_EMPOWERING):
+	case(ENCH_HASTE):
+	case(ENCH_STONESKIN):
+	case(ENCH_WRATH):
+		return name + " #" + to_string(val) + " turns";
 		
 		//	Just the +bonus
 	default:
@@ -492,6 +502,7 @@ string getBuffName(const BuffType bf)
 	switch (bf)
 	{
 	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
+	case(BUFF_EMPOWERED):		return "Empowered";
 	case(BUFF_HASTE):			return "Haste";
 	case(BUFF_SMITE_EVIL):		return "Smite Evil";
 	case(BUFF_STONESKIN):		return "Stoneskin";

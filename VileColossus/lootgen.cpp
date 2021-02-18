@@ -55,7 +55,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 			ENCH_SHARPNESS, ENCH_SLAYING, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_FLASK):
-		return { ENCH_CAPACITY, ENCH_CHARGING, ENCH_CURING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
+		return { ENCH_CAPACITY, ENCH_CURING, ENCH_EMPOWERING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
 
 	case(ITEM_SPELLRUNE):
 		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON,  ENCH_GREED, ENCH_MAGIC, ENCH_MANALEECH, ENCH_FLAMEWARD, ENCH_POISON_WARD, ENCH_SPELLWARD, ENCH_STORMWARD, };
@@ -148,6 +148,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_CHARGING):		return randint(4, 8) * 5;
 	case(ENCH_CURING):			return 100;
 	case(ENCH_DEFENCE):			return randint(1, 3);
+	case(ENCH_EMPOWERING):		return randint(5, 15);
 	case(ENCH_FLAMEWARD):		return randint(5, 25);
 	case(ENCH_FURY):			return randint(5, 15) * 5;
 	case(ENCH_GREED):			return randint(1, 4) * 10;
