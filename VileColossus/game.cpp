@@ -9,7 +9,6 @@ TODO
 	reduce amt of blue material gained?? or give it some kind of sink?
 
 	halt quickmoving if we see an enemy
-	boost stats of higher-tier flasks
 	allow 'v' to view from equipment list and pickup menus
 	first blue enchantment costs more than the second??!!
 	add 'spellpower buff' flask effect
