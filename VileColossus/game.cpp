@@ -8,8 +8,6 @@ TODO
 	Show item comparison in inventory
 	reduce amt of blue material gained?? or give it some kind of sink?
 
-	show venomfang damage in spell description
-	RAT KING needs a buff
 	prioritize items in stacks
 
 */

@@ -1011,6 +1011,8 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 		writeFormatted(atx, ++aty, "Smite Damage #" + to_string(gdata->_player->getSmiteEvilDamage()), { TCODColor::gold });
 	else if (sp == Spell::ARCANE_PULSE)
 		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(gdata->_player->getArcanePulseDamage()), { getDamageTypeColor(DTYPE_ARCANE) });
+	else if (sp == Spell::VENOMFANG)
+		writeFormatted(atx, ++aty, "Poison Damage #" + to_string(6 + 10.0f * (float)gdata->_player->getSpellPower() / 100.0f), { getDamageTypeColor(DTYPE_POISON) });
 
 	//	range
 	if (isSpellTargeted(sp))
