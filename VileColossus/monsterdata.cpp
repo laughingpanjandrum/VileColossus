@@ -208,7 +208,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SKULL_EXPLODING):
 		return { "flits", "less_health", "protected", "less_damage", "immune_poison", "undead", "flying", "fire_burst" };
 	case(MonsterType::SKULL_FLAMING):
-		return { "flits", "less_health", "protected", "less_damage", "bones", "immune_poison", "flying", "fire_attack", "undead" };
+		return { "flits", "less_health", "protected", "less_damage", "bones", "immune_poison", "resists_fire", "flying", "fire_attack", "undead" };
 	case(MonsterType::SKULL_FLOATING):
 		return { "flits", "less_health", "protected", "less_damage", "bones", "immune_poison", "flying", "undead" };
 	case(MonsterType::SKULL_PILE):

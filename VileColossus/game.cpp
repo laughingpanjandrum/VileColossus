@@ -11,7 +11,6 @@ TODO
 
 	show gem descriptions in detailed item view
 	make self-fireballing kill you properly
-	make certain enemies fire resistant
 	do not mark flasks as containing unknown enchantments
 	make BIG DOWN STAIRS fit better into the surface map
 	possible to somehow not die at zero health? just stay invincible??
