@@ -167,7 +167,7 @@ int player::getWeaponDamage() const
 	total = adjustByPercent(total, percent_adjust);
 
 	//	gem bonuses
-	total += getTotalGemBonusFromWeapons(GemType::BLACKSTONE) * 2;
+	total += getTotalGemBonusFromWeapons(GemType::BLACKSTONE) * 3;
 	
 	return total;
 }
@@ -333,25 +333,25 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 	{
 	case(DTYPE_ARCANE):     
 		total += getTotalEnchantmentBonus(ENCH_ARCANE);
-		total += getTotalGemBonusFromWeapons(GemType::SILVERSTONE) * 2;
+		total += getTotalGemBonusFromWeapons(GemType::SILVERSTONE) * 3;
 		break;
 	
 	case(DTYPE_ELECTRIC):   
 		total += getTotalEnchantmentBonus(ENCH_LIGHTNING);
 		total += getTotalEnchantmentBonus(ENCH_STORMBURST);
-		total += getTotalGemBonusFromWeapons(GemType::BOLTSTONE) * 2;
+		total += getTotalGemBonusFromWeapons(GemType::BOLTSTONE) * 3;
 		break;
 	
 	case(DTYPE_FIRE):       
 		total += getTotalEnchantmentBonus(ENCH_BURNING); 
 		total += getTotalEnchantmentBonus(ENCH_FIREBURST);
-		total += getTotalGemBonusFromWeapons(GemType::FLAMESTONE) * 2;
+		total += getTotalGemBonusFromWeapons(GemType::FLAMESTONE) * 3;
 		break;
 	
 	case(DTYPE_POISON):     
 		total += getTotalEnchantmentBonus(ENCH_VENOM); 
 		total += getTotalEnchantmentBonus(ENCH_VENOMBURST);
-		total += getTotalGemBonusFromWeapons(GemType::SPIDERSTONE) * 2;
+		total += getTotalGemBonusFromWeapons(GemType::SPIDERSTONE) * 3;
 		if (hasBuff(BUFF_VENOMFANG))
 			total += 6 + 10.0f * (float)getSpellPower() / 100.0f;
 		break;

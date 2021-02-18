@@ -1167,31 +1167,31 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 	case(GemType::BLACKSTONE):
 		armour = plusminus(tier) + " #Armour Value";
 		jewel = plusminus(tier * 10) + "% #Critical Damage";
-		weapon = plusminus(tier * 2) + " #Physical Damage";
+		weapon = plusminus(tier * 4) + " #Physical Damage";
 		break;
 
 	case(GemType::BOLTSTONE):
 		armour = plusminus(tier * 10) + "% #Electric Bonus";
 		jewel = plusminus(tier * 5) + "% #Spell Power";
-		weapon = plusminus(tier * 2) + " #Electric Damage";
+		weapon = plusminus(tier * 3) + " #Electric Damage";
 		break;
 
 	case(GemType::FLAMESTONE):
 		armour = plusminus(tier * 10) + "% #Fire Bonus";
 		jewel = plusminus(tier * 5) + " #Max Health";
-		weapon = plusminus(tier * 2) + " #Fire Damage";
+		weapon = plusminus(tier * 3) + " #Fire Damage";
 		break;
 
 	case(GemType::SILVERSTONE):
 		armour = plusminus(tier * 10) + "% #Arcane Bonus";
 		jewel = plusminus(tier) + " #Max Magic";
-		weapon = plusminus(tier * 2) + " #Arcane Damage";
+		weapon = plusminus(tier * 3) + " #Arcane Damage";
 		break;
 
 	case(GemType::SPIDERSTONE):
 		armour = plusminus(tier * 10) + "% #Poison Bonus";
 		jewel = plusminus(tier) + "% #Critical Chance";
-		weapon = plusminus(tier * 2) + " #Poison Damage";
+		weapon = plusminus(tier * 3) + " #Poison Damage";
 		break;
 	}
 
