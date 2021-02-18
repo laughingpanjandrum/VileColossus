@@ -248,6 +248,7 @@ itemPtr lootgen::generateGem(const int tier, const int rarity)
 }
 
 
+//	Create a random flask.
 itemPtr lootgen::generateFlask(const int tier, const int rarity)
 {
 	//	Flask tier
@@ -266,7 +267,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 	it->setProperty(PROP_CHARGES_ON_HIT, randint(2, 5 + tier + rarity));
 	it->setProperty(PROP_CHARGE_REGAIN_RATE, randint(10, 25));
 
-	//	Special flask enchant
+	//	Enchantment level. Always has the maximum amount.
 	it->_enhancementLevel = rarity;
 
 	return it;

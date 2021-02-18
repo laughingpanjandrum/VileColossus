@@ -97,6 +97,7 @@ void removeFromInventory(gamedataPtr gdata, itemPtr it);
 
 void selectItemFromInventory(gamedataPtr gdata);
 void viewItemDetails(gamedataPtr gdata);
+void viewEquipmentDetails(gamedataPtr gdata);
 
 void removeFromCurrentItemList(gamedataPtr gdata, itemPtr it);
 

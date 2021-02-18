@@ -1145,8 +1145,9 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 	//	Basic info
 	drawItemInfo(gdata, it, 4, 4);
 	
+	
 	//	Enchantment details
-	int x = 6, y = 24;
+	int x = 5, y = 24;
 	for (auto en : *it->getAllEnchantments())
 	{
 		auto txt = getItemEnchantmentVerbose(en, it->getEnchantmentValue(en));
@@ -1154,7 +1155,25 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 		y = _win.writeWrapped(x, ++y, 40, txt, COLOR_MEDIUM);
 		y += 2;
 	}
-	drawBox(2, 23, 45, y - 20, COLOR_DARK);
+	drawBox(2, 23, 42, y - 22, COLOR_DARK);
+
+
+	//	Gem descriptions
+	x = 50; y = 3;
+	auto gems = it->getAllSocketedGemTypes();
+	for (unsigned i = 0; i < gems->size(); i++)
+	{
+		auto col = getGemTypeColor(gems->at(i));
+		_win.writec(x, ++y, 229, col);
+		if (gems->at(i) != GemType::__NONE)
+		{
+			drawBox(48, y - 2, 35, 8, COLOR_DARK);
+			auto lvl = it->getSocketLevel(i);
+			_win.write(x + 2, y, getGemTypeFullName(gems->at(i), lvl), col);
+			drawGemTypeEffects(gdata, gems->at(i), lvl, x, ++y);
+			y += 8;
+		}
+	}
 }
 
 

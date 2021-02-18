@@ -219,6 +219,8 @@ void game::processInput()
 				selectCurrentEquipmentSlot(_gdata);
 			else if (_ih->isKeyPressed('w'))
 				swapToSecondaryEquipment(_gdata);
+			else if (_ih->isKeyPressed('v'))
+				viewEquipmentDetails(_gdata);
 			break;
 
 
@@ -256,6 +258,8 @@ void game::processInput()
 				takeSelectedFromStash(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
+			else if (_ih->isKeyPressed('v'))
+				viewItemDetails(_gdata);
 			break;
 		case(STATE_VIEW_INVENTORY_IN_STASH):
 			if (_ih->isKeyPressed(TCODK_TAB))
@@ -266,6 +270,8 @@ void game::processInput()
 				transferInventoryToStash(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
+			else if (_ih->isKeyPressed('v'))
+				viewItemDetails(_gdata);
 			break;
 
 
@@ -279,6 +285,8 @@ void game::processInput()
 				tryRepairSelected(_gdata);
 			else if (_ih->isKeyPressed('x'))
 				extractEnchantments(_gdata);
+			else if (_ih->isKeyPressed('v'))
+				viewItemDetails(_gdata);
 			break;
 
 
@@ -296,6 +304,8 @@ void game::processInput()
 				repairAllEquipped(_gdata);
 			else if (_ih->isKeyPressed('w'))
 				swapToSecondaryEquipment(_gdata);
+			else if (_ih->isKeyPressed('v'))
+				viewItemDetails(_gdata);
 			break;
 		case(STATE_SELECT_ENCHANTMENT):
 			if (_ih->isDirectionalKeyPressed())
@@ -464,7 +474,12 @@ void game::backOut()
 
 	//	From item details, return to inventory
 	else if (_gdata->_state == STATE_VIEW_ITEM_DETAILS)
-		_gdata->_state = STATE_VIEW_INVENTORY;
+	{
+		if (_gdata->_currentItemList.empty())
+			_gdata->_state = STATE_VIEW_EQUIPMENT;
+		else
+			_gdata->_state = STATE_VIEW_INVENTORY;
+	}
 
 	//	The default: return to the normal game display
 	else if (_gdata->_state != STATE_ACKNOWLEDGE_DEATH)
@@ -495,6 +510,11 @@ void game::awaitDebugCommand()
 	{
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
+	}
+	else if (txt == "gems10")
+	{
+		for (unsigned i = 0; i < 10; i++)
+			_gdata->_map->addItem(lootgen::generateGem(randint(1, 5), 1), _gdata->_player->_pos);
 	}
 }
 

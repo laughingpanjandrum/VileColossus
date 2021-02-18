@@ -364,7 +364,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_POISON_WARD):		return "Reduces Poison damage taken by " + to_string(val) + "%.";
 	case(ENCH_RAGE):			return "Increases chance to gain the Wrath buff when you kill something by " + to_string(val) + "%. Wrath temporarily increases weapon damage you inflict.";
 	case(ENCH_SHARPNESS):		return "Weapon attacks are " + to_string(val) + "% more likely to be critical hits.";
-	case(ENCH_SLAYING):			return "Critical hits inflict " + to_string(val) + " extra damage.";
+	case(ENCH_SLAYING):			return "Critical hits inflict " + plusminus(val) + "% extra damage.";
 	case(ENCH_SPELLPOWER):		return "Adjusts damage inflicted by spells by " + plusminus(val) + ".";
 	case(ENCH_SPELLWARD):		return "Reduces Arcane damage taken by " + to_string(val) + "%.";;
 	case(ENCH_STONESKIN):		return "Grants Stoneskin when quaffed for " + to_string(val) + " rounds, which increases your Armour Value by 2 points per level.";

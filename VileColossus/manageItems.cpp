@@ -770,6 +770,7 @@ void openGemstonePress(gamedataPtr gdata)
 //	Open equipment menu
 void openEquipment(gamedataPtr gdata)
 {
+	gdata->_currentItemList.clear();
 	gdata->_state = STATE_VIEW_EQUIPMENT;
 	gdata->_selectedSlot = SLOT__NONE;
 	gdata->_idx = 0;
@@ -842,12 +843,29 @@ void selectItemFromInventory(gamedataPtr gdata)
 	}
 }
 
+
+//	View detailed information about selected inventory item.
 void viewItemDetails(gamedataPtr gdata)
 {
 	if (gdata->_idx < gdata->_currentItemList.size())
 	{
 		gdata->_viewingItem = gdata->_currentItemList[gdata->_idx];
 		gdata->_state = STATE_VIEW_ITEM_DETAILS;
+	}
+}
+
+
+//	View detailed description of selected equipment item, if any.
+void viewEquipmentDetails(gamedataPtr gdata)
+{
+	auto items = gdata->_player->getAllEquippedItems();
+	if (gdata->_idx <= items.size())
+	{
+		if (items[gdata->_idx] != nullptr)
+		{
+			gdata->_viewingItem = items[gdata->_idx];
+			gdata->_state = STATE_VIEW_ITEM_DETAILS;
+		}
 	}
 }
 
