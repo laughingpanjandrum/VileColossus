@@ -28,7 +28,7 @@ string getItemCategoryName(const ItemCategory cat)
 	case(ITEM_QUIVER):			return "Quiver";
 	case(ITEM_RING):			return "Ring";
 	case(ITEM_SHIELD):			return "Shield";
-	case(ITEM_SHOULDERS):		return "Shoulder";
+	case(ITEM_SHOULDERS):		return "Back";
 	case(ITEM_SPELLRUNE):		return "Spellrune";
 	case(ITEM_WEAPON):			return "Weapon";
 	default:
@@ -94,7 +94,7 @@ string getEquipmentSlotName(const EquipmentSlot slot)
 	case(SLOT_MAIN_HAND):		return "Main";
 	case(SLOT_OFFHAND):			return "Offhand";
 	case(SLOT_RIGHT_RING):		return "R. Ring";
-	case(SLOT_SHOULDERS):		return "Shoulder";
+	case(SLOT_SHOULDERS):		return "Back";
 	default:
 		return "";
 	}

@@ -9,7 +9,6 @@ TODO
 	reduce amt of blue material gained?? or give it some kind of sink?
 	allow 'v' to view from equipment list and pickup menus
 
-	change 'shoulders' to 'back' so it fits better
 	show gem descriptions in detailed item view
 	make self-fireballing kill you properly
 	make certain enemies fire resistant
