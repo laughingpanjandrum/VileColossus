@@ -482,6 +482,11 @@ void extractEnchantments(gamedataPtr gdata)
 //	Returns True if the given item has 1 or more enchantments we don't already know.
 bool doesItemHaveUnknownEnchants(gamedataPtr gdata, itemPtr it)
 {
+	//	We can't enchant flasks, so no need to harvest their enchants.
+	if (it->_category == ITEM_FLASK)
+		return false;
+
+	//	Otherwise, test for enchants.
 	for (auto en : *it->getAllEnchantments())
 	{
 		if (!knowsEnchantmentType(gdata, en))
