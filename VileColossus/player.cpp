@@ -99,7 +99,7 @@ int player::getMaxHealth() const
 {
 	int total = 27 + _level * 3 + getDerivedAttribute(ATTR_STRENGTH) * 2;
 	total += getTotalEnchantmentBonus(ENCH_LIFE);
-	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 5;
+	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 20;
 	return total;
 }
 
@@ -115,7 +115,7 @@ int player::getSpellPower() const
 {
 	int total = (getDerivedAttribute(ATTR_WILLPOWER) - 10) * 5;
 	total += getTotalEnchantmentBonus(ENCH_SPELLPOWER);
-	total += getTotalGemBonusFromJewels(GemType::BOLTSTONE);
+	total += getTotalGemBonusFromJewels(GemType::BOLTSTONE) * 25;
 	return total;
 }
 
@@ -143,7 +143,7 @@ int player::getArmourValue() const
 	int total = getEquipmentPropertySum(PROP_ARMOUR_VALUE);
 	if (hasBuff(BUFF_STONESKIN))
 		total += _level * 2;
-	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE);
+	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 2;
 	return total;
 }
 
@@ -199,7 +199,7 @@ int player::getCriticalMultiplier() const
 
 	//	Other adjustments.
 	total += getTotalEnchantmentBonus(ENCH_SLAYING);
-	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 10;
+	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 25;
 	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
 	return total;
 }
@@ -477,22 +477,22 @@ int player::getElementalAffinity(const DamageType dt) const
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):
-		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 10;
+		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ARCANE);
 		break;
 
 	case(DTYPE_ELECTRIC):
-		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 10;
+		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ELECTRIC);
 		break;
 
 	case(DTYPE_FIRE):
-		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 10;
+		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_FIRE);
 		break;
 
 	case(DTYPE_POISON):
-		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 10;
+		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_POISON);
 		if (hasBuff(BUFF_TOXIC_RADIANCE))
 			total += 25 + getSpellPower() / 5;

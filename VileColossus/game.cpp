@@ -12,7 +12,6 @@ TODO
 	allow 'v' to view from equipment list and pickup menus
 	add 'spellpower buff' flask effect
 	remove 'charging' buff & just make charge gain more variable
-	up other gemstone effects at low tiers
 
 
 */
