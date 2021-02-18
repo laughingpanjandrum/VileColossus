@@ -349,6 +349,7 @@ int getDefaultStatusEffectDuration(const StatusEffect st)
 }
 
 
+
 //	Attempts to inflict a status effect with the given % chance.
 void tryInflictStatusEffect(gamedataPtr gdata, creaturePtr target, const StatusEffect st, const int odds, const int stacks)
 {
@@ -399,9 +400,9 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		//	some energy types also confer a status effect
 		switch (dt)
 		{
-		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, 5 * dam, dam * 2); break;
-		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, 5 * dam, dam); break;
-		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam, dam); break;
+		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, 5 * dam); break;
+		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, 5 * dam); break;
+		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam); break;
 		}
 	}
 }
