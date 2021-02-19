@@ -460,6 +460,10 @@ void standOnTile(gamedataPtr gdata, creaturePtr cr)
 		//	Tile effects
 		switch (gdata->_map->getTile(cr->_pos))
 		{
+		case(MT_LAVA):
+			inflictEnergyDamage(gdata, cr, randint(1, 10), DTYPE_FIRE);
+			break;
+
 		case(MT_WATER):
 			cr->cureStatusEffect(STATUS_BURN);
 			break;

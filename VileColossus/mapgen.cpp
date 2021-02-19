@@ -1042,53 +1042,40 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters
 
 
 //	The SECOND TIER of horror levels
-gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, bool add_monsters)
+gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters)
 {
-	const int MIN_NODE_SIZE = 8;
+	const int MIN_NODE_SIZE = 10;
 	auto m = gridmapPtr(new gridmap(2 + MIN_NODE_SIZE * randint(5, 8), 2 + MIN_NODE_SIZE * randint(5, 8)));
-	fillMap(m, { MT_WALL_BLOODY });
-	m->_name = "The Hellfort [Depth " + to_string(dl) + "]";
+	fillMap(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
+	m->_name = "Hellmouth [Depth " + to_string(dl) + "]";
 
-	//	Make a 2d node map.
-	auto tcod_nodes = createNodeMap(m, MIN_NODE_SIZE, 15);
-
-
-	//	Connect nodes to each other.
-	for (unsigned i = 0; i < tcod_nodes.size() - 1; i++)
-		tunnelBetweenNodes(m, tcod_nodes[i], tcod_nodes[i + 1], MT_FLOOR_HOT);
-
-
-	//	Make nodes into rooms.
-	for (auto n : tcod_nodes)
+	
+	//	AUTOMATA
+	auto cells = rollCellAutomata(m->_xsize, m->_ysize, 2, 5, 3, 8);
+	for (unsigned x = 0; x < m->_xsize; x++)
 	{
-		//	room shape
-		fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_HOT, }, n->x + 1, n->y + 1, n->w - 2, n->h - 2);
-
-		//	room details
-		int r = randint(1, 12);
-		if (r == 1)
+		for (unsigned y = 0; y < m->_ysize; y++)
 		{
-			const int rad = MIN(n->w / 2, n->h / 2) - 1;
-			addLake(m, intpair(n->x + n->w / 2, n->y + n->h / 2), rad, MT_LAVA, MT_FLOOR_HOT);
-		}
-		else if (r == 2)
-		{
-			for (int x = n->x + 2; x < n->x + n->w - 2; x += 2)
-			{
-				for (int y = n->y + 2; y < n->y + n->h - 2; y += 2)
-					m->setTile(MT_TABLE_WOODEN, x, y);
-			}
-		}
-		else if (r == 3)
-		{
-			fillRegion(m, { MT_THORNS, MT_BUSH }, n->x + 1, n->y + 1, n->w - 1, n->h - 1);
+			if (cells[x][y])
+				m->setTile(MT_WALL_BLOODY, x, y);
 		}
 	}
 
 
+	//	Lakes of FIRE
+	auto count = randint(1, 3);
+	while (count-- > 0)
+	{
+		const int r = randint(3, 8);
+		auto ctr = getRandomWithPad(m, r + 1);
+		addLake(m, ctr, r, MT_LAVA, MT_FLOOR_HOT);
+	}
+
+
 	//	Chaos
-	scatterOnMap(m, MT_SAND, 0.05);
-	scatterSurface(m, Surface::BONES, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
+	scatterOnMap(m, MT_TOMBSTONE, 0.05);
+	scatterSurface(m, Surface::CORPSE, 2, 2, m->_xsize - 4, m->_ysize - 4, 0.05);
+	scatterSurface(m, Surface::BONES, 2, 2, m->_xsize - 4, m->_ysize - 4, 0.05);
 
 
 	//	Treasures
@@ -1098,16 +1085,20 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, bool add_monsters)
 		//	roll type
 		auto ctype = MT_CHEST_SMALL;
 		int r = randint(1, 100);
-		if (r <= 30 && dl > 2)	ctype = MT_CHEST_GLOWING;
+		if		(r <= 50)	ctype = MT_CHEST_GLOWING;
+		else if (r <= 75)	ctype = MT_CHEST_RADIANT;
 
 		//	emplace it
 		m->setTile(ctype, getRandomWalkable(m));
 	}
 
+	//	Divide into nodes for monster-placing purposes
+	auto tcod_nodes = createNodeMap(m, MIN_NODE_SIZE, 10);
+
 	//	Monsters, exits, entrances
 	if (add_monsters)
 	{
-		addMonsters(m, dl, &tcod_nodes);
+		//addMonsters(m, dl, &tcod_nodes);
 		addStairsToMap(m, dl, descending);
 	}
 
@@ -1231,7 +1222,7 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending);
 	else if (dl > 9)
-		m = generate_Hellfort(dl, descending);
+		m = generate_Hellmouth(dl, descending);
 	else
 		m = generate_Cathedral(dl, descending);
 	

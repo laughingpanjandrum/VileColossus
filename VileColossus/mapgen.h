@@ -138,7 +138,7 @@ namespace mapgen
 
 	//		The HELLFORT
 
-	gridmapPtr generate_Hellfort(int dl, bool descending, bool add_monsters = true);
+	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
 
 
 	//		Abyssal swamps

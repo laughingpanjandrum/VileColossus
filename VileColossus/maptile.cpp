@@ -9,6 +9,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_BARREL):			return "wooden barrel";
 	case(MT_BUSH):              return "bush";
 	case(MT_CHEST_GLOWING):		return "glowing chest";
+	case(MT_CHEST_RADIANT):		return "radiant chest";
 	case(MT_CHEST_SMALL):		return "small chest";
 	case(MT_DOOR_STONE):        return "stone door";
 	case(MT_DOOR_WOODEN):		return "wooden door";
@@ -74,6 +75,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return '"';
 
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 		return 8;
 
@@ -168,6 +170,8 @@ const colorType getMaptileColor(const Maptile tl)
 		return TCODColor::lightSepia;
 	case(MT_CHEST_GLOWING):
 		return TCODColor::lighterBlue;
+	case(MT_CHEST_RADIANT):
+		return TCODColor::lighterPurple;
 
 	case(MT_FLOOR_CARPET):
 		return TCODColor::darkRed;
@@ -231,7 +235,7 @@ const colorType getMaptileColor(const Maptile tl)
 		return TCODColor::grey;
 
 	case(MT_THORNS):
-		return TCODColor::lighterFlame;
+		return TCODColor::lightGreen;
 
 	case(MT_HELLPORTAL_DOWN):
 		return TCODColor::orange;
@@ -251,6 +255,7 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_ANVIL):
 	case(MT_BARREL):
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 	case(MT_FORGE):
 	case(MT_GEMSTONE_PRESS):
@@ -293,15 +298,16 @@ const bool isMaptileTransparent(const Maptile tl)
 	}
 }
 
+//	Will break if we shoot/bump into it.
 const bool isMaptileBreakable(const Maptile tl)
 {
-	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN || tl == MT_TREE_DEAD;
+	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN || tl == MT_TOMBSTONE || tl == MT_TREE_DEAD;
 }
 
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_RADIANT;
 }
 
 const bool isMaptileStairs(const Maptile tl)

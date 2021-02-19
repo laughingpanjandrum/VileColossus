@@ -11,6 +11,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	{
 		//	Treasure?
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 		openLootChest(gdata, pt);
 		break;
@@ -19,6 +20,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	case(MT_BARREL):
 	case(MT_PEW_WOODEN):
 	case(MT_TABLE_WOODEN):
+	case(MT_TOMBSTONE):
 		messages::add(gdata, "You smash the #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
 		addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(tl)));
 		gdata->_map->setTile(MT_RUBBLE, pt);
