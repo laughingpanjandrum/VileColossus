@@ -223,7 +223,7 @@ int player::getMoveEnergyCost() const
 int player::getAttackEnergyCost() const
 {
 	auto total = ENERGY_COST_BASE;
-	if (usingOffhandWeapon())		
+	if (usingOffhandWeapon() && _Equipped[SLOT_OFFHAND]->_category != ITEM_QUIVER)		
 		total += 100;
 	if (getTotalEnchantmentBonus(ENCH_WEIGHT) > 0)
 		total += 100;
