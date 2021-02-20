@@ -118,20 +118,24 @@ bool ai::trySpawn(gamedataPtr gdata, monsterPtr ai)
 //	Returns True if we decide to cast a special ability.
 bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 {
-	//	Chance to cast a ray spell, if we know one
+	//	Use abilities 50% of the time
 	if (roll_one_in(2))
 	{
+		//	Visibility tests
+		auto dist = getDistanceBetweenCreatures(ai, ai->_target);
+		auto vis = canMonsterSeeCreature(gdata, ai, ai->_target);
+
 		//	Ray spells
 		auto spell = ai->rollRaySpellToCast();
-		if (!spell.empty() && getDistanceBetweenCreatures(ai, ai->_target) <= 8 && canMonsterSeeCreature(gdata, ai, ai->_target))
+		if (!spell.empty() && vis && dist <= 8)
 			return castRaySpell(gdata, ai, ai->_target, spell);
 
 		//	Explode automatically lol
-		else if ((ai->hasFlag("poison_burst") || ai->hasFlag("fire_burst")) && getDistanceBetweenCreatures(ai, ai->_target) < 3 && roll_one_in(3))
+		else if ((ai->hasFlag("poison_burst") || ai->hasFlag("fire_burst")) && dist < 3 && roll_one_in(3))
 			explode(gdata, ai);
 
 		//	Bonetoss
-		else if (ai->hasFlag("throws_bones") && getDistanceBetweenCreatures(ai, ai->_target) <= 6 && canMonsterSeeCreature(gdata, ai, ai->_target))
+		else if (ai->hasFlag("throws_bones") && dist <= 6 && vis)
 		{
 			if (rollToHit(gdata, ai, ai->_target))
 			{
@@ -139,6 +143,15 @@ bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 				creatureTakeDamage(gdata, ai->_target, applyProtection(gdata, ai->_target, randint(1, ai->_level)));
 			}
 			spawnMinion(gdata, ai, MonsterType::SKULL_FLOATING, ai->_target->_pos);
+			ai->spendActionEnergy();
+			return true;
+		}
+
+		//	Spray webs
+		else if (ai->hasFlag("webs") && dist <= 6 && vis && !ai->_target->hasStatusEffect(STATUS_ENTANGLED))
+		{
+			addAnimation(gdata, anim_Projectile(getBresenhamLine(ai->_pos, ai->_target->_pos), '%', TCODColor::white));
+			fillRegionWithSurface(gdata, ai->_target->_pos, 1, Surface::WEB);
 			ai->spendActionEnergy();
 			return true;
 		}

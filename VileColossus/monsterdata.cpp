@@ -66,7 +66,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else
-		return { MonsterType::IMP, MonsterType::WRETCH, };
+		return { MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
@@ -135,6 +135,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 
 	case(MonsterType::SKELETON):	
 		return MonsterType::SKELETON_GIANT;
+
+	case(MonsterType::SPIDER):
+		return MonsterType::SPIDER_OGRE;
 	
 	case(MonsterType::ZOMBIE):		
 		if (dl > 1)
@@ -221,6 +224,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::WALKING_SKULL_PILE):
 		return { "flits", "protected", "throws_bones", "immune_poison", "undead", };
 
+	case(MonsterType::SPIDER):
+		return { "webs", "defended", "poison_attack" };
+	case(MonsterType::SPIDER_OGRE):
+		return { "webs", "protected", "poison_attack", };
+
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
 	case(MonsterType::WRETCH_PUKING):
@@ -271,6 +279,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::SKELETON_GIANT):
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
+	case(MonsterType::SPIDER_OGRE):
 	case(MonsterType::ZOMBIE_INFUSED):
 	case(MonsterType::ZOMBIE_LARGE):
 		return 2;
@@ -313,6 +322,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SKULL_FLAMING):		return make_tuple("flaming skull", 's', TCODColor::darkFlame);
 	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
 	case(MonsterType::SKULL_PILE):			return make_tuple("skull pile", 234, TCODColor::lightestYellow);
+	case(MonsterType::SPIDER):				return make_tuple("giant spider", 'm', TCODColor::lime);
+	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
 	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
