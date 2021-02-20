@@ -27,6 +27,15 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 {
 	if (dl < 2)
 		return MonsterType::__NONE;
+	else if (dl >= 10)
+	{
+		int r = randint(1, 2);
+		switch (r)
+		{
+		case(1):	return MonsterType::FLAME_CONJURER;
+		default:	return MonsterType::WORM_DEMON;
+		}
+	}
 	else
 	{
 		int r = randint(1, 4);
@@ -180,6 +189,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::CULTIST_WINGED):
 		return { "casts_arcane_bolt", "flying", "flits", "casts_poison_spit" };
 
+	case(MonsterType::FLAME_CONJURER):
+		return { "spawner", "resists_fire", "flits", "casts_firebolt" };
+
 	case(MonsterType::GRIM_KNIGHT):
 		return { "protected_heavy", "arcane_attack", "more_damage", "slow", "defended", };
 
@@ -192,6 +204,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "slow", "electric_attack", "immune_electric", };
 	case(MonsterType::OOZE_SLUDGE):
 		return { "flits", "spits_sludge", "more_health", "resists_electric" };
+
+	case(MonsterType::ORB_FLAME):
+		return { "immobile", "flying", "less_health", "immune_fire", "casts_firebolt" };
 
 	case(MonsterType::RAT_GIANT):
 		return { "less_health", "poison_attack", "fast", "defended", };
@@ -239,6 +254,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SPIDER_PHASE):
 		return { "webs", "defended", "teleports", "immune_arcane", "arcane_attack" };
 
+	case(MonsterType::WORM_DEMON):
+		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
+
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
 	case(MonsterType::WRETCH_PUKING):
@@ -278,9 +296,11 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::SKINLESS_KNIGHT):
 		return 4;
 
+	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::RAT_KING):
 	case(MonsterType::WALKING_SKULL_PILE):
+	case(MonsterType::WORM_DEMON):
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
 
@@ -313,11 +333,13 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CULTIST_INFESTED):	return make_tuple("infested cultist", 'u', TCODColor::lime);
 	case(MonsterType::CULTIST_MUTTERING):	return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
 	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);
+	case(MonsterType::FLAME_CONJURER):		return make_tuple("Flame Conjurer", 'F', TCODColor::flame);
 	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'K', TCODColor::lightPurple);
 	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::IMP_MEGA):			return make_tuple("mega-imp", 'I', TCODColor::flame);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
+	case(MonsterType::ORB_FLAME):			return make_tuple("orb of flame", '*', TCODColor::flame);
 	case(MonsterType::RAT_GIANT):			return make_tuple("giant rat", 'r', TCODColor::darkGreen);
 	case(MonsterType::RAT_KING):			return make_tuple("Rat King", 'R', TCODColor::lightSepia);
 	case(MonsterType::ROACH):				return make_tuple("roach", 'r', TCODColor::sepia);
@@ -338,6 +360,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
 	case(MonsterType::SPIDER_PHASE):		return make_tuple("phase spider", 'M', TCODColor::lightPurple);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
+	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'W', TCODColor::lightGrey);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
 	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
 	case(MonsterType::ZOMBIE):				return make_tuple("zombie", 'z', TCODColor::green);
