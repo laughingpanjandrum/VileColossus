@@ -22,7 +22,10 @@ void messages::attack_string(gamedataPtr gdata, creaturePtr attacker, creaturePt
 	vector<colorType> colors;
 	if (attacker->isPlayer())
 	{
+		//	indicate what we hit
 		txt += "You attack " + getTargetIdentifier(gdata, target) + " (";
+
+		//	damage per hit
 		for (unsigned i = 0; i < damage.size(); i++)
 		{
 			if (damage[i] < 1)
@@ -42,9 +45,27 @@ void messages::attack_string(gamedataPtr gdata, creaturePtr attacker, creaturePt
 			}
 		}
 		txt.pop_back();
-		txt += "@)";
+		txt += "@) #";
+		
+		//	monster's health remaining
+		auto hp_per = target->getHealthPercent() / 10;
+		if (hp_per > 0)
+		{
+			for (unsigned i = 0; i < hp_per; i++)
+				txt += "|";
+			txt += "#";
+			for (unsigned i = hp_per; i < 10; i++)
+				txt += "|";
+			colors.push_back(COLOR_HEALTH);
+			colors.push_back(TCODColor::darkGrey);
+		}
+		
+		//	done
 		add(gdata, txt, colors);
 	}
+
+	else if (target->isPlayer() && damage[0] > 0)
+		add(gdata, "Took #" + to_string(damage[0]) + " damage @from #" + attacker->getName(), { COLOR_HEALTH, attacker->getColor() });
 }
 
 

@@ -1078,6 +1078,13 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 	scatterSurface(m, Surface::BONES, 2, 2, m->_xsize - 4, m->_ysize - 4, 0.05);
 
 
+	//	More chaos
+	if (roll_one_in(6))
+		scatterOnMap(m, MT_BUSH, 0.05);
+	if (roll_one_in(6))
+		scatterOnMap(m, MT_WATER, 0.05);
+
+
 	//	Treasures
 	int chest_count = randint(1, 5);
 	while (chest_count-- > 0)
@@ -1098,7 +1105,7 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 	//	Monsters, exits, entrances
 	if (add_monsters)
 	{
-		//addMonsters(m, dl, &tcod_nodes);
+		addMonsters(m, dl, &tcod_nodes);
 		addStairsToMap(m, dl, descending);
 	}
 
