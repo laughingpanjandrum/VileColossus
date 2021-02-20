@@ -102,7 +102,6 @@ bool doPlayerMove(gamedataPtr gdata, const intpair vec, bool allowAttacking)
 	intpair_add(&pt, &vec);
 
 
-
 	//	Actually attempt the move.
 	if (gdata->_map->inBounds(pt))
 	{
@@ -119,8 +118,18 @@ bool doPlayerMove(gamedataPtr gdata, const intpair vec, bool allowAttacking)
 		//	Is the point walkable?
 		else if (gdata->_map->isWalkable(pt))
 		{
+			//	we struggle if entangled.
+			if (gdata->_player->hasStatusEffect(STATUS_ENTANGLED))
+			{
+				messages::add(gdata, "#You struggle against the entangling webs!", { COLOR_WHITE });
+				gdata->_player->reduceStatusEffectDuration(STATUS_ENTANGLED);
+			}
+
 			//	movement
-			playerEnterTile(gdata, pt);
+			else
+				playerEnterTile(gdata, pt);
+
+			//	lose energy either way
 			gdata->_player->spendActionEnergy(gdata->_player->getMoveEnergyCost());
 			return true;
 		}

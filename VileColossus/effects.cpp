@@ -339,6 +339,7 @@ int getDefaultStatusEffectDuration(const StatusEffect st)
 	{
 	case(STATUS_AGONY):		return dieRoll(3, 6);
 	case(STATUS_BURN):		return randint(2, 5);
+	case(STATUS_ENTANGLED):	return 3;
 	case(STATUS_POISON):	return 10;
 	case(STATUS_SLUDGED):	return 10;
 	case(STATUS_SHOCK):		return 10;
@@ -479,6 +480,11 @@ void standOnTile(gamedataPtr gdata, creaturePtr cr)
 
 		case(Surface::SLUDGE):
 			tryInflictStatusEffect(gdata, cr, STATUS_SLUDGED, 75, 10);
+			break;
+
+		case(Surface::WEB):
+			tryInflictStatusEffect(gdata, cr, STATUS_ENTANGLED, 100, 3);
+			gdata->_map->setSurface(Surface::__NONE, cr->_pos);
 			break;
 		}
 	}

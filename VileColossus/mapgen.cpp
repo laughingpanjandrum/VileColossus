@@ -1232,10 +1232,6 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 		m = generate_Hellmouth(dl, descending);
 	else
 		m = generate_Cathedral(dl, descending);
-	
-	//style_Rooms(m, "cathedral", dl);
-	//style_Tomblands(m, dl);
-	//style_DryRoad(m, dl);
 
 	//	Map exterior is always filled with indestructible walls.
 	for (unsigned x = 0; x < m->_xsize; x++)

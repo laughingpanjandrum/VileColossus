@@ -473,6 +473,7 @@ string getStatusEffectName(const StatusEffect st)
 	{
 	case(STATUS_AGONY):		return "Agony";
 	case(STATUS_BURN):		return "Burn";
+	case(STATUS_ENTANGLED):	return "Entangled";
 	case(STATUS_POISON):	return "Poison";
 	case(STATUS_SHOCK):		return "Shock";
 	case(STATUS_SLUDGED):	return "Sludged";
@@ -488,6 +489,7 @@ colorType getStatusEffectColor(const StatusEffect st)
 	{
 	case(STATUS_AGONY):		return TCODColor::crimson;
 	case(STATUS_BURN):		return TCODColor::flame;
+	case(STATUS_ENTANGLED):	return TCODColor::white;
 	case(STATUS_POISON):	return TCODColor::lime;
 	case(STATUS_SHOCK):		return TCODColor::darkYellow;
 	case(STATUS_SLUDGED):	return TCODColor::sepia;

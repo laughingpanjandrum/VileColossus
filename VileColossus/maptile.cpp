@@ -331,6 +331,7 @@ const string getSurfaceName(const Surface sf)
 	case(Surface::CORPSE):		return "Corpse";
 	case(Surface::POISON_OOZE):	return "Poison Ooze";
 	case(Surface::SLUDGE):		return "Sludge";
+	case(Surface::WEB):			return "Web";
 	default:
 		return "surface?";
 	}
@@ -344,6 +345,7 @@ const colorType getSurfaceColor(const Surface sf)
 	case(Surface::CORPSE):		return TCODColor::darkRed; 
 	case(Surface::POISON_OOZE):	return TCODColor::lime;
 	case(Surface::SLUDGE):		return TCODColor::sepia;
+	case(Surface::WEB):			return TCODColor::lightestGrey;
 	default:
 		return COLOR_WHITE;
 	}
@@ -355,6 +357,7 @@ const int getSurfaceGlyph(const Surface sf)
 	{
 	case(Surface::BONES):
 	case(Surface::CORPSE):
+	case(Surface::WEB):
 		return '%';
 
 	case(Surface::POISON_OOZE):

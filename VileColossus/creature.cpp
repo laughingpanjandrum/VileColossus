@@ -36,6 +36,14 @@ void creature::addStatusEffect(const StatusEffect st, int stacks)
 }
 
 
+//	Tick down the given status effect.
+void creature::reduceStatusEffectDuration(const StatusEffect st)
+{
+	if (_StatusEffects[st] > 0)
+		_StatusEffects[st] -= 1;
+}
+
+//	Tick down the given buff.
 void creature::reduceBuffDuration(const BuffType bf)
 {
 	if (_Buffs[bf] > 0)
@@ -56,7 +64,7 @@ void creature::tick()
 	//	Reduce status effect and buff durations.	
 	for (unsigned i = 0; i < STATUS__MAX; i++)
 	{
-		if (_StatusEffects[i] > 0)
+		if (_StatusEffects[i] > 0 && _StatusEffects[i] != STATUS_ENTANGLED)
 			_StatusEffects[i]--;
 	}
 	for (unsigned i = 0; i < BUFF__MAX; i++)
@@ -66,6 +74,7 @@ void creature::tick()
 	}
 }
 
+
 //	Replenishes all health and clears all status effects.
 void creature::healToMax()
 {
@@ -73,6 +82,7 @@ void creature::healToMax()
 	for (auto st : ALL_STATUS_EFFECTS)
 		_StatusEffects[st] = 0;
 }
+
 
 void creature::healDamage(int amt)
 {

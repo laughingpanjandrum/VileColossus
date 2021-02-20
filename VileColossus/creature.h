@@ -109,6 +109,7 @@ public:
 	int getStatusEffectDuration(const StatusEffect st) const { return _StatusEffects[st]; }
 
 	void addStatusEffect(const StatusEffect st, int stacks);
+	void reduceStatusEffectDuration(const StatusEffect st);
 	void cureStatusEffect(const StatusEffect st) { _StatusEffects[st] = 0; }
 
 
