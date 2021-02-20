@@ -74,6 +74,27 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 }
 
 
+//	Random point nearby for teleporting monsters.
+intpair ai::getTeleportPoint(gamedataPtr gdata, monsterPtr ai)
+{
+	vector<intpair> options;
+	const int r = 5;
+	const intpair ctr = ai->_pos;
+	for (int x = ctr.first - r; x <= ctr.first + r; x++)
+	{
+		for (int y = ctr.second - r; y <= ctr.second + r; y++)
+		{
+			if (gdata->_map->inBounds(x, y) && gdata->_map->isPointClear(x, y))
+				options.push_back(intpair(x, y));
+		}
+	}
+	if (!options.empty())
+		return options[randrange(options.size())];
+	else
+		return ai->_pos;
+}
+
+
 //	Spawn something adjacent to us.
 bool ai::spawnMinion(gamedataPtr gdata, monsterPtr spawner, const MonsterType spawn_id, const intpair pt)
 {
@@ -152,6 +173,17 @@ bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 		{
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(ai->_pos, ai->_target->_pos), '%', TCODColor::white));
 			fillRegionWithSurface(gdata, ai->_target->_pos, 1, Surface::WEB);
+			ai->spendActionEnergy();
+			return true;
+		}
+
+		//	Random teleport
+		else if (ai->hasFlag("teleports") && roll_one_in(4))
+		{
+			auto pt = getTeleportPoint(gdata, ai);
+			addAnimation(gdata, anim_FlashGlyph(ai->_pos, '*', TCODColor::purple));
+			addAnimation(gdata, anim_FlashGlyph(pt, '*', TCODColor::purple));
+			ai->_pos = pt;
 			ai->spendActionEnergy();
 			return true;
 		}

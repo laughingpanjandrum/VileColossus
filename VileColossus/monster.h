@@ -27,7 +27,7 @@ enum class MonsterType
 
 	//	Hellfort monsters
 	IMP, IMP_MEGA,
-	SPIDER, SPIDER_OGRE,
+	SPIDER, SPIDER_FLAMING, SPIDER_OGRE, SPIDER_PHASE,
 	WRETCH, WRETCH_PUKING,
 
 

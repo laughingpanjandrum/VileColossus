@@ -28,6 +28,8 @@ namespace ai
 
 	bool castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, const string spell);
 
+	intpair getTeleportPoint(gamedataPtr gdata, monsterPtr ai);
+
 
 	//		Combat basics.
 	

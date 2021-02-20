@@ -9,6 +9,7 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	{
 	case(MonsterType::CARRION_PRINCE):
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
 	case(MonsterType::WALKING_SKULL_PILE):
@@ -66,7 +67,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else
-		return { MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
+		return { MonsterType::IMP, MonsterType::SPIDER, MonsterType::SPIDER_PHASE, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
@@ -101,6 +102,11 @@ const vector<MonsterType> monsterdata::getAltVersions(const MonsterType id, cons
 			alts.push_back(MonsterType::SKELETON_BURNING);
 		if (dl > 5)
 			alts.push_back(MonsterType::SKELETON_GOLD_PLATED);
+		break;
+
+	case(MonsterType::SPIDER):
+		if (dl > 10)
+			alts.push_back(MonsterType::SPIDER_FLAMING);
 		break;
 
 	case(MonsterType::WRETCH):
@@ -226,8 +232,12 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::SPIDER):
 		return { "webs", "defended", "poison_attack" };
+	case(MonsterType::SPIDER_FLAMING):
+		return { "webs", "defended", "fire_attack", "resists_fire" };
 	case(MonsterType::SPIDER_OGRE):
 		return { "webs", "protected", "poison_attack", };
+	case(MonsterType::SPIDER_PHASE):
+		return { "webs", "defended", "teleports", "immune_arcane", "arcane_attack" };
 
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
@@ -280,6 +290,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
 	case(MonsterType::SPIDER_OGRE):
+	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::ZOMBIE_INFUSED):
 	case(MonsterType::ZOMBIE_LARGE):
 		return 2;
@@ -323,7 +334,9 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
 	case(MonsterType::SKULL_PILE):			return make_tuple("skull pile", 234, TCODColor::lightestYellow);
 	case(MonsterType::SPIDER):				return make_tuple("giant spider", 'm', TCODColor::lime);
+	case(MonsterType::SPIDER_FLAMING):		return make_tuple("flaming spider", 'm', TCODColor::flame);
 	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
+	case(MonsterType::SPIDER_PHASE):		return make_tuple("phase spider", 'M', TCODColor::lightPurple);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
 	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
