@@ -130,7 +130,12 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			{
 				auto mult = attacker->getCriticalMultiplier();
 				dam = adjustByPercent(dam, mult);
+				attacker->removeBuff(BUFF_CRIT_BONUS);
 			}
+
+			//	Kinslayer buff increases the player's crit chance when they don't crit
+			else if (attacker->isPlayer())
+				gdata->_player->addBuff(BUFF_CRIT_BONUS, gdata->_player->getTotalEnchantmentBonus(ENCH_KINSLAYER));
 
 			//	Apply damage resistance
 			dam = applyProtection(gdata, target, dam);

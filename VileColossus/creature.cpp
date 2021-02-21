@@ -69,7 +69,7 @@ void creature::tick()
 	}
 	for (unsigned i = 0; i < BUFF__MAX; i++)
 	{
-		if (_Buffs[i] > 0 && i != BUFF_SMITE_EVIL)
+		if (_Buffs[i] > 0 && i != BUFF_SMITE_EVIL && i != BUFF_CRIT_BONUS)
 			_Buffs[i]--;
 	}
 }

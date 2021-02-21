@@ -268,6 +268,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_DIVINE):			return "Divinity";
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
+	case(ENCH_KINSLAYER):		return "Kinslayer";
 	case(ENCH_SHADOWSTRIKE):	return "Shade";
 	case(ENCH_SPELLBURN):		return "Spellburner";
 	case(ENCH_STORMBURST):		return "Stormburst";
@@ -331,6 +332,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_DIVINE):			return "Divine Damage";
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
+	case(ENCH_KINSLAYER):		return "Kinslay";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
 	case(ENCH_SPELLBURN):		return "Spellburn";
 	case(ENCH_STORMBURST):		return "Stormburst";
@@ -396,6 +398,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
 	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
 	case(ENCH_FLAMESPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Fire.";
+	case(ENCH_KINSLAYER):		return "Each time you fail to crit, you gain a cumulative " + plusminus(val) + "% bonus to crit chance. This bonus is cleared on crit.";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
 	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + "%. You take damage when casting spells equal to twice their Magic cost.";
 	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";
@@ -431,6 +434,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
 	case(ENCH_GREED):
+	case(ENCH_KINSLAYER):
 	case(ENCH_POISON_WARD):
 	case(ENCH_RAGE):
 	case(ENCH_SHADOWSTRIKE):
@@ -522,6 +526,7 @@ string getBuffName(const BuffType bf)
 	{
 	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
 	case(BUFF_CONDUCTION):		return "Conduction";
+	case(BUFF_CRIT_BONUS):		return "Crit Chance";
 	case(BUFF_EMPOWERED):		return "Empowered";
 	case(BUFF_HASTE):			return "Haste";
 	case(BUFF_SMITE_EVIL):		return "Smite Evil";

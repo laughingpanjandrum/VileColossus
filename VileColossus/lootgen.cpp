@@ -715,6 +715,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(ENCH_DIVINE, randint(2, 4));
 		break;
 
+	case(ENCH_KINSLAYER):
+		it = generateWeapon(maxTier, 4);
+		it->addEnchantment(ENCH_KINSLAYER, randint(5, 10));
+		break;
+
 	case(ENCH_FIREBURST):
 	case(ENCH_STORMBURST):
 	case(ENCH_VENOMBURST):

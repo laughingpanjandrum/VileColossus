@@ -45,7 +45,7 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_FLAMESPIKE));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_KINSLAYER));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
