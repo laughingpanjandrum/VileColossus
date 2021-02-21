@@ -2,6 +2,25 @@
 
 
 
+//	Special effects when we kill a boss.
+void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
+{
+	//	turn into down stairs lol
+	gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
+
+	//	count up kills
+	switch (mon->getType())
+	{
+	case(MonsterType::BOSS_PALLID_ROTKING):
+		gdata->_killedRotking++;
+		if (gdata->_killedRotking == 1)
+			mapgen::openHellPortal(gdata->_homeBase);
+		break;
+	}
+}
+
+
+
 //	Attempt to drop a corpse at the given point.
 //	Certain points will not accept corpses.
 void tryDropCorpse(gamedataPtr gdata, const Surface corpse, const intpair at)
@@ -303,9 +322,9 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 			if (roll_percent(gdata->_player->getWrathOnKillChance()))
 				gdata->_player->addBuff(BUFF_WRATH, 1 + mon->_tier * 2);
 
-			//	bosses turn into downstairs on death
+			//	special events when we kill a boss
 			if (mon->_tier == 5)
-				gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
+				triggerBossKillEffects(gdata, mon);
 		}
 	}
 }

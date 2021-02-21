@@ -1250,6 +1250,16 @@ gridmapPtr mapgen::generate(int dl, bool descending)
 }
 
 
+//	Adds the hell-portal to the home map.
+void mapgen::openHellPortal(gridmapPtr m)
+{
+	scatterSurface(m, Surface::BONES, 16, 16, 4, 4, 0.8);
+	scatterSurface(m, Surface::CORPSE, 16, 16, 4, 4, 0.8);
+	m->setSurface(Surface::__NONE, 18, 18);
+	m->setTile(MT_HELLPORTAL_DOWN, 18, 18);
+}
+
+
 gridmapPtr mapgen::generate_HomeBase()
 {
 	auto m = gridmapPtr(new gridmap(40, 45));
@@ -1296,12 +1306,6 @@ gridmapPtr mapgen::generate_HomeBase()
 	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_BUSH }, 29, 12, 5, 6);
 	m->setTile(MT_FLOOR_HOT, 28, 15);
 	m->setTile(MT_STAIRS_DOWN_LONG, 31, 15);
-
-	//	stairs to hell
-	scatterSurface(m, Surface::BONES, 16, 16, 4, 4, 0.8);
-	scatterSurface(m, Surface::CORPSE, 16, 16, 4, 4, 0.8);
-	m->setSurface(Surface::__NONE, 18, 18);
-	m->setTile(MT_HELLPORTAL_DOWN, 18, 18);
 
 	m->_lightLevel = 5;
 	m->updateTmap();

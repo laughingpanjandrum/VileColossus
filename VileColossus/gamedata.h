@@ -78,6 +78,9 @@ struct gamedata
 	vector<creaturePtr> _visibleMonsters;
 	intpair _cursorPt;
 
+	//	Game progress
+	int _killedRotking = 0;
+
 	//	Debug flags
 	bool _omniscient = false;
 	bool _invincible = false;

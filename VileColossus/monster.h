@@ -93,6 +93,8 @@ public:
 
 	//	Flags
 
+	const MonsterType getType() const { return _type; }
+
 	void addFlag(const string flag);
 	bool hasFlag(const string flag) const;
 

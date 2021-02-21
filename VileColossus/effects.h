@@ -5,10 +5,13 @@
 #include "monster.h"
 #include "progression.h"
 #include "monsterdata.h"
+#include "mapgen.h"
 
 
 
 //	Death effects
+
+void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon);
 
 void tryDropCorpse(gamedataPtr gdata, const Surface corpse, const intpair at);
 void doDeathDrops(gamedataPtr gdata, monsterPtr target);

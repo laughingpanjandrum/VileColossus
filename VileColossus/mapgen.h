@@ -156,6 +156,8 @@ namespace mapgen
 	int rollMapDimension();
 
 	gridmapPtr generate(int dl, bool descending = true);
+
+	void openHellPortal(gridmapPtr m);
 	gridmapPtr generate_HomeBase();
 
 }
