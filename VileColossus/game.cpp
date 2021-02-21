@@ -17,7 +17,6 @@ TODO
 	make monsters immune to lava
 	make higher tier items more likely
 	rename lava to something less intense
-	up SUPERBOSS xp gained
 	add alt superboss version when returning to the same map
 
 */

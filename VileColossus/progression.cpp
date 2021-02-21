@@ -23,6 +23,7 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 	case(2):	base_xp = XP_PER_LEVEL / 50; break;
 	case(3):	base_xp = XP_PER_LEVEL / 10; break;
 	case(4):	base_xp = XP_PER_LEVEL / 5; break;
+	case(5):	base_xp = XP_PER_LEVEL / 2; break;
 	default:
 		base_xp = 0;
 	}
