@@ -509,6 +509,8 @@ void game::awaitDebugCommand()
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::generateGem(randint(1, 5), 1), _gdata->_player->_pos);
 	}
+	else if (txt == "hellportal")
+		mapgen::openHellPortal(_gdata->_homeBase);
 }
 
 

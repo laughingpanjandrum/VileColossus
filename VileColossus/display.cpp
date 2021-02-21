@@ -1526,6 +1526,11 @@ void display::drawSidebar(gamedataPtr gdata)
 	auto p = gdata->_player;
 
 
+	//	Debug flags
+	if (gdata->_invincible)
+		_win.write(51, 2, "GOD", COLOR_WHITE);
+
+
 	//	Level
 
 	_win.write(x, ++y, "LV " + to_string(p->_level), { COLOR_MEDIUM });
