@@ -427,6 +427,10 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, 5 * dam); break;
 		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam); break;
 		}
+
+		//	other special effects
+		if (target->isPlayer() && dt == DTYPE_ELECTRIC && gdata->_player->getTotalEnchantmentBonus(ENCH_CONDUCTING) > 0)
+			gdata->_player->setBuffDuration(BUFF_CONDUCTION, 5);
 	}
 }
 

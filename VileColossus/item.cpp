@@ -99,7 +99,7 @@ string item::getName() const
 
 	//	Nickname?
 	if (!_nickname.empty())
-		name = "the " + name + " '" + _nickname + "'";
+		name = name + " '" + _nickname + "'";
 
 	//	Enchantments
 	else if (!_Enchants.empty() && _category != ITEM_SPELLRUNE)

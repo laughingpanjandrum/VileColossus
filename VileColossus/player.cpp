@@ -493,6 +493,8 @@ int player::getElementalAffinity(const DamageType dt) const
 	case(DTYPE_ELECTRIC):
 		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ELECTRIC);
+		if (hasBuff(BUFF_CONDUCTION))
+			total += getTotalEnchantmentBonus(ENCH_CONDUCTING);
 		break;
 
 	case(DTYPE_FIRE):

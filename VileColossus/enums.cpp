@@ -263,6 +263,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_AFFINITY):		return "Affinity";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Mirror";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
+	case(ENCH_CONDUCTING):		return "Fierce Conductor";
 	case(ENCH_CUNNING):			return "Rat's Cunning";
 	case(ENCH_DIVINE):			return "Divinity";
 	case(ENCH_FIREBURST):		return "Fireburst";
@@ -321,6 +322,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_AFFINITY):		return "Affinity Resist";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
+	case(ENCH_CONDUCTING):		return "Conduction";
 	case(ENCH_CUNNING):			return "Cunning";
 	case(ENCH_DIVINE):			return "Divine Damage";
 	case(ENCH_FIREBURST):		return "Fireburst";
@@ -348,6 +350,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_BURNING):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
 	case(ENCH_CAPACITY):		return "The flask has " + to_string(val) + " additional charges.";
 	case(ENCH_CHARGING):		return "Kills add " + to_string(val) + "% more charge to the flask.";
+	case(ENCH_CONDUCTING):		return "Taking electric damage boosts temporarily boosts electric bonus by " + to_string(val) + "%.";
 	case(ENCH_CURING):			return "Immediately removes Burn, Poison, and Shock status effects when quaffed.";
 	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
 	case(ENCH_EMPOWERING):		return "Buffs your Spell Power by 50%, plus half of its base value, for " + to_string(val) + " turns.";
@@ -505,6 +508,7 @@ string getBuffName(const BuffType bf)
 	switch (bf)
 	{
 	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
+	case(BUFF_CONDUCTION):		return "Conduction";
 	case(BUFF_EMPOWERED):		return "Empowered";
 	case(BUFF_HASTE):			return "Haste";
 	case(BUFF_SMITE_EVIL):		return "Smite Evil";
