@@ -345,6 +345,7 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 	case(DTYPE_ARCANE):     
 		total += getTotalEnchantmentBonus(ENCH_ARCANE);
 		total += getTotalGemBonusFromWeapons(GemType::SILVERSTONE) * 3;
+		total += MIN(getSpellPower() / 10, getTotalEnchantmentBonus(ENCH_DARK_ARCANA));
 		break;
 	
 	case(DTYPE_ELECTRIC):   
