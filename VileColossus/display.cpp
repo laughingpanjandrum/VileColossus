@@ -67,6 +67,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	drawStatWithBox(x, y + 15, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
 	drawStatWithBox(x, y + 19, plusminus(p->getLeechOnKill()), "Life on Kill", COLOR_HEALTH);
 	drawStatWithBox(x, y + 22, plusminus(p->getManaleech()), "Magic on Kill", COLOR_MAGIC);
+	drawStatWithBox(x, y + 26, to_string(p->estimateDPS()), "Avg Damage/Turn", TCODColor::darkCrimson);
 
 
 	//	OFFENCE

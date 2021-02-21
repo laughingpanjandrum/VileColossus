@@ -152,6 +152,11 @@ public:
 	itemPtr _currentFlask;
 
 
+	//	Estimation
+
+	int estimateDPS() const;
+
+
 	//	Time passage events
 	virtual void tick();
 	bool _triggeredDeath;

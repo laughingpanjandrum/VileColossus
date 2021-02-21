@@ -652,22 +652,33 @@ void player::chargeFlaskOnHit()
 }
 
 
+//	Figures out our average damage (summing every damage type) and divides by attack delay.
+int player::estimateDPS() const
+{
+	//	Sum up damage (with elemental bonuses included)
+	int total = getWeaponDamage();
+	for (auto dt : SPECIAL_DAMAGE_TYPES)
+	{
+		auto dam = getWeaponDamageOfType(dt) / 2;
+		if (dam > 0)
+		{
+			auto aff = getElementalAffinity(dt);
+			dam = adjustByPercent(dam, aff);
+		}
+		total += dam;
+	}
+
+	//	Adjust by attack delay
+	total = (float)total / ((float)getAttackEnergyCost() / 100.0f);
+
+	return total;
+}
+
+
 //	Special time-passage events for the player only
 void player::tick()
 {
 	creature::tick();
-
-	//	Regenerate magic
-	/*if (_magicExpended > 0)
-	{
-		if (_magicRegenTicks > 0)
-			_magicRegenTicks--;
-		else
-		{
-			_magicRegenTicks = getMagicRegenDelay();
-			_magicExpended--;
-		}
-	}*/
 }
 
 

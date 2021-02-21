@@ -10,8 +10,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	add dps estimate to character sheet
-
 */
 
 
