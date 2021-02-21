@@ -10,7 +10,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	add proper comparisons/'new item' marks for quivers
 	add alt superboss version when returning to the same map
 
 */

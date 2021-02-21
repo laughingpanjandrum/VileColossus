@@ -112,6 +112,7 @@ EquipmentSlot getSlotForCategory(const ItemCategory cat)
 	case(ITEM_CHESTPIECE):		return SLOT_BODY;
 	case(ITEM_GLOVES):			return SLOT_GLOVES;
 	case(ITEM_HELMET):			return SLOT_HELMET;
+	case(ITEM_QUIVER):			return SLOT_OFFHAND;
 	case(ITEM_RING):			return SLOT_LEFT_RING;
 	case(ITEM_SHIELD):			return SLOT_OFFHAND;
 	case(ITEM_SHOULDERS):		return SLOT_SHOULDERS;
