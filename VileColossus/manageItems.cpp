@@ -976,23 +976,14 @@ void pickupFromFloor(gamedataPtr gdata)
 	auto icp = gdata->_map->getItemContainer(gdata->_player->_pos);
 	if (icp != nullptr)
 	{
-		//	if there's just one item, pick it up immediately
-		//if (icp->_items.size() == 1)
-		//{
-		//	auto it = icp->_items.front();
-		//	addToInventory(gdata, it);
-		//	gdata->_map->removeItemFromContainer(it, icp);
-		//	messages::add(gdata, "Picked up #" + it->getName() + "@!", { it->getColor() });
-		//}
-
-		////	otherwise, give us a choice of what to get
-		//else 
 		if (icp->_items.size() > 0)
 		{
+			//	Make list of all items used.
 			gdata->_currentItemList.clear();
 			for (auto it : icp->_items)
 				gdata->_currentItemList.push_back(it);
 
+			//	Indicates we're picking up items
 			gdata->_state = STATE_PICKING_UP_ITEMS;
 			gdata->_idx = 0;
 		}

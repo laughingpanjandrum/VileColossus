@@ -42,11 +42,14 @@ void player::takeDamage(int amt)
 }
 
 
+//	Base value of the given attribute.
 int player::getBaseAttribute(const Attribute attr) const
 {
 	return _Attributes[attr];
 }
 
+
+//	This would add modifiers, but there currently aren't any available!
 int player::getDerivedAttribute(const Attribute attr) const
 {
 	int total = getBaseAttribute(attr);

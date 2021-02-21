@@ -462,7 +462,8 @@ void standOnTile(gamedataPtr gdata, creaturePtr cr)
 		switch (gdata->_map->getTile(cr->_pos))
 		{
 		case(MT_LAVA):
-			inflictEnergyDamage(gdata, cr, randint(1, 10), DTYPE_FIRE);
+			if (cr->isPlayer())
+				inflictEnergyDamage(gdata, cr, randint(1, 10), DTYPE_FIRE);
 			break;
 
 		case(MT_WATER):

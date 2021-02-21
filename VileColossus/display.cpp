@@ -375,7 +375,7 @@ void display::drawItemPickup(gamedataPtr gdata)
 }
 
 
-
+//	List of equipped items.
 void display::drawEquipment(gamedataPtr gdata)
 {
 	drawBox(2, 2, 42, 19, COLOR_DARK);
