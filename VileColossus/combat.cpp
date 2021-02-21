@@ -54,9 +54,29 @@ bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target)
 //	Damage attacker on hit in melee.
 void triggerReprisal(gamedataPtr gdata, creaturePtr repriser, creaturePtr target)
 {
+	//	default reprisal
 	auto dam = repriser->getReprisalDamage();
 	if (dam > 0)
 		creatureTakeDamage(gdata, target, applyProtection(gdata, target, dam));
+		
+	//	player might inflict special reprisal damage
+	if (repriser->isPlayer())
+	{
+		const vector<ItemEnchantment> ops = { ENCH_FLAMESPIKE, ENCH_THUNDERSPIKE, ENCH_VENOMSPIKE };
+		for (auto en : ops)
+		{
+			const int bns = gdata->_player->getTotalEnchantmentBonus(en);
+			if (bns > 0)
+			{
+				switch (en)
+				{
+				case(ENCH_FLAMESPIKE):		inflictEnergyDamage(gdata, target, bns, DTYPE_FIRE); break;
+				case(ENCH_THUNDERSPIKE):	inflictEnergyDamage(gdata, target, bns, DTYPE_ELECTRIC); break;
+				case(ENCH_VENOMSPIKE):		inflictEnergyDamage(gdata, target, bns, DTYPE_POISON); break;
+				}
+			}
+		}
+	}
 }
 
 

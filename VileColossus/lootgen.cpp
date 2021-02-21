@@ -722,6 +722,13 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(en, randint(10, 13));
 		break;
 
+	case(ENCH_FLAMESPIKE):
+	case(ENCH_THUNDERSPIKE):
+	case(ENCH_VENOMSPIKE):
+		it = generateArmourPiece(maxTier, 4);
+		it->addEnchantment(en, randint(5, 15));
+		break;
+
 	case(ENCH_SHADOWSTRIKE):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_SHADOWSTRIKE, randint(5, 10));

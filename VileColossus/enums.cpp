@@ -267,10 +267,13 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_CUNNING):			return "Rat's Cunning";
 	case(ENCH_DIVINE):			return "Divinity";
 	case(ENCH_FIREBURST):		return "Fireburst";
+	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_SHADOWSTRIKE):	return "Shade";
 	case(ENCH_SPELLBURN):		return "Spellburner";
 	case(ENCH_STORMBURST):		return "Stormburst";
+	case(ENCH_THUNDERSPIKE):	return "Thunderspike";
 	case(ENCH_VENOMBURST):		return "Venomburst";
+	case(ENCH_VENOMSPIKE):		return "Venomspike";
 	case(ENCH_WEIGHT):			return "Dragonbone";
 
 	default:
@@ -327,10 +330,13 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_CUNNING):			return "Cunning";
 	case(ENCH_DIVINE):			return "Divine Damage";
 	case(ENCH_FIREBURST):		return "Fireburst";
+	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
 	case(ENCH_SPELLBURN):		return "Spellburn";
 	case(ENCH_STORMBURST):		return "Stormburst";
+	case(ENCH_THUNDERSPIKE):	return "Thunderspike";
 	case(ENCH_VENOMBURST):		return "Venomburst";
+	case(ENCH_VENOMSPIKE):		return "Venomspike";
 	case(ENCH_WEIGHT):			return "Massive";
 
 	default:
@@ -389,10 +395,13 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
 	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
+	case(ENCH_FLAMESPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Fire.";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
-	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + ". You take damage when casting spells equal to twice their Magic cost.";
+	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + "%. You take damage when casting spells equal to twice their Magic cost.";
 	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";
+	case(ENCH_THUNDERSPIKE):	return "You inflict " + plusminus(val) + " Reprisal damage as Electric.";
 	case(ENCH_VENOMBURST):		return "Increases maximum poison damage by " + plusminus(val) + ".";
+	case(ENCH_VENOMSPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Poison.";
 	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + "% damage, but attack speed is slowed.";
 
 	default:
@@ -427,6 +436,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_SHADOWSTRIKE):
 	case(ENCH_SHARPNESS):
 	case(ENCH_SLAYING):
+	case(ENCH_SPELLBURN):
 	case(ENCH_SPELLPOWER):
 	case(ENCH_SPELLWARD):
 	case(ENCH_STORMWARD):

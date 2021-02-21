@@ -10,7 +10,7 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	add alt superboss version when returning to the same map
+	add dps estimate to character sheet
 
 */
 
@@ -47,7 +47,7 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_SPELLBURN));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_FLAMESPIKE));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
