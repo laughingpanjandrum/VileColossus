@@ -10,6 +10,7 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	case(MonsterType::CARRION_PRINCE):
 	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::LIGHTNING_SPIRE):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
@@ -90,7 +91,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else
-		return { MonsterType::CULTIST_ASCENDED, MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
+		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
@@ -219,6 +220,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::IMP_MEGA):
 		return { "protected", "immune_fire", "casts_firebolt", };
 
+	case(MonsterType::LIGHTNING_SPIRE):
+		return { "immobile", "immune_electric", "protected", "casts_lightning", "no_attack", };
+
 	case(MonsterType::OOZE_ELECTRIC):
 		return { "slow", "electric_attack", "immune_electric", };
 	case(MonsterType::OOZE_SLUDGE):
@@ -339,6 +343,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::CULTIST_WINGED):
 	case(MonsterType::IMP_MEGA):
+	case(MonsterType::LIGHTNING_SPIRE):
 	case(MonsterType::SKELETON_GIANT):
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
@@ -373,6 +378,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::IMP_MEGA):			return make_tuple("mega-imp", 'I', TCODColor::flame);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
+	case(MonsterType::LIGHTNING_SPIRE):		return make_tuple("lightning spire", 234, TCODColor::yellow);
 	case(MonsterType::ORB_FLAME):			return make_tuple("orb of flame", '*', TCODColor::flame);
 	case(MonsterType::RAT_GIANT):			return make_tuple("giant rat", 'r', TCODColor::darkGreen);
 	case(MonsterType::RAT_KING):			return make_tuple("Rat King", 'R', TCODColor::lightSepia);
