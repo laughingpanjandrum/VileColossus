@@ -8,6 +8,7 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	switch (id)
 	{
 	case(MonsterType::CARRION_PRINCE):
+	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
@@ -29,10 +30,11 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 		return MonsterType::__NONE;
 	else if (dl >= 10)
 	{
-		int r = randint(1, 2);
+		int r = randint(1, 3);
 		switch (r)
 		{
 		case(1):	return MonsterType::FLAME_CONJURER;
+		case(2):	return MonsterType::SPIDER_PHASE;
 		default:	return MonsterType::WORM_DEMON;
 		}
 	}
@@ -53,9 +55,21 @@ const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 const MonsterType monsterdata::rollBossForLevel(const int dl)
 {
 	//	Assemble list of options.
-	vector<MonsterType> ops = { MonsterType::CORPSE_COLOSSUS, MonsterType::CARRION_PRINCE, };
-	if (dl > 4)
-		ops.push_back(MonsterType::SKINLESS_KNIGHT);
+	vector<MonsterType> ops;
+	
+	//	Lower tier
+	if (dl < 10)
+	{
+		ops = { MonsterType::CORPSE_COLOSSUS, MonsterType::CARRION_PRINCE, };
+		if (dl > 4)
+			ops.push_back(MonsterType::SKINLESS_KNIGHT);
+	}
+
+	//	Higher tier
+	else
+	{
+		ops = { MonsterType::COLOSSUS_IRON };
+	}
 
 	//	Pick one.
 	return ops[randrange(ops.size())];
@@ -76,7 +90,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else
-		return { MonsterType::IMP, MonsterType::SPIDER, MonsterType::SPIDER_PHASE, MonsterType::WRETCH, };
+		return { MonsterType::CULTIST_ASCENDED, MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
@@ -174,6 +188,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::CARRION_PRINCE):
 		return { "spawner", "more_defence", "undead", "poison_attack", "resists_poison", };
 
+	case(MonsterType::COLOSSUS_IRON):
+		return { "protected_heavy", "more_damage", "slow", "resists_fire", "resists_poison", "resists_electric" };
+
 	case(MonsterType::CORPSE_COLOSSUS):
 		return { "slow", "spawner", "more_damage", "less_defence", "more_health", "undead", };
 
@@ -182,6 +199,8 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::CULTIST):
 		return { "less_health", "less_damage" };
+	case(MonsterType::CULTIST_ASCENDED):
+		return { "flying", "casts_arcane_bolt", "resists_arcane", "spawner" };
 	case(MonsterType::CULTIST_INFESTED):
 		return { "less_health", "spawner", "infested", };
 	case(MonsterType::CULTIST_MUTTERING):
@@ -292,6 +311,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 		return 5;
 
 	case(MonsterType::CARRION_PRINCE):
+	case(MonsterType::COLOSSUS_IRON):
 	case(MonsterType::CORPSE_COLOSSUS):
 	case(MonsterType::SKINLESS_KNIGHT):
 		return 4;
@@ -299,18 +319,19 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::RAT_KING):
+	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::WORM_DEMON):
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
 
+	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::CULTIST_WINGED):
 	case(MonsterType::IMP_MEGA):
 	case(MonsterType::SKELETON_GIANT):
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
 	case(MonsterType::SPIDER_OGRE):
-	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::ZOMBIE_INFUSED):
 	case(MonsterType::ZOMBIE_LARGE):
 		return 2;
@@ -327,9 +348,11 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	{
 	case(MonsterType::BLOAT):				return make_tuple("bloat", 'b', TCODColor::lightLime);
 	case(MonsterType::CARRION_PRINCE):		return make_tuple("CARRION PRINCE", 'P', TCODColor::lime);
+	case(MonsterType::COLOSSUS_IRON):		return make_tuple("Iron Colossus", 'N', TCODColor::silver);
 	case(MonsterType::CORPSEFLY):			return make_tuple("corpsefly", 'f', TCODColor::lightLime);
 	case(MonsterType::CORPSE_COLOSSUS):		return make_tuple("CORPSE COLOSSUS", 'C', TCODColor::pink);
 	case(MonsterType::CULTIST):				return make_tuple("cultist", 'u', TCODColor::pink);
+	case(MonsterType::CULTIST_ASCENDED):	return make_tuple("ascended cultist", 'U', TCODColor::purple);
 	case(MonsterType::CULTIST_INFESTED):	return make_tuple("infested cultist", 'u', TCODColor::lime);
 	case(MonsterType::CULTIST_MUTTERING):	return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
 	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);

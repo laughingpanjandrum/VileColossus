@@ -10,6 +10,16 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
+	learn enchants from dismantling items (rather than separating)
+	mark unknown enchants in the 'pick up item' menu
+	add proper comparisons/'new item' marks for quivers
+	put gems/currency on top of item stacks
+	make monsters immune to lava
+	make higher tier items more likely
+	rename lava to something less intense
+	up SUPERBOSS xp gained
+	add alt superboss version when returning to the same map
+
 */
 
 

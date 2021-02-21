@@ -172,7 +172,11 @@ bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 		else if (ai->hasFlag("webs") && dist <= 6 && vis && !ai->_target->hasStatusEffect(STATUS_ENTANGLED))
 		{
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(ai->_pos, ai->_target->_pos), '%', TCODColor::white));
-			fillRegionWithSurface(gdata, ai->_target->_pos, 1, Surface::WEB);
+			for (auto pt : getAdjacentWalkable(gdata, ai->_target->_pos))
+			{
+				if (roll_one_in(2))
+					trySetSurface(gdata, pt, Surface::WEB);
+			}
 			ai->spendActionEnergy();
 			return true;
 		}

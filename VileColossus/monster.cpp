@@ -187,8 +187,14 @@ const MonsterType monster::rollMonsterToSpawn() const
 		else				return MonsterType::ZOMBIE_LARGE;
 		break;
 
+	case(MonsterType::CULTIST_ASCENDED):
+		return MonsterType::WRETCH;
+
 	case(MonsterType::CULTIST_INFESTED):
 		return MonsterType::ROACH;
+
+	case(MonsterType::FLAME_CONJURER):
+		return MonsterType::ORB_FLAME;
 
 	case(MonsterType::RAT_KING):
 		return MonsterType::RAT_GIANT;
