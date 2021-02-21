@@ -338,12 +338,16 @@ void display::drawItemPickup(gamedataPtr gdata)
 	{
 		//	is the item selected
 		y++;
+		auto it = gdata->_currentItemList[i];
 		bool selected = i == gdata->_idx;
 		if (selected)
 			_win.writec(x, y, '>', COLOR_WHITE);
 
+		//	mark if it has unknown enchantments
+		if (doesItemHaveUnknownEnchants(gdata, it))
+			_win.writec(x - 1, y, '*', TCODColor::gold);
+
 		//	the item itself
-		auto it = gdata->_currentItemList[i];
 		_win.writec(x + 1, y, it->getGlyph(), it->getColor());
 
 		if (selected)
@@ -541,7 +545,8 @@ void display::drawAnvil(gamedataPtr gdata)
 			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
 			it->_isNewItem = false;
 		}
-		if (doesItemHaveUnknownEnchants(gdata, it))
+		/*if (doesItemHaveUnknownEnchants(gdata, it))
+			_win.writec(x - 1, y, '*', TCODColor::gold);*/
 			_win.writec(x - 1, y, '*', TCODColor::gold);
 
 
@@ -573,7 +578,7 @@ void display::drawAnvil(gamedataPtr gdata)
 
 		//	Annihilate?
 		writeFormatted(47, 26, "#D @Dismantle for materials", { COLOR_LIGHT });
-		writeFormatted(47, 28, "#x @Extract enchantments", { COLOR_LIGHT });
+		//writeFormatted(47, 28, "#x @Extract enchantments", { COLOR_LIGHT });
 	}
 
 

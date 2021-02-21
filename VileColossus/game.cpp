@@ -10,7 +10,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	learn enchants from dismantling items (rather than separating)
 	mark unknown enchants in the 'pick up item' menu
 	add proper comparisons/'new item' marks for quivers
 	put gems/currency on top of item stacks
@@ -287,8 +286,6 @@ void game::processInput()
 				dismantleFromInventory(_gdata);
 			else if (_ih->isKeyPressed('r'))
 				tryRepairSelected(_gdata);
-			else if (_ih->isKeyPressed('x'))
-				extractEnchantments(_gdata);
 			else if (_ih->isKeyPressed('v'))
 				viewItemDetails(_gdata);
 			break;

@@ -403,6 +403,16 @@ void dismantleFromInventory(gamedataPtr gdata)
 			}
 		}
 
+		//	Learn its enchants, if any
+		for (auto en : *it->getAllEnchantments())
+		{
+			if (!knowsEnchantmentType(gdata, en))
+			{
+				messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
+				gdata->_knownEnchants.push_back(en);
+			}
+		}
+
 		//	Destroy the item.
 		removeFromInventory(gdata, it);
 		removeFromCurrentItemList(gdata, it);
