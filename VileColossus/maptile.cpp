@@ -11,6 +11,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_CHEST_GLOWING):		return "glowing chest";
 	case(MT_CHEST_RADIANT):		return "radiant chest";
 	case(MT_CHEST_SMALL):		return "small chest";
+	case(MT_DEMONFORGE):		return "THE DEMONFORGE";
 	case(MT_DOOR_STONE):        return "stone door";
 	case(MT_DOOR_WOODEN):		return "wooden door";
 	case(MT_DRAINED_SHRINE):	return "drained shrine";
@@ -68,6 +69,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_HELLPORTAL_UP):
 		return '0';
 
+	case(MT_DEMONFORGE):
 	case(MT_FORGE):
 		return 233;
 
@@ -162,6 +164,8 @@ const colorType getMaptileColor(const Maptile tl)
 
 	case(MT_FORGE):
 		return TCODColor::flame;
+	case(MT_DEMONFORGE):
+		return TCODColor::darkOrange;
 
 	case(MT_STASH):
 		return TCODColor::sepia;
@@ -257,6 +261,7 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_CHEST_GLOWING):
 	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
+	case(MT_DEMONFORGE):
 	case(MT_FORGE):
 	case(MT_GEMSTONE_PRESS):
 	case(MT_PEW_WOODEN):
@@ -307,7 +312,7 @@ const bool isMaptileBreakable(const Maptile tl)
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_RADIANT;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_RADIANT || tl == MT_DEMONFORGE;
 }
 
 const bool isMaptileStairs(const Maptile tl)

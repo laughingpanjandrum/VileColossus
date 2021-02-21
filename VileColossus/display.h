@@ -65,6 +65,8 @@ public:
 	void drawEnchantmentSelect(gamedataPtr gdata);
 	
 	void drawAlchemy(gamedataPtr gdata);
+
+	void drawDemonforge(gamedataPtr gdata);
 	
 	void drawGemstonePress(gamedataPtr gdata);
 	void drawGemstoneSelect(gamedataPtr gdata);

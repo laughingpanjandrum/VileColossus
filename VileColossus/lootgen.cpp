@@ -826,11 +826,12 @@ const int lootgen::rollTier(const int maxTier)
 
 
 //	Generic item roller. Higher tiers/rarities are somewhat less likely.
-itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
+//	If 'forceRarity' is set, the item is guaranteed to have the maximum possible rarity.
+itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bool forceRarity)
 {
 	//	Roll actual tier and rarity
 	int tier = rollTier(maxTier);
-	int rarity = rollRarity(bestRarityAllowed);
+	int rarity = forceRarity ? bestRarityAllowed : rollRarity(bestRarityAllowed);
 
 
 	//	Legendary items use a special generator

@@ -117,6 +117,6 @@ namespace lootgen
 
 	const int rollRarity(const int maxRarity);
 	const int rollTier(const int maxTier);
-	itemPtr rollItemDrop(const int maxTier, const int bestRarityAllowed);
+	itemPtr rollItemDrop(const int maxTier, const int bestRarityAllowed, bool forceRarity = false);
 
 }

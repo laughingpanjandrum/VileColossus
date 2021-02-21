@@ -12,6 +12,7 @@
 
 
 #define GEM_MAX_TIER 5
+#define MAX_ITEM_RARITY 4
 
 
 

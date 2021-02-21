@@ -466,6 +466,65 @@ void openForgeMenu(gamedataPtr gdata)
 }
 
 
+//	Cost to generate an item of the given rarity at the demonforge
+const pair<MaterialType, int> getCostToForgeItem(const int rarity)
+{
+	pair<MaterialType, int> cost;
+	switch (rarity)
+	{
+	case(1):	cost.first = MaterialType::FRAGMENTS; cost.second = 500; break;
+	case(2):	cost.first = MaterialType::MAGIC_DUST; cost.second = 250; break;
+	case(3):	cost.first = MaterialType::GLOWING_POWDER; cost.second = 100; break;
+	case(4):	cost.first = MaterialType::RADIANT_ASH; cost.second = 2; break;
+	}
+	return cost;
+}
+
+
+//	Increases the tier of items created with the forge.
+void tryUpgradeDemonforge(gamedataPtr gdata)
+{
+	if (gdata->_demonforgeTier == 1 && hasMaterial(gdata, MaterialType::MAGIC_DUST, 500))
+	{
+		gdata->_demonforgeTier++;
+		spendMaterial(gdata, MaterialType::MAGIC_DUST, 500);
+		messages::add(gdata, "#DEMONFORGE ENHANCED TO #TIER 2", { TCODColor::orange, TCODColor::lightBlue });
+	}
+	else if (gdata->_demonforgeTier == 2 && hasMaterial(gdata, MaterialType::GLOWING_POWDER, 250))
+	{
+		gdata->_demonforgeTier++;
+		spendMaterial(gdata, MaterialType::GLOWING_POWDER, 250);
+		messages::add(gdata, "#DEMONFORGE ENHANCED TO #TIER 3", { TCODColor::orange, TCODColor::yellow });
+	}
+	else
+		messages::error(gdata, "Cannot upgrade the demonforge!");
+}
+
+
+//	Try to create an item of the given rarity.
+void createWithDemonforge(gamedataPtr gdata)
+{
+	auto cost = getCostToForgeItem(gdata->_idx + 1);
+	if (hasMaterial(gdata, cost.first, cost.second))
+	{
+		spendMaterial(gdata, cost.first, cost.second);
+		auto it = lootgen::rollItemDrop(gdata->_demonforgeTier, gdata->_idx + 1, true);
+		messages::add(gdata, "Forged #" + it->getName() + "@!", { it->getColor() });
+		addToInventory(gdata, it);
+	}
+	else
+		messages::error(gdata, "Not enough materials!");
+}
+
+
+void openDemonforge(gamedataPtr gdata)
+{
+	autodepositMaterials(gdata);
+	gdata->_state = STATE_DEMONFORGE;
+	gdata->_idx = 0;
+}
+
+
 //	Destroys an item. We learn any enchantments it contained.
 void extractEnchantments(gamedataPtr gdata)
 {

@@ -58,6 +58,9 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	case(MT_GEMSTONE_PRESS):
 		openGemstonePress(gdata);
 		break;
+	case(MT_DEMONFORGE):
+		openDemonforge(gdata);
+		break;
 
 		//	Just prevented from moving
 	default:

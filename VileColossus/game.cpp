@@ -127,9 +127,11 @@ void game::drawScreen()
 	case(STATE_FORGE):
 		_disp.drawEnchantedForge(_gdata);
 		break;
-
 	case(STATE_SELECT_ENCHANTMENT):
 		_disp.drawEnchantmentSelect(_gdata);
+		break;
+	case(STATE_DEMONFORGE):
+		_disp.drawDemonforge(_gdata);
 		break;
 
 	case(STATE_ALCHEMY):
@@ -305,6 +307,17 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_knownEnchants.size());
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				selectEnchantmentToApply(_gdata);
+			break;
+
+
+			//	Demonforge
+		case(STATE_DEMONFORGE):
+			if (_ih->isKeyPressed('U'))
+				tryUpgradeDemonforge(_gdata);
+			else if (_ih->isDirectionalKeyPressed())
+				scrollMenu(_ih->getVectorFromKeypress().second, MAX_ITEM_RARITY);
+			else if (_ih->isKeyPressed(TCODK_ENTER))
+				createWithDemonforge(_gdata);
 			break;
 
 
@@ -508,6 +521,13 @@ void game::awaitDebugCommand()
 	{
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::generateGem(randint(1, 5), 1), _gdata->_player->_pos);
+	}
+	else if (txt == "materials")
+	{
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, 1000));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, 500));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 250));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 	}
 	else if (txt == "hellportal")
 		mapgen::openHellPortal(_gdata->_homeBase);

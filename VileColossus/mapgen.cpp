@@ -1265,6 +1265,7 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 //	Adds the hell-portal to the home map.
 void mapgen::openHellPortal(gridmapPtr m)
 {
+	//	The portal
 	scatterSurface(m, Surface::BONES, 16, 16, 4, 4, 0.8);
 	scatterSurface(m, Surface::CORPSE, 16, 16, 4, 4, 0.8);
 	m->setSurface(Surface::__NONE, 18, 18);
@@ -1312,6 +1313,12 @@ gridmapPtr mapgen::generate_HomeBase()
 
 	m->setTile(MT_STAIRS_DOWN, 11, 6);
 	m->_startPt = intpair(11, 6);
+
+	//	the DEMONFORGE
+	fillRegion(m, MT_WALL_STONE, 26, 5, 4, 5);
+	fillRegion(m, MT_FLOOR_HOT, 27, 6, 2, 3);
+	m->setTile(MT_FLOOR_STONE, 27, 9);
+	m->setTile(MT_DEMONFORGE, 28, 6);
 
 	//	additional stairs down
 	fillRegion(m, MT_WALL_STONE, 28, 11, 7, 8);

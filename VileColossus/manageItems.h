@@ -58,6 +58,16 @@ void enhanceSelectedItem(gamedataPtr gdata);
 void repairEquipmentItem(gamedataPtr gdata);
 
 
+
+//	The DEMONFORGE
+
+const pair<MaterialType, int> getCostToForgeItem(const int rarity);
+
+void tryUpgradeDemonforge(gamedataPtr gdata);
+void createWithDemonforge(gamedataPtr gdata);
+void openDemonforge(gamedataPtr gdata);
+
+
 //	ALCHEMY
 
 void openAlchemyMenu(gamedataPtr gdata);

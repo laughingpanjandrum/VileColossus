@@ -712,6 +712,45 @@ void display::drawAlchemy(gamedataPtr gdata)
 }
 
 
+//	Generate new items by spending materials.
+void display::drawDemonforge(gamedataPtr gdata)
+{
+	drawBox(2, 2, 45, 10, COLOR_DARK);
+	_win.write(3, 2, "THE DEMONFORGE", TCODColor::orange);
+	_win.write(41, 2, "Tier " + to_string(gdata->_demonforgeTier), TCODColor::white);
+
+	//	Main options
+	int x = 4, y = 3;
+	for (unsigned i = 0; i < MAX_ITEM_RARITY; i++)
+	{
+		//	selection
+		y++;
+		if (i == gdata->_idx)
+			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
+
+		//	cost/material type
+		auto cost = getCostToForgeItem(i + 1);
+
+		//	name
+		drawProgressDots(x + 1, y, i + 1, MAX_ITEM_RARITY, TCODColor::gold);
+		writeFormatted(x + 6, y, "Forge for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { getMaterialTypeColor(cost.first) });
+	}
+	_win.writeWrapped(4, 9, 40, "Generate a random item of the given rarity by expending materials.", COLOR_MEDIUM);
+
+
+	//	Additional options
+	switch (gdata->_demonforgeTier)
+	{
+	case(1):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 2 for #500 Magic Dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
+	case(2):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 3 for #250 Glowing Powder", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
+	}
+	
+	
+	drawStashedMaterials(gdata, 50, 4);
+	drawMessages(gdata);
+}
+
+
 //	Allows us to socket/unsocket gems.
 void display::drawGemstonePress(gamedataPtr gdata)
 {
