@@ -268,6 +268,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_DIVINE):			return "Divinity";
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_SHADOWSTRIKE):	return "Shade";
+	case(ENCH_SPELLBURN):		return "Spellburner";
 	case(ENCH_STORMBURST):		return "Stormburst";
 	case(ENCH_VENOMBURST):		return "Venomburst";
 	case(ENCH_WEIGHT):			return "Dragonbone";
@@ -327,6 +328,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_DIVINE):			return "Divine Damage";
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
+	case(ENCH_SPELLBURN):		return "Spellburn";
 	case(ENCH_STORMBURST):		return "Stormburst";
 	case(ENCH_VENOMBURST):		return "Venomburst";
 	case(ENCH_WEIGHT):			return "Massive";
@@ -350,7 +352,6 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_BURNING):			return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
 	case(ENCH_CAPACITY):		return "The flask has " + to_string(val) + " additional charges.";
 	case(ENCH_CHARGING):		return "Kills add " + to_string(val) + "% more charge to the flask.";
-	case(ENCH_CONDUCTING):		return "Taking electric damage boosts temporarily boosts electric bonus by " + to_string(val) + "%.";
 	case(ENCH_CURING):			return "Immediately removes Burn, Poison, and Shock status effects when quaffed.";
 	case(ENCH_DEFENCE):			return "Adjusts your Defence Value by " + plusminus(val) + ", which reduces the chance that enemy weapon attacks will hit you.";
 	case(ENCH_EMPOWERING):		return "Buffs your Spell Power by 50%, plus half of its base value, for " + to_string(val) + " turns.";
@@ -384,10 +385,12 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated bonus.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
+	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your electric bonus by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
 	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
+	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + ". You take damage when casting spells equal to twice their Magic cost.";
 	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";
 	case(ENCH_VENOMBURST):		return "Increases maximum poison damage by " + plusminus(val) + ".";
 	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + "% damage, but attack speed is slowed.";

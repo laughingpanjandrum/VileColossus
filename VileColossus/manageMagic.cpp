@@ -266,8 +266,7 @@ void playerCastAimedSpell(gamedataPtr gdata, const intpair vec)
 	}
 
 	//	pay spell costs
-	gdata->_player->expendMagic(getSpellMPCost(sp, lvl));
-	gdata->_player->spendActionEnergy();
+	playerSpendSpellCost(gdata, sp, lvl);
 	gdata->_state = STATE_NORMAL;
 }
 
@@ -287,8 +286,7 @@ void playerCastSpell(gamedataPtr gdata, const int sp_idx)
 		if (!isSpellTargeted(sp))
 		{
 			triggerSpellEffect(gdata, gdata->_player, sp, lvl);
-			gdata->_player->expendMagic(getSpellMPCost(sp, lvl));
-			gdata->_player->spendActionEnergy();
+			playerSpendSpellCost(gdata, sp, lvl);
 		}
 
 		//	We need to aim the spell
@@ -301,6 +299,20 @@ void playerCastSpell(gamedataPtr gdata, const int sp_idx)
 	}
 	else
 		messages::error(gdata, "Not enough magic to cast this spell!");
+}
+
+
+//	Spend the MP and time required to cast a spell, plus any other costs.
+void playerSpendSpellCost(gamedataPtr gdata, const Spell sp, const int lvl)
+{
+	//	usual costs
+	auto mp = getSpellMPCost(sp, lvl);
+	gdata->_player->expendMagic(mp);
+	gdata->_player->spendActionEnergy();
+
+	//	spellburn, if any
+	if (gdata->_player->getTotalEnchantmentBonus(ENCH_SPELLBURN) > 0)
+		creatureTakeDamage(gdata, gdata->_player, mp * 2);
 }
 
 

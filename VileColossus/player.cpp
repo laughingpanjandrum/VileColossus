@@ -119,6 +119,7 @@ int player::getSpellPower() const
 	//	from items
 	int total = (getDerivedAttribute(ATTR_WILLPOWER) - 10) * 5;
 	total += getTotalEnchantmentBonus(ENCH_SPELLPOWER);
+	total += getTotalEnchantmentBonus(ENCH_SPELLBURN);
 	total += getTotalGemBonusFromJewels(GemType::BOLTSTONE) * 25;
 
 	//	from buffs

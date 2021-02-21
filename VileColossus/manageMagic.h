@@ -26,6 +26,7 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 
 void playerCastAimedSpell(gamedataPtr gdata, const intpair vec);
 void playerCastSpell(gamedataPtr gdata, const int sp_idx);
+void playerSpendSpellCost(gamedataPtr gdata, const Spell sp, const int lvl);
 void castSpellFromHotkey(gamedataPtr gdata, const int hotkey);
 
 
