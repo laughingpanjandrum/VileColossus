@@ -12,8 +12,6 @@ TODO
 
 	add proper comparisons/'new item' marks for quivers
 	put gems/currency on top of item stacks
-	make higher tier items more likely
-	rename lava to something less intense
 	add alt superboss version when returning to the same map
 
 */

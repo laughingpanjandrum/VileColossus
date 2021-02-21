@@ -24,7 +24,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_HEALING_FOUNTAIN):	return "fountain of life";
 	case(MT_HELLPORTAL_DOWN):	return "ascending hellportal";
 	case(MT_HELLPORTAL_UP):		return "descending hellportal";
-	case(MT_LAVA):				return "lava";
+	case(MT_LAVA):				return "molten ooze";
 	case(MT_MEDITATION_SHRINE):	return "Shrine of Meditation";
 	case(MT_PEW_WOODEN):        return "wooden pew";
 	case(MT_RUBBLE):            return "rubble";

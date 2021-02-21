@@ -114,6 +114,7 @@ namespace lootgen
 	int getGemTierForMonsterLevel(const int dl);
 
 	const int rollRarity(const int maxRarity);
+	const int rollTier(const int maxTier);
 	itemPtr rollItemDrop(const int maxTier, const int bestRarityAllowed);
 
 }

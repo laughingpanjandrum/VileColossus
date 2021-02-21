@@ -779,11 +779,30 @@ const int lootgen::rollRarity(const int maxRarity)
 }
 
 
+//	Most likely to drop an item of the given tier, but a lower tier is still possible.
+const int lootgen::rollTier(const int maxTier)
+{
+	const int r = randint(1, 100);
+	switch (maxTier)
+	{
+	case(1):	return 1;
+	case(2):
+		if (r <= 20)	return 1;
+		else			return 2;
+	case(3):
+		if (r <= 30)	return 2;
+		else			return 3;
+	default:
+		return 3;
+	}
+}
+
+
 //	Generic item roller. Higher tiers/rarities are somewhat less likely.
 itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed)
 {
 	//	Roll actual tier and rarity
-	int tier = randint(1, maxTier);
+	int tier = rollTier(maxTier);
 	int rarity = rollRarity(bestRarityAllowed);
 
 
