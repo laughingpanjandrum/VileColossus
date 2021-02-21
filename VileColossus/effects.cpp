@@ -12,8 +12,11 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 	switch (mon->getType())
 	{
 	case(MonsterType::BOSS_PALLID_ROTKING):
-		gdata->_killedRotking++;
-		if (gdata->_killedRotking == 1)
+	case(MonsterType::BOSS_ROTKING_BURNED):
+	case(MonsterType::BOSS_ROTKING_DESOLATE):
+	case(MonsterType::BOSS_ROTKING_INFUSED):
+		gdata->_gameProgress._killedRotking++;
+		if (gdata->_gameProgress._killedRotking == 1)
 			mapgen::openHellPortal(gdata->_homeBase);
 		break;
 	}

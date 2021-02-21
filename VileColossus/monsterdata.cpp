@@ -293,8 +293,16 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "slow", "inaccurate", "poison_attack", "undead" };
 
 
+		//	Bosses
+
 	case(MonsterType::BOSS_PALLID_ROTKING):
 		return { "slow", "poison_attack", "undead", "spawner", "spit_sludge", "casts_poison_spit", "more_health" };
+	case(MonsterType::BOSS_ROTKING_BURNED):
+		return { "slow", "fire_attack", "undead", "spawner", "spit_sludge", "casts_firebolt", "more_health", "immune_fire", };
+	case(MonsterType::BOSS_ROTKING_DESOLATE):
+		return { "slow", "more_damage", "poison_attack", "undead", "spawner", "protected", "spit_sludge", "casts_poison_spit", "more_health", "immune_poison" };
+	case(MonsterType::BOSS_ROTKING_INFUSED):
+		return { "slow", "arcane_attack", "undead", "spawner", "spit_sludge", "casts_arcane_bolt", "more_health", "immune_arcane" };
 
 	default:
 		return {};
@@ -308,6 +316,9 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	switch (id)
 	{
 	case(MonsterType::BOSS_PALLID_ROTKING):
+	case(MonsterType::BOSS_ROTKING_BURNED):
+	case(MonsterType::BOSS_ROTKING_DESOLATE):
+	case(MonsterType::BOSS_ROTKING_INFUSED):
 		return 5;
 
 	case(MonsterType::CARRION_PRINCE):
@@ -392,7 +403,10 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::ZOMBIE_MASS):			return make_tuple("Zombie Mass", 'Z', TCODColor::lightPink);
 	case(MonsterType::ZOMBIE_ROTTED):		return make_tuple("rotted zombie", 'z', TCODColor::darkLime);
 
-	case(MonsterType::BOSS_PALLID_ROTKING):	return make_tuple("= THE PALLID ROTKING =", 'A', TCODColor::lightLime);
+	case(MonsterType::BOSS_PALLID_ROTKING):		return make_tuple("= THE PALLID ROTKING =", 'A', TCODColor::lightLime);
+	case(MonsterType::BOSS_ROTKING_BURNED):		return make_tuple("= THE BURNED ROTKING =", 'A', TCODColor::flame);
+	case(MonsterType::BOSS_ROTKING_DESOLATE):	return make_tuple("= THE DESOLATE ROTKING =", 'A', TCODColor::green);
+	case(MonsterType::BOSS_ROTKING_INFUSED):	return make_tuple("= THE INFUSED ROTKING =", 'A', TCODColor::lightPurple);
 
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);

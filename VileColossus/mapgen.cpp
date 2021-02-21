@@ -1187,20 +1187,32 @@ gridmapPtr mapgen::generate_Swamp(int dl, bool descending, bool add_monsters)
 
 
 //	BOSS MAP: The Pallid Rotking
-gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending)
+gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount)
 {
 	auto m = generate_Cathedral(1, descending, false);
-	m->_name = "Rotten Throne";
+	m->_name = "THE ROTTEN THRONE";
 	const int r = MIN(m->_xsize / 3, m->_ysize / 3);
 	const intpair ctr = intpair(m->_xsize / 2, m->_ysize / 2);
 
+	//	Mess up the map.
 	addLake(m, ctr, r, MT_WATER, MT_FLOOR_CARPET);
 	scatterOnMap(m, MT_BUSH, 0.3);
 	scatterOnMap(m, MT_BARREL, 0.05);
 	scatterSurface(m, Surface::SLUDGE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.3);
 
-	m->addCreature(monsterdata::generate(MonsterType::BOSS_PALLID_ROTKING, dl * 2), ctr);
+	//	Pick a boss.
+	vector<MonsterType> options;
+	if (killcount == 0)
+		options = { MonsterType::BOSS_PALLID_ROTKING };
+	else
+	{
+		options = { MonsterType::BOSS_ROTKING_BURNED, MonsterType::BOSS_ROTKING_INFUSED };
+		if (killcount > 2)
+			options.push_back(MonsterType::BOSS_ROTKING_DESOLATE);
+	}
+	m->addCreature(monsterdata::generate(options[randrange(options.size())], dl * 2 + MIN(5, killcount)), ctr);
 
+	//	Add downstairs.
 	auto spt = getRandomForStairs(m);
 	m->setTile(MT_STAIRS_UP, spt);
 	m->_startPt = spt;
@@ -1221,13 +1233,13 @@ int mapgen::rollMapDimension()
 
 //	Generate a random map for the given danger level.
 //	The 'descending' flag determines whether start position is set to the upstairs or downstairs.
-gridmapPtr mapgen::generate(int dl, bool descending)
+gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 {
 	gridmapPtr m;
 	
 	//	Type depends on depth
 	if (dl == 9)
-		m = generate_PallidRotking(dl, descending);
+		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
 	else if (dl > 9)
 		m = generate_Hellmouth(dl, descending);
 	else

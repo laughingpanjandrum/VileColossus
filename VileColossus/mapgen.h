@@ -11,6 +11,11 @@
 namespace mapgen
 {
 
+	struct game_progress
+	{
+		int _killedRotking = 0;
+	};
+
 	struct metanode
 	{
 		metanode() {}
@@ -148,14 +153,14 @@ namespace mapgen
 
 	//		Boss maps
 
-	gridmapPtr generate_PallidRotking(int dl, bool descending);
+	gridmapPtr generate_PallidRotking(int dl, bool descending, int killcount);
 
 
 	//		Map generation
 
 	int rollMapDimension();
 
-	gridmapPtr generate(int dl, bool descending = true);
+	gridmapPtr generate(int dl, game_progress* progress, bool descending = true);
 
 	void openHellPortal(gridmapPtr m);
 	gridmapPtr generate_HomeBase();

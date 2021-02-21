@@ -529,7 +529,7 @@ void game::moveToNewMap(int vec)
 	if (_gdata->_depth == 0)
 		_gdata->_map = _gdata->_homeBase;
 	else
-		_gdata->_map = mapgen::generate(_gdata->_depth, vec > 0);
+		_gdata->_map = mapgen::generate(_gdata->_depth, &_gdata->_gameProgress, vec > 0);
 
 	//	add us to it
 	auto pt = _gdata->_map->_startPt;

@@ -2,6 +2,7 @@
 
 #include "animation.h"
 #include "gridmap.h"
+#include "mapgen.h"
 #include "player.h"
 
 
@@ -79,7 +80,7 @@ struct gamedata
 	intpair _cursorPt;
 
 	//	Game progress
-	int _killedRotking = 0;
+	mapgen::game_progress _gameProgress;
 
 	//	Debug flags
 	bool _omniscient = false;
