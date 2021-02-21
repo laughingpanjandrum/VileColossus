@@ -11,7 +11,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 
 	add proper comparisons/'new item' marks for quivers
-	put gems/currency on top of item stacks
 	add alt superboss version when returning to the same map
 
 */

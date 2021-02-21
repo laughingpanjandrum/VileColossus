@@ -487,6 +487,14 @@ int item::getQualityAdjustment(const ItemProperty prop, int val) const
 //	Items are prioritized based on rarity/type
 void itemContainer::addItem(itemPtr it)
 {
+	//	Gems/currency always go on top
+	if (it->_category == ITEM_GEM || it->_category == ITEM_MATERIAL)
+	{
+		_items.insert(_items.begin(), it);
+		return;
+	}
+
+	//	Otherwise, insert
 	for (auto f = _items.begin(); f != _items.end(); f++)
 	{
 		if (it->_rarity > (*f)->_rarity)
