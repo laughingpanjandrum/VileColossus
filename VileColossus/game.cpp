@@ -6,12 +6,10 @@
 TODO
 
 	Show item comparison in inventory
-	reduce amt of blue material gained?? or give it some kind of sink?
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
 	riposte damage should be averaged, just like riposte chance
-	stagger hell enemy depths a bit
 
 */
 
@@ -321,6 +319,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, MAX_ITEM_RARITY);
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				createWithDemonforge(_gdata);
+			else if (_ih->isNumberKey())
+				transmuteMaterial(_gdata, _ih->numberKeyToInt());
 			break;
 
 

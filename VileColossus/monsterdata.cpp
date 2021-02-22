@@ -90,6 +90,8 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 	else if (dl < 10)
 		return { MonsterType::CULTIST_INFESTED, MonsterType::OOZE_ELECTRIC, MonsterType::RAT_GIANT, MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
+	else if (dl < 12)
+		return { MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::WRETCH, };
 	else
 		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
 	

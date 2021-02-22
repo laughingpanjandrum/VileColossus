@@ -481,6 +481,34 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity)
 }
 
 
+//	Turn one material into another
+void transmuteMaterial(gamedataPtr gdata, const int num)
+{
+	if (num == 1)
+	{
+		if (hasMaterial(gdata, MaterialType::MAGIC_DUST, 500))
+		{
+			spendMaterial(gdata, MaterialType::MAGIC_DUST, 500);
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 100));
+			messages::add(gdata, "Transmutation complete!");
+		}
+		else
+			messages::error(gdata, "Not enough materials!");
+	}
+	else if (num == 2)
+	{
+		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 500))
+		{
+			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 500);
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
+			messages::add(gdata, "Transmutation complete!");
+		}
+		else
+			messages::error(gdata, "Not enough materials!");
+	}
+}
+
+
 //	Increases the tier of items created with the forge.
 void tryUpgradeDemonforge(gamedataPtr gdata)
 {

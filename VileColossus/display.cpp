@@ -749,6 +749,11 @@ void display::drawDemonforge(gamedataPtr gdata)
 	case(1):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 2 for #500 Magic Dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
 	case(2):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 3 for #250 Glowing Powder", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
 	}
+
+	writeFormatted(4, 17, "#1 @Transmute #500 Magic Dust @to #100 Glowing Powder", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
+	writeFormatted(4, 18, "#2 @Transmute #500 Glowing Powder @to #1 Radiant Ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
+
+	drawBox(2, 13, 60, 8, COLOR_DARK);
 	
 	
 	drawStashedMaterials(gdata, 50, 4);
