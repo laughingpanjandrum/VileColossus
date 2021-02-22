@@ -16,7 +16,6 @@ TODO
 	riposte damage should be averaged, just like riposte chance
 	fix the 'average accuracy' getter to properly reflect monster accuracy
 	factor critical chance into DPS estimate
-	show character summary on levelup screen
 	every item is marked when in the anvil
 	combine 2 gemstones instead of 3 to make next tier
 	stagger hell enemy depths a bit

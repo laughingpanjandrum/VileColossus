@@ -328,6 +328,8 @@ void display::drawAttributePoints(gamedataPtr gdata)
 			}
 		}
 	}
+
+	drawCharacterSummary(gdata);
 }
 
 

@@ -657,8 +657,15 @@ void player::chargeFlaskOnHit()
 //	Figures out our average damage (summing every damage type) and divides by attack delay.
 int player::estimateDPS() const
 {
-	//	Sum up damage (with elemental bonuses included)
+	//	base damage
 	int total = getWeaponDamage();
+
+	//	factor in critical chance
+	const int cc = getCriticalChance();
+	const int cd = getCriticalMultiplier();
+	total = (float)(cc * adjustByPercent(total, cd) + (100 - cc) * total) / 100.0f;
+
+	//	elemental damage (unaffected by crits)
 	for (auto dt : SPECIAL_DAMAGE_TYPES)
 	{
 		auto dam = getWeaponDamageOfType(dt) / 2;
