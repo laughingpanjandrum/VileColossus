@@ -47,7 +47,7 @@ namespace lootgen
 
 
 	//	Value for various attributes by level.
-	inline int getBaseAccuracyForLevel(const int lvl) { return 5 + lvl; }
+	inline int getBaseAccuracyForLevel(const int lvl) { return (5 + lvl) * 2 / 3; }
 	inline int getBaseDamageForLevel(const int lvl) { return 4 + 2 * lvl; }
 	inline int getBaseDefenceForLevel(const int lvl) { return 7 + lvl; }
 	inline int getBaseHealthForLevel(const int lvl) { return 8 + 8 * lvl; }
