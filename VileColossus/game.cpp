@@ -12,12 +12,8 @@ TODO
 
 	don't show acc/damage for monsters with no attacks
 	show extra attack types in monster descriptions
-	make quivers a bit less common
 	riposte damage should be averaged, just like riposte chance
 	fix the 'average accuracy' getter to properly reflect monster accuracy
-	factor critical chance into DPS estimate
-	every item is marked when in the anvil
-	combine 2 gemstones instead of 3 to make next tier
 	stagger hell enemy depths a bit
 
 */

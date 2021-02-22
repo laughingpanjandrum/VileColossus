@@ -553,10 +553,6 @@ void display::drawAnvil(gamedataPtr gdata)
 			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
 			it->_isNewItem = false;
 		}
-		/*if (doesItemHaveUnknownEnchants(gdata, it))
-			_win.writec(x - 1, y, '*', TCODColor::gold);*/
-			_win.writec(x - 1, y, '*', TCODColor::gold);
-
 
 		//	item title
 		if (selected)

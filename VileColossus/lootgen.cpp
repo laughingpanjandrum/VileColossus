@@ -570,7 +570,7 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 {
 	//	chance of quiver instead
 	itemPtr it;
-	if (roll_one_in(6))
+	if (roll_one_in(8))
 		it = generateQuiver(tier, rarity);
 	else
 	{
