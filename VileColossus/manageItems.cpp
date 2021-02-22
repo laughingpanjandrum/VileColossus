@@ -473,8 +473,8 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity)
 	switch (rarity)
 	{
 	case(1):	cost.first = MaterialType::FRAGMENTS; cost.second = 500; break;
-	case(2):	cost.first = MaterialType::MAGIC_DUST; cost.second = 250; break;
-	case(3):	cost.first = MaterialType::GLOWING_POWDER; cost.second = 100; break;
+	case(2):	cost.first = MaterialType::MAGIC_DUST; cost.second = 100; break;
+	case(3):	cost.first = MaterialType::GLOWING_POWDER; cost.second = 50; break;
 	case(4):	cost.first = MaterialType::RADIANT_ASH; cost.second = 2; break;
 	}
 	return cost;
