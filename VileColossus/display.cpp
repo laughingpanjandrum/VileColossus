@@ -180,22 +180,24 @@ void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
 	//	flags
 	++y;
 	string flag_txt = "";
-	if (mon->isUndead())
-		flag_txt += "Undead  ";
-	if (mon->isFlying())
-		flag_txt += "Flying  ";
-	if (mon->hasFlag("slow"))
-		flag_txt += "Slow  ";
-	if (mon->hasFlag("minion"))
-		flag_txt += "Minion  ";
+	if (mon->isUndead())					flag_txt += "Undead  ";
+	if (mon->isFlying())					flag_txt += "Flying  ";
+	if (mon->hasFlag("slow"))				flag_txt += "Slow  ";
+	if (mon->hasFlag("minion"))				flag_txt += "Minion  ";
+	if (mon->hasFlag("arcane_attack"))		flag_txt += "Arcane Attack  ";
+	if (mon->hasFlag("electric_attack"))	flag_txt += "Electric Attack  ";
+	if (mon->hasFlag("fire_attack"))		flag_txt += "Fire Attack  ";
+	if (mon->hasFlag("poison_attack"))		flag_txt += "Poison Attack  ";
+	if (mon->hasFlag("spawner"))			flag_txt += "Spawns Monsters  ";
 	_win.write(x + 2, y, flag_txt, COLOR_DARK);
 
 
 	//	basic info
 	y += 2;
-	string txt = "HEALTH #" + to_string(mon->getMaxHealth()) + " @: ACCURACY #" + plusminus(mon->getAccuracy()) + " @: DEFENCE #" + to_string(mon->getDefenceValue());
-	txt += " @: DAMAGE #" + to_string(mon->getWeaponDamage()) + " @: PROT #" + to_string(mon->getArmourValue());
-	writeFormatted(x, y, txt, { COLOR_HEALTH, COLOR_MISC_STAT, COLOR_MISC_STAT, COLOR_HEALTH, COLOR_MISC_STAT, });
+	string txt = "HEALTH #" + to_string(mon->getMaxHealth()) + " @: DEFENCE #" + to_string(mon->getDefenceValue()) + " @: PROT #" + to_string(mon->getArmourValue());
+	if (!mon->hasFlag("no_attack"))
+		txt += " @: ACCURACY #" + plusminus(mon->getAccuracy()) + " @: DAMAGE #" + to_string(mon->getWeaponDamage());
+	writeFormatted(x, y, txt, { COLOR_HEALTH, COLOR_MISC_STAT, COLOR_MISC_STAT, COLOR_MISC_STAT, COLOR_HEALTH, });
 
 
 	//	chance to hit

@@ -10,10 +10,7 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	don't show acc/damage for monsters with no attacks
-	show extra attack types in monster descriptions
 	riposte damage should be averaged, just like riposte chance
-	fix the 'average accuracy' getter to properly reflect monster accuracy
 	stagger hell enemy depths a bit
 
 */
