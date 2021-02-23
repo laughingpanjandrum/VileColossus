@@ -214,7 +214,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 	//	Drop items in random nearby spots
 	auto pts = getAdjacentWalkable(gdata, pt);
-	int amt = randint(1, 2 + quality);
+	int amt = randint(2, 2 * quality);
 	while (amt-- > 0)
 	{
 		auto it = lootgen::rollItemDrop(quality, quality);
@@ -503,6 +503,10 @@ void standOnTile(gamedataPtr gdata, creaturePtr cr)
 		auto sf = gdata->_map->getSurface(cr->_pos);
 		switch (sf)
 		{
+		case(Surface::FIRE):
+			inflictEnergyDamage(gdata, cr, randint(2, 5), DTYPE_FIRE);
+			break;
+
 		case(Surface::POISON_OOZE):
 			inflictEnergyDamage(gdata, cr, randint(2, 5), DTYPE_POISON);
 			break;

@@ -145,7 +145,7 @@ void gridmap::updateTmap()
 }
 
 
-//	Removes surfaces as time passes.
+//	Removes certain surfaces as time passes.
 void gridmap::tickSurfaces()
 {
 	for (unsigned x = 0; x < _xsize; x++)
@@ -155,6 +155,7 @@ void gridmap::tickSurfaces()
 			auto sf = getSurface(x, y);
 			switch (sf)
 			{
+			case(Surface::FIRE):
 			case(Surface::POISON_OOZE):
 				if (roll_one_in(4))
 					setSurface(Surface::__NONE, x, y);

@@ -28,6 +28,7 @@ enum class MonsterType
 	//	Hellfort monsters
 	COLOSSUS_IRON,
 	CULTIST_ASCENDED,
+	DEMON_PRINCE,
 	FLAME_CONJURER,
 	IMP, IMP_MEGA,
 	LIGHTNING_SPIRE,

@@ -54,7 +54,7 @@ const bool drawMaptileOverSurface(const Maptile tl);
 
 //	SURFACES
 
-enum class Surface { BONES, CORPSE, POISON_OOZE, SLUDGE, WEB, __NONE, };
+enum class Surface { BONES, CORPSE, FIRE, POISON_OOZE, SLUDGE, WEB, __NONE, };
 
 const string getSurfaceName(const Surface sf);
 const colorType getSurfaceColor(const Surface sf);

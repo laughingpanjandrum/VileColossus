@@ -105,7 +105,7 @@ intpair mapgen::getRandomInCircle(gridmapPtr m, intpair ctr, int r)
 //	Returns true if the Maptile is considered 'safe' & thus eligible for items, stairs, etcs
 bool mapgen::isSafeTile(const Maptile tl)
 {
-	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS;
+	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS || tl == MT_SAND || tl == MT_FLOOR_HOT;
 }
 
 //	A random point that is some type of 'safe' floor-type tile: ie no surface, no deep water, etc
@@ -502,6 +502,24 @@ void mapgen::addLake(gridmapPtr m, intpair ctr, int r, Maptile inner, Maptile ou
 					m->setTile(inner, x, y);
 			}
 		}
+	}
+}
+
+
+//	Starting at the given tile, sets the tile, then moves to a random adjacent tile.
+//	Continue for the given number of steps. It can overlap itself.
+void mapgen::walkingTile(gridmapPtr m, const intpair start, int count, Maptile tl)
+{
+	intpair pt = start;
+	intpair last;
+	while (count-- > 0)
+	{
+		m->setTile(tl, pt);
+		last = pt;
+		do {
+			pt.first += randint(-1, 1);
+			pt.second += randint(-1, 1);
+		} while (pt == last || !m->inBounds(pt));
 	}
 }
 
@@ -1128,6 +1146,54 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 }
 
 
+gridmapPtr mapgen::generate_MoltenLake(int dl, bool descending)
+{
+	auto m = gridmapPtr(new gridmap(randint(4, 6) * 10, randint(4, 6) * 10));
+	fillMap(m, { MT_LAVA, MT_LAVA, MT_LAVA, MT_SAND });
+	m->_name = "Molten Lake [Depth " + to_string(dl) + "]";
+	m->_lightLevel = 4;
+
+	//	Generate islands.
+	int isles = randint(5, 8);
+	while (isles-- > 0)
+	{
+		const int r = randint(4, 9);
+		const intpair ctr = getRandomWithPad(m, r + 1);
+		addLake(m, ctr, r, MT_SAND, MT_FLOOR_HOT);
+		scatterTile(m, MT_TOMBSTONE, ctr.first - r / 2, ctr.second - r / 2, r, r, 0.1);
+	}
+
+	//	Scatter some chunks of floor.
+	isles = randint(2, 4);
+	while (isles-- > 0)
+		walkingTile(m, getRandomWithPad(m, 6), randint(30, 50), MT_FLOOR_HOT);
+
+	//	Monsters (special pool)
+	const vector<MonsterType> mtypes = { MonsterType::IMP, MonsterType::WRETCH };
+	auto tcod_nodes = createNodeMap(m, 10, 10);
+	int count = tcod_nodes.size() / 4;
+	while (count-- > 0)
+	{
+		auto n = randrange(tcod_nodes.size());
+		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
+		addMonsterGroupToNode(m, &mlist, tcod_nodes[n]);
+		tcod_nodes.erase(tcod_nodes.begin() + n);
+	}
+
+	//	Boss
+	m->addCreature(monsterdata::generate(MonsterType::DEMON_PRINCE, dl * 2 + 1), getRandomFree(m));
+
+	//	Loot
+	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
+	if (roll_one_in(4))
+		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+
+	//	Exits
+	addStairsToMap(m, dl, descending);
+	return m;
+}
+
+
 //	SPIDER HELL
 gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 {
@@ -1291,14 +1357,17 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
 
-	//	Random selectino of map types
+	//	Random selection of map types
 	else if (dl >= 12)
 	{
-		int r = randint(1, 2);
-		if (r == 1)
-			m = generate_SpiderNest(dl, descending);
-		else
-			m = generate_VampireNest(dl, descending);
+		int r = randint(1, 4);
+		switch (r)
+		{
+		case(1):	m = generate_MoltenLake(dl, descending); break;
+		case(2):	m = generate_SpiderNest(dl, descending); break;
+		case(3):	m = generate_VampireNest(dl, descending); break;
+		default:	m = generate_Hellmouth(dl, descending); break;
+		}	
 	}
 
 	//	Entrance to HELL

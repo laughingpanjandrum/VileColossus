@@ -51,6 +51,13 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 		inflictEnergyDamage(gdata, target, dieRoll(3, ai->_level), DTYPE_FIRE);
 		return true;
 	}
+	else if (spell == "fireblast")
+	{
+		addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+		inflictEnergyDamage(gdata, target, ai->getWeaponDamage(), DTYPE_FIRE);
+		trySetSurface(gdata, target->_pos, Surface::FIRE);
+		return true;
+	}
 	else if (spell == "lightning")
 	{
 		addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ELECTRIC)));

@@ -103,6 +103,7 @@ namespace mapgen
 
 	void addBuilding(gridmapPtr m, int x, int y, int w, int h, Maptile wall, Maptile floor, Maptile door);
 	void addLake(gridmapPtr m, intpair ctr, int r, Maptile inner, Maptile outer);
+	void walkingTile(gridmapPtr m, const intpair start, int count, Maptile tl);
 
 
 	//		Monsters.
@@ -147,6 +148,7 @@ namespace mapgen
 
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
 	
+	gridmapPtr generate_MoltenLake(int dl, bool descending);
 	gridmapPtr generate_SpiderNest(int dl, bool descending);
 	gridmapPtr generate_VampireNest(int dl, bool descending);
 
