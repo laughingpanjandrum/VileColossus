@@ -9,6 +9,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_BARREL):			return "wooden barrel";
 	case(MT_BUSH):              return "bush";
 	case(MT_CHEST_GLOWING):		return "glowing chest";
+	case(MT_CHEST_LUMINOUS):	return "luminous chest";
 	case(MT_CHEST_RADIANT):		return "radiant chest";
 	case(MT_CHEST_SMALL):		return "small chest";
 	case(MT_DEMONFORGE):		return "THE DEMONFORGE";
@@ -77,6 +78,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return '"';
 
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_LUMINOUS):
 	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 		return 8;
@@ -174,8 +176,10 @@ const colorType getMaptileColor(const Maptile tl)
 		return TCODColor::lightSepia;
 	case(MT_CHEST_GLOWING):
 		return TCODColor::lighterBlue;
-	case(MT_CHEST_RADIANT):
+	case(MT_CHEST_LUMINOUS):
 		return TCODColor::lighterPurple;
+	case(MT_CHEST_RADIANT):
+		return TCODColor::lighterOrange;
 
 	case(MT_FLOOR_CARPET):
 		return TCODColor::darkRed;
@@ -259,6 +263,7 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_ANVIL):
 	case(MT_BARREL):
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_LUMINOUS):
 	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 	case(MT_DEMONFORGE):
@@ -312,7 +317,7 @@ const bool isMaptileBreakable(const Maptile tl)
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_RADIANT || tl == MT_DEMONFORGE;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE;
 }
 
 const bool isMaptileStairs(const Maptile tl)
@@ -323,7 +328,7 @@ const bool isMaptileStairs(const Maptile tl)
 //	Returns True if a maptile should have draw priority over surfaces.
 const bool drawMaptileOverSurface(const Maptile tl)
 {
-	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL || tl == MT_THORNS || tl == MT_LAVA || tl == MT_WATER;
+	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_LUMINOUS || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL || tl == MT_THORNS || tl == MT_LAVA || tl == MT_WATER;
 }
 
 

@@ -11,6 +11,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	{
 		//	Treasure?
 	case(MT_CHEST_GLOWING):
+	case(MT_CHEST_LUMINOUS):
 	case(MT_CHEST_RADIANT):
 	case(MT_CHEST_SMALL):
 		openLootChest(gdata, pt);

@@ -202,7 +202,8 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	switch (tl)
 	{
 	case(MT_CHEST_GLOWING):		quality = 2; break;
-	case(MT_CHEST_RADIANT):		quality = 3; break;
+	case(MT_CHEST_LUMINOUS):	quality = 3; break;
+	case(MT_CHEST_RADIANT):		quality = 4; break;
 	}
 
 
@@ -228,8 +229,9 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		//	determine type
 		MaterialType mt = MaterialType::FRAGMENTS;
 		int r = randint(1, 100);
-		if (r <= 50 && quality > 1)	mt = MaterialType::MAGIC_DUST;
-		else if (r <= 75 && quality > 2) mt = MaterialType::GLOWING_POWDER;
+		if		(r <= 50 && quality > 1)	mt = MaterialType::MAGIC_DUST;
+		else if (r <= 75 && quality > 2)	mt = MaterialType::GLOWING_POWDER;
+		else if (r <= 90 && quality > 3)	mt = MaterialType::GLOWING_POWDER;
 
 		//	generate the item
 		auto it = lootgen::generateMaterial(mt, dieRoll(3, 6 + quality));

@@ -1108,7 +1108,7 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 		auto ctype = MT_CHEST_SMALL;
 		int r = randint(1, 100);
 		if		(r <= 50)	ctype = MT_CHEST_GLOWING;
-		else if (r <= 75)	ctype = MT_CHEST_RADIANT;
+		else if (r <= 75)	ctype = MT_CHEST_LUMINOUS;
 
 		//	emplace it
 		m->setTile(ctype, getRandomWalkable(m));
@@ -1165,7 +1165,9 @@ gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 	m->addCreature(monsterdata::generate(MonsterType::SPIDER_TITAN, dl * 2 + 1), getRandomFree(m));
 
 	//	Loot
-	m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
+	if (roll_one_in(4))
+		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 
 	//	Finish
 	addStairsToMap(m, dl, descending);
@@ -1220,7 +1222,9 @@ gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
 	m->addCreature(monsterdata::generate(MonsterType::VAMPIRE_PRINCE, dl * 2 + 1), getRandomFree(m));
 
 	//	treasure
-	m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
+	if (roll_one_in(4))
+		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 
 	//	other stuff
 	scatterOnMap(m, MT_SAND, 0.05);

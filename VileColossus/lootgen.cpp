@@ -807,17 +807,18 @@ const int lootgen::rollRarity(const int maxRarity)
 
 
 //	Most likely to drop an item of the given tier, but a lower tier is still possible.
+//	If a value greater than 3 is given, always generates tier 3.
 const int lootgen::rollTier(const int maxTier)
 {
 	const int r = randint(1, 100);
 	switch (maxTier)
 	{
-	case(1):	return 1;
+	case(1):			return 1;
 	case(2):
 		if (r <= 20)	return 1;
 		else			return 2;
 	case(3):
-		if (r <= 30)	return 2;
+		if (r <= 20)	return 2;
 		else			return 3;
 	default:
 		return 3;
