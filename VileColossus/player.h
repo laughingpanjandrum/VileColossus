@@ -6,6 +6,7 @@
 
 
 #define MAX_HOTKEYED_SPELLS 4
+#define STAT_CAP 70
 
 
 class player : public creature

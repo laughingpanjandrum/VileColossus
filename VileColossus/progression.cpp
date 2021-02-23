@@ -75,8 +75,11 @@ void spendAttributePoint(gamedataPtr gdata)
 		if (gdata->_idx < ATTR__MAX)
 		{
 			auto attr = static_cast<Attribute>(gdata->_idx);
-			gdata->_player->raiseAttribute(attr);
-			gdata->_attributePointsLeft--;
+			if (gdata->_player->getBaseAttribute(attr) < STAT_CAP)
+			{
+				gdata->_player->raiseAttribute(attr);
+				gdata->_attributePointsLeft--;
+			}
 		}
 	}
 }

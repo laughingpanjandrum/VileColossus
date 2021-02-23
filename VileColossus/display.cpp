@@ -269,9 +269,9 @@ void display::drawAttributePoints(gamedataPtr gdata)
 		auto attr = static_cast<Attribute>(i);
 		int base = p->getBaseAttribute(attr);
 
-		//	base value of the stat
+		//	base value of the stat; turn green if capped
 		drawBox(x, y, 3, 2, COLOR_DARK);
-		_win.write(x + 1, y + 1, extendInteger(base, 2), COLOR_WHITE);
+		_win.write(x + 1, y + 1, extendInteger(base, 2), (base < STAT_CAP) ? COLOR_WHITE : COLOR_POSITIVE);
 		if (selected)
 			_win.write(x + 5, y + 1, getAttributeName(attr), COLOR_BLACK, COLOR_MEDIUM);
 		else
@@ -295,7 +295,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", { TCODColor::crimson });
 				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)), "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
+				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)) + "%", "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
 				_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
 
 				break;
