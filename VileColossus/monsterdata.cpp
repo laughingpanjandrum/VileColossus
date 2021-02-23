@@ -170,6 +170,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 
 	case(MonsterType::SPIDER):
 		return MonsterType::SPIDER_OGRE;
+
+	case(MonsterType::VAMPIRE_SPAWN):
+		return MonsterType::VAMPIRE;
 	
 	case(MonsterType::ZOMBIE):		
 		if (dl > 1)
@@ -281,6 +284,13 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SPIDER_TITAN):
 		return { "webs", "protected_heavy", "spawner", "poison_attack", "slow", "inaccurate", "more_health", };
 
+	case(MonsterType::VAMPIRE):
+		return { "more_damage", "more_health", "vampiric" };
+	case(MonsterType::VAMPIRE_PRINCE):
+		return { "more_damage", "more_health", "vampiric", "spawner", "casts_arcane_bolt" };
+	case(MonsterType::VAMPIRE_SPAWN):
+		return { "vampiric" };
+
 	case(MonsterType::WORM_DEMON):
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
@@ -334,12 +344,14 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::CORPSE_COLOSSUS):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SPIDER_TITAN):
+	case(MonsterType::VAMPIRE_PRINCE):
 		return 4;
 
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::RAT_KING):
 	case(MonsterType::SPIDER_PHASE):
+	case(MonsterType::VAMPIRE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::WORM_DEMON):
 	case(MonsterType::ZOMBIE_MASS):
@@ -405,6 +417,9 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
 	case(MonsterType::SPIDER_PHASE):		return make_tuple("phase spider", 'M', TCODColor::lightPurple);
 	case(MonsterType::SPIDER_TITAN):		return make_tuple("Titan Spider", 'M', TCODColor::silver);
+	case(MonsterType::VAMPIRE):				return make_tuple("vampire", 'V', TCODColor::lightRed);
+	case(MonsterType::VAMPIRE_PRINCE):		return make_tuple("Vampire Prince", 'V', TCODColor::fuchsia);
+	case(MonsterType::VAMPIRE_SPAWN):		return make_tuple("Vampire spawn", 'v', TCODColor::red);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
 	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'W', TCODColor::lightGrey);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);

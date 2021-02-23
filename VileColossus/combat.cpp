@@ -21,6 +21,14 @@ void animateHit(gamedataPtr gdata, creaturePtr target, int damage, bool wasCrit,
 }
 
 
+//	Special effects when monster hits u
+void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePtr target, int damage)
+{
+	if (attacker->hasFlag("vampiric"))
+		attacker->healDamage(damage / 3);
+}
+
+
 //	Determine damage inflicted by a weapon attack. Has some random variance applied.
 int rollWeaponDamage(gamedataPtr gdata, creaturePtr attacker)
 {
@@ -189,6 +197,10 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 
 			//	player's gear might get damaged
 			testForDamageEquipment(gdata, attacker, target);
+
+			//	monster special abilities
+			if (!attacker->isPlayer())
+				monsterSpecialHitEffects(gdata, static_pointer_cast<monster>(attacker), target, dam);
 		}
 
 		//	Missed!

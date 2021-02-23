@@ -33,6 +33,7 @@ TABLE OF ALL MONSTER FLAGS
 	ranged_attack			Default attack is ranged.
 	slow					Move energy cost is increased by 50%.
 	spawner					Spawns monsters (based on its type)
+	vampiric				Regains health on hit
 
 	casts_arcane_bolt		Ranged arcane damage.
 	casts_firebolt			Ranged fire damage.

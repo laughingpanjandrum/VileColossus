@@ -148,6 +148,7 @@ namespace mapgen
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
 	
 	gridmapPtr generate_SpiderNest(int dl, bool descending);
+	gridmapPtr generate_VampireNest(int dl, bool descending);
 
 
 	//		Boss maps

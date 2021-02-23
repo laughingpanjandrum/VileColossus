@@ -518,6 +518,7 @@ vector<monsterPtr> mapgen::rollMonsterGroup(int dl, const MonsterType id)
 	if (!monsterdata::isSoloMonster(id))
 		count += randint(5, 8);
 
+
 	//	generate the monster table
 	vector<monsterPtr> mlist;
 	while (count-- > 0)
@@ -534,6 +535,7 @@ vector<monsterPtr> mapgen::rollMonsterGroup(int dl, const MonsterType id)
 		//	Add monster to list
 		mlist.push_back(monsterdata::generate(drop, mlvl));
 	}
+
 
 	//	add leaders to the gang, if necessary
 	auto boss_id = monsterdata::getGroupLeaderType(id, dl);
@@ -1172,6 +1174,64 @@ gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 
 
 
+gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
+{
+	const int sz = 10;
+	auto m = gridmapPtr(new gridmap(sz * randint(1, 3) + 2, sz * randint(1, 3) + 2));
+	fillMap(m, { MT_WALL_STONE, });
+	m->_name = "Vampire Den [Depth " + to_string(dl) + "]";
+
+	//	main setup
+	vector<TCODBsp*> nodes;
+	for (unsigned x = 1; x < m->_xsize - sz; x += sz)
+	{
+		for (unsigned y = 1; y <= m->_ysize - sz; y += sz)
+		{
+			//	interior
+			fillRegion(m, MT_FLOOR_STONE, x + 1, y + 1, sz - 2, sz - 2);
+			fillRegion(m, MT_FLOOR_CARPET, x + 2, y + 2, sz - 4, sz - 4);
+			m->setTile(MT_STATUE_MARBLE, x + 2, y + sz - 3);
+			m->setTile(MT_STATUE_MARBLE, x + 2, y + 2);
+			m->setTile(MT_STATUE_MARBLE, x + sz - 3, y + sz - 3);
+			m->setTile(MT_STATUE_MARBLE, x + sz - 3, y + 2);
+
+			//	connections
+			fillRegion(m, MT_FLOOR_STONE, x + sz / 2 - 1, y, 2, 1);
+			fillRegion(m, MT_FLOOR_STONE, x + sz / 2 - 1, y + sz - 1, 2, 1);
+			fillRegion(m, MT_FLOOR_STONE, x, y + sz / 2 - 1, 1, 2);
+			fillRegion(m, MT_FLOOR_STONE, x + sz - 1, y + sz / 2 - 1, 1, 2);
+
+			//	monsters
+			nodes.push_back(new TCODBsp(x + 1, y + 1, sz - 2, sz - 2));
+		}
+	}
+
+	//	monsters
+	int count = nodes.size() / 2 + 1;
+	while (count-- > 0)
+	{
+		auto n = randrange(nodes.size());
+		auto mlist = rollMonsterGroup(dl, MonsterType::VAMPIRE_SPAWN);
+		addMonsterGroupToNode(m, &mlist, nodes[n]);
+		nodes.erase(nodes.begin() + n);
+	}
+
+	//	boss
+	m->addCreature(monsterdata::generate(MonsterType::VAMPIRE_PRINCE, dl * 2 + 1), getRandomFree(m));
+
+	//	treasure
+	m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+
+	//	other stuff
+	scatterOnMap(m, MT_SAND, 0.05);
+	scatterSurface(m, Surface::CORPSE, 2, 2, m->_xsize - 4, m->_ysize - 4, 0.1);
+
+	addStairsToMap(m, dl, descending);
+	return m;
+}
+
+
+
 //	BOSS MAP: The Pallid Rotking
 gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount)
 {
@@ -1228,9 +1288,13 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
 
 	//	Random selectino of map types
-	else if (dl > 10)
+	else if (dl >= 12)
 	{
-		m = generate_SpiderNest(dl, descending);
+		int r = randint(1, 2);
+		if (r == 1)
+			m = generate_SpiderNest(dl, descending);
+		else
+			m = generate_VampireNest(dl, descending);
 	}
 
 	//	Entrance to HELL

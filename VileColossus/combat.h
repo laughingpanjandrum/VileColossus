@@ -14,6 +14,8 @@ void animateHit(gamedataPtr gdata, creaturePtr target, int damage, bool wasCrit,
 
 //	Attacks & attack rolls
 
+void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePtr target, int damage);
+
 int rollWeaponDamage(gamedataPtr gdata, creaturePtr attacker);
 int applyProtection(gamedataPtr gdata, creaturePtr target, int dam);
 bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target);
