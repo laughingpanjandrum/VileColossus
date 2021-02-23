@@ -614,6 +614,7 @@ void mapgen::addFloorLoot(gridmapPtr m, int dl)
 
 
 //	Pick some random points for up/down stairs.
+//	This also determines your starting position on the map.
 void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 {
 	int count = randint(1, 3);
@@ -627,6 +628,11 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 		if (descending)
 			m->_startPt = pt;
 	}
+
+
+	//	at higher depths while descending, we start at a random point
+	if (descending && depth >= 12)
+		m->_startPt = getRandomForStairs(m);
 
 
 	//	multiple down stairs
