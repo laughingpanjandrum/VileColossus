@@ -163,7 +163,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_POISON_WARD):		return randint(5, 25);
 	case(ENCH_RAGE):			return randint(5, 25);
 	case(ENCH_SHARPNESS):		return randint(1, 5);
-	case(ENCH_SLAYING):			return randint(1, 5) * 10;
+	case(ENCH_SLAYING):			return randint(3, 7) * 10;
 	case(ENCH_SPELLPOWER):		return randint(1, 5) * 10;
 	case(ENCH_SPELLWARD):		return randint(5, 25);
 	case(ENCH_STONESKIN):		return randint(5, 12);
