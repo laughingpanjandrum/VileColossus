@@ -1078,7 +1078,7 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters
 gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters)
 {
 	const int MIN_NODE_SIZE = 10;
-	auto m = gridmapPtr(new gridmap(2 + MIN_NODE_SIZE * randint(5, 8), 2 + MIN_NODE_SIZE * randint(5, 8)));
+	auto m = gridmapPtr(new gridmap(2 + MIN_NODE_SIZE * randint(4, 6), 2 + MIN_NODE_SIZE * randint(4, 6)));
 	fillMap(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
 	m->_name = "Hellmouth [Depth " + to_string(dl) + "]";
 
