@@ -108,6 +108,8 @@ namespace mapgen
 	//		Monsters.
 
 	vector<monsterPtr> rollMonsterGroup(int dl, const MonsterType id);
+
+	void addMonsterGroupToNode(gridmapPtr m, const vector<monsterPtr>* mlist, const TCODBsp* node);
 	void addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptions);
 
 
@@ -144,11 +146,8 @@ namespace mapgen
 	//		The HELLFORT
 
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
-
-
-	//		Abyssal swamps
-
-	gridmapPtr generate_Swamp(int dl, bool descending, bool add_monsters = true);
+	
+	gridmapPtr generate_SpiderNest(int dl, bool descending);
 
 
 	//		Boss maps

@@ -548,6 +548,23 @@ vector<monsterPtr> mapgen::rollMonsterGroup(int dl, const MonsterType id)
 }
 
 
+//	Randomly scatter a given list of monsters on a given node.
+void mapgen::addMonsterGroupToNode(gridmapPtr m, const vector<monsterPtr>* mlist, const TCODBsp* n)
+{
+	auto pts = getAllFreeInNode(m, n);
+	for (auto mon : *mlist)
+	{
+		//	stop if we run of points for monsters
+		if (pts.empty()) break;
+
+		//	pick a random monster location
+		auto p = randrange(pts.size());
+		m->addCreature(mon, pts[p]);
+		pts.erase(pts.begin() + p);
+	}
+}
+
+
 //	Scatter groups of monsters around.
 void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptions)
 {
@@ -562,17 +579,7 @@ void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptio
 
 		//	Get a set of monsters and a set of points in which to place them
 		auto mlist = rollMonsterGroup(dl, moptions[randrange(moptions.size())]);
-		auto pts = getAllFreeInNode(m, n);
-		for (auto mon : mlist)
-		{
-			//	stop if we run of points for monsters
-			if (pts.empty()) break;
-
-			//	pick a random monster location
-			auto p = randrange(pts.size());
-			m->addCreature(mon, pts[p]);
-			pts.erase(pts.begin() + p);
-		}
+		addMonsterGroupToNode(m, &mlist, n);
 	}
 
 	//	Chance of miniboss
@@ -611,8 +618,9 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 {
 	int count = randint(1, 3);
 
-	//	stairs back up
-	while (count-- > 0 && depth != 10)
+
+	//	stairs back up (only at certain depths!!)
+	while (count-- > 0 && depth != 10 && depth < 12)
 	{
 		auto pt = getRandomForStairs(m);
 		m->setTile(MT_STAIRS_UP, pt);
@@ -633,7 +641,7 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 
 
 	//	LONG stairs up, making it quicker to get to the surface at deeper levels
-	if (depth == 8)
+	if (depth == 8 || depth == 14)
 		m->setTile(MT_STAIRS_UP_LONG, getRandomForStairs(m));
 	else if (depth == 10)
 	{
@@ -687,7 +695,6 @@ void mapgen::addDoorsToMap(gridmapPtr m)
 		}
 	}
 }
-
 
 
 //	Cross-shaped chapel.
@@ -1113,77 +1120,50 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 }
 
 
-//	The second map type. EVIL SWAMP. Yuck
-gridmapPtr mapgen::generate_Swamp(int dl, bool descending, bool add_monsters)
+//	SPIDER HELL
+gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 {
-	//	Roll a random size.
-	const int MIN_NODE_SIZE = 10;
-	const int xsize = MIN_NODE_SIZE * randint(5, 8) + 2;
-	const int ysize = MIN_NODE_SIZE * randint(5, 8) + 2;
+	int sz = randint(3, 5) * 10;
+	auto m = gridmapPtr(new gridmap(sz, sz));
+	fillMap(m, {MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
+	m->_name = "Spider Nest [Depth " + to_string(dl) + "]";
 
 
-	//	Generate the base map.
-	auto m = gridmapPtr(new gridmap(xsize, ysize));
-	fillMap(m, { MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_BUSH, });
-	m->_name = "Abyssal Swamps [Depth " + to_string(dl) + "]";
-
-
-	//	Random deformations
-	scatterOnMap(m, MT_BUSH, 0.05);
-	scatterOnMap(m, MT_WATER, 0.05);
-	scatterOnMap(m, MT_TREE_DEAD, 0.05);
-
-	
-	//	BSP nodes.
-	auto tcod_nodes = createNodeMap(m, MIN_NODE_SIZE, 15);
-	for (auto n : tcod_nodes)
+	//	AUTOMATA
+	auto cells = rollCellAutomata(m->_xsize, m->_ysize, 2, 5, 3, 8);
+	for (unsigned x = 0; x < m->_xsize; x++)
 	{
-		int r = randint(1, 8);
-		if (r == 1)
+		for (unsigned y = 0; y < m->_ysize; y++)
 		{
-			const int rad = MIN(n->w / 2, n->y / 2) - 1;
-			addLake(m, intpair(n->x + n->w / 2, n->y + n->h / 2), rad, MT_WATER, MT_GRASS);
-		}
-		else if (r == 2)
-		{
-			scatterSurface(m, Surface::SLUDGE, n->x, n->y, n->w, n->h, 0.4);
-		}
-		else if (r == 3)
-		{
-			scatterSurface(m, Surface::CORPSE, n->x, n->y, n->w, n->h, 0.2);
-			scatterSurface(m, Surface::BONES, n->x, n->y, n->w, n->h, 0.2);
-		}
-		else if (r == 4)
-		{
-			addBuilding(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2, MT_WALL_STONE, MT_FLOOR_STONE, MT_DOOR_WOODEN);
-			scatterTile(m, MT_BARREL, n->x + 3, n->y + 3, n->w - 5, n->h - 5, 0.1);
+			if (cells[x][y])
+				m->setTile(MT_WALL_STONE, x, y);
 		}
 	}
+	scatterSurface(m, Surface::WEB, 2, 2, sz - 4, sz - 4, 0.1);
 
 
-	//	Treasures
-	int chest_count = randint(1, 5);
-	while (chest_count-- > 0)
+	//	Monsters (special pool)
+	auto tcod_nodes = createNodeMap(m, 10, 10);
+	int count = tcod_nodes.size() / 2;
+	while (count-- > 0)
 	{
-		//	roll type
-		auto ctype = MT_CHEST_SMALL;
-		int r = randint(1, 100);
-		if		(r <= 30)	ctype = MT_CHEST_GLOWING;
-		else if (r <= 35)	ctype = MT_CHEST_RADIANT;
-
-		//	emplace it
-		m->setTile(ctype, getRandomWalkable(m));
+		auto n = randrange(tcod_nodes.size());
+		auto mlist = rollMonsterGroup(dl, MonsterType::SPIDER);
+		addMonsterGroupToNode(m, &mlist, tcod_nodes[n]);
+		tcod_nodes.erase(tcod_nodes.begin() + n);
 	}
 
-	//	Monsters, exits, entrances
-	if (add_monsters)
-	{
-		//addMonsters(m, dl, &tcod_nodes);
-		addStairsToMap(m, dl, descending);
-	}
+	//	Boss
+	m->addCreature(monsterdata::generate(MonsterType::SPIDER_TITAN, dl * 2 + 1), getRandomFree(m));
 
+	//	Loot
+	m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+
+	//	Finish
+	addStairsToMap(m, dl, descending);
 	return m;
 }
+
 
 
 //	BOSS MAP: The Pallid Rotking
@@ -1240,10 +1220,21 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	//	Type depends on depth
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
+
+	//	Random selectino of map types
+	else if (dl > 10)
+	{
+		m = generate_SpiderNest(dl, descending);
+	}
+
+	//	Entrance to HELL
 	else if (dl > 9)
 		m = generate_Hellmouth(dl, descending);
+
+	//	Cathedral maps from the early game
 	else
 		m = generate_Cathedral(dl, descending);
+
 
 	//	Map exterior is always filled with indestructible walls.
 	for (unsigned x = 0; x < m->_xsize; x++)

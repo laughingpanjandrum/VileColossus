@@ -278,6 +278,8 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "webs", "protected", "poison_attack", };
 	case(MonsterType::SPIDER_PHASE):
 		return { "webs", "defended", "teleports", "immune_arcane", "arcane_attack" };
+	case(MonsterType::SPIDER_TITAN):
+		return { "webs", "protected_heavy", "spawner", "poison_attack", "slow", "inaccurate", "more_health", };
 
 	case(MonsterType::WORM_DEMON):
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
@@ -331,6 +333,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::COLOSSUS_IRON):
 	case(MonsterType::CORPSE_COLOSSUS):
 	case(MonsterType::SKINLESS_KNIGHT):
+	case(MonsterType::SPIDER_TITAN):
 		return 4;
 
 	case(MonsterType::FLAME_CONJURER):
@@ -401,6 +404,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SPIDER_FLAMING):		return make_tuple("flaming spider", 'm', TCODColor::flame);
 	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
 	case(MonsterType::SPIDER_PHASE):		return make_tuple("phase spider", 'M', TCODColor::lightPurple);
+	case(MonsterType::SPIDER_TITAN):		return make_tuple("Titan Spider", 'M', TCODColor::silver);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
 	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'W', TCODColor::lightGrey);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);

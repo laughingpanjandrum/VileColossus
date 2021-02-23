@@ -202,6 +202,13 @@ const MonsterType monster::rollMonsterToSpawn() const
 	case(MonsterType::SKULL_PILE):
 		return MonsterType::SKULL_FLOATING;
 
+	case(MonsterType::SPIDER_TITAN):
+		r = randint(1, 10);
+		if		(r == 1)	return MonsterType::SPIDER_OGRE;
+		else if (r <= 5)	return MonsterType::SPIDER_FLAMING;
+		else				return MonsterType::SPIDER;
+		break;
+
 	case(MonsterType::ZOMBIE_MASS):
 		if (roll_one_in(4))
 			return MonsterType::ZOMBIE_ROTTED;
