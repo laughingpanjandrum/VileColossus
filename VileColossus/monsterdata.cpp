@@ -70,6 +70,12 @@ const MonsterType monsterdata::rollBossForLevel(const int dl)
 	else
 	{
 		ops = { MonsterType::COLOSSUS_IRON };
+		if (dl > 11)
+		{
+			ops.push_back(MonsterType::DEMON_PRINCE);
+			ops.push_back(MonsterType::VAMPIRE_PRINCE);
+			ops.push_back(MonsterType::SPIDER_TITAN);
+		}
 	}
 
 	//	Pick one.
@@ -93,7 +99,7 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 	else if (dl < 12)
 		return { MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::WRETCH, };
 	else
-		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::SPIDER, MonsterType::WRETCH, };
+		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::SPIDER, MonsterType::VAMPIRE_SPAWN, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };

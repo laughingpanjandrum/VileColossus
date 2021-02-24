@@ -84,6 +84,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
+	pts.push_back(target->_pos);
 
 	//	Roll the items to drop.
 	while (drop_amt-- > 0)
