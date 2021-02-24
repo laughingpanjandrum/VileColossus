@@ -258,7 +258,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SKELETON_ARCHER):
 		return { "protected", "less_damage", "ranged_attack", "immune_poison", "bones", "undead", };
 	case(MonsterType::SKELETON_BURNING):
-		return { "protected", "fire_attack", "bones", "resists_fire", "undead" };
+		return { "protected", "fire_attack", "bones", "resists_fire", "undead", "immune_poison" };
 	case(MonsterType::SKELETON_GOLD_PLATED):
 		return { "protected_heavy", "bones", "immune_poison", "electric_attack", "bones", "undead", "more_damage", };
 	case(MonsterType::SKELETON_KNIGHT):
@@ -278,7 +278,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::SKULL_FLOATING):
 		return { "flits", "less_health", "protected", "less_damage", "bones", "immune_poison", "flying", "undead" };
 	case(MonsterType::SKULL_PILE):
-		return { "protected", "more_health", "no_attack", "immobile", "spawner", "undead", };
+		return { "protected", "more_health", "no_attack", "immobile", "spawner", "undead", "immune_poison", };
 	case(MonsterType::WALKING_SKULL_PILE):
 		return { "flits", "protected", "throws_bones", "immune_poison", "undead", };
 
