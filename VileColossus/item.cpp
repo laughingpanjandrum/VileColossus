@@ -140,7 +140,11 @@ colorType item::getColor() const
 
 	//	Gem color based on gem type
 	else if (_category == ITEM_GEM)
-		return getGemTypeColor(_gemType);
+	{
+		auto col = getGemTypeColor(_gemType);
+		col.scaleHSV(1.0f, 0.5f + 0.15f * (float)_enhancementLevel);
+		return col;
+	}
 
 	//	Broken stuff is RED for SHAME.
 	else if (isBroken())

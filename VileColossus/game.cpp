@@ -13,8 +13,6 @@ TODO
 	add more special map types for depth >=12
 
 	add decimal type to dps estimate
-	add colour scaling to the tiers of gems to distinguish them more
-	flame skellies and skull piles need to resist poison
 
 */
 
