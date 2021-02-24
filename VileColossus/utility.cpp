@@ -225,15 +225,15 @@ string extendInteger(int i, int digits)
 }
 
 
-//	Converts an int to a string and then inserts a decimal point after 'decimalPoint' characters.
+//	Converts an int to a string and then inserts a decimal point 'decimalPoint' characters from the right.
 //	For example, the arguments (15,1) would return the string "1.5"
-//	And (200,2) returns "20.0"
+//	And (200,2) returns "2.00"
 string expressIntAsFloat(int val, int decimalPoint)
 {
 	string txt = to_string(val);
 	while (txt.size() < decimalPoint + 1)
 		txt += "0";
-	txt.insert(txt.begin() + decimalPoint, '.');
+	txt.insert(txt.end() - decimalPoint, '.');
 	return txt;
 }
 

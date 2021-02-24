@@ -67,7 +67,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	drawStatWithBox(x, y + 15, extendInteger(p->getVisionRadius(), 2), "Vision Radius", TCODColor::yellow);
 	drawStatWithBox(x, y + 19, plusminus(p->getLeechOnKill()), "Life on Kill", COLOR_HEALTH);
 	drawStatWithBox(x, y + 22, plusminus(p->getManaleech()), "Magic on Kill", COLOR_MAGIC);
-	drawStatWithBox(x, y + 26, to_string(p->estimateDPS()), "Avg Damage/Turn", TCODColor::darkCrimson);
+	drawStatWithBox(x, y + 26, expressIntAsFloat(p->estimateDPS(), 1), "Avg Damage/Turn", TCODColor::darkCrimson);
 	drawStatWithBox(x, y + 29, to_string(get_hit_chance(p->getAccuracy(), lootgen::getBaseDefenceForLevel(p->_level))) + "%", "Avg Hit Chance", COLOR_MISC_STAT);
 	drawStatWithBox(x, y + 32, to_string(100 - get_hit_chance(lootgen::getBaseAccuracyForLevel(p->_level), p->getDefenceValue())) + "%", "Avg Defend Chance", COLOR_MISC_STAT);
 
@@ -147,7 +147,7 @@ void display::drawCharacterSummary(gamedataPtr gdata)
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getMaxMagic(), 3) + "@] Magic", { COLOR_MAGIC, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getDefenceValue(), 3) + "@] #Defence Value", { COLOR_MISC_STAT, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getArmourValue(), 3) + "@] #Armour Value", { COLOR_MISC_STAT, COLOR_LIGHT });
-	writeFormatted(x, y + 2, "[#" + to_string(p->estimateDPS()) + "@] #Avg Damage/Turn", { COLOR_HEALTH, COLOR_LIGHT });
+	writeFormatted(x, y + 2, "[#" + expressIntAsFloat(p->estimateDPS(), 1) + "@] #Avg Damage/Turn", { COLOR_HEALTH, COLOR_LIGHT });
 
 	x = 30; y = 51;
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getAccuracy(), 3) + "@] #Accuracy", { COLOR_MISC_STAT, COLOR_LIGHT });

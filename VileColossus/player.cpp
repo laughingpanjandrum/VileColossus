@@ -663,7 +663,7 @@ int player::estimateDPS() const
 	//	factor in critical chance
 	const int cc = getCriticalChance();
 	const int cd = getCriticalMultiplier();
-	total = (float)(cc * adjustByPercent(total, cd) + (100 - cc) * total) / 100.0f;
+	total = (float)(cc * adjustByPercent(total, cd) + (100 - cc) * total) / 10.0f;
 
 	//	elemental damage (unaffected by crits)
 	for (auto dt : SPECIAL_DAMAGE_TYPES)
@@ -674,7 +674,7 @@ int player::estimateDPS() const
 			auto aff = getElementalAffinity(dt);
 			dam = adjustByPercent(dam, aff);
 		}
-		total += dam;
+		total += dam * 10;
 	}
 
 	//	Adjust by attack delay

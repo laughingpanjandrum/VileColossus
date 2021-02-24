@@ -12,8 +12,6 @@ TODO
 
 	add more special map types for depth >=12
 
-	add decimal type to dps estimate
-
 */
 
 
