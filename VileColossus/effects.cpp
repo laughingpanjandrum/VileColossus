@@ -424,11 +424,12 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		creatureTakeDamage(gdata, target, dam);
 
 		//	some energy types also confer a status effect
+		const int odds = 100 - target->getResistance(dt);
 		switch (dt)
 		{
-		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, 5 * dam); break;
-		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, 5 * dam); break;
-		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, 5 * dam); break;
+		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, odds); break;
+		case(DTYPE_FIRE):		tryInflictStatusEffect(gdata, target, STATUS_BURN, odds); break;
+		case(DTYPE_POISON):		tryInflictStatusEffect(gdata, target, STATUS_POISON, odds); break;
 		}
 
 		//	other special effects

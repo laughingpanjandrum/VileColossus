@@ -11,9 +11,10 @@ TODO
 	riposte damage should be averaged, just like riposte chance
 
 	add more special map types for depth >=12
+	new boss at ~depth 14
+	make vampires more dangerous
 
 	change staircase colour to something MORE distinctive from grey items
-	look into rebalancing Shock and DOT effects
 	destroying obstacles with ranged atks should take time
 	return to same index after implanting gem
 	show when increasing a rune's level will increase its magic cost
