@@ -24,7 +24,6 @@ TODO
 	add chance for blues to drop from small chests
 	check spawn table for boss variants
 	add some initial enemies to boss zone
-	weapons have an armour level for some reason??
 	make spider nest smaller
 
 */

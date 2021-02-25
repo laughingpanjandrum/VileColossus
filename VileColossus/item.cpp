@@ -16,6 +16,7 @@ item::item(string name, ItemCategory cat, const int rarity)
 	for (unsigned i = 0; i < PROP__NONE; i++)
 		_Property.push_back(0);
 	_material = MaterialType::__NONE;
+	_armourCategory = ArmourCategory::ARMOUR__NONE;
 
 	//	default charges (NONE)
 	_chargeRegeneration = 0;
