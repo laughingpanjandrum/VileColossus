@@ -113,11 +113,6 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 	vector<bool> didAttackCrit;
 
 
-	//	Electrified victims take more damage
-	if (target->hasStatusEffect(STATUS_SHOCK))
-		percentDamageMult += 20;
-
-
 	//	Execute each attack until target dies or we run out
 	while (atks-- > 0)
 	{

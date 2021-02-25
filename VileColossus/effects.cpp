@@ -392,6 +392,10 @@ void creatureTakeDamage(gamedataPtr gdata, creaturePtr target, int dam)
 {
 	if (dam > 0)
 	{
+		//	shock increases damage taken
+		if (target->hasStatusEffect(STATUS_SHOCK))
+			dam = adjustByPercent(dam, 30);
+
 		//	damage indicator
 		target->takeDamage(dam);
 		if (target->isDead())
