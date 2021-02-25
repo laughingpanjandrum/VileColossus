@@ -12,7 +12,6 @@ TODO
 
 	add more special map types for depth >=12
 
-	raise minimum health granted by enchants
 	change staircase colour to something MORE distinctive from grey items
 	look into rebalancing Shock and DOT effects
 	destroying obstacles with ranged atks should take time
