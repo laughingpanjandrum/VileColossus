@@ -26,6 +26,8 @@ public:
 
 	void setNickname(const string name) { _nickname = name; }
 
+	const string serialize() const;
+
 
 	//	Category
 
@@ -138,7 +140,6 @@ public:
 
 	ItemCategory _category;
 	ArmourCategory _armourCategory;
-	ItemQuality _quality;
 	MaterialType _material;
 	GemType _gemType;
 
@@ -166,7 +167,6 @@ protected:
 	int _chargeRegeneration;
 
 	bool isPropertyAdjustedByQuality(const ItemProperty prop) const;
-	int getQualityAdjustment(const ItemProperty prop, int val) const;
 
 };
 typedef shared_ptr<item> itemPtr;

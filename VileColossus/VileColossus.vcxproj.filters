@@ -123,6 +123,9 @@
     <ClInclude Include="manageMagic.h">
       <Filter>Header Files\interactions</Filter>
     </ClInclude>
+    <ClInclude Include="savegame.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utility.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files\interface</Filter>
+    </ClCompile>
+    <ClCompile Include="savegame.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

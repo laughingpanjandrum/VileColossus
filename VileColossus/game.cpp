@@ -457,6 +457,10 @@ void game::mainGameInput()
 	//	Debug
 	else if (_ih->isKeyPressed('`'))
 		awaitDebugCommand();
+
+	//	Save
+	/*else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
+		savegame::save_to_file("test.txt", _gdata);*/
 }
 
 

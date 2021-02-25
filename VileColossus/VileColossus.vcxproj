@@ -173,6 +173,7 @@
     <ClInclude Include="movement.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="progression.h" />
+    <ClInclude Include="savegame.h" />
     <ClInclude Include="spells.h" />
     <ClInclude Include="utility.h" />
     <ClInclude Include="visibility.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="movement.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="progression.cpp" />
+    <ClCompile Include="savegame.cpp" />
     <ClCompile Include="spells.cpp" />
     <ClCompile Include="utility.cpp" />
     <ClCompile Include="visibility.cpp" />

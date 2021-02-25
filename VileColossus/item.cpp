@@ -15,8 +15,6 @@ item::item(string name, ItemCategory cat, const int rarity)
 	//	list of properties
 	for (unsigned i = 0; i < PROP__NONE; i++)
 		_Property.push_back(0);
-	_armourCategory = ARMOUR__NONE;
-	_quality = QUALITY_NORMAL;
 	_material = MaterialType::__NONE;
 
 	//	default charges (NONE)
@@ -31,6 +29,45 @@ item::item(string name, ItemCategory cat, const int rarity)
 	_damageTaken = 0;
 	_maxDurability = -1;
 }
+
+
+
+//	Turns item into a string.
+const string item::serialize() const
+{
+	//	name, in quotes
+	string t = "\"" + _name + "\"";
+	t += "\"" + _nickname + "\"";
+
+	//	enchants
+	for (unsigned i = 0; i < _Enchants.size(); i++)
+	{
+		t += (char)_Enchants[i];
+		t += (char)_EnchantLevels[i];
+	}
+
+	//	individual int properties
+	t += (char)_amountLeft;
+	t += (char)_category;
+	t += (char)_chargesLeft;
+	t += (char)_chargeRegeneration;
+	t += (char)_containsSpell;
+	t += (char)_damageTaken;
+	t += (char)_enhancementLevel;
+	t += (char)_gemType;
+	t += (char)_material;
+	t += (char)_maxDurability;
+	t += (char)_rarity;
+	t += (char)_spellLevel;
+	t += (char)_tier;
+
+	//	properties from the table
+	for (unsigned i = 0; i < PROP__NONE; i++)
+		t += (char)_Property[i];
+
+	return t;
+}
+
 
 bool item::isArmourPiece() const
 {
@@ -180,8 +217,6 @@ int item::getProperty(const ItemProperty prop) const
 	if (isBroken()) return 0;
 
 	int total =_Property[prop];
-	if (isPropertyAdjustedByQuality(prop) && total > 0)
-		total += getQualityAdjustment(prop, total);
 	return total;
 }
 
@@ -463,28 +498,6 @@ bool item::isPropertyAdjustedByQuality(const ItemProperty prop) const
 	default:
 		return false;
 	}
-}
-
-
-//	Adjustment added to the given property due to our base quality.
-int item::getQualityAdjustment(const ItemProperty prop, int val) const
-{
-	//	normal quality has no effect
-	if (_quality == QUALITY_NORMAL)
-		return 0;
-
-	//	determine multiplier
-	double f = 0.0;
-	switch (_quality)
-	{
-	case(QUALITY_DAMAGED):		f = -0.1; break;
-	case(QUALITY_REFINED):		f = 0.1; break;
-	case(QUALITY_SUPERIOR):		f = 0.2; break;
-	case(QUALITY_MASTERWORK):	f = 0.3; break;
-	}
-
-	int mod = MAX(1, (int)((double)val * f));
-	return mod;
 }
 
 

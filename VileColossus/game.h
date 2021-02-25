@@ -12,6 +12,7 @@
 #include "manageItems.h"
 #include "manageMagic.h"
 #include "movement.h"
+#include "savegame.h"
 
 
 #define ANIMATION_TICK_MS	25
