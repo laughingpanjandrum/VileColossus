@@ -1328,6 +1328,11 @@ gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount
 	}
 	m->addCreature(monsterdata::generate(options[randrange(options.size())], dl * 2 + MIN(5, killcount)), ctr);
 
+	//	Add additional monsters.
+	auto node = new TCODBsp(ctr.first - 3, ctr.second - 3, 6, 6);
+	auto mtable = rollMonsterGroup(dl * 2, MonsterType::CULTIST);
+	addMonsterGroupToNode(m, &mtable, node);
+
 	//	Add downstairs.
 	auto spt = getRandomForStairs(m);
 	m->setTile(MT_STAIRS_UP, spt);

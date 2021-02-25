@@ -22,7 +22,6 @@ TODO
 	show when increasing a rune's level will increase its magic cost
 	enemies take some take to activate upon first descent?
 	add chance for blues to drop from small chests
-	add some initial enemies to boss zone
 	make spider nest smaller
 
 */
@@ -552,6 +551,11 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "hellportal")
 		mapgen::openHellPortal(_gdata->_homeBase);
+	else if (txt == "killall")
+	{
+		for (auto m : _gdata->_visibleMonsters)
+			killCreature(_gdata, m);
+	}
 }
 
 
