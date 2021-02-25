@@ -385,8 +385,8 @@ int item::getEnhanceCost() const
 	{
 		switch (_enhancementLevel)
 		{
-		case(0):	return 5;
-		case(1):	return 10;
+		case(0):	return 50;
+		case(1):	return 100;
 		case(2):	return 20;
 		case(3):	return 20;
 		case(4):	return 1;
@@ -411,7 +411,9 @@ MaterialType item::getEnhanceMaterial() const
 
 	else
 	{
-		if (_enhancementLevel < 3)
+		if (_enhancementLevel < 2)
+			return MaterialType::FRAGMENTS;
+		else if (_enhancementLevel < 3)
 			return MaterialType::MAGIC_DUST;
 		else if (_enhancementLevel < 4)
 			return MaterialType::GLOWING_POWDER;
