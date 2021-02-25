@@ -14,7 +14,6 @@ TODO
 
 	raise minimum health granted by enchants
 	make 1st extra enchant cost fragments instead of blue stuff
-	standardize material names
 	change staircase colour to something MORE distinctive from grey items
 	look into rebalancing Shock and DOT effects
 	destroying obstacles with ranged atks should take time

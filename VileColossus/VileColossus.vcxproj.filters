@@ -210,7 +210,7 @@
       <Filter>Source Files\interface</Filter>
     </ClCompile>
     <ClCompile Include="savegame.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

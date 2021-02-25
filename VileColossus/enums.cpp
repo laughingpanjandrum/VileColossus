@@ -55,8 +55,8 @@ const string getMaterialTypeName(const MaterialType mat)
 	case(MaterialType::BRIGHT_RUNE):	return "bright rune";
 	case(MaterialType::FRAGMENTS):		return "fragments";
 	case(MaterialType::GLASS_SHARD):	return "glass shards";
-	case(MaterialType::GLOWING_POWDER):	return "glowing powder";
-	case(MaterialType::MAGIC_DUST):		return "magic dust";
+	case(MaterialType::GLOWING_POWDER):	return "luminous dust";
+	case(MaterialType::MAGIC_DUST):		return "glowing goo";
 	case(MaterialType::RADIANT_ASH):	return "radiant ash";
 	case(MaterialType::RUNE_SHARD):		return "rune shards";
 	default:
