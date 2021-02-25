@@ -208,7 +208,7 @@ const colorType getMaptileColor(const Maptile tl)
 
 	case(MT_STAIRS_DOWN):
 	case(MT_STAIRS_UP):
-		return TCODColor::lightestBlue;
+		return TCODColor::lightSea;
 	case(MT_STAIRS_DOWN_LONG):
 	case(MT_STAIRS_UP_LONG):
 		return TCODColor::gold;

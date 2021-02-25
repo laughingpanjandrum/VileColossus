@@ -14,7 +14,6 @@ TODO
 	new boss at ~depth 14
 	make vampires more dangerous
 
-	change staircase colour to something MORE distinctive from grey items
 	destroying obstacles with ranged atks should take time
 	return to same index after implanting gem
 	show when increasing a rune's level will increase its magic cost
