@@ -22,7 +22,6 @@ TODO
 	show when increasing a rune's level will increase its magic cost
 	enemies take some take to activate upon first descent?
 	add chance for blues to drop from small chests
-	check spawn table for boss variants
 	add some initial enemies to boss zone
 	make spider nest smaller
 

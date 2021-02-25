@@ -168,6 +168,9 @@ const MonsterType monster::rollMonsterToSpawn() const
 	switch (_type)
 	{
 	case(MonsterType::BOSS_PALLID_ROTKING):
+	case(MonsterType::BOSS_ROTKING_BURNED):
+	case(MonsterType::BOSS_ROTKING_DESOLATE):
+	case(MonsterType::BOSS_ROTKING_INFUSED):
 		r = randint(1, 3);
 		if		(r == 1)	return MonsterType::BLOAT;
 		else if (r == 2)	return MonsterType::ZOMBIE_ROTTED;
