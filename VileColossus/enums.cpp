@@ -447,6 +447,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_SPELLPOWER):
 	case(ENCH_SPELLWARD):
 	case(ENCH_STORMWARD):
+	case(ENCH_WEIGHT):
 		return name + " #" + plusminus(val) + "%";
 
 		//	Duration

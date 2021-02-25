@@ -145,10 +145,9 @@ int monster::getResistance(const DamageType dt) const
 //	Type of corpse we drop on death.
 const Surface monster::getCorpseType() const
 {
-	if (hasFlag("bones"))
-		return Surface::BONES;
-	else
-		return Surface::CORPSE;
+	if		(hasFlag("no_corpse"))	return Surface::__NONE;
+	else if (hasFlag("bones"))		return Surface::BONES;
+	else							return Surface::CORPSE;
 }
 
 

@@ -230,7 +230,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected_heavy", "arcane_attack", "more_damage", "slow", "defended", };
 
 	case(MonsterType::IMP):
-		return { "protected", "less_health", "resists_fire", "casts_firebolt" };
+		return { "protected", "less_health", "immune_fire", "casts_firebolt" };
 	case(MonsterType::IMP_MEGA):
 		return { "protected", "immune_fire", "casts_firebolt", };
 
@@ -243,7 +243,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "flits", "spits_sludge", "more_health", "resists_electric" };
 
 	case(MonsterType::ORB_FLAME):
-		return { "immobile", "flying", "less_health", "immune_fire", "casts_firebolt" };
+		return { "immobile", "flying", "less_health", "immune_fire", "casts_firebolt", "no_corpse", };
 
 	case(MonsterType::RAT_GIANT):
 		return { "less_health", "poison_attack", "fast", "defended", };

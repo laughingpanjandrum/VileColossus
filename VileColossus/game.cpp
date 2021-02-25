@@ -12,6 +12,21 @@ TODO
 
 	add more special map types for depth >=12
 
+	raise minimum health granted by enchants
+	make 1st extra enchant cost fragments instead of blue stuff
+	standardize material names
+	change staircase colour to something MORE distinctive from grey items
+	look into rebalancing Shock and DOT effects
+	destroying obstacles with ranged atks should take time
+	return to same index after implanting gem
+	show when increasing a rune's level will increase its magic cost
+	enemies take some take to activate upon first descent?
+	add chance for blues to drop from small chests
+	check spawn table for boss variants
+	add some initial enemies to boss zone
+	weapons have an armour level for some reason??
+	make spider nest smaller
+
 */
 
 
