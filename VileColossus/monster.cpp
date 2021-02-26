@@ -114,28 +114,28 @@ int monster::getResistance(const DamageType dt) const
 		if (hasFlag("immune_arcane"))
 			total += 100;
 		else if (hasFlag("resists_arcane"))
-			total += 50;
+			total += 67;
 		break;
 
 	case(DTYPE_ELECTRIC):
 		if (hasFlag("immune_electric"))
 			total += 100;
 		else if (hasFlag("resists_electric"))
-			total += 50;
+			total += 67;
 		break;
 
 	case(DTYPE_FIRE):
 		if (hasFlag("immune_fire"))
 			total += 100;
 		else if (hasFlag("resists_fire"))
-			total += 50;
+			total += 67;
 		break;
 
 	case(DTYPE_POISON):
 		if (hasFlag("immune_poison"))
 			total += 100;
 		else if (hasFlag("resists_poison"))
-			total += 50;
+			total += 67;
 		break;
 	}
 	return total;

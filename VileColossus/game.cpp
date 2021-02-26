@@ -13,7 +13,6 @@ TODO
 
 	prevent blues from spawning at depth 1
 	wraiths should be undead
-	make 'resistant' enemies resist MORE
 	add a 'regen' flask enchant
 	reduce charges granted by the 'charges up' enchant
 	change knight glyph to differentiate them from skeletons
