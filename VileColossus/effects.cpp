@@ -199,13 +199,18 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 
 	//	Quality determined by type of chest
-	int quality = (roll_one_in(4)) ? 2 : 1;
+	int quality = 1;
 	switch (tl)
 	{
 	case(MT_CHEST_GLOWING):		quality = 2; break;
 	case(MT_CHEST_LUMINOUS):	quality = 3; break;
 	case(MT_CHEST_RADIANT):		quality = 4; break;
 	}
+
+
+	//	Rarity depends on quality (chance for it to be higher)
+	int rarity = quality;
+	if (roll_one_in(4)) rarity++;
 
 
 	//	Delete the chest
@@ -218,7 +223,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	int amt = randint(2, 2 * quality);
 	while (amt-- > 0)
 	{
-		auto it = lootgen::rollItemDrop(quality, quality);
+		auto it = lootgen::rollItemDrop(quality, rarity);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 
@@ -428,7 +433,7 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		creatureTakeDamage(gdata, target, dam);
 
 		//	some energy types also confer a status effect
-		const int odds = 100 - target->getResistance(dt);
+		const int odds = 50 - target->getResistance(dt) / 2;
 		switch (dt)
 		{
 		case(DTYPE_ELECTRIC):	tryInflictStatusEffect(gdata, target, STATUS_SHOCK, odds); break;

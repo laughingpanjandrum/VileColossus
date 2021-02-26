@@ -9,9 +9,15 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 	riposte damage should be averaged, just like riposte chance
-	new boss at ~depth 14
-
 	enemies take some take to activate upon first descent?
+
+	prevent blues from spawning at depth 1
+	wraiths should be undead
+	make 'resistant' enemies resist MORE
+	add a 'regen' flask enchant
+	reduce charges granted by the 'charges up' enchant
+	change knight glyph to differentiate them from skeletons
+	factor in affinities when displaying venombolt/arcane pulse damage
 
 */
 
