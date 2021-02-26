@@ -1074,9 +1074,9 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 	if (sp == Spell::SMITE_EVIL)
 		writeFormatted(atx, ++aty, "Smite Damage #" + to_string(gdata->_player->getSmiteEvilDamage()), { TCODColor::gold });
 	else if (sp == Spell::ARCANE_PULSE)
-		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(gdata->_player->getArcanePulseDamage()), { getDamageTypeColor(DTYPE_ARCANE) });
+		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(adjustByPercent(gdata->_player->getArcanePulseDamage(), gdata->_player->getElementalAffinity(DTYPE_ARCANE))), { getDamageTypeColor(DTYPE_ARCANE) });
 	else if (sp == Spell::VENOMFANG)
-		writeFormatted(atx, ++aty, "Poison Damage #" + to_string(gdata->_player->getVenomfangDamage()), { getDamageTypeColor(DTYPE_POISON) });
+		writeFormatted(atx, ++aty, "Poison Damage #" + to_string(adjustByPercent(gdata->_player->getVenomfangDamage(), gdata->_player->getElementalAffinity(DTYPE_POISON))), { getDamageTypeColor(DTYPE_POISON) });
 
 	//	range
 	if (isSpellTargeted(sp))

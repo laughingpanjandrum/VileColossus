@@ -12,7 +12,6 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	prevent blues from spawning at depth 1
-	factor in affinities when displaying venombolt/arcane pulse damage
 
 */
 
