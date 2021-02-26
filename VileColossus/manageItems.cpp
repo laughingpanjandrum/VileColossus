@@ -5,8 +5,15 @@
 //	Apply 'on-use' effects of a given item
 void applyFlaskEffect(gamedataPtr gdata, itemPtr it)
 {
+	//	Instant healing
 	if (it->hasProperty(PROP_HEAL_ON_USE))
 		gdata->_player->healDamage(it->getProperty(PROP_HEAL_ON_USE));
+
+	//	Heals over time
+	if (it->hasEnchantment(ENCH_REGEN))
+		gdata->_player->addBuff(BUFF_REGENERATION, it->getEnchantmentValue(ENCH_REGEN));
+
+	//	Secondary effects
 	if (it->hasEnchantment(ENCH_CURING))
 	{
 		gdata->_player->cureStatusEffect(STATUS_BURN);
@@ -34,9 +41,11 @@ void playerQuaffCurrentFlask(gamedataPtr gdata)
 	{
 		if (fl->hasChargesLeft())
 		{
+			//	Immediate effect
 			applyFlaskEffect(gdata, fl);
 			fl->expendCharge();
 			
+			//	Animations
 			addAnimation(gdata, anim_FlashGlyph(gdata->_player->_pos, fl->getGlyph(), TCODColor::red));
 			messages::add(gdata, "You quaff a #" + fl->getName() + "@.", { fl->getColor() });
 

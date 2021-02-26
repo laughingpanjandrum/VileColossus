@@ -12,9 +12,6 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	prevent blues from spawning at depth 1
-	wraiths should be undead
-	add a 'regen' flask enchant
-	change knight glyph to differentiate them from skeletons
 	factor in affinities when displaying venombolt/arcane pulse damage
 
 */
@@ -636,6 +633,8 @@ void game::doCreatureTick(creaturePtr cr)
 		creatureTakeDamage(_gdata, cr, 1 + cr->getMaxHealth() / 20);
 	if (cr->hasStatusEffect(STATUS_POISON))
 		creatureTakeDamage(_gdata, cr, 1 + cr->getMaxHealth() / 30);
+	if (cr->hasBuff(BUFF_REGENERATION))
+		cr->healDamage(1  +cr->getMaxHealth() / 20);
 
 	//	PULSE
 	if (cr->isPlayer() && cr->hasBuff(BUFF_ARCANE_PULSE))

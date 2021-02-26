@@ -55,7 +55,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 			ENCH_SHARPNESS, ENCH_SLAYING, ENCH_SPELLPOWER, ENCH_SPELLWARD, ENCH_STORMWARD, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_FLASK):
-		return { ENCH_CAPACITY, ENCH_CURING, ENCH_EMPOWERING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_STONESKIN, ENCH_WRATH, };
+		return { ENCH_CAPACITY, ENCH_CURING, ENCH_EMPOWERING, ENCH_HASTE, ENCH_MAGIC_RESTORE, ENCH_REGEN, ENCH_STONESKIN, ENCH_WRATH, };
 
 	case(ITEM_SPELLRUNE):
 		return { ENCH_AFF_ARCANE, ENCH_AFF_ELECTRIC, ENCH_AFF_FIRE, ENCH_AFF_POISON,  ENCH_GREED, ENCH_MAGIC, ENCH_MANALEECH, ENCH_FLAMEWARD, ENCH_POISON_WARD, ENCH_SPELLWARD, ENCH_STORMWARD, };
@@ -102,7 +102,7 @@ itemPtr lootgen::generateStartingFlask()
 {
 	auto it = itemPtr(new item("meagre flask", ITEM_FLASK, 0));
 	it->setProperty(PROP_HEAL_ON_USE, 35);
-	it->setProperty(PROP_MAX_CHARGES, 3);
+	it->setProperty(PROP_MAX_CHARGES, 2);
 	it->setProperty(PROP_CHARGES_ON_HIT, 5);
 	it->setProperty(PROP_CHARGE_REGAIN_RATE, 25);
 	it->restoreAllCharges();
@@ -162,6 +162,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_MANALEECH):		return randint(1, 2);
 	case(ENCH_POISON_WARD):		return randint(5, 25);
 	case(ENCH_RAGE):			return randint(5, 25);
+	case(ENCH_REGEN):			return randint(4, 8);
 	case(ENCH_SHARPNESS):		return randint(1, 5);
 	case(ENCH_SLAYING):			return randint(3, 7) * 10;
 	case(ENCH_SPELLPOWER):		return randint(1, 5) * 10;

@@ -248,6 +248,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_MANALEECH):		return "manaleech";
 	case(ENCH_POISON_WARD):		return "venomguard";
 	case(ENCH_RAGE):			return "rage";
+	case(ENCH_REGEN):			return "regeneration";
 	case(ENCH_SHARPNESS):		return "sharpness";
 	case(ENCH_SLAYING):			return "slaying";
 	case(ENCH_SPELLPOWER):		return "spellpower";
@@ -313,6 +314,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_MANALEECH):		return "Mana on Kill";
 	case(ENCH_POISON_WARD):		return "Poison Resistance";
 	case(ENCH_RAGE):			return "Wrath on Kill Chance";
+	case(ENCH_REGEN):			return "Regeneration";
 	case(ENCH_SHARPNESS):		return "Critical Chance";
 	case(ENCH_SLAYING):			return "Critical Damage";
 	case(ENCH_SPELLPOWER):		return "Spell Power";
@@ -378,6 +380,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_MANALEECH):		return "Recover " + to_string(val) + " Magic when you kill something.";
 	case(ENCH_POISON_WARD):		return "Reduces Poison damage taken by " + to_string(val) + "%.";
 	case(ENCH_RAGE):			return "Increases chance to gain the Wrath buff when you kill something by " + to_string(val) + "%. Wrath temporarily increases weapon damage you inflict.";
+	case(ENCH_REGEN):			return "In addition to its immediate effect, heals 5% of our max health per turn for " + to_string(val) + " turns.";
 	case(ENCH_SHARPNESS):		return "Weapon attacks are " + to_string(val) + "% more likely to be critical hits.";
 	case(ENCH_SLAYING):			return "Critical hits inflict " + plusminus(val) + "% extra damage.";
 	case(ENCH_SPELLPOWER):		return "Adjusts damage inflicted by spells by " + plusminus(val) + ".";
@@ -453,6 +456,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 		//	Duration
 	case(ENCH_EMPOWERING):
 	case(ENCH_HASTE):
+	case(ENCH_REGEN):
 	case(ENCH_STONESKIN):
 	case(ENCH_WRATH):
 		return name + " #" + to_string(val) + " turns";
@@ -533,6 +537,7 @@ string getBuffName(const BuffType bf)
 	case(BUFF_CRIT_BONUS):		return "Crit Chance";
 	case(BUFF_EMPOWERED):		return "Empowered";
 	case(BUFF_HASTE):			return "Haste";
+	case(BUFF_REGENERATION):	return "Regeneration";
 	case(BUFF_SMITE_EVIL):		return "Smite Evil";
 	case(BUFF_STONESKIN):		return "Stoneskin";
 	case(BUFF_TOXIC_RADIANCE):	return "Toxic Radiance";
