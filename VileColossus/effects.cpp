@@ -210,7 +210,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 	//	Rarity depends on quality (chance for it to be higher)
 	int rarity = quality;
-	if (roll_one_in(4)) rarity++;
+	if (roll_one_in(6)) rarity++;
 
 
 	//	Delete the chest

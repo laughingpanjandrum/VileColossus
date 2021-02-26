@@ -11,8 +11,6 @@ TODO
 	riposte damage should be averaged, just like riposte chance
 	enemies take some take to activate upon first descent?
 
-	prevent blues from spawning at depth 1
-
 */
 
 
