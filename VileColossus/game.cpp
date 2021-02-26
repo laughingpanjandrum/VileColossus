@@ -18,8 +18,6 @@ TODO
 	return to same index after implanting gem
 	show when increasing a rune's level will increase its magic cost
 	enemies take some take to activate upon first descent?
-	add chance for blues to drop from small chests
-	make spider nest smaller
 
 */
 

@@ -1197,7 +1197,7 @@ gridmapPtr mapgen::generate_MoltenLake(int dl, bool descending)
 //	SPIDER HELL
 gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 {
-	int sz = randint(3, 5) * 10;
+	int sz = randint(25, 35);
 	auto m = gridmapPtr(new gridmap(sz, sz));
 	fillMap(m, {MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
 	m->_name = "Spider Nest [Depth " + to_string(dl) + "]";

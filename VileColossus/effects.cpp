@@ -218,7 +218,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	int amt = randint(2, 2 * quality);
 	while (amt-- > 0)
 	{
-		auto it = lootgen::rollItemDrop(quality, quality);
+		auto it = lootgen::rollItemDrop(quality, quality + 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 
