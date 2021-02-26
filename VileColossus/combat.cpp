@@ -269,6 +269,7 @@ void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec)
 				addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(gdata->_map->getTile(pt))));
 				gdata->_map->setTile(MT_RUBBLE, pt);
 				gdata->_map->updateTmapAtPoint(pt.first, pt.second);
+				gdata->_player->spendActionEnergy(gdata->_player->getAttackEnergyCost());
 				break;
 			}
 
