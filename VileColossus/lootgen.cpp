@@ -144,7 +144,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_AFF_POISON):		return randint(5, 10) * 5;
 	case(ENCH_ARMOURING):		return randint(1, 5);
 	case(ENCH_BURNING):			return randint(1, 6);
-	case(ENCH_CAPACITY):		return randint(3, 4);
+	case(ENCH_CAPACITY):		return randint(2, 3);
 	case(ENCH_CHARGING):		return randint(4, 8) * 5;
 	case(ENCH_CURING):			return 100;
 	case(ENCH_DEFENCE):			return randint(1, 3);

@@ -311,11 +311,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
 	case(MonsterType::WRAITH):
-		return { "ethereal", "defended", "arcane_attack", "immune_arcane", };
+		return { "ethereal", "defended", "arcane_attack", "immune_arcane", "undead", };
 	case(MonsterType::WRAITH_GREAT):
-		return { "ethereal", "arcane_attack", "more_damage", "immune_arcane", };
+		return { "ethereal", "arcane_attack", "more_damage", "immune_arcane", "undead", };
 	case(MonsterType::WRAITH_MOON):
-		return { "ethereal", "electric_attack", "immune_arcane", "immune_electric", "casts_lightning" };
+		return { "ethereal", "electric_attack", "immune_arcane", "immune_electric", "casts_lightning", "undead", };
 
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
@@ -350,7 +350,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "immune_fire", "resists_poison", "fire_attack", "casts_fireblast", "more_health", "spawner", };
 
 	case(MonsterType::BOSS_WRAITH_KING):
-		return { "immune_arcane", "ethereal", "casts_arcane_bolt", "more_health", "spawner", };
+		return { "immune_arcane", "ethereal", "casts_arcane_bolt", "more_health", "spawner", "undead", };
 		
 
 	default:
@@ -428,7 +428,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);
 	case(MonsterType::DEMON_PRINCE):		return make_tuple("DEMON PRINCE", 'P', TCODColor::flame);
 	case(MonsterType::FLAME_CONJURER):		return make_tuple("Flame Conjurer", 'F', TCODColor::flame);
-	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'K', TCODColor::lightPurple);
+	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'N', TCODColor::lightPurple);
 	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::IMP_MEGA):			return make_tuple("mega-imp", 'I', TCODColor::flame);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
@@ -445,7 +445,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SKELETON_GOLD_PLATED):return make_tuple("gold-plated skeleton", 'k', TCODColor::gold);
 	case(MonsterType::SKELETON_MAGE):		return make_tuple("skeleton mage", 'k', TCODColor::fuchsia);
 	case(MonsterType::SKELETON_GIANT):		return make_tuple("giant skeleton", 'K', TCODColor::desaturatedYellow);
-	case(MonsterType::SKINLESS_KNIGHT):		return make_tuple("SKINLESS KNIGHT", 'K', TCODColor::lighterOrange);
+	case(MonsterType::SKINLESS_KNIGHT):		return make_tuple("SKINLESS KNIGHT", 'N', TCODColor::lighterOrange);
 	case(MonsterType::SKULL_EXPLODING):		return make_tuple("exploding skull", 's', TCODColor::lightOrange);
 	case(MonsterType::SKULL_FLAMING):		return make_tuple("flaming skull", 's', TCODColor::darkFlame);
 	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
