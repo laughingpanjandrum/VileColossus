@@ -792,6 +792,7 @@ void selectGemToSocketIntoItem(gamedataPtr gdata)
 
 		//	return to previous menu
 		openGemstonePress(gdata);
+		gdata->_idx = gdata->_selectedSlot;
 	}
 }
 
@@ -802,7 +803,8 @@ void selectItemToSocket(gamedataPtr gdata)
 {
 	if (gdata->_idx < SLOT__NONE)
 	{
-		auto it = gdata->_player->getItemInSlot(static_cast<EquipmentSlot>(gdata->_idx));
+		gdata->_selectedSlot = static_cast<EquipmentSlot>(gdata->_idx);
+		auto it = gdata->_player->getItemInSlot(gdata->_selectedSlot);
 		if (it != nullptr && it->hasFreeSocket())
 		{
 			gdata->_idx = 0;
