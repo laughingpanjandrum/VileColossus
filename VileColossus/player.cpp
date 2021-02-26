@@ -290,7 +290,13 @@ int player::getRiposteChance() const
 //  Percent of our base damage a riposte attack inflicts.
 int player::getRiposteDamageMult() const
 {
-	return getEquipmentPropertySum(PROP_RIPOSTE_DAMAGE);
+	int total = getEquipmentPropertySum(PROP_RIPOSTE_DAMAGE);
+
+	//	Average if dualwielding.
+	if (usingOffhandWeapon())
+		total /= 2;
+
+	return total;
 }
 
 //  We must have a cleaving primary weapon equipped.
@@ -543,7 +549,7 @@ void player::restoreMagic(const int amt)
 //	Shields don't count.
 bool player::usingOffhandWeapon() const
 {
-	return _Equipped[SLOT_OFFHAND] != nullptr && _Equipped[SLOT_OFFHAND]->_category != ITEM_SHIELD;
+	return _Equipped[SLOT_OFFHAND] != nullptr && _Equipped[SLOT_OFFHAND]->_category == ITEM_WEAPON;
 }
 
 //	Tests whether our main and offhand items can be equipped together.

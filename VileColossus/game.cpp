@@ -5,10 +5,8 @@
 /*
 TODO
 
-	Show item comparison in inventory
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
-	riposte damage should be averaged, just like riposte chance
 	enemies take some take to activate upon first descent?
 
 */
