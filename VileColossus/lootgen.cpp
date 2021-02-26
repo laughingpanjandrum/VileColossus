@@ -182,6 +182,8 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 //	Adds the given number of random enchantments to an item.
 void lootgen::enchantItem(itemPtr it, int count)
 {
+	bool is_2h = it->_isTwoHanded && !it->isRangedWeapon();
+
 	//	sockets?
 	if (it->_tier > 1 || roll_one_in(10))
 	{
@@ -189,8 +191,8 @@ void lootgen::enchantItem(itemPtr it, int count)
 		if (max_sockets > 0 && roll_one_in(2))
 		{
 			int sockets = randint(0, max_sockets);
+			if (sockets > 0 && is_2h) sockets++;
 			it->adjustMaxSockets(sockets);
-			//count -= sockets;
 		}
 	}
 
@@ -198,9 +200,18 @@ void lootgen::enchantItem(itemPtr it, int count)
 	auto options = getEnchantmentsForItemCategory(it->_category);
 	while (count-- > 0)
 	{
+		//	Pick a random enchant
 		if (options.empty()) break;
 		auto i = randrange(options.size());
-		it->addEnchantment(options[i], rollEnchantmentBonus(options[i]));
+
+		//	Roll a bonus
+		auto bns = rollEnchantmentBonus(options[i]);
+
+		//	2h weapons have an increased bonus
+		if (is_2h) bns += bns / 2;
+
+		//	add the enchant
+		it->addEnchantment(options[i], bns);
 		options.erase(options.begin() + i);
 	}
 }
