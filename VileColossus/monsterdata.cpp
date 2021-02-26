@@ -345,6 +345,14 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::BOSS_ROTKING_INFUSED):
 		return { "slow", "arcane_attack", "undead", "spawner", "spit_sludge", "casts_arcane_bolt", "more_health", "immune_arcane" };
 
+
+	case(MonsterType::BOSS_DEMON_LORD):
+		return { "immune_fire", "resists_poison", "fire_attack", "casts_fireblast", "more_health", "spawner", };
+
+	case(MonsterType::BOSS_WRAITH_KING):
+		return { "immune_arcane", "ethereal", "casts_arcane_bolt", "more_health", "spawner", };
+		
+
 	default:
 		return {};
 	}
@@ -360,6 +368,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::BOSS_ROTKING_BURNED):
 	case(MonsterType::BOSS_ROTKING_DESOLATE):
 	case(MonsterType::BOSS_ROTKING_INFUSED):
+	case(MonsterType::BOSS_DEMON_LORD):
+	case(MonsterType::BOSS_WRAITH_KING):
 		return 5;
 
 	case(MonsterType::CARRION_PRINCE):
@@ -465,6 +475,9 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::BOSS_ROTKING_BURNED):		return make_tuple("= BURNED ROTKING =", 'A', TCODColor::flame);
 	case(MonsterType::BOSS_ROTKING_DESOLATE):	return make_tuple("= DESOLATE ROTKING =", 'A', TCODColor::green);
 	case(MonsterType::BOSS_ROTKING_INFUSED):	return make_tuple("= INFUSED ROTKING =", 'A', TCODColor::lightPurple);
+
+	case(MonsterType::BOSS_DEMON_LORD):			return make_tuple("= DEMON LORD =", 'D', TCODColor::flame);
+	case(MonsterType::BOSS_WRAITH_KING):		return make_tuple("= WRAITH KING =", 'W', TCODColor::pink);
 
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);

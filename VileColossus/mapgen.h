@@ -114,11 +114,6 @@ namespace mapgen
 	void addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptions);
 
 
-	//		Items.
-
-	void addFloorLoot(gridmapPtr m, int dl);
-
-
 	//		Connections.
 
 	void addStairsToMap(gridmapPtr m, int depth, bool descending);
@@ -147,7 +142,6 @@ namespace mapgen
 	//		The HELLFORT
 
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
-	
 	gridmapPtr generate_MoltenLake(int dl, bool descending);
 	gridmapPtr generate_SpiderNest(int dl, bool descending);
 	gridmapPtr generate_Tomb(int dl, bool descending);
@@ -157,6 +151,7 @@ namespace mapgen
 	//		Boss maps
 
 	gridmapPtr generate_PallidRotking(int dl, bool descending, int killcount);
+	gridmapPtr generate_Hellfort(int dl, bool descending, int killcount);
 
 
 	//		Map generation

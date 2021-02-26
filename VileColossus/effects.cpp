@@ -199,7 +199,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 
 	//	Quality determined by type of chest
-	int quality = 1;
+	int quality = (roll_one_in(4)) ? 2 : 1;
 	switch (tl)
 	{
 	case(MT_CHEST_GLOWING):		quality = 2; break;
@@ -218,7 +218,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	int amt = randint(2, 2 * quality);
 	while (amt-- > 0)
 	{
-		auto it = lootgen::rollItemDrop(quality, quality + 1);
+		auto it = lootgen::rollItemDrop(quality, quality);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 

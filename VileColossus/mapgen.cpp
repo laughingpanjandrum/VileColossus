@@ -620,19 +620,6 @@ void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptio
 }
 
 
-//	Items on the floor, as opposed to items dropped by monsters.
-void mapgen::addFloorLoot(gridmapPtr m, int dl)
-{
-	auto count = dieRoll(6, 4);
-	while (count-- > 0)
-	{
-		auto it = lootgen::generateArmourPiece(dl, randint(0, 3));
-		auto pt = getRandomFree(m);
-		m->addItem(it, pt);
-	}
-}
-
-
 //	Pick some random points for up/down stairs.
 //	This also determines your starting position on the map.
 void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
@@ -1391,6 +1378,33 @@ gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount
 }
 
 
+gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
+{
+	auto m = gridmapPtr(new gridmap(30, 30));
+	fillMap(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_STONE, MT_FLOOR_STONE2 });
+	scatterTile(m, MT_LAVA, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
+	
+	//	centre of map
+	auto ctr = intpair(m->_xsize / 2, m->_ysize / 2);
+
+	//	Pick a boss.
+	vector<MonsterType> options = { MonsterType::BOSS_DEMON_LORD, MonsterType::BOSS_WRAITH_KING };
+	m->addCreature(monsterdata::generate(options[randrange(options.size())], dl * 2 + MIN(5, killcount)), ctr);
+
+	//	Add additional monsters.
+	auto node = new TCODBsp(ctr.first - 3, ctr.second - 3, 6, 6);
+	auto mtable = rollMonsterGroup(dl * 2, MonsterType::CULTIST);
+	addMonsterGroupToNode(m, &mtable, node);
+
+	//	Add downstairs.
+	auto spt = getRandomForStairs(m);
+	m->setTile(MT_STAIRS_UP, spt);
+	m->_startPt = spt;
+
+	return m;
+}
+
+
 //	Randomly rolls one dimensional axis for a map. Larger maps are increasingly unlikely.
 int mapgen::rollMapDimension()
 {
@@ -1410,6 +1424,8 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	//	Type depends on depth
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
+	else if (dl == 15)
+		m = generate_Hellfort(dl, descending, progress->_killedRotking);
 
 	//	Random selection of map types
 	else if (dl >= 12)
