@@ -12,9 +12,7 @@ TODO
 
 	add more special map types for depth >=12
 	new boss at ~depth 14
-	make vampires more dangerous
 
-	show when increasing a rune's level will increase its magic cost
 	enemies take some take to activate upon first descent?
 
 */
