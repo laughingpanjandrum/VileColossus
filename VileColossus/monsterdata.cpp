@@ -141,6 +141,10 @@ const vector<MonsterType> monsterdata::getAltVersions(const MonsterType id, cons
 			alts.push_back(MonsterType::SPIDER_FLAMING);
 		break;
 
+	case(MonsterType::WRAITH):
+		alts.push_back(MonsterType::WRAITH_MOON);
+		break;
+
 	case(MonsterType::WRETCH):
 		alts.push_back(MonsterType::WRETCH_PUKING);
 		break;
@@ -179,6 +183,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 
 	case(MonsterType::VAMPIRE_SPAWN):
 		return MonsterType::VAMPIRE;
+
+	case(MonsterType::WRAITH):
+		return MonsterType::WRAITH_GREAT;
 	
 	case(MonsterType::ZOMBIE):		
 		if (dl > 1)
@@ -303,6 +310,13 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::WORM_DEMON):
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
+	case(MonsterType::WRAITH):
+		return { "ethereal", "defended", "arcane_attack", "immune_arcane", };
+	case(MonsterType::WRAITH_GREAT):
+		return { "ethereal", "arcane_attack", "more_damage", "immune_arcane", };
+	case(MonsterType::WRAITH_MOON):
+		return { "ethereal", "electric_attack", "immune_arcane", "immune_electric", "casts_lightning" };
+
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
 	case(MonsterType::WRETCH_PUKING):
@@ -364,6 +378,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::VAMPIRE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::WORM_DEMON):
+	case(MonsterType::WRAITH_GREAT):
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
 
@@ -375,6 +390,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
 	case(MonsterType::SPIDER_OGRE):
+	case(MonsterType::WRAITH):
+	case(MonsterType::WRAITH_MOON):
 	case(MonsterType::ZOMBIE_INFUSED):
 	case(MonsterType::ZOMBIE_LARGE):
 		return 2;
@@ -432,7 +449,10 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::VAMPIRE_PRINCE):		return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
 	case(MonsterType::VAMPIRE_SPAWN):		return make_tuple("Vampire spawn", 'v', TCODColor::red);
 	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
-	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'W', TCODColor::lightGrey);
+	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'O', TCODColor::lightGrey);
+	case(MonsterType::WRAITH):				return make_tuple("wraith", 'w', TCODColor::lightPurple);
+	case(MonsterType::WRAITH_GREAT):		return make_tuple("great wraith", 'W', TCODColor::lighterPurple);
+	case(MonsterType::WRAITH_MOON):			return make_tuple("moon wraith", 'w', TCODColor::lightYellow);
 	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
 	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
 	case(MonsterType::ZOMBIE):				return make_tuple("zombie", 'z', TCODColor::green);

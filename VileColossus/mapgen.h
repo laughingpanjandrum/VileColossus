@@ -150,6 +150,7 @@ namespace mapgen
 	
 	gridmapPtr generate_MoltenLake(int dl, bool descending);
 	gridmapPtr generate_SpiderNest(int dl, bool descending);
+	gridmapPtr generate_Tomb(int dl, bool descending);
 	gridmapPtr generate_VampireNest(int dl, bool descending);
 
 

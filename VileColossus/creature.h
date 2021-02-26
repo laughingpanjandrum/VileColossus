@@ -27,6 +27,7 @@ public:
 
 	virtual bool isPlayer() const { return false; }
 
+	virtual bool isEthereal() const { return false; }
 	virtual bool isFlying() const { return false; }
 	virtual bool isUndead() const { return false; }
 

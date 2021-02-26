@@ -158,6 +158,10 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 					dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
 			}
 
+			//	ETHEREAL reduces damage by 50%
+			if (target->isEthereal())
+				dam /= 2;
+
 			//	Actually inflict the damage
 			creatureTakeDamage(gdata, target, dam);
 

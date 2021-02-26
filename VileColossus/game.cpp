@@ -9,8 +9,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 	riposte damage should be averaged, just like riposte chance
-
-	add more special map types for depth >=12
 	new boss at ~depth 14
 
 	enemies take some take to activate upon first descent?

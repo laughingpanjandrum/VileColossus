@@ -25,7 +25,7 @@ enum class MonsterType
 	BOSS_PALLID_ROTKING, BOSS_ROTKING_BURNED, BOSS_ROTKING_INFUSED, BOSS_ROTKING_DESOLATE,
 
 
-	//	Hellfort monsters
+	//	Hell monsters
 	COLOSSUS_IRON,
 	CULTIST_ASCENDED,
 	DEMON_PRINCE,
@@ -36,6 +36,7 @@ enum class MonsterType
 	SPIDER, SPIDER_FLAMING, SPIDER_OGRE, SPIDER_PHASE, SPIDER_TITAN,
 	WORM_DEMON,
 	VAMPIRE, VAMPIRE_PRINCE, VAMPIRE_SPAWN,
+	WRAITH, WRAITH_GREAT, WRAITH_MOON,
 	WRETCH, WRETCH_PUKING,
 
 
@@ -90,6 +91,7 @@ public:
 	const string rollRaySpellToCast() const;
 	const MonsterType rollMonsterToSpawn() const;
 
+	virtual bool isEthereal() const { return hasFlag("ethereal"); }
 	virtual bool isFlying() const { return hasFlag("flying"); }
 	virtual bool isUndead() const { return hasFlag("undead"); }
 

@@ -1242,6 +1242,55 @@ gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 
 
 
+gridmapPtr mapgen::generate_Tomb(int dl, bool descending)
+{
+	const int NODESZ = 8;
+	auto m = gridmapPtr(new gridmap(NODESZ * 5, NODESZ * 5));
+	fillMap(m, { MT_WALL_STONE });
+	m->_name = "Frigid Tomb";
+
+	//	add creepy nodes
+	auto nodes = createNodeMap(m, NODESZ, 10);
+	for (auto n : nodes)
+	{
+		fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2 }, n->x + 1, n->y + 1, n->w - 3, n->h - 3);
+		for (unsigned x = n->x + 2; x <= n->x + n->w - 4; x += 2)
+		{
+			for (unsigned y = n->y + 2; y <= n->y + n->h - 4; y += 2)
+				m->setTile(MT_SARCOPHAGUS, x, y);
+		}
+	}
+
+	//	some chaos
+	scatterTile(m, MT_TOMBSTONE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
+	scatterTile(m, MT_BUSH, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.1);
+
+	//	randomly connect nodes
+	for (unsigned n = 1; n < nodes.size(); n++)
+		tunnelBetweenNodes(m, nodes[n], nodes[n - 1], MT_FLOOR_STONE);
+
+	//	monsters
+	int count = nodes.size() / 2 + 1;
+	while (count-- > 0)
+	{
+		auto n = randrange(nodes.size());
+		auto mlist = rollMonsterGroup(dl, MonsterType::WRAITH);
+		addMonsterGroupToNode(m, &mlist, nodes[n]);
+		nodes.erase(nodes.begin() + n);
+	}
+
+	//	treasure
+	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
+	if (roll_one_in(4))
+		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+
+	//	stairs
+	addStairsToMap(m, dl, descending);
+	return m;
+}
+
+
+
 gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
 {
 	const int sz = 10;
@@ -1365,14 +1414,15 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	//	Random selection of map types
 	else if (dl >= 12)
 	{
-		int r = randint(1, 4);
+		int r = randint(1, 5);
 		switch (r)
 		{
 		case(1):	m = generate_MoltenLake(dl, descending); break;
 		case(2):	m = generate_SpiderNest(dl, descending); break;
-		case(3):	m = generate_VampireNest(dl, descending); break;
+		case(3):	m = generate_Tomb(dl, descending); break;
+		case(4):	m = generate_VampireNest(dl, descending); break;
 		default:	m = generate_Hellmouth(dl, descending); break;
-		}	
+		}
 	}
 
 	//	Entrance to HELL
