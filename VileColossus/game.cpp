@@ -9,7 +9,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
-	gain levels 1-4 a bit faster??
 	add 'fast scrolling' to item lists/enchant list
 	show inventory capacity when picking stuff up
 	interface stuff to add:
