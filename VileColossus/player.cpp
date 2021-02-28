@@ -252,22 +252,22 @@ int player::getResistance(const DamageType dt) const
 	{
 	case(DTYPE_ARCANE):
 		total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
-		total += MAX(20, (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2);
+		total += MIN(20, (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2);
 		break;
 
 	case(DTYPE_FIRE):
 		total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
-		total += MAX(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
+		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
 		break;
 
 	case(DTYPE_ELECTRIC):
 		total += getTotalEnchantmentBonus(ENCH_STORMWARD);
-		total += MAX(20, (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 2);
+		total += MIN(20, (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 2);
 		break;
 
 	case(DTYPE_POISON):
 		total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
-		total += MAX(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
+		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
 		break;
 	}
 
