@@ -147,6 +147,7 @@ void display::drawCharacterSummary(gamedataPtr gdata)
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getMaxMagic(), 3) + "@] Magic", { COLOR_MAGIC, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getDefenceValue(), 3) + "@] #Defence Value", { COLOR_MISC_STAT, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getArmourValue(), 3) + "@] #Armour Value", { COLOR_MISC_STAT, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getReprisalDamage(), 3) + "@] #Reprisal Damage", { COLOR_HEALTH, COLOR_LIGHT });
 	writeFormatted(x, y + 2, "[#" + expressIntAsFloat(p->estimateDPS(), 1) + "@] #Avg Damage/Turn", { COLOR_HEALTH, COLOR_LIGHT });
 
 	x = 30; y = 51;
@@ -154,6 +155,7 @@ void display::drawCharacterSummary(gamedataPtr gdata)
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getWeaponDamage(), 3) + "@] #Damage", { COLOR_HEALTH, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getCriticalChance(), 3) + "@] #Critical Chance", { TCODColor::lightCrimson, COLOR_LIGHT });
 	writeFormatted(x, ++y, "[#" + extendInteger(p->getCriticalMultiplier(), 3) + "@] #Critical Damage", { TCODColor::crimson, COLOR_LIGHT });
+	writeFormatted(x, ++y, "[#" + extendInteger(p->getSpellPower(), 3) + "@] Spell Power", { TCODColor::lightBlue, COLOR_LIGHT });
 	writeFormatted(x, y + 2, "[#" + to_string(get_hit_chance(p->getAccuracy(), lootgen::getBaseDefenceForLevel(p->_level))) + "%@] #Avg Hit Chance", { COLOR_MISC_STAT, COLOR_LIGHT });
 
 	x = 56; y = 51;
@@ -162,7 +164,7 @@ void display::drawCharacterSummary(gamedataPtr gdata)
 		auto res = p->getResistance(dt);
 		writeFormatted(x, ++y, "[#" + extendInteger(res, 2) + "%@] #" + getDamageTypeName(dt) + " Resist", { getDamageTypeColor(dt), COLOR_LIGHT });
 	}
-	writeFormatted(x, y + 2, "[#" + to_string(100 - get_hit_chance(lootgen::getBaseAccuracyForLevel(p->_level), p->getDefenceValue())) + "%@] #Avg Defend Chance", { COLOR_MISC_STAT, COLOR_LIGHT });
+	writeFormatted(x, y + 3, "[#" + to_string(100 - get_hit_chance(lootgen::getBaseAccuracyForLevel(p->_level), p->getDefenceValue())) + "%@] #Avg Defend Chance", { COLOR_MISC_STAT, COLOR_LIGHT });
 }
 
 

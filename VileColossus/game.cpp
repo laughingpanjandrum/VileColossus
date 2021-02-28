@@ -14,7 +14,6 @@ TODO
 		-> more key prompts on inventory screens/etc
 		-> numpad support
 		-> button to show what stuff on the screen is
-		-> spell power in character summary	
 	some system for diving faster in Hell?
 	add t3 spells
 
