@@ -1381,7 +1381,6 @@ void display::updateVisibleMapData(gamedataPtr gdata)
 			colorType col = COLOR_BLACK;
 			colorType bgcol = COLOR_BLACK;
 
-
 			//	Is this in the map boundaries
 			auto mpt = displayToMapCoord(ctr, dx, dy);
 			if (gdata->_map->inBounds(mpt))
@@ -1468,6 +1467,10 @@ void display::updateVisibleMapData(gamedataPtr gdata)
 			auto it = icp->_items.front();
 			_visibleGlyphs[dpt.first][dpt.second] = it->getGlyph();
 			_visibleColors[dpt.first][dpt.second] = it->getColor();
+
+			//	if the underlying tile is lava, reveal it
+			if (gdata->_map->getTile(icp->_pos) == MT_LAVA)
+				_visibleBgcolors[dpt.first][dpt.second] = getMaptileColor(MT_LAVA);
 		}
 	}
 

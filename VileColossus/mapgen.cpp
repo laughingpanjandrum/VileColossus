@@ -1383,6 +1383,7 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
 	auto m = gridmapPtr(new gridmap(30, 30));
 	fillMap(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_STONE, MT_FLOOR_STONE2 });
 	scatterTile(m, MT_LAVA, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
+	m->_name = "THE HELLFORT";
 	
 	//	centre of map
 	auto ctr = intpair(m->_xsize / 2, m->_ysize / 2);

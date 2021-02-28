@@ -15,9 +15,7 @@ TODO
 		-> numpad support
 		-> button to show what stuff on the screen is
 		-> spell power in character summary	
-	show when items are on lava
 	some system for diving faster in Hell?
-	2nd boss map has no title
 	add t3 spells
 
 */
