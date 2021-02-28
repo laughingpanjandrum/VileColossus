@@ -451,6 +451,17 @@ vector<Spell> player::getAllSpellsKnown() const
 }
 
 
+//	Max spells we can have equipped at once.
+const int player::getMaxSpellsKnown() const
+{
+	auto wil = getBaseAttribute(ATTR_WILLPOWER);
+	if		(wil >= 25)	return 4;
+	else if (wil >= 20)	return 3;
+	else if (wil >= 15)	return 2;
+	else				return 1;
+}
+
+
 //	If we have a spell at this index, return it; otherwise returns Spell::__NONE
 Spell player::getSpellAtIndex(const int idx) const
 {
@@ -490,7 +501,7 @@ int player::getSpellLevel(const Spell sp) const
 //	Put spell rune in the first available slot.
 void player::equipSpellRune(itemPtr it)
 {
-	if (_ImprintedRunes.size() < MAX_HOTKEYED_SPELLS)
+	if (_ImprintedRunes.size() < getMaxSpellsKnown())
 		_ImprintedRunes.push_back(it);
 }
 

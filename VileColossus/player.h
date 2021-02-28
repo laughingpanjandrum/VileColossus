@@ -123,6 +123,7 @@ public:
 	//	Spells
 
 	vector<Spell> getAllSpellsKnown() const;
+	const int getMaxSpellsKnown() const;
 
 	Spell getSpellAtIndex(const int idx) const;
 	int getSpellLevel(const Spell sp) const;

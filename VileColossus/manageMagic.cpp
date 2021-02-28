@@ -433,7 +433,7 @@ bool playerImprintSpellRune(gamedataPtr gdata, itemPtr it)
 	}
 
 	//	otherwise, append.
-	if (gdata->_player->_ImprintedRunes.size() < MAX_HOTKEYED_SPELLS)
+	if (gdata->_player->_ImprintedRunes.size() < gdata->_player->getMaxSpellsKnown())
 	{
 		gdata->_player->_ImprintedRunes.push_back(it);
 		return true;

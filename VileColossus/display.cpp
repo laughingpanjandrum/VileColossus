@@ -294,38 +294,35 @@ void display::drawAttributePoints(gamedataPtr gdata)
 			{
 			case(ATTR_DEXTERITY):
 
-				drawStatWithBox(rx, ry, to_string(p->getAccuracy()), "Global Accuracy", { COLOR_MISC_STAT });
+				drawStatWithBox(rx, ry, to_string(p->getAccuracy()), "Global Accuracy", COLOR_MISC_STAT);
 				_win.write(rx - 5, ry + 1, "+1", COLOR_POSITIVE);
 				
-				drawStatWithBox(rx, ry + 3, to_string(p->getDefenceValue()), "Defence Value", { COLOR_MISC_STAT });
+				drawStatWithBox(rx, ry + 3, to_string(p->getDefenceValue()), "Defence Value", COLOR_MISC_STAT);
 				_win.write(rx - 5, ry + 4, "+0.5", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", { TCODColor::crimson });
+				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", TCODColor::crimson);
 				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
 
+				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)) + "%", "Electric Resist", getDamageTypeColor(DTYPE_ELECTRIC));
 				if (base <= 50)
-				{
-					drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)) + "%", "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
 					_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
-				}
 
 				break;
 
 
 			case(ATTR_STRENGTH):
 				
-				drawStatWithBox(rx, ry, to_string(p->getMaxHealth()), "Health", { COLOR_HEALTH });
+				drawStatWithBox(rx, ry, to_string(p->getMaxHealth()), "Health", COLOR_HEALTH);
 				_win.write(rx - 5, ry + 1, "+2", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", { COLOR_HEALTH });
+				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", COLOR_HEALTH);
 				_win.write(rx - 5, ry + 4, "+0.3", COLOR_POSITIVE);
 
+				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", getDamageTypeColor(DTYPE_POISON));
+				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_FIRE)) + "%", "Fire Resist", getDamageTypeColor(DTYPE_FIRE));
 				if (base <= 50)
 				{
-					drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", { getDamageTypeColor(DTYPE_POISON) });
 					_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
-
-					drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_FIRE)) + "%", "Fire Resist", { getDamageTypeColor(DTYPE_FIRE) });
 					_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
 				}
 
@@ -334,17 +331,19 @@ void display::drawAttributePoints(gamedataPtr gdata)
 
 			case(ATTR_WILLPOWER):
 
-				drawStatWithBox(rx, ry, to_string(p->getMaxMagic()), "Magic", { COLOR_MAGIC });
+				drawStatWithBox(rx, ry, to_string(p->getMaxMagic()), "Magic", COLOR_MAGIC);
 				_win.write(rx - 5, ry + 1, "+0.5", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 3, plusminus(p->getSpellPower()) + "%", "Spell Power", { COLOR_MAGIC });
+				drawStatWithBox(rx, ry + 3, plusminus(p->getSpellPower()) + "%", "Spell Power", COLOR_MAGIC);
 				_win.write(rx - 5, ry + 4, "+5%", COLOR_POSITIVE);
+
+				drawStatWithBox(rx, ry + 6, to_string(p->getMaxSpellsKnown()), "Max Spells", TCODColor::lightBlue);
+				if (base < 25)
+					_win.write(rx - 5, ry + 7, "+0.2", COLOR_POSITIVE);
 				
+				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ARCANE)) + "%", "Arcane Resist", getDamageTypeColor(DTYPE_ARCANE));
 				if (base <= 50)
-				{
-					drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_ARCANE)) + "%", "Arcane Resist", { getDamageTypeColor(DTYPE_ARCANE) });
-					_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
-				}
+					_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
 
 				break;
 			}
@@ -959,7 +958,8 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 	x = 47, y = 30;
 	drawBox(45, 29, 35, 8, COLOR_DARK);
 	_win.write(46, 29, "Spells Memorized", COLOR_LIGHT);
-	writeFormatted(53, 37, "#U @Un-inscribe all runes", { COLOR_LIGHT });
+	_win.write(73, 29, "SLOTS:" + to_string(gdata->_player->getMaxSpellsKnown()), COLOR_MEDIUM);
+	writeFormatted(57, 37, "#U @Un-inscribe all runes", { COLOR_LIGHT });
 	for (auto sp : gdata->_player->getAllSpellsKnown())
 		_win.write(x, ++y, getSpellNameFull(sp, gdata->_player->getSpellLevel(sp)), getSpellColor(sp));
 

@@ -14,6 +14,9 @@ TODO
 		-> button to show what stuff on the screen is
 	some system for diving faster in Hell?
 	add t3 spells
+	don't learn legendary enchants when dismantling
+	give names to shield tiers
+	start dropping blue chests later
 
 */
 
@@ -50,7 +53,7 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_MAGEBLOOD));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_MAGEBLOOD));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
