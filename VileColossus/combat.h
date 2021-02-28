@@ -3,6 +3,7 @@
 #include "gamedata.h"
 #include "visibility.h"
 #include "effects.h"
+#include "manageMagic.h"
 #include "messages.h"
 
 
@@ -15,6 +16,7 @@ void animateHit(gamedataPtr gdata, creaturePtr target, int damage, bool wasCrit,
 //	Attacks & attack rolls
 
 void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePtr target, int damage);
+void playerTestForSpellTriggerOnHit(gamedataPtr gdata, creaturePtr target);
 
 int rollWeaponDamage(gamedataPtr gdata, creaturePtr attacker);
 int applyProtection(gamedataPtr gdata, creaturePtr target, int dam);

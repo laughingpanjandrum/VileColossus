@@ -29,6 +29,23 @@ void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePt
 }
 
 
+//	On hit, chance to trigger spell castings.
+void playerTestForSpellTriggerOnHit(gamedataPtr gdata, creaturePtr target)
+{
+	int lvl;
+
+	//	MAGEBLOOD
+	lvl = gdata->_player->getTotalEnchantmentBonus(ENCH_MAGEBLOOD);
+	if (lvl > 0 && roll_percent(20))
+		triggerSpellEffect(gdata, gdata->_player, Spell::ARCANE_EMANATION, lvl);
+
+	//	SKYPLITTER
+	lvl = gdata->_player->getTotalEnchantmentBonus(ENCH_SKYSPLITTER);
+	if (lvl > 0 && roll_percent(20))
+		triggerSpellEffect(gdata, gdata->_player, Spell::CALL_LIGHTNING, lvl);
+}
+
+
 //	Determine damage inflicted by a weapon attack. Has some random variance applied.
 int rollWeaponDamage(gamedataPtr gdata, creaturePtr attacker)
 {
@@ -156,6 +173,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			{
 				if (target->isUndead())
 					dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
+				playerTestForSpellTriggerOnHit(gdata, target);
 			}
 
 			//	ETHEREAL reduces damage by 50%
