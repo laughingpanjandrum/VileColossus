@@ -15,7 +15,6 @@ TODO
 	some system for diving faster in Hell?
 	add t3 spells
 	don't learn legendary enchants when dismantling
-	give names to shield tiers
 	start dropping blue chests later
 
 */
