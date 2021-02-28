@@ -301,7 +301,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", { TCODColor::crimson });
 				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
 
-				if (base < 40)
+				if (base <= 50)
 				{
 					drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)) + "%", "Electric Resist", { getDamageTypeColor(DTYPE_ELECTRIC) });
 					_win.write(rx - 5, ry + 10, "+0.5%", COLOR_POSITIVE);
@@ -318,7 +318,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", { COLOR_HEALTH });
 				_win.write(rx - 5, ry + 4, "+0.3", COLOR_POSITIVE);
 
-				if (base < 40)
+				if (base <= 50)
 				{
 					drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", { getDamageTypeColor(DTYPE_POISON) });
 					_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
@@ -338,7 +338,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry + 3, plusminus(p->getSpellPower()) + "%", "Spell Power", { COLOR_MAGIC });
 				_win.write(rx - 5, ry + 4, "+5%", COLOR_POSITIVE);
 				
-				if (base < 40)
+				if (base <= 50)
 				{
 					drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_ARCANE)) + "%", "Arcane Resist", { getDamageTypeColor(DTYPE_ARCANE) });
 					_win.write(rx - 5, ry + 7, "+0.5%", COLOR_POSITIVE);
