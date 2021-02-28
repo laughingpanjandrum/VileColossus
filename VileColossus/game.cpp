@@ -11,7 +11,6 @@ TODO
 
 	interface stuff to add:
 		-> more key prompts on inventory screens/etc
-		-> numpad support
 		-> button to show what stuff on the screen is
 	some system for diving faster in Hell?
 	add t3 spells
@@ -415,7 +414,7 @@ void game::mainGameInput()
 	}
 
 	//	Wait one turn
-	else if (_ih->isKeyPressed('z'))
+	else if (_ih->isKeyPressed('z') || _ih->isKeyPressed(TCODK_KP5))
 		_gdata->_player->spendActionEnergy();
 
 	//	Quaff
