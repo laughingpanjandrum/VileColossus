@@ -1044,7 +1044,7 @@ gridmapPtr mapgen::generate_Cathedral(int dl, bool descending, bool add_monsters
 		//	roll type
 		auto ctype = MT_CHEST_SMALL;
 		int r = randint(1, 100);
-		if (r <= 30 && dl > 2)	ctype = MT_CHEST_GLOWING;
+		if (r <= 30 && dl > 4)	ctype = MT_CHEST_GLOWING;
 
 		//	emplace it
 		m->setTile(ctype, getRandomWalkable(m));
