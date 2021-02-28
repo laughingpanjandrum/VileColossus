@@ -9,7 +9,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
-	add 'fast scrolling' to item lists/enchant list
 	interface stuff to add:
 		-> more key prompts on inventory screens/etc
 		-> numpad support
@@ -691,6 +690,8 @@ void game::checkForAnimationTick()
 
 void game::scrollMenu(int vec, const unsigned size)
 {
+	if (_ih->isCtrlPressed())
+		vec *= 3;
 	_gdata->_idx += vec;
 	if (_gdata->_idx < 0)
 		_gdata->_idx = size - 1;

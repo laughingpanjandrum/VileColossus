@@ -446,6 +446,10 @@ void display::drawEquipment(gamedataPtr gdata)
 			_win.write(x + 15, y, "---", TCODColor::darkGrey);
 	}
 
+	//	Controls
+	writeFormatted(4, y + 2, "#ENTER @Select an item to equip here", { COLOR_LIGHT });
+	writeFormatted(4, y + 3, "#  U   @Unequip this item", { COLOR_LIGHT });
+
 	//	Our current flask
 	y += 3;
 	if (gdata->_player->_currentFlask != nullptr)
@@ -462,10 +466,6 @@ void display::drawEquipment(gamedataPtr gdata)
 		if (it != nullptr)
 			drawItemInfo(gdata, it, 47, 4);
 	}
-
-	//	Controls
-	writeFormatted(4, 48, "#ENTER @Select an item to equip here", { COLOR_LIGHT });
-	writeFormatted(4, 49, "#  U   @Unequip this item", { COLOR_LIGHT });
 
 	drawCharacterSummary(gdata);
 }
