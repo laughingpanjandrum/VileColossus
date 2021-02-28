@@ -16,7 +16,6 @@ TODO
 		-> button to show what stuff on the screen is
 		-> spell power in character summary	
 	show when items are on lava
-	check stacking BEFORE claiming an item can't be picked up
 	some system for diving faster in Hell?
 	2nd boss map has no title
 	add t3 spells

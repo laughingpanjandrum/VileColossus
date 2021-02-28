@@ -888,19 +888,6 @@ void openEquipment(gamedataPtr gdata)
 //	Insert item into inventory.
 void addToInventory(gamedataPtr gdata, itemPtr it)
 {
-	//	Test that we have space
-	if (getInventorySlotsAvailable(gdata) < it->getSize())
-	{
-		//	Drop item on the ground.
-		messages::error(gdata, "Your inventory is full!");
-		gdata->_map->addItem(it, gdata->_player->_pos);
-		return;
-	}
-
-	//	Note that we have a new item for whatever slot this goes in
-	if (it->_isNewItem)
-		gdata->_player->markNewForSlot(getSlotForCategory(it->_category));
-
 	//	Attempt to stack
 	if (it->stacks())
 	{
@@ -913,6 +900,20 @@ void addToInventory(gamedataPtr gdata, itemPtr it)
 			}
 		}
 	}
+
+	//	Test that we have space
+	if (getInventorySlotsAvailable(gdata) < it->getSize())
+	{
+		//	Drop item on the ground.
+		messages::error(gdata, "Your inventory is full!");
+		gdata->_map->addItem(it, gdata->_player->_pos);
+		gdata->_state = STATE_NORMAL;
+		return;
+	}
+
+	//	Note that we have a new item for whatever slot this goes in
+	if (it->_isNewItem)
+		gdata->_player->markNewForSlot(getSlotForCategory(it->_category));
 
 	//	Attempt to insert alphabetically
 	for (auto f = gdata->_carriedItems.begin(); f != gdata->_carriedItems.end(); f++)
