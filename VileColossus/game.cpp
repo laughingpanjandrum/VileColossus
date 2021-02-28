@@ -9,6 +9,27 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
+	make bloat poison radius a bit smaller
+	gain levels 1-4 a bit faster??
+	add 'fast scrolling' to item lists/enchant list
+	show inventory capacity when picking stuff up
+	interface stuff to add:
+		-> more key prompts on inventory screens/etc
+		-> numpad support
+		-> button to show what stuff on the screen is
+		-> spell power in character summary	
+	make orb of fire glyph clearer
+	make STR adjust fire resist also
+	monsters on boss level spawn at a hilariously over-high level
+	check gemstone fabrication costs - higher tiers should be unattainable at lower levels
+	make wraiths immune to poison, not arcane
+	show when items are on lava
+	check stacking BEFORE claiming an item can't be picked up
+	reduce max range of Chain Lightning
+	some system for diving faster in Hell?
+	2nd boss map has no title
+	add t3 spells
+
 */
 
 

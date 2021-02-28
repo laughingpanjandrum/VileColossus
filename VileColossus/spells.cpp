@@ -79,7 +79,7 @@ const string getSpellDescription(const Spell sp)
 	case(Spell::FIREBALL):
 		return "Hurl an exploding ball of flame.";
 	case(Spell::SMITE_EVIL):
-		return "Your next weapon attack inflicts massive bonus damage to an undead or demonic target. Lasts for more hits at higher levels.";
+		return "Your next weapon attack inflicts massive bonus damage to an undead target. Lasts for more hits at higher levels.";
 	case(Spell::TELEPORT):
 		return "Teleport in a chosen direction. Can pass through monsters, but not solid walls or doors.";
 	case(Spell::TOXIC_RADIANCE):
