@@ -149,7 +149,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_CURING):			return 100;
 	case(ENCH_DEFENCE):			return randint(1, 3);
 	case(ENCH_EMPOWERING):		return randint(5, 15);
-	case(ENCH_FLAMEWARD):		return randint(5, 25);
+	case(ENCH_FLAMEWARD):		return randint(5, 15);
 	case(ENCH_FURY):			return randint(5, 15) * 5;
 	case(ENCH_GREED):			return randint(1, 4) * 10;
 	case(ENCH_HASTE):			return randint(5, 12);
@@ -160,15 +160,15 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_MAGIC):			return randint(1, 3);
 	case(ENCH_MAGIC_RESTORE):	return randint(1, 6);
 	case(ENCH_MANALEECH):		return randint(1, 2);
-	case(ENCH_POISON_WARD):		return randint(5, 25);
+	case(ENCH_POISON_WARD):		return randint(5, 15);
 	case(ENCH_RAGE):			return randint(5, 25);
 	case(ENCH_REGEN):			return randint(4, 8);
 	case(ENCH_SHARPNESS):		return randint(1, 5);
 	case(ENCH_SLAYING):			return randint(3, 7) * 10;
 	case(ENCH_SPELLPOWER):		return randint(1, 5) * 10;
-	case(ENCH_SPELLWARD):		return randint(5, 25);
+	case(ENCH_SPELLWARD):		return randint(5, 15);
 	case(ENCH_STONESKIN):		return randint(5, 12);
-	case(ENCH_STORMWARD):		return randint(5, 25);
+	case(ENCH_STORMWARD):		return randint(5, 15);
 	case(ENCH_THORNS):			return randint(1, 8);
 	case(ENCH_VENOM):			return randint(2, 5);
 	case(ENCH_WOUNDING):		return randint(1, 6);
@@ -735,6 +735,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_KINSLAYER):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_KINSLAYER, randint(5, 10));
+		break;
+
+	case(ENCH_PETRIFYING):
+		it = generateArmourPiece(maxTier, 4);
+		it->addEnchantment(ENCH_PETRIFYING, randint(4, 8));
 		break;
 
 	case(ENCH_FIREBURST):

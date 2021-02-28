@@ -271,6 +271,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_KINSLAYER):		return "Kinslayer";
+	case(ENCH_PETRIFYING):		return "Petrify";
 	case(ENCH_SHADOWSTRIKE):	return "Shade";
 	case(ENCH_SPELLBURN):		return "Spellburner";
 	case(ENCH_STORMBURST):		return "Stormburst";
@@ -337,6 +338,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_KINSLAYER):		return "Kinslay";
+	case(ENCH_PETRIFYING):		return "Petrifying";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
 	case(ENCH_SPELLBURN):		return "Spellburn";
 	case(ENCH_STORMBURST):		return "Stormburst";
@@ -405,6 +407,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
 	case(ENCH_FLAMESPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Fire.";
 	case(ENCH_KINSLAYER):		return "Each time you fail to crit, you gain a cumulative " + plusminus(val) + "% bonus to crit chance. This bonus is cleared on crit.";
+	case(ENCH_PETRIFYING):		return "The Stoneskin buff increases your Armour Value by an additional +" + to_string(val) + ".";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
 	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + "%. You take damage when casting spells equal to twice their Magic cost.";
 	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";

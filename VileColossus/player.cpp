@@ -152,7 +152,7 @@ int player::getArmourValue() const
 {
 	int total = getEquipmentPropertySum(PROP_ARMOUR_VALUE);
 	if (hasBuff(BUFF_STONESKIN))
-		total += _level * 2;
+		total += _level * 2 + getTotalEnchantmentBonus(ENCH_PETRIFYING);
 	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 2;
 	return total;
 }
