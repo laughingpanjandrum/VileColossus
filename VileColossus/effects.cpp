@@ -142,7 +142,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 void explodeOnDeath(gamedataPtr gdata, monsterPtr target, string flag)
 {
 	if (flag == "poison_burst")
-		fillRegionWithSurface(gdata, target->_pos, 2, Surface::POISON_OOZE);
+		fillRegionWithSurface(gdata, target->_pos, 1, Surface::POISON_OOZE);
 	else if (flag == "fire_burst")
 		inflictDamageInRadius(gdata, target->_pos, 1, DTYPE_FIRE, intpair(1, target->_level));
 }
