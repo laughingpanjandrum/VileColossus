@@ -15,10 +15,8 @@ TODO
 		-> numpad support
 		-> button to show what stuff on the screen is
 		-> spell power in character summary	
-	make wraiths immune to poison, not arcane
 	show when items are on lava
 	check stacking BEFORE claiming an item can't be picked up
-	reduce max range of Chain Lightning
 	some system for diving faster in Hell?
 	2nd boss map has no title
 	add t3 spells

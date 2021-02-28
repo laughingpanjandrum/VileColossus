@@ -154,7 +154,7 @@ const int getSpellRange(const Spell sp, const int lvl)
 		return 3 + lvl / 2;
 
 	case(Spell::CHAIN_LIGHTNING):
-		return MAX(10, lvl - 5);
+		return 5;
 
 	case(Spell::CONJURE_FLAME):
 		return 6;
