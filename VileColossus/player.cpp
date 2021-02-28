@@ -201,6 +201,7 @@ int player::getCriticalChance() const
 	return total;
 }
 
+
 int player::getCriticalMultiplier() const
 {
 	//	Base (From weapons); averaged if dualwielding.
@@ -212,6 +213,11 @@ int player::getCriticalMultiplier() const
 	total += getTotalEnchantmentBonus(ENCH_SLAYING);
 	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 25;
 	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
+
+	//	Additional adjust from special enchants
+	if (getTotalEnchantmentBonus(ENCH_AVARICE) > 0)
+		total += getGreedBonus();
+
 	return total;
 }
 

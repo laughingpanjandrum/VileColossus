@@ -263,6 +263,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 		//	Unique enchantments
 	case(ENCH_AFFINITY):		return "Affinity";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Mirror";
+	case(ENCH_AVARICE):			return "Avarice";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Fierce Conductor";
 	case(ENCH_CUNNING):			return "Rat's Cunning";
@@ -330,6 +331,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 		//	Legendary enchants
 	case(ENCH_AFFINITY):		return "Bonus Resist";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
+	case(ENCH_AVARICE):			return "Avarice";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Conduction";
 	case(ENCH_CUNNING):			return "Cunning";
@@ -399,6 +401,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 
 	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated bonus.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
+	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
 	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
@@ -429,6 +432,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	switch (en)
 	{
 		//	Numeric value is irrelevant
+	case(ENCH_AVARICE):
 	case(ENCH_CURING):
 		return name;
 

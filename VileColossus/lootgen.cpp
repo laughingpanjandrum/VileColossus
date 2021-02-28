@@ -707,6 +707,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(ENCH_ARCANE_SHIELD, randint(5, 15));
 		break;
 
+	case(ENCH_AVARICE):
+		it = generateJewel(maxTier, 4);
+		it->addEnchantment(ENCH_AVARICE, 1);
+		break;
+
 	case(ENCH_BLACKBLOOD):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_BLACKBLOOD, randint(30, 50));
