@@ -14,7 +14,7 @@ TODO
 		-> button to show what stuff on the screen is
 	some system for diving faster in Hell?
 	add t3 spells
-	don't learn legendary enchants when dismantling
+	
 
 */
 

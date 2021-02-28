@@ -48,6 +48,7 @@ void openAnvilMenu(gamedataPtr gdata);
 
 void openForgeMenu(gamedataPtr gdata);
 
+bool canLearnEnchantment(gamedataPtr gdata, const ItemEnchantment en);
 bool knowsEnchantmentType(gamedataPtr gdata, const ItemEnchantment en);
 void enhanceItem(gamedataPtr gdata, itemPtr it);
 

@@ -392,8 +392,11 @@ void dismantleFromInventory(gamedataPtr gdata)
 		if (it->_rarity > 3)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 
+		//	Flask components
 		if (it->_category == ITEM_FLASK)
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity));
+
+		//	Spellrune components
 		else if (it->_category == ITEM_SPELLRUNE)
 		{
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
@@ -415,7 +418,7 @@ void dismantleFromInventory(gamedataPtr gdata)
 		//	Learn its enchants, if any
 		for (auto en : *it->getAllEnchantments())
 		{
-			if (!knowsEnchantmentType(gdata, en))
+			if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
 			{
 				messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
 				gdata->_knownEnchants.push_back(en);
@@ -618,6 +621,14 @@ void reinforceSelectedItem(gamedataPtr gdata)
 		else
 			messages::error(gdata, "Insufficient materials to reinforce!");
 	}
+}
+
+
+//	Returns True if we're allowed to learn the given enchant on dismantle.
+//	We don't learn legendary enchants.
+bool canLearnEnchantment(gamedataPtr gdata, const ItemEnchantment en)
+{
+	return find(lootgen::LEGENDARY_ENCHANTS.begin(), lootgen::LEGENDARY_ENCHANTS.end(), en) == lootgen::LEGENDARY_ENCHANTS.end();
 }
 
 
