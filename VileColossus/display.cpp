@@ -388,6 +388,7 @@ void display::drawItemPickup(gamedataPtr gdata)
 			_win.write(46, 24, "EQUIPPED", COLOR_WHITE);
 		}
 	}
+	drawInventoryCapacity(gdata, 4, 40);
 }
 
 

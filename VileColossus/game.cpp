@@ -10,13 +10,11 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	add 'fast scrolling' to item lists/enchant list
-	show inventory capacity when picking stuff up
 	interface stuff to add:
 		-> more key prompts on inventory screens/etc
 		-> numpad support
 		-> button to show what stuff on the screen is
 		-> spell power in character summary	
-	make orb of fire glyph clearer
 	make STR adjust fire resist also
 	monsters on boss level spawn at a hilariously over-high level
 	check gemstone fabrication costs - higher tiers should be unattainable at lower levels
