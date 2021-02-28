@@ -1366,7 +1366,7 @@ gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount
 
 	//	Add additional monsters.
 	auto node = new TCODBsp(ctr.first - 3, ctr.second - 3, 6, 6);
-	auto mtable = rollMonsterGroup(dl * 2, MonsterType::CULTIST);
+	auto mtable = rollMonsterGroup(dl, MonsterType::CULTIST);
 	addMonsterGroupToNode(m, &mtable, node);
 
 	//	Add downstairs.
@@ -1393,7 +1393,7 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
 
 	//	Add additional monsters.
 	auto node = new TCODBsp(ctr.first - 3, ctr.second - 3, 6, 6);
-	auto mtable = rollMonsterGroup(dl * 2, MonsterType::CULTIST);
+	auto mtable = rollMonsterGroup(dl, MonsterType::CULTIST);
 	addMonsterGroupToNode(m, &mtable, node);
 
 	//	Add downstairs.

@@ -16,7 +16,6 @@ TODO
 		-> button to show what stuff on the screen is
 		-> spell power in character summary	
 	make STR adjust fire resist also
-	monsters on boss level spawn at a hilariously over-high level
 	check gemstone fabrication costs - higher tiers should be unattainable at lower levels
 	make wraiths immune to poison, not arcane
 	show when items are on lava
