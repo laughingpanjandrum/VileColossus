@@ -311,11 +311,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
 	case(MonsterType::WRAITH):
-		return { "ethereal", "defended", "arcane_attack", "immune_arcane", "undead", };
+		return { "ethereal", "defended", "arcane_attack", "immune_poison", "undead", };
 	case(MonsterType::WRAITH_GREAT):
-		return { "ethereal", "arcane_attack", "more_damage", "immune_arcane", "undead", };
+		return { "ethereal", "arcane_attack", "more_damage", "immune_poison", "undead", };
 	case(MonsterType::WRAITH_MOON):
-		return { "ethereal", "electric_attack", "immune_arcane", "immune_electric", "casts_lightning", "undead", };
+		return { "ethereal", "electric_attack", "immune_poison", "immune_electric", "casts_lightning", "undead", };
 
 	case(MonsterType::WRETCH):
 		return { "slow", "more_health", "undead", };
@@ -350,7 +350,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "immune_fire", "resists_poison", "fire_attack", "casts_fireblast", "more_health", "spawner", };
 
 	case(MonsterType::BOSS_WRAITH_KING):
-		return { "immune_arcane", "ethereal", "casts_arcane_bolt", "more_health", "spawner", "undead", };
+		return { "immune_poison", "ethereal", "casts_arcane_bolt", "more_health", "spawner", "undead", };
 		
 
 	default:
