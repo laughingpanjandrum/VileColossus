@@ -488,7 +488,7 @@ void knockback(gamedataPtr gdata, creaturePtr t, const intpair awayFrom, int dis
 			break;
 	}
 	if (t->isPlayer())
-		setPlayerPosition(gdata, at);
+		setPlayerPosition(gdata, t->_pos);
 }
 
 

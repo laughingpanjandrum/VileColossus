@@ -15,7 +15,6 @@ TODO
 	some system for diving faster in Hell?
 	add t3 spells
 	
-	knockback can push you into walls
 	add some way to mark items [as 'important')
 	
 
