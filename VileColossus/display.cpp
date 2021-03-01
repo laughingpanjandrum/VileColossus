@@ -1120,6 +1120,12 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(dam), { getDamageTypeColor(DTYPE_ARCANE) });
 		writeFormatted(atx, ++aty, "Adjusted #1-" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_ARCANE))), { getDamageTypeColor(DTYPE_ARCANE) });
 	}
+	else if (sp == Spell::STATIC_FIELD)
+	{
+		auto dam = gdata->_player->getStaticFieldDamage();
+		writeFormatted(atx, ++aty, "Damage   #" + to_string(dam), { getDamageTypeColor(DTYPE_ELECTRIC) });
+		writeFormatted(atx, ++aty, "Adjusted #" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_ELECTRIC))), { getDamageTypeColor(DTYPE_ELECTRIC) });
+	}
 	else if (sp == Spell::VENOMFANG)
 	{
 		auto dam = gdata->_player->getVenomfangDamage();

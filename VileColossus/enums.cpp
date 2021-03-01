@@ -557,6 +557,7 @@ string getBuffName(const BuffType bf)
 	case(BUFF_HASTE):			return "Haste";
 	case(BUFF_REGENERATION):	return "Regeneration";
 	case(BUFF_SMITE_EVIL):		return "Smite Undead";
+	case(BUFF_STATIC_FIELD):	return "Static Field";
 	case(BUFF_STONESKIN):		return "Stoneskin";
 	case(BUFF_TOXIC_RADIANCE):	return "Toxic Radiance";
 	case(BUFF_VENOMFANG):		return "Venomfang";

@@ -652,6 +652,7 @@ itemPtr lootgen::generateSpellrune(const int tier, const int rarity)
 	const vector<Spell>* options;
 	switch (tier)
 	{
+	case(3):	options = &SPELLS_TIER_3; break;
 	case(2):	options = &SPELLS_TIER_2; break;
 	default:	options = &SPELLS_TIER_1; break;
 	}

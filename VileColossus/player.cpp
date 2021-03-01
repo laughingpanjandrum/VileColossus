@@ -404,13 +404,17 @@ int player::getReprisalDamage() const
 }
 
 
-//	Bonus damage inflicted by the Smite Evil buff.
+
 int player::getSmiteEvilDamage() const
 {
 	return 10 + getSpellPower() / 5;
 }
 
-//	Added to max poison damage when casting the spell.
+int player::getStaticFieldDamage() const
+{
+	return 5 + getSpellPower() / 10;;
+}
+
 int player::getVenomfangDamage() const
 {
 	return 6 + 10.0f * (float)getSpellPower() / 100.0f;

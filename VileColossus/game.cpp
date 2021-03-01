@@ -13,9 +13,6 @@ TODO
 		-> more key prompts on inventory screens/etc
 	some system for diving faster in Hell?
 	add t3 spells
-	
-	add some way to mark items [as 'important')
-	
 
 */
 
@@ -52,15 +49,11 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
+	addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
 	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_MAGEBLOOD));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
-		addToInventory(_gdata, it);
-	}*/
-	/*for (unsigned i = 0; i < 30; i++)
-	{
-		auto it = lootgen::generateGem(0, 4);
 		addToInventory(_gdata, it);
 	}*/
 
@@ -675,6 +668,18 @@ void game::doCreatureTick(creaturePtr cr)
 				inflictEnergyDamage(_gdata, t, randint(1, dam), DTYPE_ARCANE);
 		}
 		addAnimation(_gdata, anim_Explosion(cr->_pos, 1, '#', getDamageTypeColor(DTYPE_ARCANE)));
+	}
+
+	//	CHAIN
+	if (cr->isPlayer() && cr->hasBuff(BUFF_STATIC_FIELD))
+	{
+		auto t = findRandomSpellTarget(_gdata, _gdata->_player);
+		if (t != nullptr)
+		{
+			const int dbase = _gdata->_player->getStaticFieldDamage();
+			auto dam = intpair(dbase / 2, dbase);
+			chainDamage(_gdata, t, DTYPE_ELECTRIC, dam, 3);
+		}
 	}
 
 	//	Progress creature state

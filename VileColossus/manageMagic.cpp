@@ -185,6 +185,10 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '*', getDamageTypeColor(dtype)));
 			break;
 
+		case(Spell::CRYSTAL_SPEAR):
+			addAnimation(gdata, anim_BulletPath(getBresenhamLine(caster->_pos, target->_pos), getDamageTypeColor(dtype)));
+			break;
+
 		case(Spell::FIREBALL):
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '*', getDamageTypeColor(dtype)));
 			addAnimation(gdata, padAnimationFront(anim_Explosion(target->_pos, 2, '#', TCODColor::flame), 5));
@@ -210,6 +214,10 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 
 	case(Spell::SMITE_EVIL):
 		caster->setBuffDuration(BUFF_SMITE_EVIL, getSpellDuration(sp, lvl));
+		break;
+
+	case(Spell::STATIC_FIELD):
+		caster->setBuffDuration(BUFF_STATIC_FIELD, getSpellDuration(sp, lvl));
 		break;
 
 	case(Spell::TOXIC_RADIANCE):
@@ -255,7 +263,8 @@ void playerCastAimedSpell(gamedataPtr gdata, const intpair vec)
 				if (t != nullptr)
 				{
 					hitTargetWithSpell(gdata, gdata->_player, t, sp, lvl);
-					break;
+					if (sp != Spell::CRYSTAL_SPEAR)
+						break;
 				}
 
 				//	if not, did we hit an obstacle?

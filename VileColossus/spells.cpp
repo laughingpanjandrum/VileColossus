@@ -23,6 +23,9 @@ const string getSpellName(const Spell sp)
 	case(Spell::TELEPORT):				return "Teleport";
 	case(Spell::TOXIC_RADIANCE):		return "Toxic Radiance";
 
+	case(Spell::CRYSTAL_SPEAR):			return "Crystal Spear";
+	case(Spell::STATIC_FIELD):			return "Static Field";
+
 	default:
 		return "unknown_spell_name";
 	}
@@ -34,6 +37,7 @@ const colorType getSpellColor(const Spell sp)
 	{
 	case(Spell::ARCANE_EMANATION):		
 	case(Spell::ARCANE_PULSE):
+	case(Spell::CRYSTAL_SPEAR):
 		return getDamageTypeColor(DTYPE_ARCANE);
 
 	case(Spell::BLINK):
@@ -42,6 +46,7 @@ const colorType getSpellColor(const Spell sp)
 	
 	case(Spell::CALL_LIGHTNING):		
 	case(Spell::CHAIN_LIGHTNING):
+	case(Spell::STATIC_FIELD):
 		return getDamageTypeColor(DTYPE_ELECTRIC);
 
 	case(Spell::CONJURE_FLAME):
@@ -76,10 +81,14 @@ const string getSpellDescription(const Spell sp)
 		return "Hurl lightning in a chosen direction; it then arcs to additional nearby enemies.";
 	case(Spell::CONJURE_FLAME):
 		return "Hurl fire in a chosen direction.";
+	case(Spell::CRYSTAL_SPEAR):
+		return "Hurl a spear of arcane energy that penetrates multiple creatures in a line.";
 	case(Spell::FIREBALL):
 		return "Hurl an exploding ball of flame.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead target. Lasts for more hits at higher levels.";
+	case(Spell::STATIC_FIELD):
+		return "You emit pulses of electricity at random intervals, which can chain through multiple enemies.";
 	case(Spell::TELEPORT):
 		return "Teleport in a chosen direction. Can pass through monsters, but not solid walls or doors.";
 	case(Spell::TOXIC_RADIANCE):
@@ -118,6 +127,10 @@ int getSpellTier(const Spell sp)
 	case(Spell::TOXIC_RADIANCE):
 		return 2;
 
+	case(Spell::CRYSTAL_SPEAR):
+	case(Spell::STATIC_FIELD):
+		return 3;
+
 	default:
 		return 0;
 	}
@@ -137,6 +150,7 @@ bool isSpellTargeted(const Spell sp)
 	case(Spell::BLINK):
 	case(Spell::CHAIN_LIGHTNING):
 	case(Spell::CONJURE_FLAME):
+	case(Spell::CRYSTAL_SPEAR):
 	case(Spell::FIREBALL):
 	case(Spell::TELEPORT):
 		return true;
@@ -159,6 +173,9 @@ const int getSpellRange(const Spell sp, const int lvl)
 	case(Spell::CONJURE_FLAME):
 		return 6;
 
+	case(Spell::CRYSTAL_SPEAR):
+		return 10 + lvl / 3;
+
 	case(Spell::FIREBALL):
 		return 8 + lvl / 5;
 
@@ -179,6 +196,7 @@ bool doesSpellHaveDuration(const Spell sp)
 	{
 	case(Spell::ARCANE_PULSE):
 	case(Spell::SMITE_EVIL):
+	case(Spell::STATIC_FIELD):
 	case(Spell::TOXIC_RADIANCE):
 	case(Spell::VENOMFANG):
 		return true;
@@ -194,6 +212,7 @@ const int getSpellDuration(const Spell sp, const int lvl)
 	{
 	case(Spell::ARCANE_PULSE):		return lvl * 2;
 	case(Spell::SMITE_EVIL):		return 1 + lvl / 2;
+	case(Spell::STATIC_FIELD):		return lvl * 2;
 	case(Spell::TOXIC_RADIANCE):	return lvl * 5;
 	case(Spell::VENOMFANG):			return 2 + lvl;
 
@@ -209,6 +228,7 @@ bool doesSpellInflictDamage(const Spell sp)
 	case(Spell::ARCANE_PULSE):
 	case(Spell::BLINK):
 	case(Spell::SMITE_EVIL):
+	case(Spell::STATIC_FIELD):
 	case(Spell::TELEPORT):
 	case(Spell::VENOMFANG):
 		return false;
@@ -224,6 +244,7 @@ const DamageType getSpellDamageType(const Spell sp)
 	{
 	case(Spell::ARCANE_EMANATION):	
 	case(Spell::ARCANE_PULSE):
+	case(Spell::CRYSTAL_SPEAR):
 		return DTYPE_ARCANE;
 
 	case(Spell::CALL_LIGHTNING):	
@@ -251,6 +272,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::CALL_LIGHTNING):	return intpair(1 + lvl, 2 + lvl * 2);
 	case(Spell::CHAIN_LIGHTNING):	return intpair(3 + lvl, 3 + lvl * 3);
 	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
+	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 10);
 	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
 	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 4);
 	default:
