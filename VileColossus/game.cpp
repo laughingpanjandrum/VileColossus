@@ -18,9 +18,6 @@ TODO
 	knockback can push you into walls
 	balance spellrunes so their enchants only affect spells?
 	add some way to mark items [as 'important')
-	gemstone fabrication interface needs fixing:
-		- show crafts we can't afford
-		- move ENTER prompt to underneath fabrication box
 	
 
 */

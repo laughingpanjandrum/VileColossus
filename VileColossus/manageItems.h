@@ -17,6 +17,7 @@ void tryEquipSelectedFlask(gamedataPtr gdata);
 
 void openStash(gamedataPtr gdata);
 
+void stashGemstone(gamedataPtr gdata, itemPtr it);
 void addToStash(gamedataPtr gdata, itemPtr it);
 void removeFromStash(gamedataPtr gdata, itemPtr it);
 

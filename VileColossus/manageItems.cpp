@@ -96,6 +96,41 @@ void openStash(gamedataPtr gdata)
 }
 
 
+//	Add a gemstone to our stash.
+void stashGemstone(gamedataPtr gdata, itemPtr it)
+{
+	//	Is it in the gems list already?
+	for (auto other : gdata->_stashedGems)
+	{
+		if (other->stacksWith(it))
+		{
+			other->_amountLeft += it->_amountLeft;
+			return;
+		}
+	}
+
+	//	If not, add it in order with other gems of the same type.
+	for (auto f = gdata->_stashedGems.begin(); f != gdata->_stashedGems.end(); f++)
+	{
+		//	Found gems of the same type.
+		if ((*f)->_gemType == it->_gemType)
+		{
+			//	Find the first gem in the list that's higher level than the current one, and insert before.
+			//	If none is higher level, insert afterward.
+			while (f != gdata->_stashedGems.end() && (*f)->_enhancementLevel < it->_enhancementLevel && (*f)->_gemType == it->_gemType)
+				f++;
+			
+			//	Insert.
+			gdata->_stashedGems.insert(f, it);
+			return;
+		}
+	}
+
+	//	Push to the end.
+	gdata->_stashedGems.push_back(it);
+}
+
+
 //	Put an item into our stash.
 void addToStash(gamedataPtr gdata, itemPtr it)
 {
@@ -120,18 +155,7 @@ void addToStash(gamedataPtr gdata, itemPtr it)
 	//	As do gems.
 	else if (it->_category == ITEM_GEM)
 	{
-		//	Is it in the gems list already?
-		for (auto other : gdata->_stashedGems)
-		{
-			if (other->stacksWith(it))
-			{
-				other->_amountLeft += it->_amountLeft;
-				return;
-			}
-		}
-
-		//	If not, add it.
-		gdata->_stashedGems.push_back(it);
+		stashGemstone(gdata, it);
 		return;
 	}
 

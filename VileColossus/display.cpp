@@ -905,7 +905,7 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 
 	//	Other stashed stuff
 	drawStashedGemstones(gdata, 47, 4);
-	drawStashedMaterials(gdata, 47, 32);
+	drawStashedMaterials(gdata, 47, 34);
 	drawMessages(gdata);
 }
 
@@ -1351,7 +1351,7 @@ int display::drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int at
 //	All the gems in our stash.
 void display::drawStashedGemstones(gamedataPtr gdata, int x, int y)
 {
-	drawBox(x - 2, y - 2, 35, 25, COLOR_DARK);
+	drawBox(x - 2, y - 2, 35, 28, COLOR_DARK);
 	_win.write(x - 1, y - 2, "GEMSTONES", COLOR_LIGHT);
 	for (auto gem : gdata->_stashedGems)
 	{
