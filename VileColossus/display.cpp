@@ -731,6 +731,7 @@ void display::drawAlchemy(gamedataPtr gdata)
 	auto mat_cost = gdata->_player->_currentFlask->getEnhanceCost();
 	auto mat_type = gdata->_player->_currentFlask->getEnhanceMaterial();
 	writeFormatted(52, 5, "Requires #x" + to_string(mat_cost) + " " + getMaterialTypeName(mat_type), { getMaterialTypeColor(mat_type) });
+	writeFormatted(52, 6, " and #" + to_string(getFlaskEnhanceCost(gdata, gdata->_player->_currentFlask)) + " fragments", { getMaterialTypeColor(MaterialType::FRAGMENTS) });
 
 	drawStashedMaterials(gdata, 50, 13);
 	drawMessages(gdata);

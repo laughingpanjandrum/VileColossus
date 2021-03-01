@@ -394,7 +394,7 @@ void dismantleFromInventory(gamedataPtr gdata)
 
 		//	Flask components
 		if (it->_category == ITEM_FLASK)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity));
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));
 
 		//	Spellrune components
 		else if (it->_category == ITEM_SPELLRUNE)
@@ -716,6 +716,13 @@ void repairEquipmentItem(gamedataPtr gdata)
 		repairItem(gdata, it);
 }
 
+
+//	Fragment cost to increase flask healing amount.
+int getFlaskEnhanceCost(gamedataPtr gdata, itemPtr it)
+{
+	return it->getProperty(PROP_HEAL_ON_USE) * 3 / 2;
+}
+
 void openAlchemyMenu(gamedataPtr gdata)
 {
 	gdata->_state = STATE_ALCHEMY;
@@ -728,9 +735,11 @@ void tryEnhanceFlask(gamedataPtr gdata)
 {
 	auto mat_type = gdata->_player->_currentFlask->getEnhanceMaterial();
 	auto mat_cost = gdata->_player->_currentFlask->getEnhanceCost();
-	if (hasMaterial(gdata, mat_type, mat_cost))
+	auto frag_cost = getFlaskEnhanceCost(gdata, gdata->_player->_currentFlask);
+	if (hasMaterial(gdata, mat_type, mat_cost) && hasMaterial(gdata, MaterialType::FRAGMENTS, frag_cost))
 	{
 		spendMaterial(gdata, mat_type, mat_cost);
+		spendMaterial(gdata, MaterialType::FRAGMENTS, frag_cost);
 		int heal = gdata->_player->_currentFlask->getProperty(PROP_HEAL_ON_USE);
 		gdata->_player->_currentFlask->adjustProperty(PROP_HEAL_ON_USE, (float)heal * 0.15f);
 		messages::add(gdata, "Enhanced #" + gdata->_player->_currentFlask->getName() + "@!", { gdata->_player->_currentFlask->getColor() });

@@ -72,6 +72,7 @@ void openDemonforge(gamedataPtr gdata);
 
 //	ALCHEMY
 
+int getFlaskEnhanceCost(gamedataPtr gdata, itemPtr it);
 void openAlchemyMenu(gamedataPtr gdata);
 void tryEnhanceFlask(gamedataPtr gdata);
 
