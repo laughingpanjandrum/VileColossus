@@ -758,8 +758,8 @@ const vector<itemPtr> getGemstonesWeCanFabricate(gamedataPtr gdata)
 		if (it->_amountLeft >= 3 && it->_enhancementLevel < GEM_MAX_TIER)
 		{
 			auto gem = lootgen::generateGemOfType(it->_gemType, it->_enhancementLevel + 1, it->_rarity);
-			if (hasMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(gem)))
-				gems.push_back(gem);
+			//if (hasMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(gem)))
+			gems.push_back(gem);
 		}
 	}
 	return gems;
@@ -851,28 +851,35 @@ void tryFabricateGemstone(gamedataPtr gdata)
 	{
 		//	what we're trying to make
 		auto gem = gdata->_currentItemList[gdata->_idx];
+		auto cost = getGemstoneFabricateCost(gem);
 		
-		//	pay the PRICE
-		spendMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(gem));
-		for (unsigned i = 0; i < gdata->_stashedGems.size(); i++)
+		//	Can we afford it?
+		if (hasMaterial(gdata, MaterialType::FRAGMENTS, cost))
 		{
-			//	identify the type of gem required to create this
-			if (gdata->_stashedGems[i]->_gemType == gem->_gemType && gdata->_stashedGems[i]->_enhancementLevel == gem->_enhancementLevel - 1)
+			//	pay the PRICE
+			spendMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(gem));
+			for (unsigned i = 0; i < gdata->_stashedGems.size(); i++)
 			{
-				gdata->_stashedGems[i]->_amountLeft -= 3;
-				if (gdata->_stashedGems[i]->_amountLeft < 1)
-					gdata->_stashedGems.erase(gdata->_stashedGems.begin() + i);
-				break;
+				//	identify the type of gem required to create this
+				if (gdata->_stashedGems[i]->_gemType == gem->_gemType && gdata->_stashedGems[i]->_enhancementLevel == gem->_enhancementLevel - 1)
+				{
+					gdata->_stashedGems[i]->_amountLeft -= 3;
+					if (gdata->_stashedGems[i]->_amountLeft < 1)
+						gdata->_stashedGems.erase(gdata->_stashedGems.begin() + i);
+					break;
+				}
 			}
+
+			//	get the gem
+			addToStash(gdata, gem);
+
+			//	re-create the list of forgeable gems
+			gdata->_currentItemList = getGemstonesWeCanFabricate(gdata);
+			if (gdata->_idx >= gdata->_currentItemList.size())
+				gdata->_idx = gdata->_currentItemList.size() - 1;
 		}
-
-		//	get the gem
-		addToStash(gdata, gem);
-
-		//	re-create the list of forgeable gems
-		gdata->_currentItemList = getGemstonesWeCanFabricate(gdata);
-		if (gdata->_idx >= gdata->_currentItemList.size())
-			gdata->_idx = gdata->_currentItemList.size() - 1;
+		else
+			messages::error(gdata, "Not enough materials!");
 	}
 }
 
@@ -1055,8 +1062,11 @@ void tryAutopickup(gamedataPtr gdata, const intpair pt)
 
 			//	we play a little animation when we pick up money
 			if (it->_category == ITEM_MATERIAL)
+			{
+				messages::add(gdata, "Got #" + it->getName() + "@!", { it->getColor() });
 				addAnimation(gdata, anim_FlashGlyph(gdata->_player->_pos, '$', it->getColor()));
-				//addAnimation(gdata, padAnimationFront(anim_MovingText(gdata->_player->_pos, "$+" + to_string(it->_amountLeft), it->getColor(), intpair(1, -1)), anim_delay++));
+			}
+
 		}
 	}
 }

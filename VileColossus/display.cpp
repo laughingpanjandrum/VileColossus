@@ -886,21 +886,24 @@ void display::drawGemstoneFabricator(gamedataPtr gdata)
 
 		//	selected item
 		auto it = gdata->_currentItemList[i];
+		auto col = it->getColor();
+		if (!hasMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(it)))
+			col = TCODColor::darkGrey;
 		if (selected)
 		{
-			//	show item info
-			_win.write(x + 3, y, it->getName(), COLOR_BLACK, it->getColor());
-			//drawItemInfo(gdata, it, 47, 4);
+			//	name of gem
+			_win.write(x + 3, y, it->getName(), COLOR_BLACK, col);
 
 			//	requirements to fabricate
-			writeFormatted(45, 23, "#ENTER @Fabricate gemstone", { COLOR_LIGHT });
-			writeFormatted(47, 24, "Requires #x3 " + getGemTypeFullName(it->_gemType, it->_enhancementLevel - 1), { it->getColor() });
-			writeFormatted(47, 25, "Costs #" + to_string(getGemstoneFabricateCost(it)) + " fragments", { TCODColor::gold });
+			writeFormatted(4, 35, "#ENTER @Fabricate gemstone", { COLOR_LIGHT });
+			writeFormatted(5, 36, "Requires #x3 " + getGemTypeFullName(it->_gemType, it->_enhancementLevel - 1), { it->getColor() });
+			writeFormatted(5, 37, "Costs #" + to_string(getGemstoneFabricateCost(it)) + " fragments", { TCODColor::gold });
 		}
 		else
-			_win.write(x + 2, y, it->getName(), it->getColor());
+			_win.write(x + 2, y, it->getName(), col);
 	}
 
+	//	Other stashed stuff
 	drawStashedGemstones(gdata, 47, 4);
 	drawStashedMaterials(gdata, 47, 32);
 	drawMessages(gdata);

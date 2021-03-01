@@ -17,7 +17,6 @@ TODO
 	
 	knockback can push you into walls
 	balance spellrunes so their enchants only affect spells?
-	show how much gold is being picked up
 	add some way to mark items [as 'important')
 	gemstone fabrication interface needs fixing:
 		- show crafts we can't afford
