@@ -15,7 +15,6 @@ TODO
 	some system for diving faster in Hell?
 	add t3 spells
 	
-	lose ALL bonuses from broken items
 	'increase spellrune level to x' should display 'x+1' instead
 	knockback can push you into walls
 	balance spellrunes so their enchants only affect spells?

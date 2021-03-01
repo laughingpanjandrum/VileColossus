@@ -214,9 +214,6 @@ void item::setProperty(const ItemProperty prop, int to)
 //	Current value of a given property.
 int item::getProperty(const ItemProperty prop) const
 {
-	//	broken items do not grant any bonuses
-	if (isBroken()) return 0;
-
 	int total =_Property[prop];
 	return total;
 }

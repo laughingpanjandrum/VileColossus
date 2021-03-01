@@ -597,7 +597,7 @@ int player::getTotalEnchantmentBonus(const ItemEnchantment en) const
 	int total = 0;
 	for (auto it : getAllEquippedItems())
 	{
-		if (it != nullptr)
+		if (it != nullptr && !it->isBroken())
 			total += it->getEnchantmentValue(en);
 	}
 	for (auto it : _ImprintedRunes)
@@ -614,7 +614,7 @@ int player::getEquipmentPropertySum(const ItemProperty prop) const
 	int total = 0;
 	for (auto it : _Equipped)
 	{
-		if (it != nullptr)
+		if (it != nullptr && !it->isBroken())
 			total += it->getProperty(prop);
 	}
 	return total;
