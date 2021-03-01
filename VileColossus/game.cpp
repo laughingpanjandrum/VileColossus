@@ -11,7 +11,6 @@ TODO
 
 	interface stuff to add:
 		-> more key prompts on inventory screens/etc
-		-> button to show what stuff on the screen is
 	some system for diving faster in Hell?
 	add t3 spells
 	
@@ -221,6 +220,8 @@ void game::processInput()
 				dropSelectedItem(_gdata);
 			else if (_ih->isKeyPressed('v'))
 				viewItemDetails(_gdata);
+			else if (_ih->isKeyPressed('M'))
+				toggleMarkedValuable(_gdata);
 			break;
 		case(STATE_VIEW_EQUIPMENT):
 			if (_ih->isKeyPressed('U'))
@@ -272,6 +273,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed('v'))
 				viewItemDetails(_gdata);
+			else if (_ih->isKeyPressed('M'))
+				toggleMarkedValuable(_gdata);
 			break;
 		case(STATE_VIEW_INVENTORY_IN_STASH):
 			if (_ih->isKeyPressed(TCODK_TAB))
@@ -284,6 +287,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed('v'))
 				viewItemDetails(_gdata);
+			else if (_ih->isKeyPressed('M'))
+				toggleMarkedValuable(_gdata);
 			break;
 
 
@@ -297,6 +302,8 @@ void game::processInput()
 				tryRepairSelected(_gdata);
 			else if (_ih->isKeyPressed('v'))
 				viewItemDetails(_gdata);
+			else if (_ih->isKeyPressed('M'))
+				toggleMarkedValuable(_gdata);
 			break;
 
 

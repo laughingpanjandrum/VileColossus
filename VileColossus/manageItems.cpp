@@ -240,6 +240,17 @@ void takeSelectedFromStash(gamedataPtr gdata)
 }
 
 
+//	Toggles a mark on the item that highlights it and prevents it from being dismantled.
+void toggleMarkedValuable(gamedataPtr gdata)
+{
+	if (gdata->_idx < gdata->_currentItemList.size())
+	{
+		auto it = gdata->_currentItemList[gdata->_idx];
+		it->_markedAsValuable = !it->_markedAsValuable;
+	}
+}
+
+
 //	Open inventory menu
 void openInventory(gamedataPtr gdata)
 {
@@ -404,54 +415,64 @@ void dismantleFromInventory(gamedataPtr gdata)
 	{
 		auto it = gdata->_currentItemList[gdata->_idx];
 
-		//	Amount/type of parts depend on the item.
-		int fragments = dieRoll(3, 4 + 2 * it->_rarity);
-		addToStash(gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, fragments));
-
-		//	Higher-tier and type-based stuff
-		if (it->_rarity > 1)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
-		if (it->_rarity > 2)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
-		if (it->_rarity > 3)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
-
-		//	Flask components
-		if (it->_category == ITEM_FLASK)
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));
-
-		//	Spellrune components
-		else if (it->_category == ITEM_SPELLRUNE)
+		//	Don't dismantle valuables!
+		if (it->_markedAsValuable)
 		{
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
-			if (it->_spellLevel >= 10)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
+			messages::error(gdata, "This item is marked as valuable and can't be dismantled!");
+			messages::add(gdata, "Remove the mark if you want to dismantle it.");
 		}
-
-		//	Save any gems in the item.
-		auto gems = it->getAllSocketedGemTypes();
-		for (unsigned i = 0; i < gems->size(); i++)
+		
+		else
 		{
-			if (gems->at(i) != GemType::__NONE)
+			//	Amount/type of parts depend on the item.
+			int fragments = dieRoll(3, 4 + 2 * it->_rarity);
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, fragments));
+
+			//	Higher-tier and type-based stuff
+			if (it->_rarity > 1)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
+			if (it->_rarity > 2)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
+			if (it->_rarity > 3)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
+
+			//	Flask components
+			if (it->_category == ITEM_FLASK)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));
+
+			//	Spellrune components
+			else if (it->_category == ITEM_SPELLRUNE)
 			{
-				auto lvl = it->getSocketLevel(i);
-				addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
+				if (it->_spellLevel >= 10)
+					addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
 			}
-		}
 
-		//	Learn its enchants, if any
-		for (auto en : *it->getAllEnchantments())
-		{
-			if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
+			//	Save any gems in the item.
+			auto gems = it->getAllSocketedGemTypes();
+			for (unsigned i = 0; i < gems->size(); i++)
 			{
-				messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
-				gdata->_knownEnchants.push_back(en);
+				if (gems->at(i) != GemType::__NONE)
+				{
+					auto lvl = it->getSocketLevel(i);
+					addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+				}
 			}
-		}
 
-		//	Destroy the item.
-		removeFromInventory(gdata, it);
-		removeFromCurrentItemList(gdata, it);
+			//	Learn its enchants, if any
+			for (auto en : *it->getAllEnchantments())
+			{
+				if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
+				{
+					messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
+					gdata->_knownEnchants.push_back(en);
+				}
+			}
+
+			//	Destroy the item.
+			removeFromInventory(gdata, it);
+			removeFromCurrentItemList(gdata, it);
+		}
 	}
 }
 

@@ -487,6 +487,7 @@ void display::drawInventory(gamedataPtr gdata)
 		y += 1;
 		bool selected = i == gdata->_idx;
 
+		//	item (highlight if selected)
 		auto it = gdata->_currentItemList[i];
 		if (selected)
 		{
@@ -495,6 +496,11 @@ void display::drawInventory(gamedataPtr gdata)
 		}
 		else if (it->_isNewItem)
 			_win.writec(x, y, '!', COLOR_POSITIVE);
+
+
+		//	specially marked
+		if (it->_markedAsValuable)
+			_win.writec(x - 1, y, '#', TCODColor::gold);
 
 		//	item title
 		if (selected)
@@ -541,11 +547,12 @@ void display::drawInventory(gamedataPtr gdata)
 	//	character info
 	if (gdata->_state == STATE_VIEW_INVENTORY_IN_STASH)
 	{
-		writeFormatted(2, 47, "# TAB  @View stash", { COLOR_LIGHT, COLOR_LIGHT });
-		writeFormatted(2, 48, "#  t   @Transfer item to stash", { COLOR_LIGHT, COLOR_LIGHT });
-		writeFormatted(2, 49, "#  T   @Transfer all to stash", { COLOR_LIGHT, COLOR_LIGHT });
+		writeFormatted(2, 44, "# TAB  @View stash", { COLOR_LIGHT, COLOR_LIGHT });
+		writeFormatted(2, 45, "#  t   @Transfer item to stash", { COLOR_LIGHT, COLOR_LIGHT });
+		writeFormatted(2, 46, "#  T   @Transfer all to stash", { COLOR_LIGHT, COLOR_LIGHT });
 	}
-	writeFormatted(2, 50, "#  v  @View item details", { COLOR_LIGHT });
+	writeFormatted(2, 47, "#  v   @View item details", { COLOR_LIGHT });
+	writeFormatted(2, 48, "#  M   @Mark/unmark as valuable item", { COLOR_LIGHT });
 	drawCharacterSummary(gdata);
 }
 
@@ -575,6 +582,8 @@ void display::drawAnvil(gamedataPtr gdata)
 			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
 			it->_isNewItem = false;
 		}
+		if (it->_markedAsValuable)
+			_win.writec(x - 1, y, '#', TCODColor::gold);
 
 		//	item title
 		if (selected)
@@ -1002,6 +1011,10 @@ void display::drawStash(gamedataPtr gdata)
 			it->_isNewItem = false;
 		}
 
+		//	marked as valuable
+		if (it->_markedAsValuable)
+			_win.writec(x - 1, y, '#', TCODColor::gold);
+
 		//	item title
 		if (selected)
 		{
@@ -1026,8 +1039,9 @@ void display::drawStash(gamedataPtr gdata)
 	//	Control options
 	y = 40;
 	drawBox(x - 2, y - 1, 35, 10, COLOR_DARK);
-	writeFormatted(x, ++y, "#TAB      @Open inventory", { COLOR_LIGHT, COLOR_LIGHT });
+	writeFormatted(x, ++y, "#TAB   @Open inventory", { COLOR_LIGHT, COLOR_LIGHT });
 	writeFormatted(x, ++y, " #g    @Transfer to inventory", { COLOR_LIGHT, COLOR_LIGHT });
+	writeFormatted(x, ++y, " #M    @Mark as valuable item", { COLOR_LIGHT });
 }
 
 

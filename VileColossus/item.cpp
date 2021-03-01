@@ -11,6 +11,7 @@ item::item(string name, ItemCategory cat, const int rarity)
 	_rarity = rarity;
 	_amountLeft = 1;
 	_enhancementLevel = 0;
+	_markedAsValuable = false;
 
 	//	list of properties
 	for (unsigned i = 0; i < PROP__NONE; i++)

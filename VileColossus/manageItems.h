@@ -26,6 +26,8 @@ void transferInventoryToStash(gamedataPtr gdata);
 void moveSelectedToStash(gamedataPtr gdata);
 void takeSelectedFromStash(gamedataPtr gdata);
 
+void toggleMarkedValuable(gamedataPtr gdata);
+
 
 //	The ANVIL
 
