@@ -82,9 +82,14 @@ void radiateSpellDamage(gamedataPtr gdata, creaturePtr caster, const intpair ctr
 		{
 			if (gdata->_map->inBounds(x, y))
 			{
+				//	target creature
 				auto t = gdata->_map->getCreature(x, y);
 				if (t != nullptr && t != caster)
 					hitTargetWithSpell(gdata, caster, t, sp, lvl);
+
+				//	other special effects
+				if (sp == Spell::FIRESTORM && roll_one_in(2))
+					trySetSurface(gdata, intpair(x, y), Surface::FIRE);
 			}
 		}
 	}
@@ -210,6 +215,10 @@ void triggerSpellEffect(gamedataPtr gdata, creaturePtr caster, const Spell sp, c
 
 	case(Spell::ARCANE_PULSE):
 		caster->setBuffDuration(BUFF_ARCANE_PULSE, getSpellDuration(sp, lvl));
+		break;
+
+	case(Spell::FIRESTORM):
+		radiateSpellDamage(gdata, caster, caster->_pos, 8, Spell::FIRESTORM, lvl);
 		break;
 
 	case(Spell::SMITE_EVIL):

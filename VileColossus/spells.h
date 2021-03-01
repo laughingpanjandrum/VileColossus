@@ -22,6 +22,7 @@ enum class Spell
 
 	//	Tier 3
 	CRYSTAL_SPEAR,
+	FIRESTORM,
 	STATIC_FIELD,
 
 	__NONE,

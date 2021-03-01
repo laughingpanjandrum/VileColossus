@@ -24,6 +24,7 @@ const string getSpellName(const Spell sp)
 	case(Spell::TOXIC_RADIANCE):		return "Toxic Radiance";
 
 	case(Spell::CRYSTAL_SPEAR):			return "Crystal Spear";
+	case(Spell::FIRESTORM):				return "Firestorm";
 	case(Spell::STATIC_FIELD):			return "Static Field";
 
 	default:
@@ -51,6 +52,7 @@ const colorType getSpellColor(const Spell sp)
 
 	case(Spell::CONJURE_FLAME):
 	case(Spell::FIREBALL):
+	case(Spell::FIRESTORM):
 		return getDamageTypeColor(DTYPE_FIRE);
 
 	case(Spell::TOXIC_RADIANCE):
@@ -85,6 +87,8 @@ const string getSpellDescription(const Spell sp)
 		return "Hurl a spear of arcane energy that penetrates multiple creatures in a line.";
 	case(Spell::FIREBALL):
 		return "Hurl an exploding ball of flame.";
+	case(Spell::FIRESTORM):
+		return "Release an explosion of fire that ignites the area around you.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead target. Lasts for more hits at higher levels.";
 	case(Spell::STATIC_FIELD):
@@ -128,6 +132,7 @@ int getSpellTier(const Spell sp)
 		return 2;
 
 	case(Spell::CRYSTAL_SPEAR):
+	case(Spell::FIRESTORM):
 	case(Spell::STATIC_FIELD):
 		return 3;
 
@@ -253,6 +258,7 @@ const DamageType getSpellDamageType(const Spell sp)
 
 	case(Spell::CONJURE_FLAME):
 	case(Spell::FIREBALL):
+	case(Spell::FIRESTORM):
 		return DTYPE_FIRE;
 
 	case(Spell::TOXIC_RADIANCE):
@@ -272,8 +278,9 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::CALL_LIGHTNING):	return intpair(1 + lvl, 2 + lvl * 2);
 	case(Spell::CHAIN_LIGHTNING):	return intpair(3 + lvl, 3 + lvl * 3);
 	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
-	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 10);
+	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 20);
 	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
+	case(Spell::FIRESTORM):			return intpair(5, 5 + lvl * 2);
 	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 4);
 	default:
 		return intpair(0, 0);

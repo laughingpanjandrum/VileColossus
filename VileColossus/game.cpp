@@ -49,7 +49,7 @@ void game::start()
 	_gdata->_homeBase = _gdata->_map;
 
 	//	test
-	addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
+	//addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
 	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_MAGEBLOOD));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
