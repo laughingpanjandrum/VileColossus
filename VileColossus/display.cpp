@@ -871,8 +871,9 @@ void display::drawGemstoneSelect(gamedataPtr gdata)
 		else
 			_win.write(x, y, it->getName(), it->getColor());
 
+		//	description of gem
 		if (selected)
-			drawItemInfo(gdata, it, 45, 25);
+			drawItemInfo(gdata, it, 45, 25, gdata->_viewingItem);
 	}
 
 	//	description of item we're socketing something into
@@ -1118,7 +1119,7 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 	{
 		auto dam = gdata->_player->getArcanePulseDamage();
 		writeFormatted(atx, ++aty, "Pulse Damage #1-" + to_string(dam), { getDamageTypeColor(DTYPE_ARCANE) });
-		writeFormatted(atx, ++aty, "Adjusted #1-" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_ARCANE))), { getDamageTypeColor(DTYPE_ARCANE) });
+		writeFormatted(atx, ++aty, "Adjusted     #1-" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_ARCANE))), { getDamageTypeColor(DTYPE_ARCANE) });
 	}
 	else if (sp == Spell::STATIC_FIELD)
 	{
@@ -1130,7 +1131,7 @@ void display::drawSpellInfo(gamedataPtr gdata, const Spell sp, const int lvl, in
 	{
 		auto dam = gdata->_player->getVenomfangDamage();
 		writeFormatted(atx, ++aty, "Poison Damage #" + to_string(dam), { getDamageTypeColor(DTYPE_POISON) });
-		writeFormatted(atx, ++aty, "Adjusted #" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_POISON))), { getDamageTypeColor(DTYPE_POISON) });
+		writeFormatted(atx, ++aty, "Adjusted      #" + to_string(adjustByPercent(dam, gdata->_player->getElementalAffinity(DTYPE_POISON))), { getDamageTypeColor(DTYPE_POISON) });
 	}
 
 	//	range
@@ -1184,7 +1185,11 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 
 	//	info about gems
 	if (it->_category == ITEM_GEM)
-		drawGemTypeEffects(gdata, it->_gemType, it->_enhancementLevel, atx, aty + 2);
+	{
+		ItemCategory cat = ITEM__MAX;
+		if (gdata->_viewingItem != nullptr) cat = gdata->_viewingItem->_category;
+		drawGemTypeEffects(gdata, it->_gemType, it->_enhancementLevel, atx, aty + 2, cat);
+	}
 
 
 	//	list of properties
@@ -1289,7 +1294,7 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 			drawBox(48, y - 2, 35, 8, COLOR_DARK);
 			auto lvl = it->getSocketLevel(i);
 			_win.write(x + 2, y, getGemTypeFullName(gems->at(i), lvl), col);
-			drawGemTypeEffects(gdata, gems->at(i), lvl, x, ++y);
+			drawGemTypeEffects(gdata, gems->at(i), lvl, x, ++y, it->_category);
 			y += 8;
 		}
 	}
@@ -1297,8 +1302,9 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 
 
 //	Effects of a gem of the given type, for each type of socket.
-void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty)
+void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty, const ItemCategory hcat)
 {
+	//	outlines for each
 	string weapon, armour, jewel;
 	switch (gem)
 	{
@@ -1333,10 +1339,18 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 		break;
 	}
 
-	_win.write(atx, aty, "Effect if socketed into:", COLOR_MEDIUM);
-	writeFormatted(atx, ++aty, "#ARMOUR #" + armour, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT, });
-	writeFormatted(atx, ++aty, "#JEWEL  #" + jewel, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
-	writeFormatted(atx, ++aty, "#WEAPON #" + weapon, { COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+	
+	//	should we highlight one of them?
+	auto ha = (hcat == ITEM_BOOTS || hcat == ITEM_BRACERS || hcat == ITEM_CHESTPIECE || hcat == ITEM_GLOVES || hcat == ITEM_HELMET || hcat == ITEM_SHOULDERS);
+	auto hj = (hcat == ITEM_AMULET || hcat == ITEM_RING);
+	auto hw = (hcat == ITEM_SHIELD || hcat == ITEM_WEAPON);
+
+
+	//	actually write the effects
+	_win.write(atx, aty, "Effect if socketed into:", COLOR_LIGHT);
+	writeFormatted(atx, ++aty, "#ARMOUR #" + armour, { ha ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT, });
+	writeFormatted(atx, ++aty, "#JEWEL  #" + jewel, { hj ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+	writeFormatted(atx, ++aty, "#WEAPON #" + weapon, { hw ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
 }
 
 

@@ -49,7 +49,7 @@ public:
 
 	void drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, itemPtr compareTo = nullptr);
 	void drawItemInfoDetailed(gamedataPtr gdata, itemPtr it);
-	void drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty);
+	void drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty, const ItemCategory highlightCategory = ITEM__MAX);
 	void drawInventoryCapacity(gamedataPtr gdata, int x, int y);
 	int drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int aty);
 
