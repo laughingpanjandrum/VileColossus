@@ -152,7 +152,7 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_CRITICAL_DAMAGE):			return "Crit Damage";
 	case(PROP_DAMAGE_VARIANCE):			return "Damage Variance";
 	case(PROP_DEFENCE):					return "Defence";
-	case(PROP_HASTE_BUFF):				return "Haste Duration";
+	case(PROP_HASTE_BUFF):				return "Haste";
 	case(PROP_HEAL_ON_USE):				return "Heals";
 	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
@@ -163,8 +163,8 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_SPELLSHIELD_PERCENT):		return "Spellshield";
 	case(PROP_STAGGER_CHANCE):			return "Stagger Chance";
 	case(PROP_STAGGER_DURATION):		return "Stagger Duration";
-	case(PROP_STONESKIN_BUFF):			return "Stoneskin Duration";
-	case(PROP_WRATH_BUFF):				return "Wrath Duration";
+	case(PROP_STONESKIN_BUFF):			return "Stoneskin";
+	case(PROP_WRATH_BUFF):				return "Wrath";
 	default:
 		return "item property " + to_string(prop);
 	}
@@ -323,12 +323,12 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_SLAYING):			return "Critical Damage";
 	case(ENCH_SPELLPOWER):		return "Spell Power";
 	case(ENCH_SPELLWARD):		return "Arcane Resistance";
-	case(ENCH_STONESKIN):		return "Stoneskin Duration";
+	case(ENCH_STONESKIN):		return "Stoneskin";
 	case(ENCH_STORMWARD):		return "Electric Resistance";
 	case(ENCH_THORNS):			return "Reprisal Damage";
 	case(ENCH_VENOM):			return "Poison Damage";
 	case(ENCH_WOUNDING):		return "Weapon Damage";
-	case(ENCH_WRATH):			return "Wrath Duration";
+	case(ENCH_WRATH):			return "Wrath";
 
 		//	Legendary enchants
 	case(ENCH_AFFINITY):		return "Bonus Resist";
