@@ -16,7 +16,6 @@ TODO
 	add t3 spells
 	
 	knockback can push you into walls
-	balance spellrunes so their enchants only affect spells?
 	add some way to mark items [as 'important')
 	
 
