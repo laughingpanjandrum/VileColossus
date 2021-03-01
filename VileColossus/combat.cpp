@@ -93,12 +93,17 @@ void triggerReprisal(gamedataPtr gdata, creaturePtr repriser, creaturePtr target
 			const int bns = gdata->_player->getTotalEnchantmentBonus(en);
 			if (bns > 0)
 			{
+				//	Determine damage type of the spikes
+				DamageType dt = DTYPE_NORMAL;
 				switch (en)
 				{
-				case(ENCH_FLAMESPIKE):		inflictEnergyDamage(gdata, target, bns, DTYPE_FIRE); break;
-				case(ENCH_THUNDERSPIKE):	inflictEnergyDamage(gdata, target, bns, DTYPE_ELECTRIC); break;
-				case(ENCH_VENOMSPIKE):		inflictEnergyDamage(gdata, target, bns, DTYPE_POISON); break;
+				case(ENCH_FLAMESPIKE):		dt = DTYPE_FIRE; break;
+				case(ENCH_THUNDERSPIKE):	dt = DTYPE_ELECTRIC; break;
+				case(ENCH_VENOMSPIKE):		dt = DTYPE_POISON; break;
 				}
+
+				//	Apply affinity bonus and inflict
+				inflictEnergyDamage(gdata, target, adjustByPercent(bns, gdata->_player->getElementalAffinity(dt)), dt); break;
 			}
 		}
 	}

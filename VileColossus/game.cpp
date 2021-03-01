@@ -15,12 +15,8 @@ TODO
 	some system for diving faster in Hell?
 	add t3 spells
 	
-	'increase spellrune level to x' should display 'x+1' instead
 	knockback can push you into walls
 	balance spellrunes so their enchants only affect spells?
-	draw spell slots available as a sequence of squares
-	add Armour Value as an enchant option for weapons
-	make 'Spike'-type reprisal damage scale with affinity
 	show how much gold is being picked up
 	add some way to mark items [as 'important')
 	gemstone fabrication interface needs fixing:
