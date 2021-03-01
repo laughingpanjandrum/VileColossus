@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gamedata.h"
+#include "messages.h"
 
 
 
@@ -49,3 +50,8 @@ bool canMonsterSeeCreature(gamedataPtr gdata, creaturePtr mon, creaturePtr targe
 bool canPlayerSeeCreature(gamedataPtr gdata, creaturePtr target);
 
 int getActualVisionRadius(gamedataPtr gdata);
+
+
+//	Highlight enemies/tiles
+
+void startHighlightingEnemies(gamedataPtr gdata);

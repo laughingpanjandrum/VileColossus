@@ -388,3 +388,14 @@ int getActualVisionRadius(gamedataPtr gdata)
 	else if (total > 15)	total = 15;
 	return total;
 }
+
+
+//	A special overlay that highlights visible enemies.
+void startHighlightingEnemies(gamedataPtr gdata)
+{
+	if (!gdata->_visibleMonsters.empty())
+	{
+		gdata->_state = STATE_HIGHLIGHT_ENEMIES;
+
+	}
+}

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "gamedata.h"
-#include "visibility.h"
 
 
 #define MAX_MESSAGE_COUNT 11
@@ -20,8 +19,5 @@ namespace messages
 	void status_effect(gamedataPtr gdata, const creaturePtr target, const StatusEffect st);
 	void energy_damage(gamedataPtr gdata, const creaturePtr target, const DamageType dt, const int amt);
 
-
-	//	Utility
-	string getTargetIdentifier(gamedataPtr gdata, creaturePtr t);
 
 }

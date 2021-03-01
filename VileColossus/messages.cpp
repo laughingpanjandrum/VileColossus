@@ -23,7 +23,7 @@ void messages::attack_string(gamedataPtr gdata, creaturePtr attacker, creaturePt
 	if (attacker->isPlayer())
 	{
 		//	indicate what we hit
-		txt += "You attack " + getTargetIdentifier(gdata, target) + " (";
+		txt += "You attack " + target->getName() + " (";
 
 		//	damage per hit
 		for (unsigned i = 0; i < damage.size(); i++)
@@ -82,23 +82,12 @@ void messages::status_effect(gamedataPtr gdata, const creaturePtr target, const 
 {
 	if (target->isPlayer())
 		messages::add(gdata, "#You gain status effect: #" + getStatusEffectName(st) + "!", { COLOR_NEGATIVE, getStatusEffectColor(st) });
-	else if (canPlayerSeeCreature(gdata, target) && !target->hasStatusEffect(st))
-		messages::add(gdata, "#" + getTargetIdentifier(gdata, target) + " gains status effect: #" + getStatusEffectName(st) + "!", { target->getColor(), getStatusEffectColor(st) });
+	/*else if (canPlayerSeeCreature(gdata, target) && !target->hasStatusEffect(st))
+		messages::add(gdata, "#" + target->getName() + " gains status effect: #" + getStatusEffectName(st) + "!", { target->getColor(), getStatusEffectColor(st) });*/
 }
 
 void messages::energy_damage(gamedataPtr gdata, const creaturePtr target, const DamageType dt, const int amt)
 {
 	if (!target->isPlayer())
-		messages::add(gdata, "#" + getTargetIdentifier(gdata, target) + " takes #" + to_string(amt) + " " + getDamageTypeName(dt) + " @damage.", { target->getColor(), getDamageTypeColor(dt) });
-}
-
-
-
-//	How the player identifies a given creature, including an article; ie 'the goblin', 'Lord Baal', 'something'
-string messages::getTargetIdentifier(gamedataPtr gdata, creaturePtr t)
-{
-	if (canPlayerSeeCreature(gdata, t))
-		return "the " + t->getName();
-	else
-		return "something";
+		messages::add(gdata, "#" + target->getName() + " takes #" + to_string(amt) + " " + getDamageTypeName(dt) + " @damage.", { target->getColor(), getDamageTypeColor(dt) });
 }
