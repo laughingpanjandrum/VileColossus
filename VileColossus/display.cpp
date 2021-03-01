@@ -942,7 +942,7 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 			//	Other options
 			if (gdata->_player->isRuneEquipped(it))
 				writeFormatted(47, 24, "#u @Unequip this rune", { COLOR_LIGHT });
-			writeFormatted(47, 25, "#e @Increase spellrune level to #" + to_string(it->_spellLevel), { COLOR_LIGHT, COLOR_POSITIVE });
+			writeFormatted(47, 25, "#e @Increase spellrune level to #" + to_string(it->_spellLevel + 1), { COLOR_LIGHT, COLOR_POSITIVE });
 
 			//	Requirements
 			auto mat = it->_spellLevel >= 10 ? MaterialType::BRIGHT_RUNE : MaterialType::RUNE_SHARD;
@@ -959,10 +959,18 @@ void display::drawRuneImprinter(gamedataPtr gdata)
 	x = 47, y = 30;
 	drawBox(45, 29, 35, 8, COLOR_DARK);
 	_win.write(46, 29, "Spells Memorized", COLOR_LIGHT);
-	_win.write(73, 29, "SLOTS:" + to_string(gdata->_player->getMaxSpellsKnown()), COLOR_MEDIUM);
 	writeFormatted(57, 37, "#U @Un-inscribe all runes", { COLOR_LIGHT });
 	for (auto sp : gdata->_player->getAllSpellsKnown())
 		_win.write(x, ++y, getSpellNameFull(sp, gdata->_player->getSpellLevel(sp)), getSpellColor(sp));
+
+
+	//	no of slots
+	const int maxspells = gdata->_player->getMaxSpellsKnown();
+	unsigned s = 0;
+	for (s = 0; s < gdata->_player->getAllSpellsKnown().size(); s++)
+		_win.writec(80 + s - maxspells, 29, 254, TCODColor::lightBlue);
+	for (s; s < maxspells; s++)
+		_win.writec(80 + s - maxspells, 29, 255, TCODColor::darkGrey);
 
 
 	//	mats/messages
