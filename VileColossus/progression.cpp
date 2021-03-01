@@ -19,8 +19,8 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 	int base_xp;
 	switch (target->_tier)
 	{
-	case(1):	base_xp = XP_PER_LEVEL / 100; break;
-	case(2):	base_xp = XP_PER_LEVEL / 50; break;
+	case(1):	base_xp = XP_PER_LEVEL / 50; break;
+	case(2):	base_xp = XP_PER_LEVEL / 25; break;
 	case(3):	base_xp = XP_PER_LEVEL / 10; break;
 	case(4):	base_xp = XP_PER_LEVEL / 5; break;
 	case(5):	base_xp = XP_PER_LEVEL / 2; break;
@@ -29,8 +29,8 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 	}
 
 	//	Gain XP faster at lower levels.
-	if (gdata->_player->_level < 4)
-		base_xp *= 5;
+	/*if (gdata->_player->_level < 4)
+		base_xp *= 5;*/
 
 	//	Monsters of higher level grant slightly more xp
 	int lvl_diff = target->_level - gdata->_player->_level;
