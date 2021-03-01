@@ -6,6 +6,7 @@
 #include "progression.h"
 #include "monsterdata.h"
 #include "mapgen.h"
+#include "visibility.h"
 
 
 

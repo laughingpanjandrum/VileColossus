@@ -164,6 +164,13 @@ void game::drawScreen()
 		break;
 
 
+		//	Highlighting
+	case(STATE_HIGHLIGHT_ENEMIES):
+		_disp.drawMainInterface(_gdata);
+		_disp.drawMonsterHighlights(_gdata);
+		break;
+
+
 		//	The normal game screen
 	default:
 		_disp.updateVisibleMapData(_gdata);
@@ -393,6 +400,13 @@ void game::processInput()
 			break;
 
 
+			//	Highlighting.
+		case(STATE_HIGHLIGHT_ENEMIES):
+			if (_ih->isKeyPressed(TCODK_TAB))
+				backOut();
+			break;
+
+
 			//	Normal input
 		case(STATE_NORMAL):
 			mainGameInput(); break;
@@ -447,6 +461,10 @@ void game::mainGameInput()
 	//	Warp home, if allowed
 	else if (_ih->isKeyPressed('T'))
 		castTownPortal();
+
+	//	Highlighting
+	else if (_ih->isKeyPressed(TCODK_TAB))
+		startHighlightingEnemies(_gdata);
 
 	//	View menus
 	else if (_ih->isKeyPressed('@'))

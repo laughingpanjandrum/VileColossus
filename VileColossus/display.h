@@ -85,6 +85,8 @@ public:
 
 	//	Map drawing & the main game interface
 
+	void drawMonsterHighlights(gamedataPtr gdata);
+
 	void updateVisibleMapData(gamedataPtr gdata);
 	void drawMainInterface(gamedataPtr gdata);
 

@@ -396,6 +396,6 @@ void startHighlightingEnemies(gamedataPtr gdata)
 	if (!gdata->_visibleMonsters.empty())
 	{
 		gdata->_state = STATE_HIGHLIGHT_ENEMIES;
-
+		messages::add(gdata, "#Highlighting enemies. Press ESC to close.", { COLOR_HIGHLIGHT });
 	}
 }
