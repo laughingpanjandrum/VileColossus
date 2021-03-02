@@ -176,9 +176,20 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			//	Player-only damage bonuses
 			if (attacker->isPlayer())
 			{
+				//	Divine enchantment
 				if (target->isUndead())
 					dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
+
+				//	Spell triggers
 				playerTestForSpellTriggerOnHit(gdata, target);
+
+				//	Special crit effects
+				if (crit)
+				{
+					auto pdam = gdata->_player->getTotalEnchantmentBonus(ENCH_BLACKBLOOD);
+					if (pdam > 0)
+						inflictEnergyDamage(gdata, target, adjustByPercent(pdam, gdata->_player->getElementalAffinity(DTYPE_POISON)), DTYPE_POISON);
+				}
 			}
 
 			//	ETHEREAL reduces damage by 50%

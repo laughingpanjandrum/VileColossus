@@ -195,8 +195,6 @@ int player::getCriticalChance() const
 	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE);
 	if (getVisionRadius() <= 6)
 		total += getTotalEnchantmentBonus(ENCH_SHADOWSTRIKE);
-	if (hasStatusEffect(STATUS_POISON))
-		total += getTotalEnchantmentBonus(ENCH_BLACKBLOOD);
 	total += getBuffDuration(BUFF_CRIT_BONUS);
 	return total;
 }

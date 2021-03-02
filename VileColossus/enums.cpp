@@ -406,7 +406,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated bonus.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
-	case(ENCH_BLACKBLOOD):		return "When you are poisoned, your critical hit chance is increased by " + to_string(val) + "%.";
+	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DARK_ARCANA):		return "Weapon attacks inflict bonus Arcane damage equal to 1/10 of your Spell Power, up to " + plusminus(val) + ".";
@@ -447,7 +447,6 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_AFF_ELECTRIC):
 	case(ENCH_AFF_FIRE):
 	case(ENCH_AFF_POISON):
-	case(ENCH_BLACKBLOOD):
 	case(ENCH_CHARGING):
 	case(ENCH_CUNNING):
 	case(ENCH_FLAMEWARD):
