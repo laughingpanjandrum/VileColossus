@@ -14,7 +14,6 @@ TODO
 	some system for diving faster in Hell?
 
 	make resistance inherent to armour pieces, rather than enchantments
-	increase damage bonus from Strength
 
 */
 

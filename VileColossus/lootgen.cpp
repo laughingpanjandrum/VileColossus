@@ -89,11 +89,20 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 
 itemPtr lootgen::generateStartingWeapon()
 {
-	auto it = generateWeaponOfType(BaseWeaponType::SHORTSWORD);
+	//	Randomized type
+	BaseWeaponType bwt;
+	switch (randint(1, 4))
+	{
+	case(1):	bwt = BaseWeaponType::DAGGER;
+	case(2):	bwt = BaseWeaponType::CLUB;
+	case(3):	bwt = BaseWeaponType::SHORTSWORD;
+	default:	bwt = BaseWeaponType::BATTLE_AXE;
+	}
+	auto it = generateWeaponOfType(bwt);
+
+	//	Fixed durability
 	it->setMaxDurability(10);
 	it->_damageTaken = 0;
-	it->setProperty(PROP_RIPOSTE_CHANCE, 25);
-	it->setProperty(PROP_RIPOSTE_DAMAGE, 100);
 	return it;
 }
 
