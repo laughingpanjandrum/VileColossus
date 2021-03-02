@@ -4,6 +4,9 @@
 #include "messages.h"
 
 
+#define MONSTER_MAX_VISION_RANGE 15
+
+
 
 //	Getting coordinates for special effects
 

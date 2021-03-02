@@ -13,7 +13,6 @@ TODO
 		-> more key prompts on inventory screens/etc
 	some system for diving faster in Hell?
 
-	Limit monster aggro range
 	make resistance inherent to armour pieces, rather than enchantments
 	increase damage bonus from Strength
 

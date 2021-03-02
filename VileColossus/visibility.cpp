@@ -368,7 +368,7 @@ bool canCreatureSeeCreature(gamedataPtr gdata, creaturePtr c1, creaturePtr c2)
 //	Monsters can't see anything unless they're in FOV.
 bool canMonsterSeeCreature(gamedataPtr gdata, creaturePtr mon, creaturePtr target)
 {
-	return gdata->_map->isInFov(mon->_pos) && canCreatureSeeCreature(gdata, mon, target);
+	return gdata->_map->isInFov(mon->_pos) && getDistanceBetweenCreatures(mon, target) <= MONSTER_MAX_VISION_RANGE && canCreatureSeeCreature(gdata, mon, target);
 }
 
 //	Tests whether the player can see a given creature.
