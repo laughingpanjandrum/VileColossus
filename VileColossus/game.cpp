@@ -15,7 +15,6 @@ TODO
 
 	Limit monster aggro range
 	remove 'stagger duration' property from hammers, make it constant
-	do cleave attacks consume extra time per attack?
 	lighten the blue colour of blue rarity
 	does fragment qty dropped reduce based on level difference? if so, it shouldn't
 	make resistance inherent to armour pieces, rather than enchantments

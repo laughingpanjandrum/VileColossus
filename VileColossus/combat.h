@@ -25,7 +25,7 @@ bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target);
 void triggerReprisal(gamedataPtr gdata, creaturePtr repriser, creaturePtr target);
 void triggerRiposte(gamedataPtr gdata, creaturePtr riposter, creaturePtr target);
 
-void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, bool allowRiposte = true, int percentDamageMult = 100, int flatDamageAdjust = 0);
+void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, bool allowRiposte = true, int percentDamageMult = 100, int flatDamageAdjust = 0, bool spendEnergy = true);
 
 
 //	Player actions

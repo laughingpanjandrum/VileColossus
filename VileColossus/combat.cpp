@@ -125,7 +125,8 @@ void triggerRiposte(gamedataPtr gdata, creaturePtr riposter, creaturePtr target)
 //	if 'allowRiposte' is set, target has a chance to riposte on miss.
 //	'percentDamageMult' is a multiplier, so 100% means no change to damage inflicted.
 //	'flatDamageAdjust' is added directly to damage BEFORE 'percentDamageMult' is applied.
-void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, bool allowRiposte, int percentDamageMult, int flatDamageAdjust)
+//	if 'spendEnergy' is set, attacker expends attack energy.
+void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, bool allowRiposte, int percentDamageMult, int flatDamageAdjust, bool spendEnergy)
 {
 	//	Determine number of attacks
 	int atks = attacker->getAttacksThisTurn();
@@ -252,7 +253,8 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 
 	//	Attacker expends energy regardless
 	messages::attack_string(gdata, attacker, target, damageCounts, didAttackCrit);
-	attacker->spendActionEnergy(attacker->getAttackEnergyCost());
+	if (spendEnergy)
+		attacker->spendActionEnergy(attacker->getAttackEnergyCost());
 }
 
 
@@ -262,7 +264,8 @@ void triggerCleaveAttack(gamedataPtr gdata, creaturePtr cleaver)
 	auto targets = getAdjacentEnemies(gdata, gdata->_player);
 	auto dbonus = cleaver->getCleaveDamageBonus() * targets.size();
 	for (auto t : targets)
-		attackWithWeapon(gdata, cleaver, t, true, 100, dbonus);
+		attackWithWeapon(gdata, cleaver, t, true, 100, dbonus, false);
+	cleaver->spendActionEnergy(cleaver->getAttackEnergyCost());
 }
 
 
