@@ -316,7 +316,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				_win.write(rx - 5, ry + 1, "+2", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", COLOR_HEALTH);
-				_win.write(rx - 5, ry + 4, "+0.3", COLOR_POSITIVE);
+				_win.write(rx - 5, ry + 4, "+0.5", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", getDamageTypeColor(DTYPE_POISON));
 				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_FIRE)) + "%", "Fire Resist", getDamageTypeColor(DTYPE_FIRE));

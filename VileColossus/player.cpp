@@ -162,7 +162,7 @@ int player::getWeaponDamage() const
 	int total = getEquipmentPropertySum(PROP_BASE_DAMAGE);
 	
 	//	stats/basic enchantments
-	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) * 0.3f;
+	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2;
 	total += getTotalEnchantmentBonus(ENCH_WOUNDING);
 
 	//	tally up total percentage bonus
