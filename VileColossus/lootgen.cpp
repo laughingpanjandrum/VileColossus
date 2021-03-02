@@ -327,10 +327,10 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			switch (tier)
 			{
 			case(1):	name = "buckler"; break;
-			case(2):	name = "light shield"; break;
+			case(2):	name = "kite shield"; break;
 			case(3):	name = "demon shield"; break;
 			}
-			dv = 3 + tier;
+			dv = 1 + tier * 3;
 			break;
 
 		case(2):
@@ -341,7 +341,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			case(3):	name = "titan shield"; break;
 			}
 			dv = tier;
-			av = tier * 2;
+			av = tier * 3;
 			acc = -(dv + av);
 			break;
 		}
