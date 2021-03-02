@@ -548,7 +548,6 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::MACE):
 	case(BaseWeaponType::WARHAMMER):
 		it->setProperty(PROP_STAGGER_CHANCE, randint(25, 75));
-		it->setProperty(PROP_STAGGER_DURATION, randint(3, 6));
 		break;
 
 	case(BaseWeaponType::SHORTBOW):

@@ -201,7 +201,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			creatureTakeDamage(gdata, target, dam);
 
 			//	Additional effects
-			tryInflictStatusEffect(gdata, target, STATUS_STAGGER, attacker->getStaggerChance(), attacker->getStaggerAttackDuration());
+			tryInflictStatusEffect(gdata, target, STATUS_STAGGER, attacker->getStaggerChance(), randint(3, 6));
 			for (auto dt : SPECIAL_DAMAGE_TYPES)
 			{
 				auto amt = attacker->getWeaponDamageOfType(dt);
