@@ -206,8 +206,6 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				tryEquipCurrentItemInSlot(_gdata);
-			else if (_ih->isKeyPressed('e'))
-				selectItemFromInventory(_gdata);
 			else if (_ih->isKeyPressed('d'))
 				dropSelectedItem(_gdata);
 			else if (_ih->isKeyPressed('v'))

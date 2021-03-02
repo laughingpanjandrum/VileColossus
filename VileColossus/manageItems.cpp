@@ -296,10 +296,17 @@ void swapToSecondaryEquipment(gamedataPtr gdata)
 //	Attempt to equip the currently selected item in the currently selected slot.
 void tryEquipCurrentItemInSlot(gamedataPtr gdata)
 {
-	if (gdata->_selectedSlot != SLOT__NONE && gdata->_idx < gdata->_currentItemList.size())
+
+	if (gdata->_idx < gdata->_currentItemList.size())
 	{
 		auto it = gdata->_currentItemList[gdata->_idx];
-		if (it->canEquipInSlot(gdata->_selectedSlot))
+
+		//	Did we select a flask? If so, equip the flask
+		if (it->_category == ITEM_FLASK)
+			selectItemFromInventory(gdata);
+
+		//	Otherwise, try equipping
+		else if (gdata->_selectedSlot != SLOT__NONE && it->canEquipInSlot(gdata->_selectedSlot))
 		{
 			//	restore previous item to inventory, if possible
 			auto here = gdata->_player->getItemInSlot(gdata->_selectedSlot);
