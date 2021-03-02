@@ -239,8 +239,13 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		else if (r <= 75 && quality > 2)	mt = MaterialType::GLOWING_POWDER;
 		else if (r <= 90 && quality > 3)	mt = MaterialType::GLOWING_POWDER;
 
+		//	increase fragment gain
+		auto amt = dieRoll(3, 6 + quality);
+		if (mt == MaterialType::FRAGMENTS)
+			amt = adjustByPercent(amt, gdata->_player->getGreedBonus());
+
 		//	generate the item
-		auto it = lootgen::generateMaterial(mt, dieRoll(3, 6 + quality));
+		auto it = lootgen::generateMaterial(mt, amt);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 

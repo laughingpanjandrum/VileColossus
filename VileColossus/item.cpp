@@ -195,7 +195,7 @@ colorType item::getColor() const
 		switch (_rarity)
 		{
 		case(1):	return TCODColor::lightGrey;
-		case(2):	return TCODColor::lightBlue;
+		case(2):	return TCODColor::lighterBlue;
 		case(3):	return TCODColor::lightPurple;
 		case(4):	return TCODColor::orange;
 		default:
