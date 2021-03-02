@@ -735,7 +735,7 @@ void display::drawAlchemy(gamedataPtr gdata)
 {
 	drawItemInfo(gdata, gdata->_player->_currentFlask, 4, 4);
 
-	drawBox(48, 2, 35, 5, COLOR_DARK);
+	drawBox(48, 2, 35, 6, COLOR_DARK);
 	writeFormatted(50, 4, "#e @Enhance healing potential", { COLOR_LIGHT });
 	auto mat_cost = gdata->_player->_currentFlask->getEnhanceCost();
 	auto mat_type = gdata->_player->_currentFlask->getEnhanceMaterial();
@@ -1035,11 +1035,11 @@ void display::drawStash(gamedataPtr gdata)
 
 	//	Stashed materials.
 	x = 40; y = 25;
-	drawStashedMaterials(gdata, x, y);
+	drawStashedMaterials(gdata, 40, 25);
+	drawStashedGemstones(gdata, 40, 37);
 	
 	//	Control options
-	y = 40;
-	drawBox(x - 2, y - 1, 35, 10, COLOR_DARK);
+	x = 4;  y = 58;
 	writeFormatted(x, ++y, "#TAB   @Open inventory", { COLOR_LIGHT, COLOR_LIGHT });
 	writeFormatted(x, ++y, " #g    @Transfer to inventory", { COLOR_LIGHT, COLOR_LIGHT });
 	writeFormatted(x, ++y, " #M    @Mark as valuable item", { COLOR_LIGHT });
