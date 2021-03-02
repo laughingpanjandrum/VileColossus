@@ -13,8 +13,6 @@ TODO
 		-> more key prompts on inventory screens/etc
 	some system for diving faster in Hell?
 
-	make resistance inherent to armour pieces, rather than enchantments
-
 */
 
 
@@ -38,7 +36,6 @@ void game::start()
 
 	//	Starting items
 	auto wp = lootgen::generateStartingWeapon();
-
 	_gdata->_player->equipInSlot(wp, SLOT_MAIN_HAND);
 	_gdata->_player->_currentFlask = lootgen::generateStartingFlask();
 

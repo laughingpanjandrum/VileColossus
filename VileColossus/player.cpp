@@ -255,22 +255,26 @@ int player::getResistance(const DamageType dt) const
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):
-		total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
+		//total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
+		total += getEquipmentPropertySum(PROP_RESIST_ARCANE);
 		total += MIN(20, (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2);
 		break;
 
-	case(DTYPE_FIRE):
-		total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
-		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
-		break;
-
 	case(DTYPE_ELECTRIC):
-		total += getTotalEnchantmentBonus(ENCH_STORMWARD);
+		//total += getTotalEnchantmentBonus(ENCH_STORMWARD);
+		total += getEquipmentPropertySum(PROP_RESIST_ELECTRIC);
 		total += MIN(20, (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 2);
 		break;
 
+	case(DTYPE_FIRE):
+		//total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
+		total += getEquipmentPropertySum(PROP_RESIST_FIRE);
+		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
+		break;
+
 	case(DTYPE_POISON):
-		total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
+		//total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
+		total += getEquipmentPropertySum(PROP_RESIST_POISON);
 		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
 		break;
 	}

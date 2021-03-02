@@ -237,7 +237,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 		int r = randint(1, 100);
 		if		(r <= 50 && quality > 1)	mt = MaterialType::MAGIC_DUST;
 		else if (r <= 75 && quality > 2)	mt = MaterialType::GLOWING_POWDER;
-		else if (r <= 90 && quality > 3)	mt = MaterialType::GLOWING_POWDER;
+		else if (r <= 90 && quality > 3)	mt = MaterialType::GLOWING_POWDER;	//	two chances for glowing powder at higher qualities
 
 		//	increase fragment gain
 		auto amt = dieRoll(3, 6 + quality);

@@ -149,5 +149,7 @@ private:
 	int get_hit_chance(int acc, int def);
 	int calculate_average_damage(const creaturePtr attacker, const creaturePtr target);
 
+	bool hide_item_property(const ItemProperty prop) const;
+
 };
 

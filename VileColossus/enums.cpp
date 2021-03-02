@@ -41,7 +41,6 @@ string getArmourCategoryName(const ArmourCategory cat)
 	switch (cat)
 	{
 	case(ARMOUR_LIGHT):			return "Light";
-	case(ARMOUR_MEDIUM):		return "Medium";
 	case(ARMOUR_HEAVY):			return "Heavy";
 	default:
 		return "";
@@ -157,6 +156,10 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
 	case(PROP_MOVE_SPEED_ADJUST):		return "Move Speed";
+	case(PROP_RESIST_ARCANE):			return "Resist Arcane";
+	case(PROP_RESIST_ELECTRIC):			return "Resist Electric";
+	case(PROP_RESIST_FIRE):				return "Resist Fire";
+	case(PROP_RESIST_POISON):			return "Resist Poison";
 	case(PROP_RIPOSTE_CHANCE):			return "Riposte Chance";
 	case(PROP_RIPOSTE_DAMAGE):			return "Riposte Damage";
 	case(PROP_SPELLSHIELD_FLAT):		return "Spellshield";

@@ -1198,7 +1198,7 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 	{
 		//	we don't display EVERY property
 		auto prop = static_cast<ItemProperty>(i);
-		if (!(prop == PROP_DAMAGE_VARIANCE))
+		if (!hide_item_property(prop))
 		{
 			//	stat of this item
 			auto val = it->getProperty(prop);
@@ -1233,9 +1233,29 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 		}
 	}
 
+
+	//	resistances (displayed separately, only for armour)
+	if (it->isArmourPiece())
+	{
+		int tx = atx + 8;
+		aty += 2;
+		_win.write(atx, aty, "Resists", COLOR_MEDIUM);
+		for (unsigned i = 0; i < lootgen::RESIST_PROPS.size(); i++)
+		{
+			const int val = it->getProperty(lootgen::RESIST_PROPS[i]);
+			if (val > 0)
+				writeFormatted(tx, aty, "[#" + extendInteger(val, 2) + "%@]", { getDamageTypeColor(SPECIAL_DAMAGE_TYPES[i]) });
+			else
+				writeFormatted(tx, aty, "[#00%@]", { COLOR_DARK });
+			tx += 5;
+		}
+	}
+
+
 	//	list of enchantments
 	aty++;
 	aty = drawItemEnchantments(gdata, it, atx, aty);
+
 
 	//	list of sockets, full or no
 	auto gems = it->getAllSocketedGemTypes();
@@ -1999,4 +2019,11 @@ int display::calculate_average_damage(const creaturePtr attacker, const creature
 	}
 
 	return total;
+}
+
+
+//	Returns True if the property should not be displayed when listing an item's properties.
+bool display::hide_item_property(const ItemProperty prop) const
+{
+	return prop == PROP_DAMAGE_VARIANCE || prop == PROP_RESIST_ARCANE || prop == PROP_RESIST_ELECTRIC || prop == PROP_RESIST_FIRE || prop == PROP_RESIST_POISON;
 }
