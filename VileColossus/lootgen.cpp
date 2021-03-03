@@ -90,7 +90,8 @@ itemPtr lootgen::generateStartingWeapon()
 {
 	//	Randomized type
 	BaseWeaponType bwt;
-	switch (randint(1, 4))
+	const int r = randint(1, 4);
+	switch (r)
 	{
 	case(1):	bwt = BaseWeaponType::DAGGER;
 	case(2):	bwt = BaseWeaponType::CLUB;

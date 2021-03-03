@@ -1431,14 +1431,13 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	//	Random selection of map types
 	else if (dl >= 12)
 	{
-		int r = randint(1, 5);
+		int r = randint(1, 4);
 		switch (r)
 		{
 		case(1):	m = generate_MoltenLake(dl, descending); break;
 		case(2):	m = generate_SpiderNest(dl, descending); break;
 		case(3):	m = generate_Tomb(dl, descending); break;
-		case(4):	m = generate_VampireNest(dl, descending); break;
-		default:	m = generate_Hellmouth(dl, descending); break;
+		default:	m = generate_VampireNest(dl, descending); break;
 		}
 	}
 
