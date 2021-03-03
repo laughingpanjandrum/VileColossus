@@ -12,6 +12,62 @@ const string getAttributeName(const Attribute attr)
 	}
 }
 
+const string getPerkName(const Perk pk)
+{
+	switch (pk)
+	{
+	case(PERK_ACCURACY):			return "Accuracy";
+	case(PERK_BASE_DAMAGE):			return "Physical Damage";
+	case(PERK_CRIT_DAMAGE):			return "Crit Damage";
+	case(PERK_HEALTH):				return "Health";
+	case(PERK_HEALTH_ON_KILL):		return "Health on Kill";
+	case(PERK_MAGIC):				return "Magic";
+	case(PERK_REPRISAL):			return "Reprisal Damage";
+	case(PERK_RESISTANCE):			return "All Resistances";
+	case(PERK_SPELL_POWER):			return "Spell Power";
+	case(PERK_WRATH_DAMAGE):		return "Wrath Damage";
+		return "unknown perk " + to_string(pk);
+	}
+}
+
+const int getPerkBonusPerRank(const Perk pk)
+{
+	switch (pk)
+	{
+	case(PERK_ACCURACY):			return 1;
+	case(PERK_BASE_DAMAGE):			return 2;
+	case(PERK_CRIT_DAMAGE):			return 10;
+	case(PERK_HEALTH):				return 10;
+	case(PERK_HEALTH_ON_KILL):		return 3;
+	case(PERK_MAGIC):				return 1;
+	case(PERK_REPRISAL):			return 3;
+	case(PERK_RESISTANCE):			return 5;
+	case(PERK_SPELL_POWER):			return 20;
+	case(PERK_WRATH_DAMAGE):		return 25;
+	default:
+		return 1;
+	}
+}
+
+const int getPerkMaxLevel(const Perk pk)
+{
+	switch (pk)
+	{
+	case(PERK_ACCURACY):			return 10;
+	case(PERK_BASE_DAMAGE):			return 10;
+	case(PERK_CRIT_DAMAGE):			return 10;
+	case(PERK_HEALTH):				return 10;
+	case(PERK_HEALTH_ON_KILL):		return 5;
+	case(PERK_MAGIC):				return 5;
+	case(PERK_REPRISAL):			return 5;
+	case(PERK_RESISTANCE):			return 5;
+	case(PERK_SPELL_POWER):			return 10;
+	case(PERK_WRATH_DAMAGE):		return 10;
+	default:
+		return 1;
+	}
+}
+
 string getItemCategoryName(const ItemCategory cat)
 {
 	switch (cat)

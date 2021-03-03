@@ -55,6 +55,7 @@ struct gamedata
 	//	Progression
 	int _xp = 0;
 	int _attributePointsLeft = 0;
+	int _perkPoints = 0;
 	int _townPortalCharge = 0;
 
 	//	Inventory

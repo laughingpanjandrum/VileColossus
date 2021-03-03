@@ -31,6 +31,16 @@ public:
 	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED); }
 
 
+	//	Perks
+
+	bool canGainPerks() const { return _level > 30; }
+
+	void addPerkRank(const Perk pk) { _PerkRanks[pk]++; }
+
+	int getPerkRank(const Perk pk) const { return _PerkRanks[pk]; }
+	int getPerkBonus(const Perk pk) const { return getPerkRank(pk) * getPerkBonusPerRank(pk); }
+
+
 	//	Flask use
 
 	bool willFlaskWasteHealing() const;
@@ -170,6 +180,7 @@ protected:
 	int getTotalGemBonusFromSlots(const vector<EquipmentSlot> slots, const GemType gem) const;
 
 	vector<int> _Attributes;
+	vector<int> _PerkRanks;
 	vector<itemPtr> _Equipped;
 	vector<bool> _HasNewForSlot;
 

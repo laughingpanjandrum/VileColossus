@@ -20,6 +20,10 @@ player::player()
 	_magicRegenTicks = getMagicRegenDelay();
 	for (unsigned i = 0; i < ATTR__MAX; i++)
 		_Attributes.push_back(10);
+
+	//	Perks
+	for (unsigned i = 0; i < PERK__MAX; i++)
+		_PerkRanks.push_back(0);
 }
 
 
@@ -101,6 +105,7 @@ void player::unmarkAllSlots()
 int player::getMaxHealth() const
 {
 	int total = 25 + _level * 5 + getDerivedAttribute(ATTR_STRENGTH) * 2;
+	total += getPerkBonus(PERK_HEALTH);
 	total += getTotalEnchantmentBonus(ENCH_LIFE);
 	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 20;
 	return total;
@@ -109,6 +114,7 @@ int player::getMaxHealth() const
 int player::getMaxMagic() const
 {
 	int total = 2 + (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2;
+	total += getPerkBonus(PERK_MAGIC);
 	total += getTotalEnchantmentBonus(ENCH_MAGIC);
 	total += getTotalGemBonusFromJewels(GemType::SILVERSTONE);
 	return total;
@@ -118,6 +124,9 @@ int player::getSpellPower() const
 {
 	//	from items
 	int total = (getDerivedAttribute(ATTR_WILLPOWER) - 10) * 5;
+	total += getPerkBonus(PERK_SPELL_POWER);
+
+	//	equipment
 	total += getTotalEnchantmentBonus(ENCH_SPELLPOWER);
 	total += getTotalEnchantmentBonus(ENCH_SPELLBURN);
 	total += getTotalGemBonusFromJewels(GemType::BOLTSTONE) * 25;
@@ -132,6 +141,7 @@ int player::getSpellPower() const
 int player::getAccuracy() const
 {
 	int total = getDerivedAttribute(ATTR_DEXTERITY) - 4;
+	total += getPerkBonus(PERK_ACCURACY);
 
 	total += getEquipmentPropertySum(PROP_ACCURACY_MOD);
 	total += getTotalEnchantmentBonus(ENCH_ACCURACY);
@@ -160,6 +170,7 @@ int player::getArmourValue() const
 int player::getWeaponDamage() const
 {
 	int total = getEquipmentPropertySum(PROP_BASE_DAMAGE);
+	total += getPerkBonus(PERK_BASE_DAMAGE);
 	
 	//	stats/basic enchantments
 	total += (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2;
@@ -204,6 +215,7 @@ int player::getCriticalMultiplier() const
 {
 	//	Base (From weapons); averaged if dualwielding.
 	int total = getEquipmentPropertySum(PROP_CRITICAL_DAMAGE);
+	total += getPerkBonus(PERK_CRIT_DAMAGE);
 	if (usingOffhandWeapon())
 		total /= 2;
 
@@ -251,6 +263,7 @@ int player::getResistance(const DamageType dt) const
 {
 	int total = 0;
 	total += MIN(getTotalEnchantmentBonus(ENCH_AFFINITY), getElementalAffinity(dt));
+	total += getPerkBonus(PERK_RESISTANCE);
 	
 	switch (dt)
 	{
@@ -390,6 +403,7 @@ int player::getWeaponDamageOfType(const DamageType dt) const
 int player::getLeechOnKill() const
 {
 	int total = getTotalEnchantmentBonus(ENCH_LEECHING);
+	total += getPerkBonus(PERK_HEALTH_ON_KILL);
 	return total;
 }
 

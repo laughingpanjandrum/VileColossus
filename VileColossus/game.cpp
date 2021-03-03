@@ -239,10 +239,20 @@ void game::processInput()
 		case(STATE_SPEND_ATTRIBUTE_POINTS):
 			if (_ih->isDirectionalKeyPressed())
 			{
-				if (_ih->getVectorFromKeypress().second != 0)
-					scrollMenu(_ih->getVectorFromKeypress().second, ATTR__MAX);
-				else if (_ih->getVectorFromKeypress().first == 1)
-					spendAttributePoint(_gdata);
+				if (_gdata->_player->canGainPerks() && _gdata->_attributePointsLeft < 1)
+				{
+					if (_ih->getVectorFromKeypress().second != 0)
+						scrollMenu(_ih->getVectorFromKeypress().second, PERK__MAX);
+					else if (_ih->getVectorFromKeypress().first == 1 || _ih->isKeyPressed(TCODK_ENTER))
+						spendPerkPoint(_gdata);
+				}
+				else
+				{
+					if (_ih->getVectorFromKeypress().second != 0)
+						scrollMenu(_ih->getVectorFromKeypress().second, ATTR__MAX);
+					else if (_ih->getVectorFromKeypress().first == 1)
+						spendAttributePoint(_gdata);
+				}
 			}
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				spendAttributePoint(_gdata);

@@ -4,11 +4,24 @@
 //	Advance a level, gain the requisite bonuses, restore all health.
 void playerGainLevel(gamedataPtr gdata)
 {
-	gdata->_player->_level++;
-	gdata->_attributePointsLeft += 3;
+	//	Prior to level 30, we gain levels and attribute points.
+	if (gdata->_player->_level <= 30)
+	{
+		gdata->_player->_level++;
+		gdata->_attributePointsLeft += 3;
+		messages::add(gdata, " #*** YOU HAVE ATTAINED LEVEL " + to_string(gdata->_player->_level) + "! ***", { COLOR_POSITIVE });
+	}
+
+	//	After level 30, we can perk points, but not levels.
+	else
+	{
+		gdata->_perkPoints++;
+		messages::add(gdata, " #*** ASCENDANT ABILITY POINT ACQUIRED ***", { COLOR_POSITIVE });
+	}
+
+	//	We heal up regardless.
 	gdata->_player->healToMax();
 	gdata->_player->restoreAllMagic();
-	messages::add(gdata, " #*** YOU HAVE ATTAINED LEVEL " + to_string(gdata->_player->_level) + "! ***", { COLOR_POSITIVE });
 }
 
 
@@ -62,6 +75,21 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 
 	//	We also recharge our town portal ability as we gain xp
 	gdata->_townPortalCharge = MIN(TOWN_PORTAL_CHARGE_REQ, gdata->_townPortalCharge + base_xp);
+}
+
+
+//	Level up a perk, if possible.
+void spendPerkPoint(gamedataPtr gdata)
+{
+	if (gdata->_perkPoints > 0 && gdata->_idx < PERK__MAX)
+	{
+		auto pk = static_cast<Perk>(gdata->_idx);
+		if (gdata->_player->getPerkRank(pk) < getPerkMaxLevel(pk))
+		{
+			gdata->_player->addPerkRank(pk);
+			gdata->_perkPoints--;
+		}
+	}
 }
 
 

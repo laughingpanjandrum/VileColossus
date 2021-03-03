@@ -10,12 +10,26 @@ using namespace std;
 
 //	Player attributes
 
-enum Attribute
-{
-	ATTR_STRENGTH, ATTR_DEXTERITY, ATTR_WILLPOWER, ATTR__MAX,
-};
-
+enum Attribute { ATTR_STRENGTH, ATTR_DEXTERITY, ATTR_WILLPOWER, ATTR__MAX, };
 const string getAttributeName(const Attribute attr);
+
+
+enum Perk {
+	PERK_ACCURACY,
+	PERK_BASE_DAMAGE,
+	PERK_CRIT_DAMAGE, 
+	PERK_HEALTH,
+	PERK_HEALTH_ON_KILL,
+	PERK_MAGIC,
+	PERK_REPRISAL,
+	PERK_RESISTANCE,
+	PERK_SPELL_POWER,
+	PERK_WRATH_DAMAGE,
+	PERK__MAX,
+};
+const string getPerkName(const Perk pk);
+const int getPerkBonusPerRank(const Perk pk);
+const int getPerkMaxLevel(const Perk pk);
 
 
 //	Item categories

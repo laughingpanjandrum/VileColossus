@@ -269,7 +269,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 	for (unsigned i = 0; i < ATTR__MAX; i++)
 	{
 		//	selection
-		auto selected = i == gdata->_idx;
+		auto selected = i == gdata->_idx && (!gdata->_player->canGainPerks() || gdata->_attributePointsLeft > 0);
 		if (selected)
 			_win.writec(x - 1, y + 1, '>', COLOR_HIGHLIGHT);
 
@@ -350,6 +350,44 @@ void display::drawAttributePoints(gamedataPtr gdata)
 		}
 	}
 
+
+	//	perks
+	y += 6;
+	drawBox(x - 2, y - 1, 61, 16, COLOR_DARK);
+	_win.write(x, ++y, "ASCENDANT ABILITIES", COLOR_LIGHT);
+	if (!gdata->_player->canGainPerks()) 
+		_win.write(x + 25, y, "[Unlocked after Level 30]", TCODColor::darkGrey);
+	else if (gdata->_attributePointsLeft < 1)
+	{
+		col = (gdata->_perkPoints > 0) ? COLOR_POSITIVE : COLOR_DARK;
+		writeFormatted(x + 25, y, "#POINTS LEFT [#" + extendInteger(gdata->_perkPoints, 2) + "#]", { COLOR_LIGHT, col, COLOR_LIGHT, });
+	}
+
+	//	List of perks
+	y += 1; x += 1;
+	for (unsigned i = 0; i < PERK__MAX; i++)
+	{
+		auto pk = static_cast<Perk>(i);
+		y++;
+
+		//	Highlighting
+		if (gdata->_idx == i && gdata->_player->canGainPerks() && gdata->_attributePointsLeft < 1)
+			_win.writec(x - 1, y, '>', COLOR_WHITE);
+
+		//	Perk name and bonus
+		_win.write(x, y, plusminus(getPerkBonusPerRank(pk)), p->canGainPerks() ? COLOR_POSITIVE : TCODColor::darkGrey);
+		_win.write(x + 5, y, getPerkName(pk), COLOR_MEDIUM);
+
+		//	Total bonus attained
+		auto pcol = p->getPerkRank(pk) > 0 ? COLOR_POSITIVE : COLOR_DARK;
+		writeFormatted(x + 25, y, "[#" + plusminus(p->getPerkBonus(pk)) + "@]", { pcol });
+
+		//	No. of ranks
+		drawProgressDots(x + 35, y, p->getPerkRank(pk), getPerkMaxLevel(pk), COLOR_HIGHLIGHT);
+	}
+
+
+	//	summary of character
 	drawCharacterSummary(gdata);
 }
 

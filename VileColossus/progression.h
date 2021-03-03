@@ -11,6 +11,7 @@
 void playerGainLevel(gamedataPtr gdata);
 void addKillXP(gamedataPtr gdata, monsterPtr target);
 
+void spendPerkPoint(gamedataPtr gdata);
 void spendAttributePoint(gamedataPtr gdata);
 void openAttributeMenu(gamedataPtr gdata);
 
