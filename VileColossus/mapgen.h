@@ -14,6 +14,7 @@ namespace mapgen
 	struct game_progress
 	{
 		int _killedRotking = 0;
+		int _killedHellboss = 0;
 	};
 
 	struct metanode
@@ -161,6 +162,8 @@ namespace mapgen
 	gridmapPtr generate(int dl, game_progress* progress, bool descending = true);
 
 	void openHellPortal(gridmapPtr m);
+	void openTemplePortal(gridmapPtr m);
+
 	gridmapPtr generate_HomeBase();
 	gridmapPtr generate_HellTemple();
 

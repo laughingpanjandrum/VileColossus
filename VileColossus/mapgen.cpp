@@ -1391,13 +1391,16 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
 	auto ctr = intpair(m->_xsize / 2, m->_ysize / 2);
 
 	//	Pick a boss.
-	vector<MonsterType> options = { MonsterType::BOSS_DEMON_LORD, MonsterType::BOSS_WRAITH_KING, MonsterType::BOSS_WRETCHED_PRINCE, };
+	vector<MonsterType> options = { MonsterType::BOSS_DEMON_LORD, MonsterType::BOSS_WRETCHED_PRINCE, };
 	m->addCreature(monsterdata::generate(options[randrange(options.size())], dl * 2 + MIN(5, killcount)), ctr);
 
 	//	Add additional monsters.
 	auto node = new TCODBsp(ctr.first - 3, ctr.second - 3, 6, 6);
 	auto mtable = rollMonsterGroup(dl, MonsterType::CULTIST);
 	addMonsterGroupToNode(m, &mtable, node);
+
+	//	Random start position.
+	m->_startPt = getRandomFree(m);
 
 	return m;
 }
@@ -1467,7 +1470,6 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 //	Adds the hell-portal to the home map.
 void mapgen::openHellPortal(gridmapPtr m)
 {
-	//	The portal
 	scatterSurface(m, Surface::BONES, 16, 16, 4, 4, 0.8);
 	scatterSurface(m, Surface::CORPSE, 16, 16, 4, 4, 0.8);
 	m->setSurface(Surface::__NONE, 18, 18);
@@ -1475,6 +1477,18 @@ void mapgen::openHellPortal(gridmapPtr m)
 }
 
 
+//	Second portal, connecting us to the bottom of hell.
+void mapgen::openTemplePortal(gridmapPtr m)
+{
+	fillRegionCircular(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_HOT, MT_RUBBLE, MT_FLOOR_STONE, MT_FLOOR_STONE2 }, 24, 27, 4);
+	fillRegionCircular(m, MT_LAVA, 32, 35, 2);
+	fillRegionCircular(m, MT_LAVA, 22, 33, 3);
+	fillRegionCircular(m, MT_LAVA, 31, 24, 2);
+	m->updateTmap();
+}
+
+
+//	Our MAIN MAP with all our stuff.
 gridmapPtr mapgen::generate_HomeBase()
 {
 	auto m = gridmapPtr(new gridmap(40, 45));
@@ -1528,10 +1542,12 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_FLOOR_HOT, 28, 15);
 	m->setTile(MT_STAIRS_DOWN_LONG, 31, 15);
 
-	//	test
-	m->setTile(MT_TEMPLE_PORTAL, 32, 16);
+	//	the hell-temple portal appears here later
+	fillRegion(m, MT_WALL_BLOODY, 26, 29, 9, 9);
+	fillRegion(m, MT_FLOOR_HOT, 27, 30, 7, 7);
+	m->setTile(MT_TEMPLE_PORTAL, 29, 32);
 
-	m->_lightLevel = 5;
+	m->_lightLevel = 10;
 	m->updateTmap();
 	return m;
 }
@@ -1577,9 +1593,16 @@ gridmapPtr mapgen::generate_HellTemple()
 		}
 	}
 
+	//	Portal home
 	m->setTile(MT_TEMPLE_PORTAL, 9, 12);
 	m->_startPt = intpair(9, 12);
 
+
+	//	Other stuff
+	m->setTile(MT_STASH, 8, 10);
+
+
+	//	Finish
 	m->updateTmap();
 	m->_lightLevel = 5;
 	return m;

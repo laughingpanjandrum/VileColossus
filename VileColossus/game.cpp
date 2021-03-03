@@ -574,6 +574,8 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "hellportal")
 		mapgen::openHellPortal(_gdata->_homeBase);
+	else if (txt == "helltemple")
+		mapgen::openTemplePortal(_gdata->_homeBase);
 	else if (txt == "killall")
 	{
 		for (auto m : _gdata->_visibleMonsters)

@@ -19,6 +19,13 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 		if (gdata->_gameProgress._killedRotking == 1)
 			mapgen::openHellPortal(gdata->_homeBase);
 		break;
+
+	case(MonsterType::BOSS_DEMON_LORD):
+	case(MonsterType::BOSS_WRETCHED_PRINCE):
+		gdata->_gameProgress._killedHellboss++;
+		if (gdata->_gameProgress._killedHellboss == 1)
+			mapgen::openTemplePortal(gdata->_homeBase);
+		break;
 	}
 }
 
