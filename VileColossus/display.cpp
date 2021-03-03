@@ -1392,12 +1392,22 @@ void display::drawInventoryCapacity(gamedataPtr gdata, int x, int y)
 //	Draws ONLY the item's enchantments.
 int display::drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int aty)
 {
+	//	filled slots
 	auto en_list = it->getAllEnchantments();
 	for (auto en : *en_list)
 	{
 		_win.writec(atx, ++aty, 4, TCODColor::gold);
 		writeFormatted(atx + 2, aty, formatItemEnchantment(en, it->getEnchantmentValue(en)), { COLOR_POSITIVE });
 	}
+
+
+	//	empty slots
+	for (unsigned i = 0; i < it->getMaxEnhancementLevel() - it->_enhancementLevel; i++)
+	{
+		_win.writec(atx, ++aty, 4, TCODColor::darkGrey);
+		_win.write(atx + 2, aty, "[Enchantment Slot]", TCODColor::darkGrey);
+	}
+
 	return aty;
 }
 
