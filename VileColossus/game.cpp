@@ -14,9 +14,6 @@ TODO
 	some system for diving faster in Hell?
 
 	make resistance a fixed value based on tier and type
-	remove normal Hellmouth as a post-DL 12 option
-	add some walls to the hellfort
-	what does wraithking spawn???
 
 */
 

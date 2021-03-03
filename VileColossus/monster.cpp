@@ -177,6 +177,18 @@ const MonsterType monster::rollMonsterToSpawn() const
 		else if (r == 3)	return MonsterType::CULTIST_INFESTED;
 		break;
 
+	case(MonsterType::BOSS_DEMON_LORD):
+		r = randint(1, 4);
+		if		(r <= 3)	return MonsterType::IMP;
+		else if (r == 4)	return MonsterType::IMP_MEGA;
+		break;
+
+	case(MonsterType::BOSS_WRAITH_KING):
+		r = randint(1, 3);
+		if (r <= 2)		return MonsterType::WRAITH;
+		else			return MonsterType::WRAITH_MOON;
+		break;
+
 	case(MonsterType::CARRION_PRINCE):
 		r = randint(1, 2);
 		if (r == 1)	return MonsterType::CORPSEFLY;
