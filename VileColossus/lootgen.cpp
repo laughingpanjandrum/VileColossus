@@ -158,7 +158,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_EMPOWERING):		return randint(5, 15);
 	case(ENCH_FLAMEWARD):		return randint(5, 15);
 	case(ENCH_FURY):			return randint(5, 15) * 5;
-	case(ENCH_GREED):			return randint(1, 4) * 10;
+	case(ENCH_GREED):			return randint(3, 5) * 10;
 	case(ENCH_HASTE):			return randint(5, 12);
 	case(ENCH_LEECHING):		return randint(1, 10);
 	case(ENCH_LIFE):			return randint(5, 10) * 4;

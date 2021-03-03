@@ -18,7 +18,6 @@ TODO
 	remove normal Hellmouth as a post-DL 12 option
 	add some walls to the hellfort
 	what does wraithking spawn???
-	buff 'fragments gained' effect
 
 */
 
