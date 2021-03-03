@@ -1391,7 +1391,7 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
 	auto ctr = intpair(m->_xsize / 2, m->_ysize / 2);
 
 	//	Pick a boss.
-	vector<MonsterType> options = { MonsterType::BOSS_DEMON_LORD, MonsterType::BOSS_WRAITH_KING };
+	vector<MonsterType> options = { MonsterType::BOSS_DEMON_LORD, MonsterType::BOSS_WRAITH_KING, MonsterType::BOSS_WRETCHED_PRINCE, };
 	m->addCreature(monsterdata::generate(options[randrange(options.size())], dl * 2 + MIN(5, killcount)), ctr);
 
 	//	Add additional monsters.

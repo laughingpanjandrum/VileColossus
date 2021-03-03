@@ -13,8 +13,6 @@ TODO
 		-> more key prompts on inventory screens/etc
 	some system for diving faster in Hell?
 
-	make resistance a fixed value based on tier and type
-
 */
 
 

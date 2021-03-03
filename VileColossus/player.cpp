@@ -100,7 +100,7 @@ void player::unmarkAllSlots()
 
 int player::getMaxHealth() const
 {
-	int total = 27 + _level * 3 + getDerivedAttribute(ATTR_STRENGTH) * 2;
+	int total = 25 + _level * 5 + getDerivedAttribute(ATTR_STRENGTH) * 2;
 	total += getTotalEnchantmentBonus(ENCH_LIFE);
 	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 20;
 	return total;

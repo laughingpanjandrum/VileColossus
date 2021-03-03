@@ -189,6 +189,12 @@ const MonsterType monster::rollMonsterToSpawn() const
 		else			return MonsterType::WRAITH_MOON;
 		break;
 
+	case(MonsterType::BOSS_WRETCHED_PRINCE):
+		r = randint(1, 3);
+		if (r == 1)	return MonsterType::WRETCH_PUKING;
+		else		return MonsterType::WRETCH;
+		break;
+
 	case(MonsterType::CARRION_PRINCE):
 		r = randint(1, 2);
 		if (r == 1)	return MonsterType::CORPSEFLY;
