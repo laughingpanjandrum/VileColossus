@@ -13,6 +13,8 @@ TODO
 		-> more key prompts on inventory screens/etc
 	some system for diving faster in Hell?
 
+	give hell bosses some deadlier special attacks
+
 */
 
 
@@ -44,7 +46,10 @@ void game::start()
 	_gdata->_map = mapgen::generate_HomeBase(); //mapgen::generate(1);
 	_gdata->_map->addCreature(_gdata->_player, _gdata->_map->_startPt);
 	_gdata->_map->setFOVMapCentre(_gdata->_player->_pos);
+
+	//	permanent maps
 	_gdata->_homeBase = _gdata->_map;
+	_gdata->_helltemple = mapgen::generate_HellTemple();
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
@@ -577,6 +582,19 @@ void game::awaitDebugCommand()
 }
 
 
+//	Moves us between the home base and the hell temple.
+void game::useTemplePortal()
+{
+	//	descend to hell temple
+	if (_gdata->_map == _gdata->_homeBase)
+		moveToNewMap(16);
+
+	//	return home
+	else
+		returnToHomeBase();
+}
+
+
 //	Move to a map with the given difference in depth to our current map.
 void game::moveToNewMap(int vec)
 {
@@ -587,10 +605,12 @@ void game::moveToNewMap(int vec)
 		messages::add(_gdata, "You ascend...");
 	drawScreen();
 
-	//	generate the new map
+	//	generate the new map, or use a permanent map (at certain depths)
 	_gdata->_depth += vec;
 	if (_gdata->_depth == 0)
 		_gdata->_map = _gdata->_homeBase;
+	else if (_gdata->_depth == 16)
+		_gdata->_map = _gdata->_helltemple;
 	else
 		_gdata->_map = mapgen::generate(_gdata->_depth, &_gdata->_gameProgress, vec > 0);
 
@@ -617,6 +637,8 @@ void game::tryUseStairs()
 		moveToNewMap(10);
 	else if (tl == MT_HELLPORTAL_UP)
 		moveToNewMap(-10);
+	else if (tl == MT_TEMPLE_PORTAL)
+		useTemplePortal();
 	else
 		messages::error(_gdata, "There are no stairs here!");
 }

@@ -162,6 +162,13 @@ bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 		else if ((ai->hasFlag("poison_burst") || ai->hasFlag("fire_burst")) && dist < 3 && roll_one_in(3))
 			explode(gdata, ai);
 
+		//	FIRESTORM
+		else if (ai->hasFlag("casts_firestorm"))
+		{
+			radiateSpellDamage(gdata, ai, ai->_pos, 8, Spell::FIRESTORM, ai->_level / 2);
+			return true;
+		}
+
 		//	Bonetoss
 		else if (ai->hasFlag("throws_bones") && dist <= 6 && vis)
 		{

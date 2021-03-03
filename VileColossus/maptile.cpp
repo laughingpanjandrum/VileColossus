@@ -38,8 +38,10 @@ const string getMaptileName(const Maptile tl)
 	case(MT_STAIRS_UP):         return "stairs up";
 	case(MT_STAIRS_UP_LONG):	return "stairs up (long)";
 	case(MT_STASH):				return "stash";
+	case(MT_STATUE_BLOODY):		return "bloody statue";
 	case(MT_STATUE_MARBLE):     return "marble statue";
 	case(MT_TABLE_WOODEN):      return "wooden table";
+	case(MT_TEMPLE_PORTAL):		return "temple portal";
 	case(MT_THORNS):			return "hellthorns";
 	case(MT_TOMBSTONE):			return "tombstone";
 	case(MT_TREE_DEAD):			return "dead tree";
@@ -68,6 +70,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_BARREL):
 	case(MT_HELLPORTAL_DOWN):
 	case(MT_HELLPORTAL_UP):
+	case(MT_TEMPLE_PORTAL):
 		return '0';
 
 	case(MT_DEMONFORGE):
@@ -114,6 +117,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return '<';
 
 	case(MT_HEALING_FOUNTAIN):
+	case(MT_STATUE_BLOODY):
 	case(MT_STATUE_MARBLE):
 		return 225;
 
@@ -213,6 +217,9 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_STAIRS_UP_LONG):
 		return TCODColor::gold;
 
+	case(MT_STATUE_BLOODY):
+		return TCODColor::crimson;
+
 	case(MT_STATUE_MARBLE):
 	case(MT_TOMBSTONE):
 		return TCODColor::lighterGrey;
@@ -249,6 +256,8 @@ const colorType getMaptileColor(const Maptile tl)
 		return TCODColor::orange;
 	case(MT_HELLPORTAL_UP):
 		return TCODColor::lightBlue;
+	case(MT_TEMPLE_PORTAL):
+		return TCODColor::lightCrimson;
 
 	default:
 		return COLOR_WHITE;
@@ -275,6 +284,7 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_RUNE_IMPRINTER):
 	case(MT_SARCOPHAGUS):
 	case(MT_STASH):
+	case(MT_STATUE_BLOODY):
 	case(MT_STATUE_MARBLE):
 	case(MT_TABLE_WOODEN):
 	case(MT_TOMBSTONE):
@@ -317,12 +327,12 @@ const bool isMaptileBreakable(const Maptile tl)
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL;
 }
 
 const bool isMaptileStairs(const Maptile tl)
 {
-	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG || tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP;
+	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG || tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_TEMPLE_PORTAL;
 }
 
 //	Returns True if a maptile should have draw priority over surfaces.

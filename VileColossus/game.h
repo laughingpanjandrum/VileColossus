@@ -34,6 +34,7 @@ public:
 
 	void awaitDebugCommand();
 
+	void useTemplePortal();
 	void moveToNewMap(int vec);
 	void tryUseStairs();
 	void returnToHomeBase();

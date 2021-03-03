@@ -41,6 +41,7 @@ struct gamedata
 	playerPtr _player;
 	gridmapPtr _map;
 	gridmapPtr _homeBase;
+	gridmapPtr _helltemple;
 
 	//	State
 	GameState _state;

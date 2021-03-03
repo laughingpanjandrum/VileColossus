@@ -162,5 +162,6 @@ namespace mapgen
 
 	void openHellPortal(gridmapPtr m);
 	gridmapPtr generate_HomeBase();
+	gridmapPtr generate_HellTemple();
 
 }

@@ -1399,11 +1399,6 @@ gridmapPtr mapgen::generate_Hellfort(int dl, bool descending, int killcount)
 	auto mtable = rollMonsterGroup(dl, MonsterType::CULTIST);
 	addMonsterGroupToNode(m, &mtable, node);
 
-	//	Add downstairs.
-	auto spt = getRandomForStairs(m);
-	m->setTile(MT_STAIRS_UP, spt);
-	m->_startPt = spt;
-
 	return m;
 }
 
@@ -1533,7 +1528,59 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_FLOOR_HOT, 28, 15);
 	m->setTile(MT_STAIRS_DOWN_LONG, 31, 15);
 
+	//	test
+	m->setTile(MT_TEMPLE_PORTAL, 32, 16);
+
 	m->_lightLevel = 5;
 	m->updateTmap();
+	return m;
+}
+
+gridmapPtr mapgen::generate_HellTemple()
+{
+	auto m = gridmapPtr(new gridmap(22, 22));
+	fillMap(m, { MT_FLOOR_HOT });
+	m->_name = "Hell Temple";
+
+	const vector<string> pattern = {
+		".##............##.",
+		"######..##..######",
+		"####.........~####",
+		".##~~.........~##.",
+		".#~..........~~~#.",
+		".#...B......B..~#.",
+		"..................",
+		"..................",
+		".#..............#.",
+		".#..............#.",
+		"..................",
+		"..................",
+		".#...B......B...#.",
+		".#~~..........~~#.",
+		".##~~........~~##.",
+		"####~........~####",
+		"######..##..######",
+		".##............##.",
+	};
+	for (unsigned px = 0; px < pattern.size(); px++)
+	{
+		for (unsigned py = 0; py < pattern[px].size(); py++)
+		{
+			const unsigned x = px + 2, y = py + 2;
+			switch (pattern[px][py])
+			{
+			case('.'):	m->setTile(MT_FLOOR_HOT, x, y); break;
+			case('#'):	m->setTile(MT_WALL_BLOODY, x, y); break;
+			case('~'):	m->setTile(MT_LAVA, x, y); break;
+			case('B'):	m->setTile(MT_STATUE_BLOODY, x, y); break;
+			}
+		}
+	}
+
+	m->setTile(MT_TEMPLE_PORTAL, 9, 12);
+	m->_startPt = intpair(9, 12);
+
+	m->updateTmap();
+	m->_lightLevel = 5;
 	return m;
 }

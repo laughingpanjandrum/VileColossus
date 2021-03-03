@@ -4,6 +4,7 @@
 #include "monster.h"
 #include "visibility.h"
 #include "combat.h"
+#include "manageMagic.h"
 #include "movement.h"
 #include "monsterdata.h"
 

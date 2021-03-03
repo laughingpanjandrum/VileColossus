@@ -38,6 +38,7 @@ TABLE OF ALL MONSTER FLAGS
 	casts_arcane_bolt		Ranged arcane damage.
 	casts_firebolt			Ranged fire damage.
 	casts_fireblast			Leaves flames behind on hit.
+	casts_firestorm			Like the player spell.
 	casts_lightning			Ranged electric damage.
 	spit_sludge				Hurls sludge pools.
 	throws_bones			Ranged attack that can spawn a skull.
