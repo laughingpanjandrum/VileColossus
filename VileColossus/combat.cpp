@@ -148,7 +148,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			//	Apply damage adjustments
 			dam += flatDamageAdjust;
 			if (percentDamageMult != 100)
-				dam = (float)dam * (float)percentDamageMult / 100.0f;
+				dam = adjustByPercent(dam, percentDamageMult);
 
 			//	Criticals
 			bool crit = roll_percent(attacker->getCriticalChance());
@@ -262,7 +262,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 void triggerCleaveAttack(gamedataPtr gdata, creaturePtr cleaver)
 {
 	auto targets = getAdjacentEnemies(gdata, gdata->_player);
-	auto dbonus = cleaver->getCleaveDamageBonus() * targets.size();
+	auto dbonus = cleaver->getCleaveDamageBonus() * (targets.size() - 1);
 	for (auto t : targets)
 		attackWithWeapon(gdata, cleaver, t, true, 100, dbonus, false);
 	cleaver->spendActionEnergy(cleaver->getAttackEnergyCost());

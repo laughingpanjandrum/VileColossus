@@ -556,7 +556,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::DOUBLE_AXE):
 	case(BaseWeaponType::GREAT_AXE):
 	case(BaseWeaponType::WAR_AXE):
-		it->setProperty(PROP_CLEAVE_DAMAGE, randint(8, 13));
+		it->setProperty(PROP_CLEAVE_DAMAGE, 5 + randint(dam / 3, dam / 2));
 		break;
 
 	case(BaseWeaponType::DEMON_BLADE):
