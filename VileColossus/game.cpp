@@ -14,7 +14,6 @@ TODO
 	some system for diving faster in Hell?
 
 	make resistance a fixed value based on tier and type
-	reduce ACC penalty of heavy shields a bit
 	add t1 two-handed weapons
 	remove normal Hellmouth as a post-DL 12 option
 	add some walls to the hellfort

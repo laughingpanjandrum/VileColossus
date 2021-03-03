@@ -349,7 +349,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			}
 			dv = tier;
 			av = tier * 3;
-			acc = -(dv + av);
+			acc = -tier;
 			break;
 		}
 	}
