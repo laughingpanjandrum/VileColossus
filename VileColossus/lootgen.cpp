@@ -28,15 +28,16 @@ const vector<lootgen::BaseWeaponType> lootgen::getWeaponTypesOfTier(const int ti
 	switch (tier)
 	{
 	case(1):
-		return { BaseWeaponType::BATTLE_AXE, BaseWeaponType::CROSSBOW, BaseWeaponType::CLUB, BaseWeaponType::DAGGER, BaseWeaponType::SHORTBOW, BaseWeaponType::SHORTSWORD, };
+		return { BaseWeaponType::BASTARD_SWORD, BaseWeaponType::BATTLE_AXE, BaseWeaponType::CROSSBOW, BaseWeaponType::CLUB, BaseWeaponType::DAGGER, BaseWeaponType::GREATCLUB, BaseWeaponType::GREAT_AXE,
+			BaseWeaponType::SHORTBOW, BaseWeaponType::SHORTSWORD, };
 
 	case(2):
-		return { BaseWeaponType::GREAT_AXE, BaseWeaponType::GREATHAMMER, BaseWeaponType::GREATSWORD, BaseWeaponType::HEAVY_CROSSBOW, BaseWeaponType::LONGBOW,
+		return { BaseWeaponType::DOUBLE_AXE, BaseWeaponType::GREATHAMMER, BaseWeaponType::GREATSWORD, BaseWeaponType::HEAVY_CROSSBOW, BaseWeaponType::LONGBOW,
 					BaseWeaponType::LONGSWORD, BaseWeaponType::MACE, BaseWeaponType::STILETTO, BaseWeaponType::WAR_AXE, };
 		
 	case(3):
 		return { BaseWeaponType::BROAD_AXE, BaseWeaponType::DEMON_BLADE, BaseWeaponType::DEMON_GREATBLADE, BaseWeaponType::DOUBLE_AXE, BaseWeaponType::DOUBLE_CROSSBOW,
-					BaseWeaponType:: GREATBOW, BaseWeaponType:: GREATMAUL, BaseWeaponType:: LONG_KNIFE, BaseWeaponType:: WARHAMMER, };
+					BaseWeaponType:: GREATBOW, BaseWeaponType:: GREATMAUL, BaseWeaponType:: LONG_KNIFE, BaseWeaponType::TITAN_AXE, BaseWeaponType:: WARHAMMER, };
 
 	default:
 		return {};
@@ -440,6 +441,10 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	int dam = 1, var = 0, crit = 0, mult = 25, acc = 0;
 	switch (bwt)
 	{
+	case(BaseWeaponType::BASTARD_SWORD):
+		name = "bastard sword";
+		dam = 12; var = 4; crit = 5; mult = 100;
+		break;
 	case(BaseWeaponType::BATTLE_AXE):
 		name = "battle-axe";
 		dam = 4; var = 2; crit = 3; mult = 150; acc = -2;
@@ -470,19 +475,23 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::DOUBLE_AXE):
 		name = "double axe";
-		dam = 45; var = 6; crit = 3; mult = 150; acc = -4;
+		dam = 30; var = 5; crit = 3; mult = 150; acc - -5;
 		break;
 	case(BaseWeaponType::DOUBLE_CROSSBOW):
 		name = "double crossbow";
 		dam = 36; var = 10; crit = 3; mult = 100; acc = -4;
 		break;
 	case(BaseWeaponType::GREAT_AXE):
-		name = "great-axe";
-		dam = 30; var = 5; crit = 3; mult = 150; acc - -5;
+		name = "greataxe";
+		dam = 12; var = 3; crit = 3; mult = 150; acc = -2;
 		break;
 	case(BaseWeaponType::GREATBOW):
 		name = "greatbow";
 		dam = 24; var = 7; crit = 5; mult = 100; acc = -3;
+		break;
+	case(BaseWeaponType::GREATCLUB):
+		name = "greatclub";
+		dam = 14; var = 4; crit = 1; mult = 50; acc = -3;
 		break;
 	case(BaseWeaponType::GREATHAMMER):
 		name = "greathammer";
@@ -528,6 +537,10 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		name = "stiletto";
 		dam = 6; var = 2; crit = 15; mult = randint(25, 35) * 10; acc = 2;
 		break;
+	case(BaseWeaponType::TITAN_AXE):
+		name = "titan axe";
+		dam = 45; var = 6; crit = 3; mult = 150; acc = -4;
+		break;
 	case(BaseWeaponType::WARHAMMER):
 		name = "warhammer";
 		dam = 22; var = 4; crit = 1; mult = 50; acc = -1;
@@ -555,10 +568,12 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::BROAD_AXE):
 	case(BaseWeaponType::DOUBLE_AXE):
 	case(BaseWeaponType::GREAT_AXE):
+	case(BaseWeaponType::TITAN_AXE):
 	case(BaseWeaponType::WAR_AXE):
 		it->setProperty(PROP_CLEAVE_DAMAGE, 5 + randint(dam / 3, dam / 2));
 		break;
 
+	case(BaseWeaponType::BASTARD_SWORD):
 	case(BaseWeaponType::DEMON_BLADE):
 	case(BaseWeaponType::DEMON_GREATBLADE):
 	case(BaseWeaponType::GREATSWORD):
@@ -569,6 +584,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 
 	case(BaseWeaponType::CLUB):
+	case(BaseWeaponType::GREATCLUB):
 	case(BaseWeaponType::GREATHAMMER):
 	case(BaseWeaponType::GREATMAUL):
 	case(BaseWeaponType::MACE):
@@ -593,18 +609,23 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	//	Set 2h flag
 	switch (bwt)
 	{
+	case(BaseWeaponType::BASTARD_SWORD):
 	case(BaseWeaponType::DOUBLE_AXE):
 	case(BaseWeaponType::GREAT_AXE):
+	case(BaseWeaponType::GREATCLUB):
 	case(BaseWeaponType::DEMON_GREATBLADE):
 	case(BaseWeaponType::GREATSWORD):
 	case(BaseWeaponType::GREATHAMMER):
 	case(BaseWeaponType::GREATMAUL):
+	case(BaseWeaponType::TITAN_AXE):
+
 	case(BaseWeaponType::SHORTBOW):
 	case(BaseWeaponType::LONGBOW):
 	case(BaseWeaponType::GREATBOW):
 	case(BaseWeaponType::CROSSBOW):
 	case(BaseWeaponType::HEAVY_CROSSBOW):
 	case(BaseWeaponType::DOUBLE_CROSSBOW):
+
 		it->_isTwoHanded = true;
 		break;
 	}
