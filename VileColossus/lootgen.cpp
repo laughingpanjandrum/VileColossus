@@ -403,15 +403,15 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 	//	Resistances.
 	for (auto res : RESIST_PROPS)
 	{
+		int val = 2 * tier * wt;
 		switch (cat)
 		{
 		case(ITEM_CHESTPIECE):
-		case(ITEM_SHIELD):
-			it->setProperty(res, randint(3, 5) * tier);
+			it->setProperty(res, randint(val, val + val / 2));
 			break;
 
 		default:
-			it->setProperty(res, randint(0, 5) * tier);
+			it->setProperty(res, randint(0, val));
 			break;
 		}
 	}
