@@ -350,10 +350,10 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "immune_fire", "resists_poison", "fire_attack", "casts_fireblast", "more_health", "spawner", "protected", };
 
 	case(MonsterType::BOSS_WRAITH_KING):
-		return { "immune_poison", "ethereal", "casts_arcane_bolt", "more_health", "spawner", "undead", };
+		return { "immune_poison", "ethereal", "casts_arcane_bolt", "more_health", "spawner", "undead", "arcane_attack", };
 
 	case(MonsterType::BOSS_WRETCHED_PRINCE):
-		return { "spawner", "megaspawner", "more_health", "protected_heavy", };
+		return { "spawner", "megaspawner", "more_health", "protected_heavy", "flits", "casts_poison_spit", };
 		
 
 	default:
