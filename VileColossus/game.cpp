@@ -544,11 +544,18 @@ void game::awaitDebugCommand()
 		_gdata->_omniscient = !_gdata->_omniscient;
 	else if (txt == "god")
 		_gdata->_invincible = !_gdata->_invincible;
+	else if (txt == "autokill")
+		_gdata->_autokill = !_gdata->_autokill;
 	else if (txt == "level")
 		playerGainLevel(_gdata);
 	else if (txt == "level10")
 	{
 		for (unsigned i = 0; i < 10; i++)
+			playerGainLevel(_gdata);
+	}
+	else if (txt == "level30")
+	{
+		for (unsigned i = 0; i < 30; i++)
 			playerGainLevel(_gdata);
 	}
 	else if (txt == "home")
@@ -567,7 +574,7 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "materials")
 	{
-		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, 1000));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, 5000));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, 500));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 250));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));

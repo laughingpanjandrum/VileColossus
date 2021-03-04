@@ -1515,7 +1515,9 @@ gridmapPtr mapgen::generate_HomeBase()
 			m->setTile(MT_PEW_WOODEN, x, y);
 	}
 
-	fillRegion(m, MT_SAND, 16, 33, 2, 11);
+	scatterTile(m, MT_BUSH, 10, 5, 14, 22, 0.05);
+
+	fillRegion(m, MT_SAND, 16, 33, 2, 12);
 	fillRegionCircular(m, MT_WATER, 12, 9, 1);
 
 	//	features in main structure

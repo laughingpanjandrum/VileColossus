@@ -1742,6 +1742,8 @@ void display::drawSidebar(gamedataPtr gdata)
 	//	Debug flags
 	if (gdata->_invincible)
 		_win.write(51, 2, "GOD", COLOR_WHITE);
+	if (gdata->_autokill)
+		_win.write(55, 2, "AUTOKILL", COLOR_WHITE);
 
 
 	//	Level

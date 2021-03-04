@@ -89,6 +89,7 @@ struct gamedata
 	//	Debug flags
 	bool _omniscient = false;
 	bool _invincible = false;
+	bool _autokill = false;
 };
 typedef shared_ptr<gamedata> gamedataPtr;
 

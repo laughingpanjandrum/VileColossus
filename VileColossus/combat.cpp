@@ -140,7 +140,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 	while (atks-- > 0)
 	{
 		//	Must hit first
-		if (rollToHit(gdata, attacker, target))
+		if (rollToHit(gdata, attacker, target) || (gdata->_autokill && attacker->isPlayer()))
 		{
 			//	Damage
 			auto dam = rollWeaponDamage(gdata, attacker);
@@ -235,6 +235,10 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			//	monster special abilities
 			if (!attacker->isPlayer())
 				monsterSpecialHitEffects(gdata, static_pointer_cast<monster>(attacker), target, dam);
+
+			//	if the AUTOKILL debug flag is set, we instantly kill whatever we hit
+			if (gdata->_autokill && attacker->isPlayer())
+				killCreature(gdata, target);
 		}
 
 		//	Missed!
