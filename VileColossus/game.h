@@ -25,6 +25,9 @@ public:
 	~game() {}
 
 	void start();
+	void menuLoop();
+	void newgame();
+
 	void mainGameLoop();
 	void drawScreen();
 	

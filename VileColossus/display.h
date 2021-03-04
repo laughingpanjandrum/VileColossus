@@ -30,6 +30,10 @@ public:
 	~display() {}
 
 
+	void title();
+	void toggleFullscreen() { _win.toggle_fullscreen(); }
+
+
 	//	Character information
 
 	void drawCharacterSheet(gamedataPtr gdata);
@@ -143,6 +147,10 @@ private:
 	vector<vector<colorType>> _visibleBgcolors;
 
 	TCODColor _percentColors[101];
+
+
+	//	Title screen
+	const vector<string>* _title;
 
 
 	//	Helpers

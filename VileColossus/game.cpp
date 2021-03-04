@@ -30,6 +30,27 @@ void game::start()
 	_ih = inputHandlerPtr(new inputHandler());
 	_gdata = gamedataPtr(new gamedata()); 
 
+	//	title screen
+	_gdata->_state = STATE_TITLE;
+	menuLoop();
+}
+
+
+//	We loop here prior to the game start.
+void game::menuLoop()
+{
+	while (_gdata->_state == STATE_TITLE)
+	{
+		drawScreen();
+		processInput();
+	}
+	mainGameLoop();
+}
+
+
+//	Starts the game from title.
+void game::newgame()
+{
 	//	starting character
 	_gdata->_player = playerPtr(new player());
 
@@ -60,9 +81,10 @@ void game::start()
 	//	begin the main game
 	_gdata->_state = STATE_NORMAL;
 	_gdata->_player->_actionEnergy = ENERGY_ACTION_THRESHOLD;
-	mainGameLoop();
 }
 
+
+//	Game runs in this loop
 void game::mainGameLoop()
 {
 	while (!_isGameOver)
@@ -78,7 +100,7 @@ void game::mainGameLoop()
 		else
 			processInput();
 
-		//	progress time
+		//	time passes
 		while (!_gdata->_player->hasActionEnergyAboveThreshold())
 			tick();
 	}
@@ -91,6 +113,9 @@ void game::drawScreen()
 	//	State-dependent stuff
 	switch (_gdata->_state)
 	{
+	case(STATE_TITLE):
+		_disp.title();
+		break;
 
 	case(STATE_CHARACTER_SHEET):
 		_disp.drawCharacterSheet(_gdata);
@@ -182,6 +207,10 @@ void game::processInput()
 	//	we can quit whenever we want
 	if (_ih->isKeyPressed('q') && _ih->isCtrlPressed())
 		_isGameOver = true;
+
+	//	fullscreen toggle
+	else if (_ih->isKeyPressed('f') && _ih->isCtrlPressed())
+		_disp.toggleFullscreen();
 
 	//	and we can always try to back out of whatever menu we're in
 	else if (_ih->isKeyPressed(TCODK_ESCAPE))
@@ -415,6 +444,13 @@ void game::processInput()
 			break;
 
 
+			//	Starting the game.
+		case(STATE_TITLE):
+			if (_ih->isKeyPressed(TCODK_ENTER))
+				newgame();
+			break;
+
+
 			//	Normal input
 		case(STATE_NORMAL):
 			mainGameInput(); break;
@@ -526,6 +562,10 @@ void game::backOut()
 		else
 			_gdata->_state = STATE_VIEW_INVENTORY;
 	}
+
+	//	ESC from the title screen quits.
+	else if (_gdata->_state == STATE_TITLE)
+		_isGameOver = true;
 
 	//	The default: return to the normal game display
 	else if (_gdata->_state != STATE_ACKNOWLEDGE_DEATH)

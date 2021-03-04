@@ -49,9 +49,10 @@ public:
 	//Special shape-drawing functions
 	void			drawBox(int leftx, int topy, int width, int height, TCODColor col);
 
-	//Image drawing
-	//void drawImage(imageSharedPtr img, int atx, int aty);
-	//void drawImage(imagePtr img, int atx, int aty);
+
+	//	Fullscreen toggle
+	void toggle_fullscreen() { TCODConsole::setFullscreen(!TCODConsole::isFullscreen()); }
+
 
 private:
 
