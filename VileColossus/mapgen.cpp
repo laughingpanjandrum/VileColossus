@@ -105,7 +105,7 @@ intpair mapgen::getRandomInCircle(gridmapPtr m, intpair ctr, int r)
 //	Returns true if the Maptile is considered 'safe' & thus eligible for items, stairs, etcs
 bool mapgen::isSafeTile(const Maptile tl)
 {
-	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS || tl == MT_SAND || tl == MT_FLOOR_HOT;
+	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS || tl == MT_SAND || tl == MT_FLOOR_HOT || tl == MT_FLOOR_VOID;
 }
 
 //	A random point that is some type of 'safe' floor-type tile: ie no surface, no deep water, etc
@@ -1338,6 +1338,34 @@ gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
 
 
 
+//	Add treasure to an abyssal map. These have the best types.
+void mapgen::addAbyssTreasures(gridmapPtr m)
+{
+	int count = randint(1, 3);
+	while (count-- > 0)
+		m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
+	if (roll_one_in(2))
+		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+}
+
+
+
+//	Weird void maps
+gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
+{
+	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	fillMap(m, { MT_FLOOR_VOID });
+	scatterOnMap(m, MT_WALL_ICE, 0.05);
+	scatterOnMap(m, MT_WATER, 0.1);
+	m->_name = "The Outer Dark";
+
+	addAbyssTreasures(m);
+	addStairsToMap(m, dl, descending);
+	return m;
+}
+
+
+
 //	BOSS MAP: The Pallid Rotking
 gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount)
 {
@@ -1422,13 +1450,13 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 {
 	gridmapPtr m;
 	
-	//	Type depends on depth
+	//	BOSS MAPS
 	if (dl == 9)
 		m = generate_PallidRotking(dl, descending, progress->_killedRotking);
 	else if (dl == 15)
 		m = generate_Hellfort(dl, descending, progress->_killedRotking);
 
-	//	Random selection of map types
+	//	HELL: Random selection of map types
 	else if (dl >= 12)
 	{
 		int r = randint(1, 4);
@@ -1447,7 +1475,8 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 
 	//	Cathedral maps from the early game
 	else
-		m = generate_Cathedral(dl, descending);
+		m = generate_OuterDark(dl, descending);
+		//m = generate_Cathedral(dl, descending);
 
 
 	//	Map exterior is always filled with indestructible walls.

@@ -20,6 +20,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_FLOOR_HOT):			return "hellstone floor";
 	case(MT_FLOOR_STONE):       
 	case(MT_FLOOR_STONE2):		return "stone floor";
+	case(MT_FLOOR_VOID):		return "void";
 	case(MT_FORGE):				return "enchanted forge";
 	case(MT_GEMSTONE_PRESS):	return "gemstone press";
 	case(MT_GRASS):				return "grass";
@@ -46,6 +47,7 @@ const string getMaptileName(const Maptile tl)
 	case(MT_TOMBSTONE):			return "tombstone";
 	case(MT_TREE_DEAD):			return "dead tree";
 	case(MT_WALL_BLOODY):		return "bloody wall";
+	case(MT_WALL_ICE):			return "ice block";
 	case(MT_WALL_SANDSTONE):	return "sandstone wall";
 	case(MT_WALL_STONE):        return "stone wall";
 	case(MT_WALL_SUPER):        return "unbreakable wall";
@@ -102,6 +104,7 @@ const int getMaptileGlyph(const Maptile tl)
 
 	case(MT_FLOOR_HOT):
 	case(MT_FLOOR_STONE):
+	case(MT_FLOOR_VOID):
 	case(MT_GRASS):
 	case(MT_SAND):
 		return 249;
@@ -132,6 +135,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return 239;
 
 	case(MT_WALL_BLOODY):
+	case(MT_WALL_ICE):
 	case(MT_WALL_SANDSTONE):
 	case(MT_WALL_STONE):
 	case(MT_WALL_SUPER):
@@ -203,6 +207,9 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_WALL_STONE):
 		return TCODColor::grey;
 
+	case(MT_FLOOR_VOID):
+		return TCODColor::darkerGrey;
+
 	case(MT_BARREL):
 	case(MT_DOOR_WOODEN):
 	case(MT_PEW_WOODEN):
@@ -236,6 +243,9 @@ const colorType getMaptileColor(const Maptile tl)
 
 	case(MT_WALL_BLOODY):
 		return TCODColor::darkCrimson;
+
+	case(MT_WALL_ICE):
+		return TCODColor::darkCyan;
 
 	case(MT_FLOOR_HOT):
 	case(MT_LAVA):
@@ -294,6 +304,7 @@ const bool isMaptileWalkable(const Maptile tl)
 	case(MT_TOMBSTONE):
 	case(MT_TREE_DEAD):
 	case(MT_WALL_BLOODY):
+	case(MT_WALL_ICE):
 	case(MT_WALL_SANDSTONE):
 	case(MT_WALL_STONE):
 	case(MT_WALL_SUPER):
@@ -325,13 +336,13 @@ const bool isMaptileTransparent(const Maptile tl)
 //	Will break if we shoot/bump into it.
 const bool isMaptileBreakable(const Maptile tl)
 {
-	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN || tl == MT_TOMBSTONE || tl == MT_TREE_DEAD;
+	return tl == MT_BARREL || tl == MT_PEW_WOODEN || tl == MT_TABLE_WOODEN || tl == MT_TOMBSTONE || tl == MT_TREE_DEAD || tl == MT_WALL_ICE;
 }
 
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL || tl == MT_FLOOR_VOID;
 }
 
 const bool isMaptileStairs(const Maptile tl)

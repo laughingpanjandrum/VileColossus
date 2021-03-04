@@ -29,6 +29,14 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 		gdata->_player->spendActionEnergy();
 		break;
 
+		//	Destructible (alternate)
+	case(MT_WALL_ICE):
+		messages::add(gdata, "You shatter the block of ice!");
+		gdata->_map->setTile(MT_WATER, pt);
+		gdata->_map->updateTmapAtPoint(pt.first, pt.second);
+		gdata->_player->spendActionEnergy();
+		break;
+
 		//	Magical healing fountain
 	case(MT_HEALING_FOUNTAIN):
 		messages::add(gdata, "#You touch the healing waters and are replenished!", { COLOR_POSITIVE });

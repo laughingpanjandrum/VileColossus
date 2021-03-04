@@ -227,7 +227,7 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 	//	Drop items in random nearby spots
 	auto pts = getAdjacentWalkable(gdata, pt);
-	int amt = randint(2, 2 * quality);
+	int amt = randint(quality, 2 * quality);
 	while (amt-- > 0)
 	{
 		auto it = lootgen::rollItemDrop(quality, rarity);

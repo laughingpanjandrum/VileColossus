@@ -140,13 +140,20 @@ namespace mapgen
 	gridmapPtr generate_Cathedral(int dl, bool descending, bool add_monsters = true);
 
 
-	//		The HELLFORT
+	//		Hell maps
 
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
 	gridmapPtr generate_MoltenLake(int dl, bool descending);
 	gridmapPtr generate_SpiderNest(int dl, bool descending);
 	gridmapPtr generate_Tomb(int dl, bool descending);
 	gridmapPtr generate_VampireNest(int dl, bool descending);
+
+
+	//		Abyss maps
+
+	void addAbyssTreasures(gridmapPtr m);
+
+	gridmapPtr generate_OuterDark(int dl, bool descending);
 
 
 	//		Boss maps

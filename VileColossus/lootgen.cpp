@@ -885,7 +885,7 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 const int lootgen::rollRarity(const int maxRarity)
 {
 	int r = randint(1, 100);
-	if (r <= 3 && maxRarity > 3)
+	if (r <= 5 && maxRarity > 3)
 		return 4;
 	else if (r <= 20 && maxRarity > 2)
 		return 3;
