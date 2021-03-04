@@ -31,6 +31,8 @@ public:
 
 
 	void title();
+	void drawModeSelection();
+
 	void toggleFullscreen() { _win.toggle_fullscreen(); }
 
 

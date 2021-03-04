@@ -39,12 +39,28 @@ void game::start()
 //	We loop here prior to the game start.
 void game::menuLoop()
 {
-	while (_gdata->_state == STATE_TITLE)
+	while (_gdata->_state != STATE_NORMAL)
 	{
 		drawScreen();
 		processInput();
 	}
+	cout << "Selected game mode: " << getGameModeName() << endl;
+	newgame();
 	mainGameLoop();
+}
+
+
+//	Select a game mode and start the game.
+void game::selectGameMode()
+{
+	_gdata->_state = STATE_NORMAL;
+	switch (_ih->getKeypressCharacter())
+	{
+	case('1'):	_gdata->_mode = GameMode::CASUAL; break;
+	case('2'):	_gdata->_mode = GameMode::NORMAL; break;
+	case('3'):	_gdata->_mode = GameMode::PERMADEATH; break;
+	default:	_gdata->_state = STATE_SELECT_MODE;		//	cancel, we didn't pick a valid option
+	}
 }
 
 
@@ -78,8 +94,6 @@ void game::newgame()
 		addToInventory(_gdata, it);
 	}*/
 
-	//	begin the main game
-	_gdata->_state = STATE_NORMAL;
 	_gdata->_player->_actionEnergy = ENERGY_ACTION_THRESHOLD;
 }
 
@@ -115,6 +129,10 @@ void game::drawScreen()
 	{
 	case(STATE_TITLE):
 		_disp.title();
+		break;
+
+	case(STATE_SELECT_MODE):
+		_disp.drawModeSelection();
 		break;
 
 	case(STATE_CHARACTER_SHEET):
@@ -433,7 +451,7 @@ void game::processInput()
 			//	Accept death and proceed
 		case(STATE_ACKNOWLEDGE_DEATH):
 			if (_ih->isKeyPressed(TCODK_ENTER))
-				returnToHomeBase();
+				acceptDeath();
 			break;
 
 
@@ -447,7 +465,10 @@ void game::processInput()
 			//	Starting the game.
 		case(STATE_TITLE):
 			if (_ih->isKeyPressed(TCODK_ENTER))
-				newgame();
+				_gdata->_state = STATE_SELECT_MODE;
+			break;
+		case(STATE_SELECT_MODE):
+			selectGameMode();
 			break;
 
 
@@ -562,6 +583,10 @@ void game::backOut()
 		else
 			_gdata->_state = STATE_VIEW_INVENTORY;
 	}
+
+	//	Return to title.
+	else if (_gdata->_state == STATE_SELECT_MODE)
+		_gdata->_state = STATE_TITLE;
 
 	//	ESC from the title screen quits.
 	else if (_gdata->_state == STATE_TITLE)
@@ -701,7 +726,6 @@ void game::returnToHomeBase()
 	//	Set depth and automatically replenish health
 	_gdata->_depth = 0;
 	_gdata->_player->healToMax();
-	_gdata->_player->_triggeredDeath = false;
 	_gdata->_state = STATE_NORMAL;
 }
 
@@ -718,6 +742,19 @@ void game::castTownPortal()
 	}
 	else
 		messages::error(_gdata, "Your portal isn't charged yet! Kill monsters to charge it.");
+}
+
+
+//	Normally this returns us home; in Permadeath mode, it ends the game instead.
+void game::acceptDeath()
+{
+	if (_gdata->_mode == GameMode::PERMADEATH)
+		_isGameOver = true;
+	else
+	{
+		_gdata->_player->_triggeredDeath = false;
+		returnToHomeBase();
+	}
 }
 
 
@@ -803,4 +840,15 @@ void game::scrollMenu(int vec, const unsigned size)
 		_gdata->_idx = size - 1;
 	else if (_gdata->_idx >= size)
 		_gdata->_idx = 0;
+}
+
+const string game::getGameModeName()
+{
+	switch (_gdata->_mode)
+	{
+	case(GameMode::CASUAL):		return "Casual";
+	case(GameMode::NORMAL):		return "Normal";
+	case(GameMode::PERMADEATH):	return "Permadeath";
+	default:					return "Not Set";
+	}
 }

@@ -9,9 +9,13 @@
 #define MESSAGE_COUNT_MAX 14
 
 
+
+enum class GameMode { CASUAL, NORMAL, PERMADEATH, };
+
+
 enum GameState
 {
-	STATE_TITLE,
+	STATE_TITLE, STATE_SELECT_MODE,
 	STATE_NORMAL,
 	STATE_CHARACTER_SHEET,
 	STATE_LOOK, STATE_VIEW_ITEM_DETAILS,
@@ -86,6 +90,9 @@ struct gamedata
 	//	Game progress
 	int _demonforgeTier = 1;
 	mapgen::game_progress _gameProgress;
+
+	//	Game mode
+	GameMode _mode;
 
 	//	Debug flags
 	bool _omniscient = false;

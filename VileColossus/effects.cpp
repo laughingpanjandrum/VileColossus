@@ -280,24 +280,30 @@ void killPlayer(gamedataPtr gdata)
 	//	SET STATE
 	else if (!gdata->_player->_triggeredDeath)
 	{
+		//	Death screen.
 		gdata->_player->_triggeredDeath = true;
 		gdata->_state = STATE_ACKNOWLEDGE_DEATH;
 		messages::add(gdata, "# *** YOU DIED ***", { COLOR_NEGATIVE });
 		messages::add(gdata, "#Equipment durability reduced!", { COLOR_WARNING });
 		messages::add(gdata, "Press ENTER to continue...");
 
-		//	Damage equipment
-		for (auto it : gdata->_player->getAllEquippedItems())
+		//	Penalties, if not in permadeath mode
+		if (gdata->_mode != GameMode::PERMADEATH)
 		{
-			if (it != nullptr)
+			//	Damage equipment
+			for (auto it : gdata->_player->getAllEquippedItems())
 			{
-				it->reduceMaxDurability(1 + it->_maxDurability / 10);
-				it->takePercentDamage(10);
+				if (it != nullptr)
+				{
+					it->reduceMaxDurability(1 + it->_maxDurability / 10);
+					it->takePercentDamage(10);
+				}
 			}
-		}
 
-		//	Lose inventory
-		gdata->_carriedItems.clear();
+			//	Lose inventory (on normal mode)
+			if (gdata->_mode == GameMode::NORMAL)
+				gdata->_carriedItems.clear();
+		}
 	}
 }
 

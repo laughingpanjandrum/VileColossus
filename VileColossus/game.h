@@ -26,6 +26,7 @@ public:
 
 	void start();
 	void menuLoop();
+	void selectGameMode();
 	void newgame();
 
 	void mainGameLoop();
@@ -42,6 +43,8 @@ public:
 	void tryUseStairs();
 	void returnToHomeBase();
 	void castTownPortal();
+
+	void acceptDeath();
 
 	void doCreatureTick(creaturePtr cr);
 	void tick();
@@ -62,6 +65,8 @@ private:
 	int _globalTickCounter;
 
 	chrono::steady_clock::time_point _lastAnimationTick;
+
+	const string getGameModeName();
 
 };
 

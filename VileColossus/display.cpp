@@ -87,6 +87,22 @@ void display::title()
 }
 
 
+//	Pick a game mode.
+void display::drawModeSelection()
+{
+	_win.write(5, 5, "SELECT A GAME MODE", COLOR_WHITE);
+
+	writeFormatted(10, 10, "[#1@] #CASUAL", { COLOR_LIGHT, TCODColor::green });
+	_win.writeWrapped(13, 11, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, but you keep all yours item.", COLOR_MEDIUM);
+
+	writeFormatted(10, 20, "[#2@] #NORMAL", { COLOR_LIGHT, TCODColor::yellow });
+	_win.writeWrapped(13, 21, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, and all non-equipped items in your inventory are lost.", COLOR_MEDIUM);
+
+	writeFormatted(10, 30, "[#3@] #PERMADEATH", { COLOR_LIGHT, TCODColor::red });
+	_win.writeWrapped(13, 31, 60, "On death, the game ends and your character is lost forever.", COLOR_MEDIUM);
+}
+
+
 //	Character info
 void display::drawCharacterSheet(gamedataPtr gdata)
 {
@@ -648,7 +664,7 @@ void display::drawInventory(gamedataPtr gdata)
 		writeFormatted(2, 45, "#  t   @Transfer item to stash", { COLOR_LIGHT, COLOR_LIGHT });
 		writeFormatted(2, 46, "#  T   @Transfer all to stash", { COLOR_LIGHT, COLOR_LIGHT });
 	}
-	writeFormatted(2, 47, "#  v   @View item details", { COLOR_LIGHT });
+	writeFormatted(2, 47, "#  v   @View detailed description", { COLOR_LIGHT });
 	writeFormatted(2, 48, "#  M   @Mark/unmark as valuable item", { COLOR_LIGHT });
 	drawCharacterSummary(gdata);
 }

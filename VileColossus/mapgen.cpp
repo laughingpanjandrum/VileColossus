@@ -1475,8 +1475,8 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 
 	//	Cathedral maps from the early game
 	else
-		m = generate_OuterDark(dl, descending);
-		//m = generate_Cathedral(dl, descending);
+		//m = generate_OuterDark(dl, descending);
+		m = generate_Cathedral(dl, descending);
 
 
 	//	Map exterior is always filled with indestructible walls.
