@@ -95,7 +95,7 @@ void display::drawModeSelection()
 	writeFormatted(10, 10, "[#1@] #CASUAL", { COLOR_LIGHT, TCODColor::green });
 	_win.writeWrapped(13, 11, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, but you keep all yours item.", COLOR_MEDIUM);
 
-	writeFormatted(10, 20, "[#2@] #NORMAL", { COLOR_LIGHT, TCODColor::yellow });
+	writeFormatted(10, 20, "[#2@] #NORMAL", { COLOR_LIGHT, COLOR_LIGHT });
 	_win.writeWrapped(13, 21, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, and all non-equipped items in your inventory are lost.", COLOR_MEDIUM);
 
 	writeFormatted(10, 30, "[#3@] #PERMADEATH", { COLOR_LIGHT, TCODColor::red });
@@ -208,6 +208,16 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	drawStatWithBox(x, y + 14, to_string(p->getStaggerChance()) + "%", "Stagger Chance", COLOR_MISC_STAT);
 	drawStatWithBox(x, y + 17, to_string(p->getWrathOnKillChance()) + "%", "Wrath on Kill", COLOR_LIGHT);
 	drawStatWithBox(x, y + 20, plusminus(p->getWrathDamageBonus()) + "%", "Wrath Damage", TCODColor::crimson);
+
+
+	//	GAME MODE
+	_win.write(1, 1, "Game Mode:", COLOR_DARK);
+	switch (gdata->_mode)
+	{
+	case(GameMode::CASUAL):		_win.write(12, 1, "Casual", TCODColor::darkGreen); break;
+	case(GameMode::NORMAL):		_win.write(12, 1, "Normal", COLOR_LIGHT); break;
+	case(GameMode::PERMADEATH):	_win.write(12, 1, "Permadeath", TCODColor::darkRed); break;
+	}
 }
 
 
