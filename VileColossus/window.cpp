@@ -1,7 +1,7 @@
 #include "window.h"
 #include "libtcod.hpp"
 
-window::window() : window("Viledream", 90, 65)
+window::window() : window("VILE COLOSSUS", 90, 65)
 {
 }
 
@@ -11,7 +11,7 @@ window::window(string name, int xsize, int ysize)
 	//Setup console
 	//mainConsole = new TCODConsole(xsize, ysize);
 	//mainConsole->setCustomFont("fonts/large_final_10x10.png", TCOD_FONT_LAYOUT_ASCII_INROW, 16, 32);
-	TCODConsole::setCustomFont("data/fonts/Alloy_curses_12x12.png", TCOD_FONT_LAYOUT_ASCII_INROW, 16, 16);
+	TCODConsole::setCustomFont("data/fonts/myfont.png", TCOD_FONT_LAYOUT_ASCII_INROW, 16, 16);
 	//Go!
 	TCODConsole::initRoot(xsize, ysize, name.c_str());
 	//Default bg colour

@@ -60,6 +60,8 @@ const int getMaptileGlyph(const Maptile tl)
 	switch (tl)
 	{
 	case(MT_ALCHEMY):
+		return 236;
+
 	case(MT_GEMSTONE_PRESS):
 		return 237;
 
@@ -68,10 +70,12 @@ const int getMaptileGlyph(const Maptile tl)
 		return 251;
 
 	case(MT_BARREL):
+		return '0';
+
 	case(MT_HELLPORTAL_DOWN):
 	case(MT_HELLPORTAL_UP):
 	case(MT_TEMPLE_PORTAL):
-		return '0';
+		return 239;
 
 	case(MT_DEMONFORGE):
 	case(MT_FORGE):

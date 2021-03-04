@@ -11,9 +11,6 @@ TODO
 
 	interface stuff to add:
 		-> more key prompts on inventory screens/etc
-	some system for diving faster in Hell?
-
-	give hell bosses some deadlier special attacks
 
 */
 
