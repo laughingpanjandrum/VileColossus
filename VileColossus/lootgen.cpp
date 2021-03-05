@@ -93,10 +93,10 @@ itemPtr lootgen::generateStartingWeapon()
 	const int r = randint(1, 4);
 	switch (r)
 	{
-	case(1):	bwt = BaseWeaponType::DAGGER;
-	case(2):	bwt = BaseWeaponType::CLUB;
-	case(3):	bwt = BaseWeaponType::SHORTSWORD;
-	default:	bwt = BaseWeaponType::BATTLE_AXE;
+	case(1):	bwt = BaseWeaponType::DAGGER; break;
+	case(2):	bwt = BaseWeaponType::CLUB; break;
+	case(3):	bwt = BaseWeaponType::SHORTSWORD; break;
+	default:	bwt = BaseWeaponType::BATTLE_AXE; break;
 	}
 	auto it = generateWeaponOfType(bwt);
 
