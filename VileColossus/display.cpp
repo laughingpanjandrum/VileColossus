@@ -90,14 +90,18 @@ void display::title()
 //	Pick a game mode.
 void display::drawModeSelection()
 {
-	_win.write(5, 5, "SELECT A GAME MODE", COLOR_WHITE);
+	_win.write(5, 5, "SELECT A GAME MODE", COLOR_LIGHT);
+	drawLineHorizontal(4, 6, 20, COLOR_LIGHT);
 
+	drawBox(8, 8, 70, 7, COLOR_DARK);
 	writeFormatted(10, 10, "[#1@] #CASUAL", { COLOR_LIGHT, TCODColor::green });
-	_win.writeWrapped(13, 11, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, but you keep all yours item.", COLOR_MEDIUM);
+	_win.writeWrapped(13, 11, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, but you keep all your items.", COLOR_MEDIUM);
 
+	drawBox(8, 18, 70, 7, COLOR_DARK);
 	writeFormatted(10, 20, "[#2@] #NORMAL", { COLOR_LIGHT, COLOR_LIGHT });
 	_win.writeWrapped(13, 21, 60, "On death, you return to the surface; your equipment is damaged and its maximum durability is reduced, and all non-equipped items in your inventory are lost.", COLOR_MEDIUM);
 
+	drawBox(8, 28, 70, 6, COLOR_DARK);
 	writeFormatted(10, 30, "[#3@] #PERMADEATH", { COLOR_LIGHT, TCODColor::red });
 	_win.writeWrapped(13, 31, 60, "On death, the game ends and your character is lost forever.", COLOR_MEDIUM);
 }
