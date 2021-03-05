@@ -120,7 +120,7 @@ intpair mapgen::getRandomSafe(gridmapPtr m)
 }
 
 
-intpair mapgen::getRandomInNode(TCODBsp * node)
+intpair mapgen::getRandomInNode(const TCODBsp * node)
 {
 	int x = node->x + randint(0, node->w);
 	int y = node->y + randint(0, node->h);
@@ -174,6 +174,15 @@ intpair mapgen::getRandomFreeOnEdge(gridmapPtr m)
 	auto pt = getRandomPointOnEdge(0, 0, m->_xsize, m->_ysize);
 	while (!m->isPointClear(pt))
 		pt = getRandomPointOnEdge(0, 0, m->_xsize, m->_ysize);
+	return pt;
+}
+
+intpair mapgen::getFreeINode(gridmapPtr m, const TCODBsp* node)
+{
+	intpair pt;
+	do {
+		pt = getRandomInNode(node);
+	} while (!m->isPointClear(pt));
 	return pt;
 }
 
@@ -1133,61 +1142,13 @@ gridmapPtr mapgen::generate_Hellmouth(int dl, bool descending, bool add_monsters
 }
 
 
-gridmapPtr mapgen::generate_MoltenLake(int dl, bool descending)
+//	A more complex hellmap. We start with the basic template, and then add more stuff.
+gridmapPtr mapgen::generate_HellDepths(int dl, bool descending)
 {
-	auto m = gridmapPtr(new gridmap(randint(4, 6) * 10, randint(4, 6) * 10));
-	fillMap(m, { MT_LAVA, MT_LAVA, MT_LAVA, MT_SAND });
-	m->_name = "Molten Lake [Depth " + to_string(dl) + "]";
-	m->_lightLevel = 4;
-
-	//	Generate islands.
-	int isles = randint(5, 8);
-	while (isles-- > 0)
-	{
-		const int r = randint(4, 9);
-		const intpair ctr = getRandomWithPad(m, r + 1);
-		addLake(m, ctr, r, MT_SAND, MT_FLOOR_HOT);
-		scatterTile(m, MT_TOMBSTONE, ctr.first - r / 2, ctr.second - r / 2, r, r, 0.1);
-	}
-
-	//	Scatter some chunks of floor.
-	isles = randint(2, 4);
-	while (isles-- > 0)
-		walkingTile(m, getRandomWithPad(m, 6), randint(30, 50), MT_FLOOR_HOT);
-
-	//	Monsters (special pool)
-	const vector<MonsterType> mtypes = { MonsterType::IMP, MonsterType::WRETCH };
-	auto tcod_nodes = createNodeMap(m, 10, 10);
-	int count = tcod_nodes.size() / 4;
-	while (count-- > 0)
-	{
-		auto n = randrange(tcod_nodes.size());
-		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
-		addMonsterGroupToNode(m, &mlist, tcod_nodes[n]);
-		tcod_nodes.erase(tcod_nodes.begin() + n);
-	}
-
-	//	Boss
-	m->addCreature(monsterdata::generate(MonsterType::DEMON_PRINCE, dl * 2 + 1), getRandomFree(m));
-
-	//	Loot
-	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
-	if (roll_one_in(4))
-		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
-
-	//	Exits
-	addStairsToMap(m, dl, descending);
-	return m;
-}
-
-
-//	SPIDER HELL
-gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
-{
-	int sz = randint(25, 35);
-	auto m = gridmapPtr(new gridmap(sz, sz));
-	fillMap(m, {MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
-	m->_name = "Spider Nest [Depth " + to_string(dl) + "]";
+	const int MIN_NODE_SIZE = 15;
+	auto m = gridmapPtr(new gridmap(2 + MIN_NODE_SIZE * randint(2, 4), 2 + MIN_NODE_SIZE * randint(2, 4)));
+	fillMap(m, { MT_FLOOR_HOT, MT_FLOOR_HOT, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_SAND, });
+	m->_name = "Deep Hells [Depth " + to_string(dl) + "]";
 
 
 	//	AUTOMATA
@@ -1197,100 +1158,117 @@ gridmapPtr mapgen::generate_SpiderNest(int dl, bool descending)
 		for (unsigned y = 0; y < m->_ysize; y++)
 		{
 			if (cells[x][y])
-				m->setTile(MT_WALL_STONE, x, y);
+				m->setTile(MT_WALL_BLOODY, x, y);
 		}
 	}
-	scatterSurface(m, Surface::WEB, 2, 2, sz - 4, sz - 4, 0.1);
 
 
-	//	Monsters (special pool)
-	auto tcod_nodes = createNodeMap(m, 10, 10);
-	int count = tcod_nodes.size() / 2;
-	while (count-- > 0)
+	//	ADDITIONAL FEATURES
+	auto nodes = createNodeMap(m, MIN_NODE_SIZE, 5);
+	for (auto n : nodes)
 	{
-		auto n = randrange(tcod_nodes.size());
-		auto mlist = rollMonsterGroup(dl, MonsterType::SPIDER);
-		addMonsterGroupToNode(m, &mlist, tcod_nodes[n]);
-		tcod_nodes.erase(tcod_nodes.begin() + n);
+		int r = randint(1, 6);
+		switch (r)
+		{
+		case(1):	hell_MoltenLake(m, n, dl); break;
+		case(2):	hell_SpiderNest(m, n, dl); break;
+		case(3):	hell_Tomb(m, n, dl); break;
+		case(4):	hell_VampireCourt(m, n, dl); break;
+		}
 	}
 
-	//	Boss
-	m->addCreature(monsterdata::generate(MonsterType::SPIDER_TITAN, dl * 2 + 1), getRandomFree(m));
+	//	Treasures
+	int chest_count = randint(1, 5);
+	while (chest_count-- > 0)
+	{
+		//	roll type
+		auto ctype = MT_CHEST_SMALL;
+		int r = randint(1, 100);
+		if (r <= 50)	ctype = MT_CHEST_GLOWING;
+		else if (r <= 75)	ctype = MT_CHEST_LUMINOUS;
 
-	//	Loot
-	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
-	if (roll_one_in(4))
-		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
+		//	emplace it
+		m->setTile(ctype, getRandomWalkable(m));
+	}
 
-	//	Finish
 	addStairsToMap(m, dl, descending);
 	return m;
 }
 
 
-
-gridmapPtr mapgen::generate_Tomb(int dl, bool descending)
+void mapgen::hell_MoltenLake(gridmapPtr m, TCODBsp* n, int dl)
 {
-	const int NODESZ = 8;
-	auto m = gridmapPtr(new gridmap(NODESZ * 5, NODESZ * 5));
-	fillMap(m, { MT_WALL_STONE });
-	m->_name = "Frigid Tomb";
+	//	Flames.
+	fillRegion(m, { MT_LAVA, MT_LAVA, MT_LAVA, MT_SAND }, n->x, n->y, n->w, n->h);
 
-	//	add creepy nodes
-	auto nodes = createNodeMap(m, NODESZ, 10);
-	for (auto n : nodes)
+	//	Generate islands.
+	int isles = randint(1, 3);
+	while (isles-- > 0)
 	{
-		fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2 }, n->x + 1, n->y + 1, n->w - 3, n->h - 3);
-		for (unsigned x = n->x + 2; x <= n->x + n->w - 4; x += 2)
-		{
-			for (unsigned y = n->y + 2; y <= n->y + n->h - 4; y += 2)
-				m->setTile(MT_SARCOPHAGUS, x, y);
-		}
+		const int r = randint(4, 9);
+		const intpair ctr = getRandomInBounds(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2);
+		addLake(m, ctr, r, MT_SAND, MT_FLOOR_HOT);
+		scatterTile(m, MT_TOMBSTONE, ctr.first - r / 2, ctr.second - r / 2, r, r, 0.1);
+	}
+
+	//	Scatter some chunks of floor.
+	isles = randint(2, 4);
+	while (isles-- > 0)
+		walkingTile(m, getRandomInBounds(m, n->x + 1, n->y + 1, n->w - 2, n->h - 2), randint(30, 50), MT_FLOOR_HOT);
+
+	//	Monsters
+	auto mlist = rollMonsterGroup(dl, MonsterType::IMP);
+	addMonsterGroupToNode(m, &mlist, n);
+	if (roll_one_in(3))
+		m->addCreature(monsterdata::generate(MonsterType::DEMON_PRINCE, dl * 2 + 1), getFreeINode(m, n));
+}
+
+
+void mapgen::hell_SpiderNest(gridmapPtr m, TCODBsp* n, int dl)
+{
+	//	Area
+	scatterSurface(m, Surface::WEB, n->x, n->y, n->w, n->h, 0.1);
+	scatterTile(m, MT_BUSH, n->x, n->y, n->w, n->h, 0.1);
+
+	//	Monsters
+	auto mlist = rollMonsterGroup(dl, MonsterType::SPIDER);
+	addMonsterGroupToNode(m, &mlist, n);
+	if (roll_one_in(3))
+		m->addCreature(monsterdata::generate(MonsterType::SPIDER_TITAN, dl * 2 + 1), getFreeINode(m, n));
+}
+
+
+void mapgen::hell_Tomb(gridmapPtr m, TCODBsp* n, int dl)
+{
+	//	TONS of sarcophagi
+	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2 }, n->x + 1, n->y + 1, n->w - 3, n->h - 3);
+	for (unsigned x = n->x + 2; x <= n->x + n->w - 4; x += 2)
+	{
+		for (unsigned y = n->y + 2; y <= n->y + n->h - 4; y += 2)
+			m->setTile(MT_SARCOPHAGUS, x, y);
 	}
 
 	//	some chaos
-	scatterTile(m, MT_TOMBSTONE, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.05);
-	scatterTile(m, MT_BUSH, 1, 1, m->_xsize - 2, m->_ysize - 2, 0.1);
+	scatterTile(m, MT_TOMBSTONE, n->x + 1, n->y + 1, n->w - 3, n->h - 3, 0.05);
+	scatterTile(m, MT_BUSH, n->x + 1, n->y + 1, n->w - 3, n->h - 3, 0.1);
 
-	//	randomly connect nodes
-	for (unsigned n = 1; n < nodes.size(); n++)
-		tunnelBetweenNodes(m, nodes[n], nodes[n - 1], MT_FLOOR_STONE);
-
-	//	monsters
-	int count = nodes.size() / 2 + 1;
-	while (count-- > 0)
-	{
-		auto n = randrange(nodes.size());
-		auto mlist = rollMonsterGroup(dl, MonsterType::WRAITH);
-		addMonsterGroupToNode(m, &mlist, nodes[n]);
-		nodes.erase(nodes.begin() + n);
-	}
-
-	//	treasure
-	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
-	if (roll_one_in(4))
-		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
-
-	//	stairs
-	addStairsToMap(m, dl, descending);
-	return m;
+	//	Monsters
+	auto mlist = rollMonsterGroup(dl, MonsterType::WRAITH);
+	addMonsterGroupToNode(m, &mlist, n);
 }
 
-
-
-gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
+void mapgen::hell_VampireCourt(gridmapPtr m, TCODBsp* n, int dl)
 {
-	const int sz = 10;
-	auto m = gridmapPtr(new gridmap(sz * randint(1, 3) + 2, sz * randint(1, 3) + 2));
-	fillMap(m, { MT_WALL_STONE, });
-	m->_name = "Vampire Den [Depth " + to_string(dl) + "]";
-
 	//	main setup
+	const int sz = 10;
 	vector<TCODBsp*> nodes;
-	for (unsigned x = 1; x < m->_xsize - sz; x += sz)
+	for (unsigned x = n->x + 1; x < n->x + n->w - sz; x += sz)
 	{
-		for (unsigned y = 1; y <= m->_ysize - sz; y += sz)
+		for (unsigned y = n->y + 1; y < n->y + n->h - sz; y += sz)
 		{
+			//	walls
+			fillRegion(m, MT_WALL_STONE, x, y, sz, sz);
+
 			//	interior
 			fillRegion(m, MT_FLOOR_STONE, x + 1, y + 1, sz - 2, sz - 2);
 			fillRegion(m, MT_FLOOR_CARPET, x + 2, y + 2, sz - 4, sz - 4);
@@ -1305,36 +1283,18 @@ gridmapPtr mapgen::generate_VampireNest(int dl, bool descending)
 			fillRegion(m, MT_FLOOR_STONE, x, y + sz / 2 - 1, 1, 2);
 			fillRegion(m, MT_FLOOR_STONE, x + sz - 1, y + sz / 2 - 1, 1, 2);
 
-			//	monsters
+			//	for monsters
 			nodes.push_back(new TCODBsp(x + 1, y + 1, sz - 2, sz - 2));
 		}
 	}
 
-	//	monsters
-	int count = nodes.size() / 2 + 1;
-	while (count-- > 0)
-	{
-		auto n = randrange(nodes.size());
-		auto mlist = rollMonsterGroup(dl, MonsterType::VAMPIRE_SPAWN);
-		addMonsterGroupToNode(m, &mlist, nodes[n]);
-		nodes.erase(nodes.begin() + n);
-	}
-
-	//	boss
-	m->addCreature(monsterdata::generate(MonsterType::VAMPIRE_PRINCE, dl * 2 + 1), getRandomFree(m));
-
-	//	treasure
-	m->setTile(MT_CHEST_LUMINOUS, getRandomWalkable(m));
-	if (roll_one_in(4))
-		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
-
-	//	other stuff
-	scatterOnMap(m, MT_SAND, 0.05);
-	scatterSurface(m, Surface::CORPSE, 2, 2, m->_xsize - 4, m->_ysize - 4, 0.1);
-
-	addStairsToMap(m, dl, descending);
-	return m;
+	//	Monsters
+	auto mlist = rollMonsterGroup(dl, MonsterType::VAMPIRE_SPAWN);
+	addMonsterGroupToNode(m, &mlist, n);
+	if (roll_one_in(3))
+		m->addCreature(monsterdata::generate(MonsterType::VAMPIRE_PRINCE, dl * 2 + 1), getFreeINode(m, n));
 }
+
 
 
 
@@ -1459,14 +1419,15 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	//	HELL: Random selection of map types
 	else if (dl >= 12)
 	{
-		int r = randint(1, 4);
+		m = generate_HellDepths(dl, descending);
+		/*int r = randint(1, 4);
 		switch (r)
 		{
 		case(1):	m = generate_MoltenLake(dl, descending); break;
 		case(2):	m = generate_SpiderNest(dl, descending); break;
 		case(3):	m = generate_Tomb(dl, descending); break;
 		default:	m = generate_VampireNest(dl, descending); break;
-		}
+		}*/
 	}
 
 	//	Entrance to HELL

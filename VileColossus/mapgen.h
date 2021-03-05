@@ -53,12 +53,14 @@ namespace mapgen
 	intpair getFreeWithPad(gridmapPtr m, int pad);
 	intpair getWalkableWithPad(gridmapPtr m, int pad);
 
-	intpair getRandomInNode(TCODBsp* node);
+	intpair getRandomInNode(const TCODBsp* node);
 	intpair getRandomWalkableInNode(gridmapPtr m, TCODBsp* node);
 
 	intpair getRandomOnNodeEdge(TCODBsp* node);
 	intpair getRandomPointOnEdge(int x, int y, int w, int h);
 	intpair getRandomFreeOnEdge(gridmapPtr m);
+
+	intpair getFreeINode(gridmapPtr m, const TCODBsp* node);
 
 	vector<intpair> getGroupOfFreePoints(gridmapPtr m, const intpair ctr, const int rad);
 	vector<intpair> getAllFreeInNode(gridmapPtr m, const TCODBsp* node);
@@ -143,10 +145,12 @@ namespace mapgen
 	//		Hell maps
 
 	gridmapPtr generate_Hellmouth(int dl, bool descending, bool add_monsters = true);
-	gridmapPtr generate_MoltenLake(int dl, bool descending);
-	gridmapPtr generate_SpiderNest(int dl, bool descending);
-	gridmapPtr generate_Tomb(int dl, bool descending);
-	gridmapPtr generate_VampireNest(int dl, bool descending);
+	gridmapPtr generate_HellDepths(int dl, bool descending);
+
+	void hell_MoltenLake(gridmapPtr m, TCODBsp* n, int dl);
+	void hell_SpiderNest(gridmapPtr m, TCODBsp* n, int dl);
+	void hell_Tomb(gridmapPtr m, TCODBsp* n, int dl);
+	void hell_VampireCourt(gridmapPtr m, TCODBsp* n, int dl);
 
 
 	//		Abyss maps

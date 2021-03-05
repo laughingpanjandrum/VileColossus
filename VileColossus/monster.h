@@ -42,6 +42,9 @@ enum class MonsterType
 	BOSS_DEMON_LORD, BOSS_WRAITH_KING, BOSS_WRETCHED_PRINCE,
 
 
+	//	Abyss monsters
+
+
 	__NONE,
 };
 

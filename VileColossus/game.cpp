@@ -622,6 +622,8 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "home")
 		returnToHomeBase();
+	else if (txt == "down")
+		moveToNewMap(1);
 	else if (txt == "drop")
 		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
 	else if (txt == "drop10")
