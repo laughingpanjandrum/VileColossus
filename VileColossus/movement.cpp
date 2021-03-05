@@ -103,7 +103,7 @@ void playerEnterTile(gamedataPtr gdata, intpair pt)
 	//	Alert if there are stairs here.
 	auto tl = gdata->_map->getTile(pt);
 	if (isMaptileStairs(tl))
-		messages::add(gdata, "You see here: #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
+		messages::add(gdata, "You see here: #" + getMaptileName(tl) + "@! #(Press SPACE to use)", { getMaptileColor(tl), COLOR_DARK });
 
 	//	Set our position
 	setPlayerPosition(gdata, pt);

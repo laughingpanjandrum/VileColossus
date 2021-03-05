@@ -516,7 +516,7 @@ void game::mainGameInput()
 		pickupFromFloor(_gdata);
 
 	//	Inter-map movement
-	else if (_ih->isKeyPressed('>') || _ih->isKeyPressed('<'))
+	else if (_ih->isKeyPressed(TCODK_SPACE))
 		tryUseStairs();
 
 	//	Spell hotkeys

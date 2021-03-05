@@ -1420,14 +1420,6 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	else if (dl >= 12)
 	{
 		m = generate_HellDepths(dl, descending);
-		/*int r = randint(1, 4);
-		switch (r)
-		{
-		case(1):	m = generate_MoltenLake(dl, descending); break;
-		case(2):	m = generate_SpiderNest(dl, descending); break;
-		case(3):	m = generate_Tomb(dl, descending); break;
-		default:	m = generate_VampireNest(dl, descending); break;
-		}*/
 	}
 
 	//	Entrance to HELL
