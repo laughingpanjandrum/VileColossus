@@ -11,13 +11,11 @@ TODO
 
 	add ogres
 	make riposte damage multiplier constant, instead of a roll
-	change tombstone glyph
 	don't make enchants add DV/AV as a property
 	show level on attributes screen
 	add generic 'resistance' enchant?
 	add wretches to normal hell zones [during the stitch together bit]
 	nerf imps a bit
-	change wretch glyph
 	reduce entangle duration
 	better min resistances on higher tier gear
 

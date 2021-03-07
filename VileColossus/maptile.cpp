@@ -132,7 +132,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return 194;
 
 	case(MT_TOMBSTONE):
-		return 239;
+		return 22;
 
 	case(MT_WALL_BLOODY):
 	case(MT_WALL_ICE):

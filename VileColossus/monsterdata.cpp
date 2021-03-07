@@ -469,8 +469,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::WRAITH):				return make_tuple("wraith", 'w', TCODColor::lightPurple);
 	case(MonsterType::WRAITH_GREAT):		return make_tuple("great wraith", 'W', TCODColor::lighterPurple);
 	case(MonsterType::WRAITH_MOON):			return make_tuple("moon wraith", 'w', TCODColor::lightYellow);
-	case(MonsterType::WRETCH):				return make_tuple("wretch", 'w', TCODColor::crimson);
-	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'w', TCODColor::lime);
+	case(MonsterType::WRETCH):				return make_tuple("wretch", 'e', TCODColor::crimson);
+	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'e', TCODColor::lime);
 	case(MonsterType::ZOMBIE):				return make_tuple("zombie", 'z', TCODColor::green);
 	case(MonsterType::ZOMBIE_INFUSED):		return make_tuple("infused zombie", 'z', TCODColor::fuchsia);
 	case(MonsterType::ZOMBIE_LARGE):		return make_tuple("large zombie", 'Z', TCODColor::lightGreen);
