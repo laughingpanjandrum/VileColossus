@@ -10,9 +10,7 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	add ogres
-	make riposte damage multiplier constant, instead of a roll
 	don't make enchants add DV/AV as a property
-	show level on attributes screen
 	add generic 'resistance' enchant?
 	add wretches to normal hell zones [during the stitch together bit]
 	reduce entangle duration

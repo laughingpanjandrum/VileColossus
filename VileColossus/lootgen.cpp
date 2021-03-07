@@ -581,7 +581,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::LONGSWORD):
 	case(BaseWeaponType::SHORTSWORD):
 		it->setProperty(PROP_RIPOSTE_CHANCE, randint(70, 95));
-		it->setProperty(PROP_RIPOSTE_DAMAGE, randint(100, 250));
+		it->setProperty(PROP_RIPOSTE_DAMAGE, 150);
 		break;
 
 	case(BaseWeaponType::CLUB):

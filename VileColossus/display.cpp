@@ -347,6 +347,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 {
 	drawBox(2, 2, 20, 15, COLOR_DARK);
 	drawBox(23, 2, 40, 15, COLOR_DARK);
+	writeFormatted(3, 2, "LEVEL #" + to_string(gdata->_player->_level), { COLOR_LIGHT });
 
 	int x = 4, y = 4;
 	auto col = (gdata->_attributePointsLeft > 0) ? COLOR_POSITIVE : COLOR_DARK;
@@ -2166,5 +2167,5 @@ int display::calculate_average_damage(const creaturePtr attacker, const creature
 //	Returns True if the property should not be displayed when listing an item's properties.
 bool display::hide_item_property(const ItemProperty prop) const
 {
-	return prop == PROP_DAMAGE_VARIANCE || prop == PROP_RESIST_ARCANE || prop == PROP_RESIST_ELECTRIC || prop == PROP_RESIST_FIRE || prop == PROP_RESIST_POISON;
+	return prop == PROP_DAMAGE_VARIANCE || prop == PROP_RESIST_ARCANE || prop == PROP_RESIST_ELECTRIC || prop == PROP_RESIST_FIRE || prop == PROP_RESIST_POISON || prop == PROP_RIPOSTE_DAMAGE;
 }
