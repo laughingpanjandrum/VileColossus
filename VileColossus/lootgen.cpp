@@ -411,7 +411,7 @@ itemPtr lootgen::generateArmourPieceOfType(const ItemCategory cat, const int tie
 			break;
 
 		default:
-			it->setProperty(res, randint(0, val));
+			it->setProperty(res, randint(tier * 2, val));
 			break;
 		}
 	}
