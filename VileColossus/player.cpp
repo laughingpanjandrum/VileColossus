@@ -265,6 +265,7 @@ int player::getResistance(const DamageType dt) const
 {
 	int total = 0;
 	total += MIN(getTotalEnchantmentBonus(ENCH_AFFINITY), getElementalAffinity(dt));
+	total += getTotalEnchantmentBonus(ENCH_RESISTANCE);
 	total += getPerkBonus(PERK_RESISTANCE);
 	
 	switch (dt)

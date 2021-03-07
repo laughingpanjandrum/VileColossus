@@ -8,7 +8,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
-	add generic 'resistance' enchant?
 
 */
 

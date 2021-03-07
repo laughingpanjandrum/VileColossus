@@ -308,6 +308,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_POISON_WARD):		return "venomguard";
 	case(ENCH_RAGE):			return "rage";
 	case(ENCH_REGEN):			return "regeneration";
+	case(ENCH_RESISTANCE):		return "resistance";
 	case(ENCH_SHARPNESS):		return "sharpness";
 	case(ENCH_SLAYING):			return "slaying";
 	case(ENCH_SPELLPOWER):		return "spellpower";
@@ -378,6 +379,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_POISON_WARD):		return "Poison Resistance";
 	case(ENCH_RAGE):			return "Wrath on Kill Chance";
 	case(ENCH_REGEN):			return "Regeneration";
+	case(ENCH_RESISTANCE):		return "All Resistances";
 	case(ENCH_SHARPNESS):		return "Critical Chance";
 	case(ENCH_SLAYING):			return "Critical Damage";
 	case(ENCH_SPELLPOWER):		return "Spell Power";
@@ -448,6 +450,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_POISON_WARD):		return "Reduces Poison damage taken by " + to_string(val) + "%.";
 	case(ENCH_RAGE):			return "Increases chance to gain the Wrath buff when you kill something by " + to_string(val) + "%. Wrath temporarily increases weapon damage you inflict.";
 	case(ENCH_REGEN):			return "In addition to its immediate effect, heals 5% of our max health per turn for " + to_string(val) + " turns.";
+	case(ENCH_RESISTANCE):		return "Increases Arcane, Electric, Fire, and Poison resistances by " + plusminus(val) + "%.";
 	case(ENCH_SHARPNESS):		return "Weapon attacks are " + to_string(val) + "% more likely to be critical hits.";
 	case(ENCH_SLAYING):			return "Critical hits inflict " + plusminus(val) + "% extra damage.";
 	case(ENCH_SPELLPOWER):		return "Adjusts damage inflicted by spells by " + plusminus(val) + ".";
@@ -514,6 +517,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_KINSLAYER):
 	case(ENCH_POISON_WARD):
 	case(ENCH_RAGE):
+	case(ENCH_RESISTANCE):
 	case(ENCH_SHADOWSTRIKE):
 	case(ENCH_SHARPNESS):
 	case(ENCH_SLAYING):
