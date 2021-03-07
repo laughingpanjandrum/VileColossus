@@ -547,7 +547,7 @@ void standOnTile(gamedataPtr gdata, creaturePtr cr)
 		case(Surface::WEB):
 			if (cr->isPlayer())
 			{
-				tryInflictStatusEffect(gdata, cr, STATUS_ENTANGLED, 100, 3);
+				tryInflictStatusEffect(gdata, cr, STATUS_ENTANGLED, 100, 2);
 				gdata->_map->setSurface(Surface::__NONE, cr->_pos);
 			}
 			break;

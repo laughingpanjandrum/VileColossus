@@ -1167,6 +1167,7 @@ gridmapPtr mapgen::generate_HellDepths(int dl, bool descending)
 
 	//	ADDITIONAL FEATURES
 	auto nodes = createNodeMap(m, MIN_NODE_SIZE, 5);
+	vector<monsterPtr> mgroup;
 	for (auto n : nodes)
 	{
 		int r = randint(1, 6);
@@ -1176,6 +1177,11 @@ gridmapPtr mapgen::generate_HellDepths(int dl, bool descending)
 		case(2):	hell_SpiderNest(m, n, dl); break;
 		case(3):	hell_Tomb(m, n, dl); break;
 		case(4):	hell_VampireCourt(m, n, dl); break;
+		default:
+			//	add wretches to existing map
+			mgroup = rollMonsterGroup(dl, MonsterType::WRETCH);
+			addMonsterGroupToNode(m, &mgroup, n);
+			break;
 		}
 	}
 

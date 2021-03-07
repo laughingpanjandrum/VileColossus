@@ -8,11 +8,7 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
-
-	add ogres
 	add generic 'resistance' enchant?
-	add wretches to normal hell zones [during the stitch together bit]
-	reduce entangle duration
 
 */
 
