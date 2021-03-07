@@ -237,9 +237,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected_heavy", "arcane_attack", "more_damage", "slow", "defended", };
 
 	case(MonsterType::IMP):
-		return { "protected", "less_health", "immune_fire", "casts_firebolt" };
+		return { "protected", "less_health", "immune_fire", "casts_firebolt", "less_damage", };
 	case(MonsterType::IMP_MEGA):
-		return { "protected", "immune_fire", "casts_firebolt", };
+		return { "protected", "immune_fire", "casts_firebolt", "less_damage", };
 
 	case(MonsterType::LIGHTNING_SPIRE):
 		return { "immobile", "immune_electric", "protected", "casts_lightning", "no_attack", };

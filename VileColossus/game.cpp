@@ -15,7 +15,6 @@ TODO
 	show level on attributes screen
 	add generic 'resistance' enchant?
 	add wretches to normal hell zones [during the stitch together bit]
-	nerf imps a bit
 	reduce entangle duration
 	better min resistances on higher tier gear
 
