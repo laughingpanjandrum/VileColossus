@@ -10,7 +10,6 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	add ogres
-	don't make enchants add DV/AV as a property
 	add generic 'resistance' enchant?
 	add wretches to normal hell zones [during the stitch together bit]
 	reduce entangle duration

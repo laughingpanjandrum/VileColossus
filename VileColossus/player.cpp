@@ -154,6 +154,7 @@ int player::getAccuracy() const
 int player::getDefenceValue() const
 {
 	int total = getDerivedAttribute(ATTR_DEXTERITY) / 2;
+	total += getTotalEnchantmentBonus(ENCH_DEFENCE);
 	total += getEquipmentPropertySum(PROP_DEFENCE);
 	return total;
 }
@@ -161,6 +162,7 @@ int player::getDefenceValue() const
 int player::getArmourValue() const
 {
 	int total = getEquipmentPropertySum(PROP_ARMOUR_VALUE);
+	total += getTotalEnchantmentBonus(ENCH_ARMOURING);
 	if (hasBuff(BUFF_STONESKIN))
 		total += _level * 2 + getTotalEnchantmentBonus(ENCH_PETRIFYING);
 	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 2;

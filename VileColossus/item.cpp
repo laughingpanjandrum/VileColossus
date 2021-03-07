@@ -230,10 +230,8 @@ void item::addEnchantment(const ItemEnchantment en, const int bns)
 	//	Apply stat adjustments, if any.
 	switch (en)
 	{
-	case(ENCH_ARMOURING):	adjustProperty(PROP_ARMOUR_VALUE, bns); break;
 	case(ENCH_CAPACITY):	adjustProperty(PROP_MAX_CHARGES, bns); break;
 	case(ENCH_CHARGING):	adjustProperty(PROP_CHARGE_REGAIN_RATE, bns); break;
-	case(ENCH_DEFENCE):		adjustProperty(PROP_DEFENCE, bns); break;
 	case(ENCH_HASTE):		adjustProperty(PROP_HASTE_BUFF, bns); break;
 	case(ENCH_STONESKIN):	adjustProperty(PROP_STONESKIN_BUFF, bns); break;
 	case(ENCH_WRATH):		adjustProperty(PROP_WRATH_BUFF, bns); break;
