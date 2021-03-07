@@ -54,8 +54,8 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	//	At higher level diffs, monsters drop loot as though they were a lower tier.
 	int tier = target->_tier;
 	const int ldiff = target->_level - gdata->_player->_level;
-	if (ldiff < 0)
-		tier = MAX(0, tier + ldiff);
+	if (ldiff < -1)
+		tier = MAX(0, tier + ldiff + 1);
 
 	//	Determine drop amounts & quality.
 	switch (tier)

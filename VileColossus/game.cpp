@@ -9,7 +9,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
-	make loot falloff start 1 level lower
 	add ogres
 	rename 'stairs up long' to 'stairs to surface'
 	add only 1 set of surface stairs, on D8
