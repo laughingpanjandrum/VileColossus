@@ -664,8 +664,9 @@ void mapgen::addStairsToMap(gridmapPtr m, int depth, bool descending)
 
 
 	//	LONG stairs up, making it quicker to get to the surface at deeper levels
-	if (depth == 8 || depth == 14)
+	if (depth == 8)
 		m->setTile(MT_STAIRS_UP_LONG, getRandomForStairs(m));
+
 	else if (depth == 10)
 	{
 		auto spt = getRandomForStairs(m);

@@ -35,9 +35,9 @@ const string getMaptileName(const Maptile tl)
 	case(MT_SAND):              return "sand";
 	case(MT_SARCOPHAGUS):		return "sarcophagus";
 	case(MT_STAIRS_DOWN):       return "stairs down";
-	case(MT_STAIRS_DOWN_LONG):	return "stairs down (long)";
+	case(MT_STAIRS_DOWN_LONG):	return "stairs down to depths";
 	case(MT_STAIRS_UP):         return "stairs up";
-	case(MT_STAIRS_UP_LONG):	return "stairs up (long)";
+	case(MT_STAIRS_UP_LONG):	return "stairs up to surface";
 	case(MT_STASH):				return "stash";
 	case(MT_STATUE_BLOODY):		return "bloody statue";
 	case(MT_STATUE_MARBLE):     return "marble statue";

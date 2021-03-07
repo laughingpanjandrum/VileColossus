@@ -10,8 +10,6 @@ TODO
 	enemies take some take to activate upon first descent?
 
 	add ogres
-	rename 'stairs up long' to 'stairs to surface'
-	add only 1 set of surface stairs, on D8
 	make riposte damage multiplier constant, instead of a roll
 	change tombstone glyph
 	don't make enchants add DV/AV as a property
