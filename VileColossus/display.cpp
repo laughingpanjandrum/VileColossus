@@ -878,43 +878,38 @@ void display::drawAlchemy(gamedataPtr gdata)
 //	Generate new items by spending materials.
 void display::drawDemonforge(gamedataPtr gdata)
 {
-	drawBox(2, 2, 45, 10, COLOR_DARK);
+	//	Base
+	drawBox(2, 2, 50, 10, COLOR_DARK);
 	_win.write(3, 2, "THE DEMONFORGE", TCODColor::orange);
 	_win.write(41, 2, "Tier " + to_string(gdata->_demonforgeTier), TCODColor::white);
 
-	//	Main options
-	int x = 4, y = 3;
-	for (unsigned i = 0; i < MAX_ITEM_RARITY; i++)
-	{
-		//	selection
-		y++;
-		if (i == gdata->_idx)
-			_win.writec(x, y, '>', COLOR_HIGHLIGHT);
 
-		//	cost/material type
-		auto cost = getCostToForgeItem(i + 1);
+	//	Forges
 
-		//	name
-		drawProgressDots(x + 1, y, i + 1, MAX_ITEM_RARITY, TCODColor::gold);
-		writeFormatted(x + 6, y, "Forge for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { getMaterialTypeColor(cost.first) });
-	}
-	_win.writeWrapped(4, 9, 40, "Generate a random item of the given rarity by expending materials.", COLOR_MEDIUM);
+	auto cost = getCostToForgeItem(3);
+	//drawProgressDots(4, 4, 3, 4, TCODColor::gold);
+	writeFormatted(4, 4, "#1 @Forge a random item for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { COLOR_LIGHT, getMaterialTypeColor(cost.first) });
+
+	cost = getCostToForgeItem(4);
+	//drawProgressDots(4, 5, 4, 4, TCODColor::gold);
+	writeFormatted(4, 5, "#2 @Forge a random item for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { COLOR_LIGHT, getMaterialTypeColor(cost.first) });
 
 
-	//	Additional options
+	//	Transmutations
+	writeFormatted(4, 7, "#3 @Transmute #500 glowing goo @to #100 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
+	writeFormatted(4, 8, "#4 @Transmute #500 luminous dust @to #1 radiant ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
+
+
+	//	Upgrades
 	switch (gdata->_demonforgeTier)
 	{
-	case(1):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 2 for #500 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
-	case(2):	writeFormatted(4, 15, "#U @Upgrade forge to Tier 3 for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
+	case(1):	writeFormatted(4, 10, "#U @Upgrade forge to Tier 2 for #500 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
+	case(2):	writeFormatted(4, 10, "#U @Upgrade forge to Tier 3 for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
 	}
 
-	writeFormatted(4, 17, "#1 @Transmute #500 glowing goo @to #100 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
-	writeFormatted(4, 18, "#2 @Transmute #500 luminous dust @to #1 radiant ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
-
-	drawBox(2, 13, 60, 8, COLOR_DARK);
 	
-	
-	drawStashedMaterials(gdata, 50, 4);
+	//	OTHER STUFF
+	drawStashedMaterials(gdata, 55, 4);
 	drawMessages(gdata);
 }
 
@@ -1829,6 +1824,10 @@ void display::drawSidebar(gamedataPtr gdata)
 {
 	int x = 52, y = 3;
 	auto p = gdata->_player;
+
+
+	//	debugging
+	_win.write(52, 1, to_string(p->_actionEnergy), COLOR_WHITE);
 
 
 	//	Debug flags

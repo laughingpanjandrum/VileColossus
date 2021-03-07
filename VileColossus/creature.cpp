@@ -1,6 +1,6 @@
 #include "creature.h"
 
-creature::creature(string name, int glyph, colorType color) : _name(name), _glyph(glyph), _color(color)
+creature::creature(string name, int glyph, colorType color) : _name(name), _glyph(glyph), _color(color), _actionEnergy(0)
 {
 	_damageTaken = 0;
 	_actionEnergy = 0;

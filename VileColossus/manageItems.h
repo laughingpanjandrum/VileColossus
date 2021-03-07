@@ -69,7 +69,7 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity);
 
 void transmuteMaterial(gamedataPtr gdata, const int num);
 void tryUpgradeDemonforge(gamedataPtr gdata);
-void createWithDemonforge(gamedataPtr gdata);
+void createWithDemonforge(gamedataPtr gdata, const int rarity);
 void openDemonforge(gamedataPtr gdata);
 
 

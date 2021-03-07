@@ -545,10 +545,10 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity)
 }
 
 
-//	Turn one material into another
+//	Turn one material into another; 'num' indicates which type
 void transmuteMaterial(gamedataPtr gdata, const int num)
 {
-	if (num == 1)
+	if (num == 3)
 	{
 		if (hasMaterial(gdata, MaterialType::MAGIC_DUST, 500))
 		{
@@ -559,7 +559,7 @@ void transmuteMaterial(gamedataPtr gdata, const int num)
 		else
 			messages::error(gdata, "Not enough materials!");
 	}
-	else if (num == 2)
+	else if (num == 4)
 	{
 		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 500))
 		{
@@ -594,13 +594,13 @@ void tryUpgradeDemonforge(gamedataPtr gdata)
 
 
 //	Try to create an item of the given rarity.
-void createWithDemonforge(gamedataPtr gdata)
+void createWithDemonforge(gamedataPtr gdata, const int rarity)
 {
-	auto cost = getCostToForgeItem(gdata->_idx + 1);
+	auto cost = getCostToForgeItem(rarity);
 	if (hasMaterial(gdata, cost.first, cost.second))
 	{
 		spendMaterial(gdata, cost.first, cost.second);
-		auto it = lootgen::rollItemDrop(gdata->_demonforgeTier, gdata->_idx + 1, true);
+		auto it = lootgen::rollItemDrop(gdata->_demonforgeTier, rarity, true);
 		messages::add(gdata, "Forged #" + it->getName() + "@!", { it->getColor() });
 		addToInventory(gdata, it);
 	}

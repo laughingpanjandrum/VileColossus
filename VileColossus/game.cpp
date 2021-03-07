@@ -9,6 +9,10 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
+	special upgrades?
+		-	add slots
+		-	increase base stats
+
 */
 
 
@@ -381,10 +385,10 @@ void game::processInput()
 		case(STATE_DEMONFORGE):
 			if (_ih->isKeyPressed('U'))
 				tryUpgradeDemonforge(_gdata);
-			else if (_ih->isDirectionalKeyPressed())
-				scrollMenu(_ih->getVectorFromKeypress().second, MAX_ITEM_RARITY);
-			else if (_ih->isKeyPressed(TCODK_ENTER))
-				createWithDemonforge(_gdata);
+			else if (_ih->isKeyPressed('1'))
+				createWithDemonforge(_gdata, 3);
+			else if (_ih->isKeyPressed('2'))
+				createWithDemonforge(_gdata, 4);
 			else if (_ih->isNumberKey())
 				transmuteMaterial(_gdata, _ih->numberKeyToInt());
 			break;
