@@ -218,8 +218,6 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_RESIST_POISON):			return "Resist Poison";
 	case(PROP_RIPOSTE_CHANCE):			return "Riposte Chance";
 	case(PROP_RIPOSTE_DAMAGE):			return "Riposte Damage";
-	case(PROP_SPELLSHIELD_FLAT):		return "Spellshield";
-	case(PROP_SPELLSHIELD_PERCENT):		return "Spellshield";
 	case(PROP_STAGGER_CHANCE):			return "Stagger Chance";
 	case(PROP_STAGGER_DURATION):		return "Stagger Duration";
 	case(PROP_STONESKIN_BUFF):			return "Stoneskin";
@@ -237,7 +235,6 @@ const string formatItemProperty(const ItemProperty prop, int val)
 	case(PROP_CLEAVE_DAMAGE):
 	case(PROP_DEFENCE):
 	case(PROP_ARMOUR_VALUE):
-	case(PROP_SPELLSHIELD_FLAT):
 		return plusminus(val);
 
 	case(PROP_ATTACK_SPEED):
@@ -248,7 +245,6 @@ const string formatItemProperty(const ItemProperty prop, int val)
 	case(PROP_CHARGE_REGAIN_RATE):
 	case(PROP_CRITICAL_CHANCE):
 	case(PROP_CRITICAL_DAMAGE):
-	case(PROP_SPELLSHIELD_PERCENT):
 		return plusminus(val) + "%";
 
 	case(PROP_KNOCKBACK_CHANCE):
@@ -259,20 +255,6 @@ const string formatItemProperty(const ItemProperty prop, int val)
 
 	default:
 		return to_string(val);
-	}
-}
-
-const string getItemQualityName(const ItemQuality qual)
-{
-	switch (qual)
-	{
-	case(QUALITY_DAMAGED):		return "damaged";
-	case(QUALITY_MASTERWORK):	return "mwk";
-	case(QUALITY_NORMAL):		return "normal";
-	case(QUALITY_REFINED):		return "fine";
-	case(QUALITY_SUPERIOR):		return "superb";
-	default:
-		return "Error_quality_" + to_string(qual);
 	}
 }
 

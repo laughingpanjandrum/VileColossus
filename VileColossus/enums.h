@@ -94,7 +94,6 @@ enum ItemProperty
 	PROP_KNOCKBACK_CHANCE,
 
 	PROP_DEFENCE, PROP_ARMOUR_VALUE,
-	PROP_SPELLSHIELD_PERCENT, PROP_SPELLSHIELD_FLAT,
 	PROP_MOVE_SPEED_ADJUST,
 	PROP_RESIST_ARCANE, PROP_RESIST_ELECTRIC, PROP_RESIST_FIRE, PROP_RESIST_POISON,
 
@@ -106,16 +105,6 @@ enum ItemProperty
 
 const string getItemPropertyName(const ItemProperty prop);
 const string formatItemProperty(const ItemProperty prop, int val);
-
-
-//	Item quality
-
-enum ItemQuality
-{
-	QUALITY_DAMAGED, QUALITY_NORMAL, QUALITY_REFINED, QUALITY_SUPERIOR, QUALITY_MASTERWORK,
-};
-
-const string getItemQualityName(const ItemQuality qual);
 
 
 

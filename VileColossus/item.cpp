@@ -482,24 +482,6 @@ int item::getTotalGemTier(const GemType gem) const
 }
 
 
-//	Returns whether the item's quality affects the value of THIS property.
-bool item::isPropertyAdjustedByQuality(const ItemProperty prop) const
-{
-	switch (prop)
-	{
-	case(PROP_ACCURACY_MOD):
-	case(PROP_BASE_DAMAGE):
-	case(PROP_DEFENCE):
-	case(PROP_ARMOUR_VALUE):
-	case(PROP_SPELLSHIELD_FLAT):
-		return true;
-
-	default:
-		return false;
-	}
-}
-
-
 //	Items are prioritized based on rarity/type
 void itemContainer::addItem(itemPtr it)
 {

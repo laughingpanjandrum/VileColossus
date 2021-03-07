@@ -168,8 +168,6 @@ protected:
 	int _chargesLeft;
 	int _chargeRegeneration;
 
-	bool isPropertyAdjustedByQuality(const ItemProperty prop) const;
-
 };
 typedef shared_ptr<item> itemPtr;
 
