@@ -525,10 +525,11 @@ void mapgen::walkingTile(gridmapPtr m, const intpair start, int count, Maptile t
 	{
 		m->setTile(tl, pt);
 		last = pt;
+		int tries = 0;
 		do {
 			pt.first += randint(-1, 1);
 			pt.second += randint(-1, 1);
-		} while (pt == last || !m->inBounds(pt));
+		} while ((pt == last || !m->inBounds(pt)) && tries-- > 0);
 	}
 }
 

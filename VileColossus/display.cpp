@@ -1528,11 +1528,14 @@ int display::drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int at
 	}
 
 
-	//	empty slots
-	for (unsigned i = 0; i < it->getMaxEnhancementLevel() - it->_enhancementLevel; i++)
+	//	empty slots (for certain categories)
+	if (it->_category != ITEM_GEM && it->_category != ITEM_MATERIAL)
 	{
-		_win.writec(atx, ++aty, 4, TCODColor::darkGrey);
-		_win.write(atx + 2, aty, "[Enchantment Slot]", TCODColor::darkGrey);
+		for (unsigned i = 0; i < it->getMaxEnhancementLevel() - it->_enhancementLevel; i++)
+		{
+			_win.writec(atx, ++aty, 4, TCODColor::darkGrey);
+			_win.write(atx + 2, aty, "[Enchantment Slot]", TCODColor::darkGrey);
+		}
 	}
 
 	return aty;

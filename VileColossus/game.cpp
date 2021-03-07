@@ -9,8 +9,20 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	enemies take some take to activate upon first descent?
 
-	interface stuff to add:
-		-> more key prompts on inventory screens/etc
+	make loot falloff start 1 level lower
+	add ogres
+	rename 'stairs up long' to 'stairs to surface'
+	add only 1 set of surface stairs, on D8
+	make riposte damage multiplier constant, instead of a roll
+	change tombstone glyph
+	don't make enchants add DV/AV as a property
+	show level on attributes screen
+	add generic 'resistance' enchant?
+	add wretches to normal hell zones [during the stitch together bit]
+	nerf imps a bit
+	change wretch glyph
+	reduce entangle duration
+	better min resistances on higher tier gear
 
 */
 
