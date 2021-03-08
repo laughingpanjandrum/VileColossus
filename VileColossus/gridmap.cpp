@@ -39,7 +39,11 @@ bool gridmap::canCoverWithSurface(const int x, const int y) const
 
 void gridmap::addCreature(creaturePtr cr, const intpair pt)
 {
-	_creatures.push_back(cr);
+	//	only add them to the monster list if they're not in there already
+	if (find(_creatures.begin(), _creatures.end(), cr) == _creatures.end())
+		_creatures.push_back(cr);
+
+	//	set their position
 	cr->_pos = pt;
 }
 

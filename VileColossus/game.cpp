@@ -7,7 +7,6 @@ TODO
 
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
-	enemies take some take to activate upon first descent?
 	
 	rebalance spell damage to make it less overwhelmingly good
 	make ogres NOT solo
