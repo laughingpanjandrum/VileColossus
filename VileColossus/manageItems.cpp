@@ -472,7 +472,7 @@ void dismantleFromInventory(gamedataPtr gdata)
 				if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
 				{
 					messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
-					gdata->_knownEnchants.push_back(en);
+					learnEnchantment(gdata, en);
 				}
 			}
 
@@ -481,6 +481,23 @@ void dismantleFromInventory(gamedataPtr gdata)
 			removeFromCurrentItemList(gdata, it);
 		}
 	}
+}
+
+
+//	Adds an enchantment ot the list of ones we can apply.
+void learnEnchantment(gamedataPtr gdata, const ItemEnchantment en)
+{
+	//	Attempt to add alphabetically.
+	const string name = getItemEnchantmentDescription(en);
+	for (auto f = gdata->_knownEnchants.begin(); f != gdata->_knownEnchants.end(); f++)
+	{
+		if (isFirstAlphabetically(name, getItemEnchantmentDescription(*f)))
+		{
+			gdata->_knownEnchants.insert(f, en);
+			return;
+		}
+	}
+	gdata->_knownEnchants.push_back(en);
 }
 
 
@@ -647,28 +664,6 @@ void openDemonforge(gamedataPtr gdata)
 	gdata->_idx = 0;
 }
 
-
-//	Destroys an item. We learn any enchantments it contained.
-void extractEnchantments(gamedataPtr gdata)
-{
-	if (gdata->_idx < gdata->_currentItemList.size())
-	{
-		//	Destroy the item
-		auto it = gdata->_currentItemList[gdata->_idx];
-		removeFromInventory(gdata, it);
-		removeFromCurrentItemList(gdata, it);
-
-		//	Learn its enchants, if any
-		for (auto en : *it->getAllEnchantments())
-		{
-			if (!knowsEnchantmentType(gdata, en))
-			{
-				messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
-				gdata->_knownEnchants.push_back(en);
-			}
-		}
-	}
-}
 
 
 //	Returns True if the given item has 1 or more enchantments we don't already know.

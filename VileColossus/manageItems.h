@@ -37,7 +37,7 @@ bool hasMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
 void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
 
 void dismantleFromInventory(gamedataPtr gdata);
-void extractEnchantments(gamedataPtr gdata);
+void learnEnchantment(gamedataPtr gdata, const ItemEnchantment en);
 bool doesItemHaveUnknownEnchants(gamedataPtr gdata, itemPtr it);
 
 void repairItem(gamedataPtr gdata, itemPtr it);
