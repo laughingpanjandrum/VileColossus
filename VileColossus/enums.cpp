@@ -126,7 +126,7 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 {
 	switch (mat)
 	{
-	case(MaterialType::BRIGHT_RUNE):	return TCODColor::lightPurple;
+	case(MaterialType::BRIGHT_RUNE):	return TCODColor::celadon;
 	case(MaterialType::FRAGMENTS):		return TCODColor::gold;
 	case(MaterialType::GLASS_SHARD):	return TCODColor::silver;
 	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightPurple;

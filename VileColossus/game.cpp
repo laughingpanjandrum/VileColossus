@@ -9,7 +9,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	
 	rebalance spell damage to make it less overwhelmingly good
-	change bright rune colour to differentiate from luminous dust
 	alphabetize enchantments list
 
 */
