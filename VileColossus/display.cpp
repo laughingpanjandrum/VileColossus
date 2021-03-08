@@ -1916,6 +1916,7 @@ void display::drawSidebar(gamedataPtr gdata)
 		//	icon indicates progress to next charge
 		auto scale = (float)p->_currentFlask->getRegenerationPercent() / 100.0f;
 		auto fl_col = TCODColor::lerp(TCODColor::darkGrey, TCODColor::crimson, scale);
+		//_win.write(x, y + 3, to_string(p->_currentFlask->getRegenerationPercent()) + "%", fl_col);
 		_win.writec(x + 1, y + 1, p->_currentFlask->getGlyph(), fl_col);
 
 		//	name of flask

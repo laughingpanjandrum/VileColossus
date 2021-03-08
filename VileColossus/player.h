@@ -162,6 +162,7 @@ public:
 
 	void chargeFlaskOnKill();
 	void chargeFlaskOnHit();
+	void chargeFlaskByFixedPercent(const int per);
 	itemPtr _currentFlask;
 
 

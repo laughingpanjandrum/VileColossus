@@ -693,11 +693,17 @@ void player::chargeFlaskOnKill()
 	if (_currentFlask != nullptr)
 		_currentFlask->regenerateCharge(_currentFlask->getProperty(PROP_CHARGE_REGAIN_RATE));
 }
-
 void player::chargeFlaskOnHit()
 {
 	if (_currentFlask != nullptr)
 		_currentFlask->regenerateCharge(_currentFlask->getProperty(PROP_CHARGES_ON_HIT));
+}
+
+//	Adds a fixed amount of flask charge.
+void player::chargeFlaskByFixedPercent(const int per)
+{
+	if (_currentFlask != nullptr)
+		_currentFlask->regenerateCharge(per);
 }
 
 

@@ -313,6 +313,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_AVARICE):			return "Avarice";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Fierce Conductor";
+	case(ENCH_CRUCIBLE):		return "Crucible";
 	case(ENCH_CUNNING):			return "Rat's Cunning";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
 	case(ENCH_DIVINE):			return "Divinity";
@@ -384,6 +385,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_AVARICE):			return "Avarice";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Conduction";
+	case(ENCH_CRUCIBLE):		return "Charge on Crit";
 	case(ENCH_CUNNING):			return "Cunning";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
 	case(ENCH_DIVINE):			return "Divine Damage";
@@ -457,6 +459,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
 	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
+	case(ENCH_CRUCIBLE):		return "Regains " + to_string(val) + "% charge when you score a critical hit.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DARK_ARCANA):		return "Weapon attacks inflict bonus Arcane damage equal to 1/10 of your Spell Power, up to " + plusminus(val) + ".";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
@@ -497,6 +500,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_AFF_FIRE):
 	case(ENCH_AFF_POISON):
 	case(ENCH_CHARGING):
+	case(ENCH_CRUCIBLE):
 	case(ENCH_CUNNING):
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):

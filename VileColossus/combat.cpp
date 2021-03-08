@@ -174,7 +174,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 				attacker->reduceBuffDuration(BUFF_SMITE_EVIL);
 			}
 
-			//	Player-only damage bonuses
+			//	Player-only special effects
 			if (attacker->isPlayer())
 			{
 				//	Divine enchantment
@@ -187,9 +187,14 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 				//	Special crit effects
 				if (crit)
 				{
+					//	Blackblood damage
 					auto pdam = gdata->_player->getTotalEnchantmentBonus(ENCH_BLACKBLOOD);
 					if (pdam > 0)
 						inflictEnergyDamage(gdata, target, adjustByPercent(pdam, gdata->_player->getElementalAffinity(DTYPE_POISON)), DTYPE_POISON);
+
+					//	Extra flask charge
+					if (gdata->_player->_currentFlask->hasEnchantment(ENCH_CRUCIBLE))
+						gdata->_player->chargeFlaskByFixedPercent(gdata->_player->_currentFlask->getEnchantmentValue(ENCH_CRUCIBLE));
 				}
 			}
 

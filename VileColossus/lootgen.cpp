@@ -780,6 +780,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(ENCH_CONDUCTING, randint(30, 50) * 10);
 		break;
 
+	case(ENCH_CRUCIBLE):
+		it = generateFlask(maxTier, 4);
+		it->addEnchantment(ENCH_CRUCIBLE, randint(50, 70));
+		break;
+
 	case(ENCH_CUNNING):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
