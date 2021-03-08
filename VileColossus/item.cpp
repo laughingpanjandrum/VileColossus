@@ -160,7 +160,11 @@ int item::getGlyph() const
 	case(ITEM_GEM):				return 229;
 	case(ITEM_GLOVES):			return '(';
 	case(ITEM_HELMET):			return 127;
-	case(ITEM_MATERIAL):		return '$';
+	case(ITEM_MATERIAL):
+		if (_material == MaterialType::NOTCHED_CUBE)
+			return 249;
+		else
+			return '$';
 	case(ITEM_QUIVER):			return '}';
 	case(ITEM_RING):			return 248;
 	case(ITEM_SHIELD):			return 4;

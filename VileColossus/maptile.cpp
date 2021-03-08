@@ -107,7 +107,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_FLOOR_VOID):
 	case(MT_GRASS):
 	case(MT_SAND):
-		return 249;
+		return 250;
 
 	case(MT_SARCOPHAGUS):
 	case(MT_PEW_WOODEN):

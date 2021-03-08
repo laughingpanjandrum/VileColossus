@@ -105,6 +105,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		addAnimation(gdata, anim_FlashGlyph(pt, it->getGlyph(), it->getColor()));
 	}
 
+
 	//	Also drop MONEY.
 	drop_amt = (target->_tier - 1) + randint(0, target->_tier);
 	while (drop_amt-- > 0)
@@ -114,6 +115,11 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		auto it = lootgen::generateMaterial(MaterialType::FRAGMENTS, amt);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
+
+	//	TIER 5 MONSTERS may drop SUPER SPECIAL ITEMS.
+	if (tier == 5 && roll_one_in(3))
+		gdata->_map->addItem(lootgen::generateMaterial(MaterialType::NOTCHED_CUBE, 1), pts[randrange(pts.size())]);
+
 
 	//	Chance of GEM(s) at higher levels.
 	if (target->_level >= 12)
