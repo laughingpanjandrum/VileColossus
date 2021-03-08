@@ -238,6 +238,7 @@ int player::getMoveEnergyCost() const
 	int total = 100;
 	if (hasBuff(BUFF_HASTE))				total -= 50;
 	if (hasStatusEffect(STATUS_SLUDGED))	total += 100;
+	total -= getTotalEnchantmentBonus(ENCH_LEAGUE);
 	total = MAX(25, total);
 	return total;
 }

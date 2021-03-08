@@ -805,6 +805,12 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(ENCH_KINSLAYER, randint(5, 10));
 		break;
 
+	case(ENCH_LEAGUE):
+		it = generateArmourPieceOfType(ITEM_BOOTS, maxTier);
+		it->_rarity = 4;
+		it->addEnchantment(ENCH_LEAGUE, 25);
+		break;
+
 	case(ENCH_MAGEBLOOD):
 		it = generateWeapon(maxTier, 4);
 		it->addEnchantment(ENCH_MAGEBLOOD, randint(4, 9));

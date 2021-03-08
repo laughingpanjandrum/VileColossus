@@ -320,6 +320,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_KINSLAYER):		return "Kinslayer";
+	case(ENCH_LEAGUE):			return "League";
 	case(ENCH_MAGEBLOOD):		return "Mageblood";
 	case(ENCH_PETRIFYING):		return "Petrify";
 	case(ENCH_SHADOWSTRIKE):	return "Shade";
@@ -392,6 +393,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_KINSLAYER):		return "Kinslay";
+	case(ENCH_LEAGUE):			return "Move Delay";
 	case(ENCH_MAGEBLOOD):		return "Arcane Bolt";
 	case(ENCH_PETRIFYING):		return "Petrifying";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
@@ -463,17 +465,18 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DARK_ARCANA):		return "Weapon attacks inflict bonus Arcane damage equal to 1/10 of your Spell Power, up to " + plusminus(val) + ".";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
-	case(ENCH_FIREBURST):		return "Increases maximum fire damage by " + plusminus(val) + ".";
+	case(ENCH_FIREBURST):		return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
 	case(ENCH_FLAMESPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Fire.";
 	case(ENCH_KINSLAYER):		return "Each time you fail to crit, you gain a cumulative " + plusminus(val) + "% bonus to crit chance. This bonus is cleared on crit.";
+	case(ENCH_LEAGUE):			return "Reduces your move delay by " + to_string(val) + ".";
 	case(ENCH_MAGEBLOOD):		return "On hit, has a 20% chance to cast Arcane Bolt at level " + to_string(val) + ".";
 	case(ENCH_PETRIFYING):		return "The Stoneskin buff increases your Armour Value by an additional +" + to_string(val) + ".";
 	case(ENCH_SHADOWSTRIKE):	return "You critical chance increases by " + to_string(val) + "% if your vision radius is 6 or less.";
 	case(ENCH_SKYSPLITTER):		return "On hit, has a 20% chance to cast Lightning Strike at level " + to_string(val) + ".";
 	case(ENCH_SPELLBURN):		return "Raises spell power by " + to_string(val) + "%. You take damage when casting spells equal to twice their Magic cost.";
-	case(ENCH_STORMBURST):		return "Increases maximum electric damage by " + plusminus(val) + ".";
+	case(ENCH_STORMBURST):		return "Weapon attacks inflict up to " + to_string(val) + " bonus Electric damage.";
 	case(ENCH_THUNDERSPIKE):	return "You inflict " + plusminus(val) + " Reprisal damage as Electric.";
-	case(ENCH_VENOMBURST):		return "Increases maximum poison damage by " + plusminus(val) + ".";
+	case(ENCH_VENOMBURST):		return "Weapon attacks inflict up to " + to_string(val) + " bonus Poison damage.";
 	case(ENCH_VENOMSPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Poison.";
 	case(ENCH_WEIGHT):			return "Inflicts " + plusminus(val) + "% damage, but attack speed is slowed.";
 
@@ -506,6 +509,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_FURY):
 	case(ENCH_GREED):
 	case(ENCH_KINSLAYER):
+	case(ENCH_LEAGUE):
 	case(ENCH_POISON_WARD):
 	case(ENCH_RAGE):
 	case(ENCH_RESISTANCE):
