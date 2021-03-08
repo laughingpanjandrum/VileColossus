@@ -525,11 +525,21 @@ void mapgen::walkingTile(gridmapPtr m, const intpair start, int count, Maptile t
 	{
 		m->setTile(tl, pt);
 		last = pt;
-		int tries = 0;
+		int tries = 18;
 		do {
+			//	have we run out of tries?
+			if (tries <= 0)
+			{
+				//	we can't find a legal adjacent point; give up and stop walking
+				count = 0;
+				break;
+			}
+
+			//	try again
 			pt.first += randint(-1, 1);
 			pt.second += randint(-1, 1);
-		} while ((pt == last || !m->inBounds(pt)) && tries-- > 0);
+			tries--;
+		} while (pt == last || !m->inBounds(pt));
 	}
 }
 
