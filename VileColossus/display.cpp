@@ -900,11 +900,15 @@ void display::drawDemonforge(gamedataPtr gdata)
 	writeFormatted(4, 8, "#4 @Transmute #500 luminous dust @to #1 radiant ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
 
 
+	//	Other fabrications
+	writeFormatted(4, 9, "#5 @Create a #notched cube @for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::NOTCHED_CUBE), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
+
+
 	//	Upgrades
 	switch (gdata->_demonforgeTier)
 	{
-	case(1):	writeFormatted(4, 10, "#U @Upgrade forge to Tier 2 for #500 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
-	case(2):	writeFormatted(4, 10, "#U @Upgrade forge to Tier 3 for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
+	case(1):	writeFormatted(4, 12, "#U @Upgrade forge to Tier 2 for #500 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
+	case(2):	writeFormatted(4, 12, "#U @Upgrade forge to Tier 3 for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
 	}
 
 	

@@ -548,7 +548,8 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity)
 //	Turn one material into another; 'num' indicates which type
 void transmuteMaterial(gamedataPtr gdata, const int num)
 {
-	if (num == 3)
+	//	Magic Dust => Glowing Powder
+	if (num == 1)
 	{
 		if (hasMaterial(gdata, MaterialType::MAGIC_DUST, 500))
 		{
@@ -559,13 +560,28 @@ void transmuteMaterial(gamedataPtr gdata, const int num)
 		else
 			messages::error(gdata, "Not enough materials!");
 	}
-	else if (num == 4)
+
+	//	Glowing Powder => Radiant Ash
+	else if (num == 2)
 	{
 		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 500))
 		{
 			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 500);
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 			messages::add(gdata, "Transmutation complete!");
+		}
+		else
+			messages::error(gdata, "Not enough materials!");
+	}
+
+	//	Glowing Powder => Notched Cube
+	else if (num == 3)
+	{
+		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 250))
+		{
+			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 250);
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::NOTCHED_CUBE, 1));
+			messages::add(gdata, "Created a Notched Cube!");
 		}
 		else
 			messages::error(gdata, "Not enough materials!");
@@ -606,6 +622,21 @@ void createWithDemonforge(gamedataPtr gdata, const int rarity)
 	}
 	else
 		messages::error(gdata, "Not enough materials!");
+}
+
+
+//	Select a numbered option from the demonforge.
+//	These are hardcoded to different special effects, based on the number we pass to this fn.
+void selectDemonforgeOption(gamedataPtr gdata, const int num)
+{
+	switch (num)
+	{
+	case(1):	createWithDemonforge(gdata, 3); break;
+	case(2):	createWithDemonforge(gdata, 4); break;
+	case(3):	transmuteMaterial(gdata, 1); break;
+	case(4):	transmuteMaterial(gdata, 2); break;
+	case(5):	transmuteMaterial(gdata, 3); break;
+	}
 }
 
 

@@ -385,12 +385,8 @@ void game::processInput()
 		case(STATE_DEMONFORGE):
 			if (_ih->isKeyPressed('U'))
 				tryUpgradeDemonforge(_gdata);
-			else if (_ih->isKeyPressed('1'))
-				createWithDemonforge(_gdata, 3);
-			else if (_ih->isKeyPressed('2'))
-				createWithDemonforge(_gdata, 4);
 			else if (_ih->isNumberKey())
-				transmuteMaterial(_gdata, _ih->numberKeyToInt());
+				selectDemonforgeOption(_gdata, _ih->numberKeyToInt());
 			break;
 
 
