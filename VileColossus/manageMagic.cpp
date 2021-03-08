@@ -159,14 +159,15 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 	{
 		//	Determine damage.
 		auto drange = getSpellDamage(sp, lvl);
-		auto spellpower = caster->getSpellPower();
-		drange.first += (float)drange.first * (float)spellpower / 100.0f;
-		drange.second += (float)drange.second * (float)spellpower / 100.0f;
 		auto dam = randint(drange.first, drange.second);
 
-		//	Apply damage
+		//	Add bonuses
 		auto dtype = getSpellDamageType(sp);
-		dam = adjustByPercent(dam, caster->getElementalAffinity(dtype));
+		const int pow = caster->getSpellPower();
+		const int bns = caster->getElementalAffinity(dtype);
+		dam = adjustByPercent(dam, pow + bns);
+
+		//	Inflict the damage
 		inflictEnergyDamage(gdata, target, dam, dtype);
 
 		//	Special effects

@@ -143,7 +143,7 @@ int getSpellTier(const Spell sp)
 
 int getSpellMPCost(const Spell sp, const int lvl)
 {
-	return getSpellTier(sp) + (lvl / 5);
+	return getSpellTier(sp) * 2 + (lvl / 5);
 }
 
 
@@ -274,14 +274,14 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 {
 	switch (sp)
 	{
-	case(Spell::ARCANE_EMANATION):	return intpair(1, lvl * 5 + 1);
-	case(Spell::CALL_LIGHTNING):	return intpair(1 + lvl, 2 + lvl * 2);
-	case(Spell::CHAIN_LIGHTNING):	return intpair(3 + lvl, 3 + lvl * 3);
-	case(Spell::CONJURE_FLAME):		return intpair(1 + lvl, 2 + lvl * 2);
-	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 20);
-	case(Spell::FIREBALL):			return intpair(lvl * 2, lvl * 3);
-	case(Spell::FIRESTORM):			return intpair(5, 5 + lvl * 2);
-	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 4);
+	case(Spell::ARCANE_EMANATION):	return intpair(1, lvl * 2);
+	case(Spell::CALL_LIGHTNING):	return intpair(lvl, lvl * 2);
+	case(Spell::CHAIN_LIGHTNING):	return intpair(lvl, lvl * 2);
+	case(Spell::CONJURE_FLAME):		return intpair(lvl, lvl * 2);
+	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 4);
+	case(Spell::FIREBALL):			return intpair(lvl * 2 / 3, lvl * 2);
+	case(Spell::FIRESTORM):			return intpair(lvl * 2 / 3, lvl * 2);
+	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 2);
 	default:
 		return intpair(0, 0);
 	}
