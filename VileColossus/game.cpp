@@ -83,7 +83,7 @@ void game::newgame()
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
-	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_LEAGUE));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_DERVISH));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));

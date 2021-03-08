@@ -519,7 +519,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		dam = 14; var = 6; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::LONG_KNIFE):
-		name = "long knife";
+		name = "starknife";
 		dam = 12; var = 3; crit = 15; mult = randint(30, 40) * 10; acc = 2;
 		break;
 	case(BaseWeaponType::MACE):
@@ -793,6 +793,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_DARK_ARCANA):
 		it = generateJewel(maxTier, 4);
 		it->addEnchantment(ENCH_DARK_ARCANA, randint(10, 20));
+		break;
+
+	case(ENCH_DERVISH):
+		it = generateJewel(maxTier, 4);
+		it->addEnchantment(ENCH_DERVISH, randint(5, 10));
 		break;
 
 	case(ENCH_DIVINE):

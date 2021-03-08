@@ -314,6 +314,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Fierce Conductor";
 	case(ENCH_CRUCIBLE):		return "Crucible";
+	case(ENCH_DERVISH):			return "Dervish";
 	case(ENCH_CUNNING):			return "Rat's Cunning";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
 	case(ENCH_DIVINE):			return "Divinity";
@@ -389,11 +390,12 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_CRUCIBLE):		return "Charge on Crit";
 	case(ENCH_CUNNING):			return "Cunning";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
+	case(ENCH_DERVISH):			return "Wrath Crit Chance";
 	case(ENCH_DIVINE):			return "Divine Damage";
 	case(ENCH_FIREBURST):		return "Fireburst";
 	case(ENCH_FLAMESPIKE):		return "Flamespike";
 	case(ENCH_KINSLAYER):		return "Kinslay";
-	case(ENCH_LEAGUE):			return "Move Delay";
+	case(ENCH_LEAGUE):			return "Move Speed";
 	case(ENCH_MAGEBLOOD):		return "Arcane Bolt";
 	case(ENCH_PETRIFYING):		return "Petrifying";
 	case(ENCH_SHADOWSTRIKE):	return "Shadowstrike";
@@ -464,6 +466,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_CRUCIBLE):		return "Regains " + to_string(val) + "% charge when you score a critical hit.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DARK_ARCANA):		return "Weapon attacks inflict bonus Arcane damage equal to 1/10 of your Spell Power, up to " + plusminus(val) + ".";
+	case(ENCH_DERVISH):			return "While affected by Wrath, your critical hit chance is increased by " + plusminus(val) + "%.";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " damage to undead creatures, multiplied by your Light Radius.";
 	case(ENCH_FIREBURST):		return "Weapon attacks inflict up to " + to_string(val) + " bonus Fire damage.";
 	case(ENCH_FLAMESPIKE):		return "You inflict " + plusminus(val) + " Reprisal damage as Fire.";
@@ -505,11 +508,11 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_CHARGING):
 	case(ENCH_CRUCIBLE):
 	case(ENCH_CUNNING):
+	case(ENCH_DERVISH):
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
 	case(ENCH_GREED):
 	case(ENCH_KINSLAYER):
-	case(ENCH_LEAGUE):
 	case(ENCH_POISON_WARD):
 	case(ENCH_RAGE):
 	case(ENCH_RESISTANCE):
