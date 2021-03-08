@@ -9,7 +9,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible??
 	
 	rebalance spell damage to make it less overwhelmingly good
-	make ogres NOT solo
 	change bright rune colour to differentiate from luminous dust
 	vampires need a stronger gimmick
 	amulets need to be a bit more common

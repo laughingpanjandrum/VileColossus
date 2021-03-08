@@ -11,7 +11,6 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::LIGHTNING_SPIRE):
-	case(MonsterType::OGRE):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
