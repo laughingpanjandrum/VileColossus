@@ -305,11 +305,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "webs", "protected_heavy", "spawner", "poison_attack", "slow", "inaccurate", "more_health", };
 
 	case(MonsterType::VAMPIRE):
-		return { "more_damage", "more_health", "vampiric" };
+		return { "more_damage", "more_health", "vampiric", "undead", "resists_arcane", };
 	case(MonsterType::VAMPIRE_PRINCE):
-		return { "more_damage", "more_health", "vampiric", "spawner", "casts_arcane_bolt" };
+		return { "more_damage", "more_health", "vampiric", "spawner", "casts_arcane_bolt", "undead", "resists_arcane", };
 	case(MonsterType::VAMPIRE_SPAWN):
-		return { "vampiric" };
+		return { "vampiric", "undead", "resists_arcane", };
 
 	case(MonsterType::WORM_DEMON):
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };

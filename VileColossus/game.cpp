@@ -10,9 +10,7 @@ TODO
 	
 	rebalance spell damage to make it less overwhelmingly good
 	change bright rune colour to differentiate from luminous dust
-	vampires need a stronger gimmick
 	amulets need to be a bit more common
-	make vampires undead
 	alphabetize enchantments list
 
 */
