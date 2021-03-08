@@ -128,7 +128,10 @@ public:
 	int getTotalGemTier(const GemType gem) const;
 
 
-	//	Public data
+
+	//	Public data.
+	//	All our data is public, for convenience rather than security. It can all be externally modified anyway.
+	//	In particular, this makes save-game stuff a LOT easier than the huge list of getters/setters that would otherwise be necessary.
 	
 	int _rarity;
 	int _tier;
@@ -152,9 +155,6 @@ public:
 
 	bool _markedAsValuable;
 
-
-protected:
-
 	string _name;
 	string _nickname;
 
@@ -168,6 +168,9 @@ protected:
 
 	int _chargesLeft;
 	int _chargeRegeneration;
+
+
+protected:
 
 };
 typedef shared_ptr<item> itemPtr;
