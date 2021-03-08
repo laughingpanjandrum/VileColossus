@@ -1522,12 +1522,6 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_STAIRS_DOWN, 11, 6);
 	m->_startPt = intpair(11, 6);
 
-	//	the DEMONFORGE
-	fillRegion(m, MT_WALL_STONE, 26, 5, 4, 5);
-	fillRegion(m, MT_FLOOR_HOT, 27, 6, 2, 3);
-	m->setTile(MT_FLOOR_STONE, 27, 9);
-	m->setTile(MT_DEMONFORGE, 28, 6);
-
 	//	additional stairs down
 	fillRegion(m, MT_WALL_STONE, 28, 11, 7, 8);
 	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_BUSH }, 29, 12, 5, 6);
@@ -1592,6 +1586,7 @@ gridmapPtr mapgen::generate_HellTemple()
 
 	//	Other stuff
 	m->setTile(MT_STASH, 8, 10);
+	m->setTile(MT_DEMONFORGE, 10, 9);
 
 
 	//	Finish
