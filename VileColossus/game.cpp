@@ -407,6 +407,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, SLOT__NONE);
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				selectItemToSocket(_gdata);
+			else if (_ih->isKeyPressed('e'))
+				tryAddGemSlot(_gdata);
 			else if (_ih->isKeyPressed('x'))
 				removeAllGemsFromItem(_gdata);
 			else if (_ih->isKeyPressed('f'))
@@ -644,6 +646,8 @@ void game::awaitDebugCommand()
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 250));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 	}
+	else if (txt == "cube")
+		_gdata->_map->addItem(lootgen::generateMaterial(MaterialType::NOTCHED_CUBE, 1), _gdata->_player->_pos);
 	else if (txt == "hellportal")
 		mapgen::openHellPortal(_gdata->_homeBase);
 	else if (txt == "helltemple")

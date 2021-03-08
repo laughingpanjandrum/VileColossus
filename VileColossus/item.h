@@ -67,7 +67,7 @@ public:
 
 	//	Stacking
 
-	bool stacks() const { return _category == ITEM_MATERIAL || _category == ITEM_GEM; }
+	bool stacks() const { return _category == ITEM_CONSUMABLE || _category == ITEM_MATERIAL || _category == ITEM_GEM; }
 	bool stacksWith(const shared_ptr<item> other) const;
 
 	void adjustAmount(const int adj) { _amountLeft += adj; }
@@ -114,6 +114,7 @@ public:
 
 	//	Socketed gems
 
+	int getSocketCount() const { return _socketSlots.size(); }
 	void adjustMaxSockets(const int adj);
 
 	const vector<GemType>* getAllSocketedGemTypes() const { return &_socketSlots; }

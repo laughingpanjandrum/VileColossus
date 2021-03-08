@@ -267,6 +267,7 @@ bool item::stacksWith(const shared_ptr<item> other) const
 	{
 		switch (_category)
 		{
+		case(ITEM_CONSUMABLE):
 		case(ITEM_MATERIAL):	return _material == other->_material;
 		case(ITEM_GEM):			return _gemType == other->_gemType && _enhancementLevel == other->_enhancementLevel;
 		default:
@@ -362,6 +363,8 @@ int item::getMaxEnhancementLevel() const
 {
 	switch(_category)
 	{
+	case(ITEM_CONSUMABLE):
+	case(ITEM_MATERIAL):	return 0;
 	case(ITEM_FLASK):		return _rarity;
 	case(ITEM_GEM):			return 5;
 	case(ITEM_SPELLRUNE):	return _rarity - 1;

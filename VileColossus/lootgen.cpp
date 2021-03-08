@@ -251,7 +251,6 @@ itemPtr lootgen::generateMaterial(const MaterialType mat, const int qty)
 	return it;
 }
 
-
 //	Creates a gem of the given tier.
 itemPtr lootgen::generateGemOfType(const GemType gem, const int tier, const int rarity)
 {

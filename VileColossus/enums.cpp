@@ -76,6 +76,7 @@ string getItemCategoryName(const ItemCategory cat)
 	case(ITEM_BOOTS):			return "Boots";
 	case(ITEM_BRACERS):			return "Bracers";
 	case(ITEM_CHESTPIECE):		return "Chestpiece";
+	case(ITEM_CONSUMABLE):		return "Consumable";
 	case(ITEM_FLASK):			return "Flask";
 	case(ITEM_GEM):				return "Gem";
 	case(ITEM_GLOVES):			return "Gloves";
@@ -114,6 +115,8 @@ const string getMaterialTypeName(const MaterialType mat)
 	case(MaterialType::MAGIC_DUST):		return "glowing goo";
 	case(MaterialType::RADIANT_ASH):	return "radiant ash";
 	case(MaterialType::RUNE_SHARD):		return "rune shards";
+
+	case(MaterialType::NOTCHED_CUBE):	return "notched cube";
 	default:
 		return "material";
 	}
@@ -126,10 +129,12 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 	case(MaterialType::BRIGHT_RUNE):	return TCODColor::lightPurple;
 	case(MaterialType::FRAGMENTS):		return TCODColor::gold;
 	case(MaterialType::GLASS_SHARD):	return TCODColor::silver;
-	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightYellow;
-	case(MaterialType::MAGIC_DUST):		return TCODColor::lightBlue;
+	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightPurple;
+	case(MaterialType::MAGIC_DUST):		return TCODColor::lighterBlue;
 	case(MaterialType::RADIANT_ASH):	return TCODColor::lightOrange;
 	case(MaterialType::RUNE_SHARD):		return TCODColor::lightFuchsia;
+
+	case(MaterialType::NOTCHED_CUBE):	return TCODColor::pink;
 	default:
 		return COLOR_WHITE;
 	}

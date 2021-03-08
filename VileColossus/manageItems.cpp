@@ -832,6 +832,37 @@ const int getGemstoneFabricateCost(itemPtr it)
 	}
 }
 
+//	Tests whether we can add a gem slot to the given item.
+//	We must have the required material, and the item must have no slots AND the ability to gain slots.
+bool canAddGemSlot(gamedataPtr gdata, const itemPtr it)
+{
+	//	Can this item gain sockets?
+	if (it->getSocketCount() == 0 && lootgen::getMaxSocketsForCategory(it->_category) > 0)
+	{
+		//	Do we have cubes in inventory/stash?
+		if (hasMaterial(gdata, MaterialType::NOTCHED_CUBE, 1))
+			return true;
+	}
+	return false;
+}
+
+
+//	If we can, add a gem slot to the selected equipment item.
+void tryAddGemSlot(gamedataPtr gdata)
+{
+	if (gdata->_idx < SLOT__NONE)
+	{
+		gdata->_selectedSlot = static_cast<EquipmentSlot>(gdata->_idx);
+		auto it = gdata->_player->getItemInSlot(gdata->_selectedSlot);
+		if (it != nullptr && canAddGemSlot(gdata, it))
+		{
+			it->adjustMaxSockets(1);
+			spendMaterial(gdata, MaterialType::NOTCHED_CUBE, 1);
+			messages::add(gdata, "Added socket to #" + it->getName() + "@!", { it->getColor() });
+		}
+	}
+}
+
 
 //	Clears all gems from the currently selected equipment item, returning them to our stash.
 void removeAllGemsFromItem(gamedataPtr gdata)

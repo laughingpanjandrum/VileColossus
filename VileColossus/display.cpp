@@ -932,6 +932,7 @@ void display::drawGemstonePress(gamedataPtr gdata)
 		if (selected)
 			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
 
+		//	item info, if one is equipped here
 		auto it = gdata->_player->getItemInSlot(slot);
 		if (it != nullptr)
 		{
@@ -962,6 +963,12 @@ void display::drawGemstonePress(gamedataPtr gdata)
 			drawItemInfo(gdata, it, 47, 4);
 			if (it->hasFreeSocket())
 				writeFormatted(x, ++y, "#ENTER @Add a gem to an empty socket", { COLOR_LIGHT });
+
+			if (canAddGemSlot(gdata, it))
+			{
+				++y;
+				writeFormatted(x, ++y, "#  e @Use a Notched Cube to add a socket", { COLOR_LIGHT });
+			}
 
 			++y;
 			writeFormatted(x, ++y, "#  x @Remove all socketed gems", { COLOR_LIGHT });
@@ -1284,6 +1291,7 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 	_win.writec(atx, aty, it->getGlyph(), it->getColor());
 	_win.write(atx + 2, aty, it->getName(), it->getColor());
 	
+
 	//	level and tier
 	auto cat_txt = getItemCategoryName(it->_category) + " #[" + to_string(it->_enhancementLevel) + "/" + to_string(it->getMaxEnhancementLevel()) + "]";
 	if (it->_isTwoHanded)
@@ -1312,6 +1320,13 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 		ItemCategory cat = ITEM__MAX;
 		if (gdata->_viewingItem != nullptr) cat = gdata->_viewingItem->_category;
 		drawGemTypeEffects(gdata, it->_gemType, it->_enhancementLevel, atx, aty + 2, cat);
+	}
+
+
+	//	info about materials
+	else if (it->_category == ITEM_CONSUMABLE || it->_category == ITEM_MATERIAL)
+	{
+		aty = drawMaterialDescription(it->_material, atx, ++aty);
 	}
 
 
@@ -1497,6 +1512,27 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 }
 
 
+//	Returns the last y-coord we drew on
+int display::drawMaterialDescription(const MaterialType mat, int atx, int aty)
+{
+	switch (mat)
+	{
+		//	Materials
+	case(MaterialType::BRIGHT_RUNE):		aty = _win.writeWrapped(atx, ++aty, 40, "Used to enhance spell runes up to level 10.", COLOR_MEDIUM); break;
+	case(MaterialType::FRAGMENTS):			aty = _win.writeWrapped(atx, ++aty, 40, "The most common material, used for a variety of purposes - including repairing equipment.", COLOR_MEDIUM); break;
+	case(MaterialType::GLASS_SHARD):		aty = _win.writeWrapped(atx, ++aty, 40, "Used to increase the healing potential of flasks.", COLOR_MEDIUM); break;
+	case(MaterialType::GLOWING_POWDER):		aty = _win.writeWrapped(atx, ++aty, 40, "A special material that can be used to add a 4th enchantment to some items. Gained by dismantling equipment.", COLOR_MEDIUM); break;
+	case(MaterialType::MAGIC_DUST):			aty = _win.writeWrapped(atx, ++aty, 40, "A material that can be used to add a 3rd enchantment to some items. Gained by dismantling equipment.", COLOR_MEDIUM); break;
+	case(MaterialType::RADIANT_ASH):		aty = _win.writeWrapped(atx, ++aty, 40, "The rarest of materials. Used to add a 5th enchantment to legendary items.", COLOR_MEDIUM); break;
+	case(MaterialType::RUNE_SHARD):			aty = _win.writeWrapped(atx, ++aty, 40, "Used to enhance spell runes past level 10.", COLOR_MEDIUM); break;
+
+		//	Consumables
+	case(MaterialType::NOTCHED_CUBE):		aty = _win.writeWrapped(atx, ++aty, 40, "Use at the gem press. Can add a gem slot to an item that has none.", COLOR_MEDIUM); break;
+	}
+	return aty;
+}
+
+
 //	Shows how many free inventory slots we have.
 void display::drawInventoryCapacity(gamedataPtr gdata, int x, int y)
 {
@@ -1525,7 +1561,7 @@ int display::drawItemEnchantments(gamedataPtr gdata, itemPtr it, int atx, int at
 
 
 	//	empty slots (for certain categories)
-	if (it->_category != ITEM_GEM && it->_category != ITEM_MATERIAL)
+	if (it->_category != ITEM_CONSUMABLE && it->_category != ITEM_GEM && it->_category != ITEM_MATERIAL)
 	{
 		for (unsigned i = 0; i < it->getMaxEnhancementLevel() - it->_enhancementLevel; i++)
 		{

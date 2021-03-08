@@ -85,6 +85,9 @@ void tryEnhanceFlask(gamedataPtr gdata);
 const vector<itemPtr> getGemstonesWeCanFabricate(gamedataPtr gdata);
 const int getGemstoneFabricateCost(itemPtr it);
 
+bool canAddGemSlot(gamedataPtr gdata, const itemPtr it);
+void tryAddGemSlot(gamedataPtr gdata);
+
 void removeAllGemsFromItem(gamedataPtr gdata);
 void selectGemToSocketIntoItem(gamedataPtr gdata);
 void selectItemToSocket(gamedataPtr gdata);

@@ -71,10 +71,12 @@ namespace lootgen
 	void enchantItem(itemPtr it, int count);
 
 
-	//	Materials [currency] and gems
+	//	Some misc items
 
 	const int getMaterialRarity(const MaterialType mat);
 	itemPtr generateMaterial(const MaterialType mat, const int qty);
+
+	itemPtr generateConsumableOfType(const MaterialType mat);
 
 	itemPtr generateGemOfType(const GemType gem, const int tier, const int rarity);
 	itemPtr generateGem(const int tier, const int rarity);

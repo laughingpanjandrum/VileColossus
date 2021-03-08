@@ -39,9 +39,8 @@ enum ItemCategory
 	ITEM_WEAPON, ITEM_QUIVER, ITEM_SHIELD,
 	ITEM_HELMET, ITEM_SHOULDERS, ITEM_CHESTPIECE, ITEM_BRACERS, ITEM_GLOVES, ITEM_BOOTS,
 	ITEM_AMULET, ITEM_RING,
-	ITEM_FLASK,
-	ITEM_SPELLRUNE,
-	ITEM_MATERIAL, ITEM_GEM,
+	ITEM_FLASK, ITEM_SPELLRUNE,
+	ITEM_MATERIAL, ITEM_GEM, ITEM_CONSUMABLE,
 	ITEM__MAX,
 };
 
@@ -55,9 +54,17 @@ enum ArmourCategory { ARMOUR_LIGHT, ARMOUR_HEAVY, ARMOUR__NONE, };
 string getArmourCategoryName(const ArmourCategory cat);
 
 
+
 //	Item material subtypes
 
-enum class MaterialType { BRIGHT_RUNE, FRAGMENTS, GLASS_SHARD, GLOWING_POWDER, MAGIC_DUST, RADIANT_ASH, RUNE_SHARD, __NONE, };
+enum class MaterialType { 
+	//	Basic materials
+	BRIGHT_RUNE, FRAGMENTS, GLASS_SHARD, GLOWING_POWDER, MAGIC_DUST, RADIANT_ASH, RUNE_SHARD, 
+
+	//	Consumable types
+	NOTCHED_CUBE, 
+
+	__NONE, };
 
 const string getMaterialTypeName(const MaterialType mat);
 const colorType getMaterialTypeColor(const MaterialType mat);
