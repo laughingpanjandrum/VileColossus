@@ -10,7 +10,6 @@ TODO
 	
 	rebalance spell damage to make it less overwhelmingly good
 	change bright rune colour to differentiate from luminous dust
-	amulets need to be a bit more common
 	alphabetize enchantments list
 
 */

@@ -675,7 +675,7 @@ itemPtr lootgen::generateJewel(const int tier, const int rarity)
 	//	base type
 	string name = "ring";
 	auto cat = ITEM_RING;
-	if (roll_one_in(6))
+	if (roll_one_in(4))
 	{
 		cat = ITEM_AMULET;
 		name = "amulet";
