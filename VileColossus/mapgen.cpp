@@ -1484,6 +1484,9 @@ gridmapPtr mapgen::generate_HomeBase()
 	auto m = gridmapPtr(new gridmap(40, 45));
 	m->_name = "Ruined Chapel, Aboveground";
 	fillMap(m, { MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_GRASS, MT_BUSH });
+	scatterOnMap(m, MT_TREE_DEAD, 0.05);
+
+	addLake(m, intpair(33, 5), 4, MT_WATER, MT_WATER);
 
 	fillRegion(m, MT_WALL_STONE, 9, 4, 16, 24);
 	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2 }, 10, 5, 14, 22);
