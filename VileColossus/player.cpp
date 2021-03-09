@@ -267,7 +267,6 @@ int player::getVisionRadius() const
 int player::getResistance(const DamageType dt) const
 {
 	int total = 0;
-	total += MIN(getTotalEnchantmentBonus(ENCH_AFFINITY), getElementalAffinity(dt));
 	total += getTotalEnchantmentBonus(ENCH_RESISTANCE);
 	total += getPerkBonus(PERK_RESISTANCE);
 	
@@ -562,6 +561,10 @@ int player::getElementalAffinity(const DamageType dt) const
 			total += 25 + getSpellPower() / 5;
 		break;
 	}
+
+	//	From unique enchants
+	total += MIN(getTotalEnchantmentBonus(ENCH_AFFINITY), getResistance(dt));
+
 	return total;
 }
 

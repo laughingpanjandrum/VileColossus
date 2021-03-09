@@ -756,7 +756,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	{
 	case(ENCH_AFFINITY):
 		it = generateArmourPiece(maxTier, 4);
-		it->addEnchantment(ENCH_AFFINITY, randint(10, 40));
+		it->addEnchantment(ENCH_AFFINITY, 100);
 		break;
 
 	case(ENCH_ARCANE_SHIELD):

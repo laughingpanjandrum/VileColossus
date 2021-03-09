@@ -382,7 +382,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_WRATH):			return "Wrath";
 
 		//	Legendary enchants
-	case(ENCH_AFFINITY):		return "Bonus Resist";
+	case(ENCH_AFFINITY):		return "Elemental Affinity";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_AVARICE):			return "Avarice";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
@@ -458,7 +458,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 
 		//	Legendary enchants
 
-	case(ENCH_AFFINITY):		return "Your Resistances are increased by up to " + to_string(val) + "% based on the value of the associated bonus.";
+	case(ENCH_AFFINITY):		return "Elemental bonuses are increased by the value of the associated Resistance.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
 	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
@@ -496,6 +496,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	switch (en)
 	{
 		//	Numeric value is irrelevant
+	case(ENCH_AFFINITY):
 	case(ENCH_AVARICE):
 	case(ENCH_CURING):
 		return name;
