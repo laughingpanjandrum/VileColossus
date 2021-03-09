@@ -55,8 +55,8 @@ namespace lootgen
 	inline int getBaseDamageForLevel(const int lvl) { return 4 + 2 * lvl; }
 	inline int getBaseDefenceForLevel(const int lvl) { return 7 + lvl; }
 	inline int getBaseHealthForLevel(const int lvl) { return 8 + 8 * lvl; }
-	inline int getBaseProtectionForLevel(const int lvl) { return 1 + lvl / 2; }
-	inline int getHeavyProtectionForLevel(const int lvl) { return lvl; }
+	inline int getBaseProtectionForLevel(const int lvl) { return lvl; }
+	inline int getHeavyProtectionForLevel(const int lvl) { return lvl * 2; }
 
 
 	//	Starting equipment.
