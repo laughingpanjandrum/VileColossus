@@ -118,6 +118,10 @@ const vector<MonsterType> monsterdata::getAltVersions(const MonsterType id, cons
 			alts.push_back(MonsterType::CULTIST_MUTTERING);
 		break;
 
+	case(MonsterType::OGRE):
+		alts.push_back(MonsterType::OGRE_BRUTE);
+		break;
+
 	case(MonsterType::SKULL_FLOATING):
 		if (dl > 3)
 			alts.push_back(MonsterType::SKULL_FLAMING);
@@ -175,6 +179,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 
 	case(MonsterType::IMP):
 		return MonsterType::IMP_MEGA;
+
+	case(MonsterType::OGRE):
+		return MonsterType::OGRE_BERSERKER;
 
 	case(MonsterType::SKELETON):	
 		return MonsterType::SKELETON_GIANT;
@@ -247,6 +254,10 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::OGRE):
 		return { "slow", "ranged_attack", "less_defence", "protected", "more_health" };
+	case(MonsterType::OGRE_BERSERKER):
+		return { "slow", "less_defence", "protected", "more_health", "more_damage", "berserker" };
+	case(MonsterType::OGRE_BRUTE):
+		return { "slow", "less_defence", "protected", "more_health", "more_damage" };
 
 	case(MonsterType::OOZE_ELECTRIC):
 		return { "slow", "electric_attack", "immune_electric", };
@@ -393,6 +404,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::OGRE_BERSERKER):
 	case(MonsterType::RAT_KING):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::VAMPIRE):
@@ -406,7 +418,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::CULTIST_WINGED):
 	case(MonsterType::IMP_MEGA):
 	case(MonsterType::LIGHTNING_SPIRE):
-	case(MonsterType::OGRE):
+	case(MonsterType::OGRE_BRUTE):
 	case(MonsterType::SKELETON_GIANT):
 	case(MonsterType::SKELETON_GOLD_PLATED):
 	case(MonsterType::SKULL_PILE):
@@ -443,6 +455,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::IMP_MEGA):			return make_tuple("mega-imp", 'I', TCODColor::flame);
 	case(MonsterType::OGRE):				return make_tuple("ogre rockthrower", 'O', TCODColor::pink);
+	case(MonsterType::OGRE_BERSERKER):		return make_tuple("Ogre Berserker", 'O', TCODColor::darkRed);
+	case(MonsterType::OGRE_BRUTE):			return make_tuple("ogre brute", 'O', TCODColor::orange);
 	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
 	case(MonsterType::LIGHTNING_SPIRE):		return make_tuple("lightning spire", 234, TCODColor::yellow);

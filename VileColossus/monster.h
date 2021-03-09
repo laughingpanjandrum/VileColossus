@@ -15,7 +15,7 @@ enum class MonsterType
 	CULTIST, CULTIST_INFESTED, CULTIST_MUTTERING, CULTIST_WINGED,
 	OOZE_ELECTRIC, OOZE_SLUDGE,
 	GRIM_KNIGHT,
-	OGRE,
+	OGRE, OGRE_BERSERKER, OGRE_BRUTE,
 	RAT_GIANT, RAT_KING, ROACH,
 	SKELETON, SKELETON_ARCHER, SKELETON_BURNING, SKELETON_GOLD_PLATED, SKELETON_KNIGHT, SKELETON_MAGE, SKELETON_GIANT,
 	SKULL_EXPLODING, SKULL_FLAMING, SKULL_FLOATING, SKULL_PILE,
@@ -61,7 +61,12 @@ public:
 	monster(string name, int glyph, colorType color, int lvl, int tier, MonsterType tp);
 	~monster() {}
 
-	//	to be overriden
+
+	//	changing attributes of active monsters
+	void adjustDamage(const int adj) { _baseDamage += adj; }
+
+
+	//	overriden from base class
 
 	virtual int getMaxHealth() const { return _maxHealth; }
 	virtual int getMaxSpellShield() const { return _maxSpellShield; }

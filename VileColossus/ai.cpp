@@ -283,7 +283,13 @@ void ai::doCombatAction(gamedataPtr gdata, monsterPtr ai)
 	//	test distance (we also need a straight line)
 	if (dist < melee_ran && !ai->hasFlag("no_attack"))
 	{
+		//	Perform an attack.
 		attackWithWeapon(gdata, ai, ai->_target);
+
+		//	BERSERKERS gain damage every time they attack.
+		if (ai->hasFlag("berserker"))
+			ai->adjustDamage(ai->_level / 2);
+
 		return;
 	}
 
