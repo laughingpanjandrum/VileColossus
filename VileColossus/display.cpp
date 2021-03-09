@@ -445,8 +445,11 @@ void display::drawAttributePoints(gamedataPtr gdata)
 	//	perks
 	y += 6;
 	drawBox(x - 2, y - 1, 61, 16, COLOR_DARK);
+	if (gdata->_player->_PerkLevel > 0)
+		writeFormatted(x - 1, y - 1, "ASCENDANT LEVEL #" + to_string(gdata->_player->_PerkLevel), { COLOR_LIGHT });
+
 	_win.write(x, ++y, "ASCENDANT ABILITIES", COLOR_LIGHT);
-	if (!gdata->_player->canGainPerks()) 
+	if (!gdata->_player->canGainPerks())
 		_win.write(x + 25, y, "[Unlocked after Level 30]", TCODColor::darkGrey);
 	else if (gdata->_attributePointsLeft < 1)
 	{

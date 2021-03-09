@@ -176,6 +176,10 @@ public:
 	bool _triggeredDeath;
 
 
+	//	Secondary levels (attained after level cap)
+	int _PerkLevel;
+
+
 protected:
 
 	int getTotalGemBonusFromSlots(const vector<EquipmentSlot> slots, const GemType gem) const;

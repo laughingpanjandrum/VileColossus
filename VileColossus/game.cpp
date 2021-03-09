@@ -10,10 +10,6 @@ TODO
 
 	merge the 'look around' and 'highlight enemies' modes.
 	add an auto-melee key.
-	count perk levels
-
-	hell enemy notions:
-		- fire bloat
 
 */
 

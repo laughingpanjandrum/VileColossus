@@ -24,6 +24,7 @@ player::player()
 	//	Perks
 	for (unsigned i = 0; i < PERK__MAX; i++)
 		_PerkRanks.push_back(0);
+	_PerkLevel = 0;
 }
 
 

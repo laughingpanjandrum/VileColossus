@@ -15,8 +15,9 @@ void playerGainLevel(gamedataPtr gdata)
 	//	After level 30, we can perk points, but not levels.
 	else
 	{
+		gdata->_player->_PerkLevel++;
 		gdata->_perkPoints++;
-		messages::add(gdata, " #*** ASCENDANT ABILITY POINT ACQUIRED ***", { COLOR_POSITIVE });
+		messages::add(gdata, " #*** YOU HAVE ATTAINED ASCENDANT LEVEL " + to_string(gdata->_player->_PerkLevel) + "! ***", { COLOR_POSITIVE });
 	}
 
 	//	We heal up regardless.
