@@ -1190,7 +1190,7 @@ gridmapPtr mapgen::generate_HellDepths(int dl, bool descending)
 		case(4):	hell_VampireCourt(m, n, dl); break;
 		default:
 			//	add wretches to existing map
-			mgroup = rollMonsterGroup(dl, MonsterType::WRETCH);
+			mgroup = rollMonsterGroup(dl, monsterdata::rollMonsterForLevel(11));
 			addMonsterGroupToNode(m, &mgroup, n);
 			break;
 		}

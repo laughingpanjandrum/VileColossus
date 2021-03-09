@@ -14,7 +14,6 @@ TODO
 
 	hell enemy notions:
 		- fire bloat
-		- arcane teleporting demon horde
 
 */
 

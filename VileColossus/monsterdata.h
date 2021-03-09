@@ -66,6 +66,7 @@ namespace monsterdata
 	//	Getting monsters to emplace
 	
 	const vector<MonsterType> getMonstersForLevel(const int dl);
+	const MonsterType rollMonsterForLevel(const int dl);
 	const MonsterType rollMinibossForLevel(const int dl);
 	const MonsterType rollBossForLevel(const int dl);
 

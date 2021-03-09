@@ -98,12 +98,20 @@ const vector<MonsterType> monsterdata::getMonstersForLevel(const int dl)
 				MonsterType::OOZE_SLUDGE, MonsterType::SKELETON, MonsterType::SKULL_EXPLODING, MonsterType::ZOMBIE };
 
 	else if (dl < 12)
-		return { MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::WRETCH, };
+		return { MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::QUASIT, MonsterType::WRETCH, };
 	else
-		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::SPIDER, MonsterType::VAMPIRE_SPAWN, MonsterType::WRETCH, };
+		return { MonsterType::CULTIST_ASCENDED, MonsterType::LIGHTNING_SPIRE, MonsterType::IMP, MonsterType::QUASIT, MonsterType::SPIDER, MonsterType::VAMPIRE_SPAWN, MonsterType::WRETCH, };
 	
 	//	fall-through (error)
 	return { MonsterType::__NONE };
+}
+
+
+//	Returns a random monster type of the options available for the given depth.
+const MonsterType monsterdata::rollMonsterForLevel(const int dl)
+{
+	auto moptions = getMonstersForLevel(dl);
+	return moptions[randrange(moptions.size())];
 }
 
 
@@ -266,6 +274,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::ORB_FLAME):
 		return { "immobile", "flying", "less_health", "immune_fire", "casts_firebolt", "no_corpse", };
+
+	case(MonsterType::QUASIT):
+		return { "flying", "flits", "casts_arcane_bolt", "casts_lightning", "teleports", "less_health", "less_damage", };
 
 	case(MonsterType::RAT_GIANT):
 		return { "less_health", "poison_attack", "fast", "defended", };
@@ -461,6 +472,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
 	case(MonsterType::LIGHTNING_SPIRE):		return make_tuple("lightning spire", 234, TCODColor::yellow);
 	case(MonsterType::ORB_FLAME):			return make_tuple("orb of flame", '*', TCODColor::flame);
+	case(MonsterType::QUASIT):				return make_tuple("quasit", 'q', TCODColor::lightPurple);
 	case(MonsterType::RAT_GIANT):			return make_tuple("giant rat", 'r', TCODColor::darkGreen);
 	case(MonsterType::RAT_KING):			return make_tuple("Rat King", 'R', TCODColor::lightSepia);
 	case(MonsterType::ROACH):				return make_tuple("roach", 'r', TCODColor::sepia);
