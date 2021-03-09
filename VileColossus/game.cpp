@@ -8,6 +8,23 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
+	merge the 'look around' and 'highlight enemies' modes.
+	add an auto-melee key.
+	count perk levels
+	make gems add resistances rather than affinities?
+	make exploding enemies explode more dramatically
+	do shields take excessive damage?
+	add melee ogres
+	make vampiric healing percentage-based instead of absolute
+	increase armour value of monsters with 'protected' or 'protected_heavy'
+	remove 'defended' flag from wraiths
+	remove 'All Resistances' enchant, it's unnecessary
+	give warhammers a more exciting name
+
+	hell enemy notions:
+		- fire bloat
+		- arcane teleporting demon horde
+
 */
 
 

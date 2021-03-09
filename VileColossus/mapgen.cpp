@@ -379,7 +379,8 @@ void mapgen::scatterTile(gridmapPtr m, Maptile tl, int x, int y, int w, int h, f
 	while (amt-- >= 0)
 	{
 		auto pt = getRandomInBounds(m, x, y, w, h);
-		m->setTile(tl, pt);
+		if (m->inBounds(pt))
+			m->setTile(tl, pt);
 	}
 }
 
