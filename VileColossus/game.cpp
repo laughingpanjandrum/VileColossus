@@ -17,7 +17,7 @@ TODO
 	add melee ogres
 	make vampiric healing percentage-based instead of absolute
 	increase armour value of monsters with 'protected' or 'protected_heavy'
-	remove 'All Resistances' enchant, it's unnecessary
+	make hell bosses more common
 
 	hell enemy notions:
 		- fire bloat
