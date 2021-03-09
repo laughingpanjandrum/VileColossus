@@ -480,7 +480,7 @@ void testForDamageEquipment(gamedataPtr gdata, creaturePtr attacker, creaturePtr
 	if (attacker->isPlayer())
 		toTest = { SLOT_MAIN_HAND, SLOT_OFFHAND };
 	else if (target->isPlayer())
-		toTest = { SLOT_BODY, SLOT_BOOTS, SLOT_BRACERS, SLOT_GLOVES, SLOT_HELMET, SLOT_OFFHAND, SLOT_SHOULDERS };
+		toTest = { SLOT_BODY, SLOT_BOOTS, SLOT_BRACERS, SLOT_GLOVES, SLOT_HELMET, SLOT_SHOULDERS };
 
 	//	Test each one
 	for (auto slot : toTest)
@@ -490,9 +490,7 @@ void testForDamageEquipment(gamedataPtr gdata, creaturePtr attacker, creaturePtr
 		{
 			it->rollDurabilityLoss();
 			if (it->isBroken())
-			{
 				messages::add(gdata, "#" + it->getName() + " breaks!", { COLOR_NEGATIVE });
-			}
 		}
 	}
 }
