@@ -346,3 +346,26 @@ void playerTryRangedAttack(gamedataPtr gdata, const intpair vec)
 	else
 		messages::error(gdata, "You don't have a ranged weapon equipped!");
 }
+
+
+//	Find all monsters within attack range, and attack one. Prioritizes the monster with the lowest health remaining.
+void playerTryAutoattack(gamedataPtr gdata)
+{
+	auto mlist = getAdjacentEnemies(gdata, gdata->_player);
+	if (!mlist.empty())
+	{
+		//	Find the highest-tier adjacent monster.
+		monsterPtr t = static_pointer_cast<monster>(mlist[0]);
+		for (unsigned i = 1; i < mlist.size(); i++)
+		{
+			auto m = static_pointer_cast<monster>(mlist[i]);
+			if (m->getHealthLeft() < t->getHealthLeft())
+				t = m;
+		}
+
+		//	Attack them.
+		playerTriggerMeleeAttack(gdata, t);
+	}
+	else
+		messages::error(gdata, "No adjacent monsters to attack!");
+}

@@ -8,9 +8,6 @@ TODO
 	make self-fireballing kill you properly
 	possible to somehow not die at zero health? just stay invincible??
 
-	merge the 'look around' and 'highlight enemies' modes.
-	add an auto-melee key.
-
 */
 
 
@@ -488,6 +485,10 @@ void game::mainGameInput()
 		else
 			doPlayerMove(_gdata, _ih->getVectorFromKeypress());
 	}
+
+	//	Autoattack
+	else if (_ih->isKeyPressed(TCODK_TAB))
+		playerTryAutoattack(_gdata);
 
 	//	Wait one turn
 	else if (_ih->isKeyPressed('z') || _ih->isKeyPressed(TCODK_KP5))

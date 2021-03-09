@@ -36,3 +36,5 @@ void playerTriggerMeleeAttack(gamedataPtr gdata, creaturePtr t);
 void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec);
 
 void playerTryRangedAttack(gamedataPtr gdata, const intpair vec);
+
+void playerTryAutoattack(gamedataPtr gdata);
