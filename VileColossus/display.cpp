@@ -1613,13 +1613,30 @@ void display::drawStashedMaterials(gamedataPtr gdata, int x, int y)
 void display::drawMonsterHighlights(gamedataPtr gdata)
 {
 	auto ctr = gdata->_player->_pos;
-	for (auto mon : gdata->_visibleMonsters)
+
+	//	Emphasize highlighted monster, if any.
+	auto mon = gdata->_map->getCreature(gdata->_cursorPt);
+	if (mon != nullptr && !mon->isPlayer())
 	{
 		auto dpt = mapToDisplayCoord(ctr, mon->_pos.first, mon->_pos.second);
 		dpt.first += MAP_X_OFFSET;
 		dpt.second += MAP_Y_OFFSET;
+		_win.writec(dpt.first, dpt.second, mon->getGlyph(), mon->getColor(), COLOR_HIGHLIGHT);
 		_win.writec(dpt.first + 1, dpt.second, 196, mon->getColor());
 		_win.write(dpt.first + 2, dpt.second, mon->getName(), COLOR_BLACK, mon->getColor());
+	}
+
+	//	Draw all visible monsters.
+	else
+	{
+		for (auto mon : gdata->_visibleMonsters)
+		{
+			auto dpt = mapToDisplayCoord(ctr, mon->_pos.first, mon->_pos.second);
+			dpt.first += MAP_X_OFFSET;
+			dpt.second += MAP_Y_OFFSET;
+			_win.writec(dpt.first + 1, dpt.second, 196, mon->getColor());
+			_win.write(dpt.first + 2, dpt.second, mon->getName(), COLOR_BLACK, mon->getColor());
+		}
 	}
 }
 
@@ -1825,7 +1842,7 @@ void display::drawMainInterface(gamedataPtr gdata)
 	}
 
 	//	Either messages go in this box, or we show monster info
-	if (gdata->_state == STATE_LOOK)
+	if (inCursorState(gdata))
 	{
 		//	tile here
 		auto tl = gdata->_map->getTile(gdata->_cursorPt);

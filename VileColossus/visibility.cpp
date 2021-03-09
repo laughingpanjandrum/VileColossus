@@ -341,7 +341,7 @@ void moveCursor(gamedataPtr gdata, const intpair vec)
 //	Start looking around.
 void enterLookMode(gamedataPtr gdata)
 {
-	gdata->_state = STATE_LOOK;
+	gdata->_state = STATE_HIGHLIGHT_ENEMIES; //STATE_LOOK;
 	gdata->_cursorPt = gdata->_player->_pos;
 }
 
@@ -349,7 +349,7 @@ void enterLookMode(gamedataPtr gdata)
 //	If True, we display the cursor position on screen
 bool inCursorState(gamedataPtr gdata)
 {
-	return gdata->_state == STATE_LOOK;
+	return gdata->_state == STATE_LOOK || gdata->_state == STATE_HIGHLIGHT_ENEMIES;
 }
 
 

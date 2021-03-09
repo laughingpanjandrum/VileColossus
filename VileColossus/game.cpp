@@ -198,8 +198,9 @@ void game::drawScreen()
 		break;
 
 
-		//	Highlighting
+		//	Highlighting/looking
 	case(STATE_HIGHLIGHT_ENEMIES):
+		_disp.updateVisibleMapData(_gdata);
 		_disp.drawMainInterface(_gdata);
 		_disp.drawMonsterHighlights(_gdata);
 		break;
@@ -239,11 +240,14 @@ void game::processInput()
 		switch (_gdata->_state)
 		{
 			//	Looking around
+		case(STATE_HIGHLIGHT_ENEMIES):
 		case(STATE_LOOK):
 			if (_ih->isKeyPressed(TCODK_TAB))
 				cycleCursorTarget(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				moveCursor(_gdata, _ih->getVectorFromKeypress());
+			else if (_ih->isKeyPressed('x'))
+				_gdata->_state = (_gdata->_state == STATE_LOOK) ? STATE_HIGHLIGHT_ENEMIES : STATE_LOOK;
 			break;
 
 
@@ -452,13 +456,6 @@ void game::processInput()
 			break;
 
 
-			//	Highlighting.
-		case(STATE_HIGHLIGHT_ENEMIES):
-			if (_ih->isKeyPressed(TCODK_TAB))
-				backOut();
-			break;
-
-
 			//	Starting the game.
 		case(STATE_TITLE):
 			if (_ih->isKeyPressed(TCODK_ENTER))
@@ -523,10 +520,6 @@ void game::mainGameInput()
 	//	Warp home, if allowed
 	else if (_ih->isKeyPressed('T'))
 		castTownPortal();
-
-	//	Highlighting
-	else if (_ih->isKeyPressed(TCODK_TAB))
-		startHighlightingEnemies(_gdata);
 
 	//	View menus
 	else if (_ih->isKeyPressed('@'))
