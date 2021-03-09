@@ -11,7 +11,6 @@ TODO
 	merge the 'look around' and 'highlight enemies' modes.
 	add an auto-melee key.
 	count perk levels
-	make gems add resistances rather than affinities?
 	make exploding enemies explode more dramatically
 	do shields take excessive damage?
 	add melee ogres

@@ -274,25 +274,25 @@ int player::getResistance(const DamageType dt) const
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):
-		//total += getTotalEnchantmentBonus(ENCH_SPELLWARD);
+		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 5;
 		total += getEquipmentPropertySum(PROP_RESIST_ARCANE);
 		total += MIN(20, (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2);
 		break;
 
 	case(DTYPE_ELECTRIC):
-		//total += getTotalEnchantmentBonus(ENCH_STORMWARD);
+		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 5;
 		total += getEquipmentPropertySum(PROP_RESIST_ELECTRIC);
 		total += MIN(20, (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 2);
 		break;
 
 	case(DTYPE_FIRE):
-		//total += getTotalEnchantmentBonus(ENCH_FLAMEWARD);
+		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 5;
 		total += getEquipmentPropertySum(PROP_RESIST_FIRE);
 		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
 		break;
 
 	case(DTYPE_POISON):
-		//total += getTotalEnchantmentBonus(ENCH_POISON_WARD);
+		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 5;
 		total += getEquipmentPropertySum(PROP_RESIST_POISON);
 		total += MIN(20, (getDerivedAttribute(ATTR_STRENGTH) - 10) / 2);
 		break;
@@ -539,24 +539,24 @@ int player::getElementalAffinity(const DamageType dt) const
 	switch (dt)
 	{
 	case(DTYPE_ARCANE):
-		total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 20;
+		//total += getTotalGemBonusFromArmour(GemType::SILVERSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ARCANE);
 		break;
 
 	case(DTYPE_ELECTRIC):
-		total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 20;
+		//total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ELECTRIC);
 		if (hasBuff(BUFF_CONDUCTION))
 			total += getTotalEnchantmentBonus(ENCH_CONDUCTING);
 		break;
 
 	case(DTYPE_FIRE):
-		total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 20;
+		//total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_FIRE);
 		break;
 
 	case(DTYPE_POISON):
-		total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 20;
+		//total += getTotalGemBonusFromArmour(GemType::SPIDERSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_POISON);
 		if (hasBuff(BUFF_TOXIC_RADIANCE))
 			total += 25 + getSpellPower() / 5;
