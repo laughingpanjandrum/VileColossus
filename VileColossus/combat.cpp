@@ -25,7 +25,7 @@ void animateHit(gamedataPtr gdata, creaturePtr target, int damage, bool wasCrit,
 void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePtr target, int damage)
 {
 	if (attacker->hasFlag("vampiric"))
-		attacker->healDamage(damage);
+		attacker->healDamage(attacker->getMaxHealth() / 4);
 }
 
 

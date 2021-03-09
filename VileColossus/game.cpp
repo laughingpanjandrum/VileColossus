@@ -12,7 +12,6 @@ TODO
 	add an auto-melee key.
 	count perk levels
 	make exploding enemies explode more dramatically
-	make vampiric healing percentage-based instead of absolute
 	make hell bosses more common
 
 	hell enemy notions:
