@@ -11,8 +11,6 @@ TODO
 	merge the 'look around' and 'highlight enemies' modes.
 	add an auto-melee key.
 	count perk levels
-	make exploding enemies explode more dramatically
-	make hell bosses more common
 
 	hell enemy notions:
 		- fire bloat

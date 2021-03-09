@@ -1238,7 +1238,7 @@ void mapgen::hell_MoltenLake(gridmapPtr m, TCODBsp* n, int dl)
 	//	Monsters
 	auto mlist = rollMonsterGroup(dl, MonsterType::IMP);
 	addMonsterGroupToNode(m, &mlist, n);
-	if (roll_one_in(3))
+	if (roll_one_in(2))
 		m->addCreature(monsterdata::generate(MonsterType::DEMON_PRINCE, dl * 2 + 1), getFreeINode(m, n));
 }
 
@@ -1252,7 +1252,7 @@ void mapgen::hell_SpiderNest(gridmapPtr m, TCODBsp* n, int dl)
 	//	Monsters
 	auto mlist = rollMonsterGroup(dl, MonsterType::SPIDER);
 	addMonsterGroupToNode(m, &mlist, n);
-	if (roll_one_in(3))
+	if (roll_one_in(2))
 		m->addCreature(monsterdata::generate(MonsterType::SPIDER_TITAN, dl * 2 + 1), getFreeINode(m, n));
 }
 
@@ -1310,7 +1310,7 @@ void mapgen::hell_VampireCourt(gridmapPtr m, TCODBsp* n, int dl)
 	//	Monsters
 	auto mlist = rollMonsterGroup(dl, MonsterType::VAMPIRE_SPAWN);
 	addMonsterGroupToNode(m, &mlist, n);
-	if (roll_one_in(3))
+	if (roll_one_in(2))
 		m->addCreature(monsterdata::generate(MonsterType::VAMPIRE_PRINCE, dl * 2 + 1), getFreeINode(m, n));
 }
 
