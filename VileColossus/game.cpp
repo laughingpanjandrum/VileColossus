@@ -17,9 +17,7 @@ TODO
 	add melee ogres
 	make vampiric healing percentage-based instead of absolute
 	increase armour value of monsters with 'protected' or 'protected_heavy'
-	remove 'defended' flag from wraiths
 	remove 'All Resistances' enchant, it's unnecessary
-	give warhammers a more exciting name
 
 	hell enemy notions:
 		- fire bloat

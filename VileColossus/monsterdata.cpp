@@ -315,7 +315,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
 	case(MonsterType::WRAITH):
-		return { "ethereal", "defended", "arcane_attack", "immune_poison", "undead", };
+		return { "ethereal", "arcane_attack", "immune_poison", "undead", };
 	case(MonsterType::WRAITH_GREAT):
 		return { "ethereal", "arcane_attack", "more_damage", "immune_poison", "undead", };
 	case(MonsterType::WRAITH_MOON):
