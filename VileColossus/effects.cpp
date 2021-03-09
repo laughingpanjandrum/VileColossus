@@ -155,9 +155,15 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 void explodeOnDeath(gamedataPtr gdata, monsterPtr target, string flag)
 {
 	if (flag == "poison_burst")
+	{
 		fillRegionWithSurface(gdata, target->_pos, 1, Surface::POISON_OOZE);
+		addAnimation(gdata, anim_Explosion(target->_pos, 1, '#', TCODColor::lime));
+	}
 	else if (flag == "fire_burst")
-		inflictDamageInRadius(gdata, target->_pos, 1, DTYPE_FIRE, intpair(1, target->_level));
+	{
+		inflictDamageInRadius(gdata, target->_pos, 2, DTYPE_FIRE, intpair(1, target->_level));
+		addAnimation(gdata, anim_Explosion(target->_pos, 2, '#', TCODColor::flame));
+	}
 }
 
 
