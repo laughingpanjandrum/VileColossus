@@ -33,57 +33,6 @@ item::item(string name, ItemCategory cat, const int rarity)
 }
 
 
-
-//	Turns item into a string.
-const string item::serialize() const
-{
-	/*
-	vector<ItemEnchantment> _Enchants;
-	vector<int> _EnchantLevels;
-
-	vector<GemType> _socketSlots;
-	vector<int> _socketLevels;
-	*/
-
-	//	name, in quotes
-	string t = char(_name.size()) + _name;
-	t += char(_nickname.size()) + _nickname;
-
-	//	individual int properties
-	t += (char)_amountLeft;
-	t += (char)_armourCategory;
-	t += (char)_category;
-	t += (char)_chargesLeft;
-	t += (char)_chargeRegeneration;
-	t += (char)_containsSpell;
-	t += (char)_damageTaken;
-	t += (char)_enhancementLevel;
-	t += (char)_gemType;
-	t += (char)_isNewItem;
-	t += (char)_isTwoHanded;
-	t += (char)_markedAsValuable;
-	t += (char)_material;
-	t += (char)_maxDurability;
-	t += (char)_rarity;
-	t += (char)_spellLevel;
-	t += (char)_tier;
-
-	//	list of properties (constant size)
-	for (unsigned i = 0; i < PROP__NONE; i++)
-		t += (char)_Property[i];
-
-	//	list of enchants, preceded by no. of enchants
-	t += char(_Enchants.size());
-	for (unsigned i = 0; i < _Enchants.size(); i++)
-	{
-		t += (char)_Enchants[i];
-		t += (char)_EnchantLevels[i];
-	}
-
-	return t;
-}
-
-
 bool item::isArmourPiece() const
 {
 	return _armourCategory != ARMOUR__NONE;

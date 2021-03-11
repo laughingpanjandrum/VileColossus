@@ -5,8 +5,7 @@
 /*
 TODO
 
-	make self-fireballing kill you properly
-	possible to somehow not die at zero health? just stay invincible??
+	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 
 */
 
@@ -83,7 +82,7 @@ void game::newgame()
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
-	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_DERVISH));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_WEIGHT));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
@@ -539,10 +538,10 @@ void game::mainGameInput()
 		awaitDebugCommand();
 
 	//	Save/load test
-	/*else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
+	else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
 		savegame::save_to_file("test.txt", _gdata);
 	else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
-		savegame::load_from_file("test.txt", _gdata);*/
+		savegame::load_from_file("test.txt", _gdata);
 }
 
 
@@ -624,6 +623,8 @@ void game::awaitDebugCommand()
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
 	}
+	else if (txt == "dropleg")
+		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, true), _gdata->_player->_pos);
 	else if (txt == "gems10")
 	{
 		for (unsigned i = 0; i < 10; i++)

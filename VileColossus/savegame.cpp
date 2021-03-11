@@ -2,6 +2,22 @@
 
 
 
+//	Turns a single int into 2 parts, each <256.
+intpair savegame::decompose_int(const int v)
+{
+	auto v1 = (v & 0b1111111100000000) >> 8;
+	auto v2 = (v & 0b0000000011111111);
+	return intpair(v1, v2);
+}
+
+//	Re-composes two such decomposed ints.
+int savegame::compose_intpair(const int v1, const int v2)
+{
+	auto v = (v1 << 8);
+	v += v2;
+	return v;
+}
+
 //	Generates an item from the filestream. Stops at the end of the item's data.
 itemPtr savegame::load_equipment_item(ifstream* f)
 {
@@ -41,18 +57,25 @@ itemPtr savegame::load_equipment_item(ifstream* f)
 	it->_spellLevel = f->get();
 	it->_tier = f->get();
 
-
-	//	Dynamic properties.
+	//	Dynamic properties; recomposed from a pair of chars.
 	for (unsigned i = 0; i < PROP__NONE; i++)
-		it->setProperty(static_cast<ItemProperty>(i), f->get());
-
-
+	{
+		auto c1 = f->get();
+		auto c2 = f->get();
+		auto v = compose_intpair(c1, c2) - PROP_VALUE_OFFSET;
+		cout << "Recomposed " << v + PROP_VALUE_OFFSET << " from " << c1 << "," << c2 << endl;
+		it->setProperty(static_cast<ItemProperty>(i), v);
+	}
+	
 	//	Enchants.
 	dlen = f->get();
 	for (unsigned i = 0; i < dlen; i++)
-		it->addEnchantment(static_cast<ItemEnchantment>(f->get()), f->get());
-
-
+	{
+		auto t = f->get();
+		auto v = f->get();
+		it->addEnchantment(static_cast<ItemEnchantment>(t), v);
+	}
+	
 	return it;
 }
 
@@ -65,13 +88,13 @@ void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 		//	is there an item here?
 		if (f->get() == 1)
 		{
-			cout << "  Loading item... ";
+			cout << "  Loading item... " << endl;
 			auto it = load_equipment_item(f);
 			cout << "Loaded item named " << it->getName() << endl;
 			gdata->_map->addItem(it, gdata->_player->_pos);
 		}
 		else
-			cout << "  Empty equipment slot.";
+			cout << "  Empty equipment slot." << endl;
 	}
 	cout << "END OF FILE" << endl;
 }
@@ -88,6 +111,59 @@ void savegame::load_from_file(const string name, gamedataPtr gdata)
 }
 
 
+//	Returns a string representation of an item.
+const string savegame::serialize_item(const itemPtr it)
+{
+	/*
+	vector<GemType> _socketSlots;
+	vector<int> _socketLevels;
+	*/
+
+	//	name, in quotes
+	string t = char(it->_name.size()) + it->_name;
+	t += char(it->_nickname.size()) + it->_nickname;
+
+	//	individual int properties
+	t += (char)it->_amountLeft;
+	t += (char)it->_armourCategory;
+	t += (char)it->_category;
+	t += (char)it->_chargesLeft;
+	t += (char)it->_chargeRegeneration;
+	t += (char)it->_containsSpell;
+	t += (char)it->_damageTaken;
+	t += (char)it->_enhancementLevel;
+	t += (char)it->_gemType;
+	t += (char)it->_isNewItem;
+	t += (char)it->_isTwoHanded;
+	t += (char)it->_markedAsValuable;
+	t += (char)it->_material;
+	t += (char)it->_maxDurability;
+	t += (char)it->_rarity;
+	t += (char)it->_spellLevel;
+	t += (char)it->_tier;
+
+	//	list of properties (constant size)
+	for (unsigned i = 0; i < PROP__NONE; i++)
+	{
+		auto v = it->_Property[i] + PROP_VALUE_OFFSET;
+		auto p = decompose_int(v);
+		t += (char)(p.first);
+		t += (char)(p.second);
+		/*cout << "Decomposed " << v << " into " << p.first << "," << p.second;
+		cout << "; Recomposed = " << compose_intpair(p.first, p.second) << endl;*/
+	}
+
+	//	list of enchants, preceded by no. of enchants
+	t += char(it->_Enchants.size());
+	for (unsigned i = 0; i < it->_Enchants.size(); i++)
+	{
+		t += (char)it->_Enchants[i];
+		t += (char)it->_EnchantLevels[i];
+	}
+
+	return t;
+}
+
 //	Serialize and write to file.
 void savegame::save_to_file(ofstream* f, gamedataPtr gdata)
 {
@@ -99,7 +175,7 @@ void savegame::save_to_file(ofstream* f, gamedataPtr gdata)
 		else
 		{
 			*f << (char)1;
-			*f << it->serialize();
+			*f << serialize_item(it);
 		}
 	}
 	messages::add(gdata, "Saved game.");

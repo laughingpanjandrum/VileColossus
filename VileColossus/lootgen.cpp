@@ -777,7 +777,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 
 	case(ENCH_CONDUCTING):
 		it = generateArmourPiece(maxTier, 4);
-		it->addEnchantment(ENCH_CONDUCTING, randint(30, 50) * 10);
+		it->addEnchantment(ENCH_CONDUCTING, randint(20, 25) * 10);
 		break;
 
 	case(ENCH_CRUCIBLE):
@@ -852,12 +852,12 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 
 	case(ENCH_SPELLBURN):
 		it = generateWeapon(maxTier, 4);
-		it->addEnchantment(ENCH_SPELLBURN, randint(20, 30) * 10);
+		it->addEnchantment(ENCH_SPELLBURN, randint(20, 25) * 10);
 		break;
 
 	case(ENCH_WEIGHT):
 		it = generateWeapon(maxTier, 4);
-		it->addEnchantment(ENCH_WEIGHT, randint(20, 30) * 10);
+		it->addEnchantment(ENCH_WEIGHT, randint(20, 25) * 10);
 		break;
 
 

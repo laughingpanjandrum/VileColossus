@@ -15,6 +15,10 @@ namespace savegame
 	const string FILE_PATH = "data/saves/";
 
 
+	//	Decompose an int into two parts, neither of which is greater than 255.
+	intpair decompose_int(const int v);
+	int compose_intpair(const int v1, const int v2);
+
 
 	//	Loading
 
@@ -26,6 +30,8 @@ namespace savegame
 
 
 	//	Saving
+
+	const string serialize_item(const itemPtr it);
 
 	void save_to_file(ofstream* f, gamedataPtr gdata);
 	void save_to_file(const string name, gamedataPtr gdata);

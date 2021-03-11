@@ -15,6 +15,11 @@
 #define MAX_ITEM_RARITY 4
 
 
+//	offset to convert signed int properties to unsigned char values for save games.
+//	add it to the prop value when saving, subtract when loading.
+#define PROP_VALUE_OFFSET 128
+
+
 
 class item
 {
@@ -25,8 +30,6 @@ public:
 	~item() {}
 
 	void setNickname(const string name) { _nickname = name; }
-
-	const string serialize() const;
 
 
 	//	Category

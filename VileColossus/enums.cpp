@@ -203,7 +203,6 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_ACCURACY_MOD):			return "Accuracy";
 	case(PROP_ARMOUR_VALUE):			return "Armour Value";
 	case(PROP_ATTACK_RANGE):			return "Attack Range";
-	case(PROP_ATTACK_SPEED):			return "Attack Spd";
 	case(PROP_BASE_DAMAGE):				return "Base Damage";
 	case(PROP_CHARGES_ON_HIT):			return "Charges per Hit";
 	case(PROP_CHARGE_REGAIN_RATE):		return "Charges per Kill";
@@ -216,7 +215,6 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_HEAL_ON_USE):				return "Heals";
 	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
-	case(PROP_MOVE_SPEED_ADJUST):		return "Move Speed";
 	case(PROP_RESIST_ARCANE):			return "Resist Arcane";
 	case(PROP_RESIST_ELECTRIC):			return "Resist Electric";
 	case(PROP_RESIST_FIRE):				return "Resist Fire";
@@ -241,10 +239,6 @@ const string formatItemProperty(const ItemProperty prop, int val)
 	case(PROP_DEFENCE):
 	case(PROP_ARMOUR_VALUE):
 		return plusminus(val);
-
-	case(PROP_ATTACK_SPEED):
-	case(PROP_MOVE_SPEED_ADJUST):
-		return expressIntAsFloat(val, 1);
 
 	case(PROP_CHARGES_ON_HIT):
 	case(PROP_CHARGE_REGAIN_RATE):
