@@ -63,7 +63,7 @@ itemPtr savegame::load_equipment_item(ifstream* f)
 		auto c1 = f->get();
 		auto c2 = f->get();
 		auto v = compose_intpair(c1, c2) - PROP_VALUE_OFFSET;
-		cout << "Recomposed " << v + PROP_VALUE_OFFSET << " from " << c1 << "," << c2 << endl;
+		//cout << "Recomposed " << v + PROP_VALUE_OFFSET << " from " << c1 << "," << c2 << endl;
 		it->setProperty(static_cast<ItemProperty>(i), v);
 	}
 	
@@ -74,6 +74,16 @@ itemPtr savegame::load_equipment_item(ifstream* f)
 		auto t = f->get();
 		auto v = f->get();
 		it->addEnchantment(static_cast<ItemEnchantment>(t), v);
+	}
+
+	//	Gem slots.
+	dlen = f->get();
+	for (unsigned i = 0; i < dlen; i++)
+	{
+		auto t = f->get();
+		auto v = f->get();
+		it->_socketSlots.push_back(static_cast<GemType>(t));
+		it->_socketLevels.push_back(v);
 	}
 	
 	return it;
@@ -159,6 +169,14 @@ const string savegame::serialize_item(const itemPtr it)
 	{
 		t += (char)it->_Enchants[i];
 		t += (char)it->_EnchantLevels[i];
+	}
+
+	//	list of gem types / gem levels
+	t += (char)(it->_socketSlots.size());
+	for (unsigned i = 0; i < it->_socketSlots.size(); i++)
+	{
+		t += (char)it->_socketSlots[i];
+		t += (char)it->_socketLevels[i];
 	}
 
 	return t;
