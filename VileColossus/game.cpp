@@ -7,9 +7,6 @@ TODO
 
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 
-	add demonforge after opening hell portal
-	mark teleporting enemies
-
 */
 
 

@@ -276,6 +276,7 @@ void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
 	if (mon->hasFlag("minion"))				flag_txt += "[Minion] ";
 	if (mon->hasFlag("berserker"))			flag_txt += "[Berserker] ";
 	if (mon->hasFlag("slow"))				flag_txt += "[Slow] ";
+	if (mon->hasFlag("teleports"))			flag_txt += "[Teleports] ";
 	if (mon->hasFlag("ethereal"))			flag_txt += "[Ethereal] ";
 	if (mon->hasFlag("arcane_attack"))		flag_txt += "[Arcane Attack] ";
 	if (mon->hasFlag("electric_attack"))	flag_txt += "[Electric Attack] ";

@@ -189,6 +189,68 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 }
 
 
+//	Amount of each marginal increase to an enchantment bonus,
+int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
+{
+	switch (en)
+	{
+	case(ENCH_CAPACITY):
+	case(ENCH_LIGHT):
+	case(ENCH_MAGIC):
+	case(ENCH_MAGIC_RESTORE):
+	case(ENCH_MANALEECH):
+	case(ENCH_SHARPNESS):
+		return 1;
+
+	case(ENCH_ACCURACY):				
+	case(ENCH_ARMOURING):
+	case(ENCH_BURNING):
+	case(ENCH_DEFENCE):
+	case(ENCH_LIGHTNING):
+	case(ENCH_VENOM):
+		return 2;
+
+	case(ENCH_ARCANE):
+	case(ENCH_LEECHING):
+	case(ENCH_THORNS):
+	case(ENCH_WOUNDING):
+		return 3;
+
+	case(ENCH_FLAMEWARD):
+	case(ENCH_FURY):
+	case(ENCH_HASTE):
+	case(ENCH_POISON_WARD):
+	case(ENCH_REGEN):
+	case(ENCH_RESISTANCE):
+	case(ENCH_SPELLWARD):
+	case(ENCH_STONESKIN):
+	case(ENCH_STORMWARD):
+	case(ENCH_WRATH):
+		return 5;
+
+	case(ENCH_AFF_ARCANE):
+	case(ENCH_AFF_ELECTRIC):
+	case(ENCH_AFF_FIRE):
+	case(ENCH_AFF_POISON):	
+	case(ENCH_LIFE):
+		return 10;
+		
+	case(ENCH_CHARGING):
+	case(ENCH_EMPOWERING):
+	case(ENCH_RAGE):
+		return 20;
+
+	case(ENCH_GREED):
+	case(ENCH_SLAYING):
+	case(ENCH_SPELLPOWER):
+		return 25;
+
+	default:
+		return 0;
+	}
+}
+
+
 //	Adds the given number of random enchantments to an item.
 void lootgen::enchantItem(itemPtr it, int count)
 {
@@ -216,6 +278,7 @@ void lootgen::enchantItem(itemPtr it, int count)
 
 		//	Roll a bonus
 		auto bns = rollEnchantmentBonus(options[i]);
+		bns += (it->_tier - 1) * getEnchantmentIncrement(options[i]);
 
 		//	2h weapons have an increased bonus
 		if (is_2h) bns += bns / 2;
