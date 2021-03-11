@@ -756,7 +756,8 @@ void selectEnchantmentToApply(gamedataPtr gdata)
 				spendMaterial(gdata, gdata->_viewingItem->getEnhanceMaterial(), gdata->_viewingItem->getEnhanceCost());
 
 				//	add enchantment
-				gdata->_viewingItem->addEnchantment(en, lootgen::rollEnchantmentBonus(en));
+				auto bns = lootgen::rollEnchantmentBonus(en) + lootgen::getEnchantmentIncrement(en) * (gdata->_viewingItem->_tier - 1);
+				gdata->_viewingItem->addEnchantment(en, bns);
 				gdata->_viewingItem->_enhancementLevel++;
 
 				//	return to the forge menu, but set index to selected item
