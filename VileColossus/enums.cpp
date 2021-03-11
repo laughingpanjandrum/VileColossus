@@ -453,7 +453,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 		//	Legendary enchants
 
 	case(ENCH_AFFINITY):		return "Elemental bonuses are increased by the value of the associated Resistance.";
-	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of damage when you are attacked.";
+	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of elemental damage when you are attacked (Arcane/Electric/Fire/Poison).";
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
 	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";

@@ -1529,7 +1529,7 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_STASH, 13, 5);
 	m->setTile(MT_ANVIL, 16, 6);
 	m->setTile(MT_FORGE, 17, 7);
-	m->setTile(MT_ALCHEMY, 20, 9);
+	//m->setTile(MT_ALCHEMY, 20, 9);
 	m->setTile(MT_GEMSTONE_PRESS, 21, 7);
 	m->setTile(MT_RUNE_IMPRINTER, 19, 5);
 

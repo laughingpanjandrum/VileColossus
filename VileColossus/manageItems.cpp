@@ -444,8 +444,8 @@ void dismantleFromInventory(gamedataPtr gdata)
 				addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 
 			//	Flask components
-			if (it->_category == ITEM_FLASK)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));
+			/*if (it->_category == ITEM_FLASK)
+				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));*/
 
 			//	Spellrune components
 			else if (it->_category == ITEM_SPELLRUNE)
