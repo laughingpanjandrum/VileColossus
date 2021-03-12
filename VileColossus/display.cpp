@@ -1889,7 +1889,7 @@ void display::drawSidebar(gamedataPtr gdata)
 
 
 	//	debugging
-	_win.write(52, 1, to_string(p->_actionEnergy), COLOR_WHITE);
+	//_win.write(52, 1, to_string(p->_actionEnergy), COLOR_WHITE);
 
 
 	//	Debug flags

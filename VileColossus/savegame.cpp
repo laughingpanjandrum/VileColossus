@@ -89,23 +89,101 @@ itemPtr savegame::load_equipment_item(ifstream* f)
 	return it;
 }
 
+/*
+SAVE GAME FORMAT:
 
+	-> PLAYER DATA
+		Level
+		Perk Level
+		Attribute values
+		Perk values*
+
+	-> METADATA
+		xp
+		attribute points
+		perk points
+		town portal charge
+		known enchants
+
+	-> GAME PROGRESS
+		Rotking Kills
+		Hellboss Kills
+
+	-> EQUIPMENT
+		Equipment
+		Current Flask
+		Alt Items
+
+	-> ITEMS
+		Inventory
+		Stash
+		Material Stash
+		Gem Stash
+
+*/
 void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 {
 	cout << "LOADING FILE..." << endl;
-	while (!f->eof())
+	auto p = gdata->_player;
+	int dlen, flag;
+
+
+	//		PLAYER DATA			//
+	p->_level = f->get();
+	p->_PerkLevel = f->get();
+	p->setAttributeValue(ATTR_DEXTERITY, f->get());
+	p->setAttributeValue(ATTR_STRENGTH, f->get());
+	p->setAttributeValue(ATTR_WILLPOWER, f->get());
+
+
+	//		METADATA			//
+	auto v1 = f->get();
+	auto v2 = f->get();
+	gdata->_xp = compose_intpair(v1, v2);
+	gdata->_attributePointsLeft = f->get();
+	gdata->_perkPoints = f->get();
+	gdata->_townPortalCharge = f->get();
+
+
+	//	known enchants
+	gdata->_knownEnchants.clear();
+	dlen = f->get();
+	for (unsigned i = 0; i < dlen; i++)
 	{
-		//	is there an item here?
-		if (f->get() == 1)
-		{
-			cout << "  Loading item... " << endl;
-			auto it = load_equipment_item(f);
-			cout << "Loaded item named " << it->getName() << endl;
-			gdata->_map->addItem(it, gdata->_player->_pos);
-		}
-		else
-			cout << "  Empty equipment slot." << endl;
+		auto v = f->get();
+		gdata->_knownEnchants.push_back(static_cast<ItemEnchantment>(v));
 	}
+
+	
+	//		GAME PROGRESS		//
+	gdata->_gameProgress._killedRotking = f->get();
+	gdata->_gameProgress._killedHellboss = f->get();
+
+
+	//		EQUIPMENT
+	for (unsigned i = 0; i < SLOT__NONE; i++)
+	{
+		flag = f->get();
+		if (flag != 0)
+		{
+			auto it = load_equipment_item(f);
+			gdata->_player->equipInSlot(it, static_cast<EquipmentSlot>(i));
+		}
+	}
+
+	//	Flask
+	f->get();
+	p->_currentFlask = load_equipment_item(f);
+
+	//	Alt items
+	flag = f->get();
+	if (flag == 1)
+		p->_secondaryMainHand = load_equipment_item(f);
+	flag = f->get();
+	if (flag == 1)
+		p->_secondaryOffhand = load_equipment_item(f);
+		
+		
 	cout << "END OF FILE" << endl;
 }
 
@@ -182,9 +260,76 @@ const string savegame::serialize_item(const itemPtr it)
 	return t;
 }
 
-//	Serialize and write to file.
+
+/*
+SAVE GAME FORMAT:
+	
+	-> PLAYER DATA
+		Level
+		Perk Level
+		Attribute values
+		Perk values*
+
+	-> METADATA
+		xp
+		attribute points
+		perk points
+		town portal charge
+		known enchants
+
+	-> GAME PROGRESS
+		Rotking Kills
+		Hellboss Kills
+
+	-> EQUIPMENT
+		Equipment
+		Current Flask
+		Alt Items
+
+	-> ITEMS
+		Inventory
+		Stash
+		Material Stash
+		Gem Stash
+
+*/
 void savegame::save_to_file(ofstream* f, gamedataPtr gdata)
 {
+	auto p = gdata->_player;
+
+
+	//		PLAYER DATA		//
+	*f << (char)p->_level;
+	*f << (char)p->_PerkLevel;
+	*f << (char)p->getBaseAttribute(ATTR_DEXTERITY);
+	*f << (char)p->getBaseAttribute(ATTR_STRENGTH);
+	*f << (char)p->getBaseAttribute(ATTR_WILLPOWER);
+
+
+
+	//		METADATA		//
+	auto vpair = decompose_int(gdata->_xp);
+	*f << (char)vpair.first;
+	*f << (char)vpair.second;
+	*f << (char)gdata->_attributePointsLeft;
+	*f << (char)gdata->_perkPoints;
+	*f << (char)gdata->_townPortalCharge;
+
+	//	list of known enchants
+	*f << (char)gdata->_knownEnchants.size();
+	for (unsigned i = 0; i < gdata->_knownEnchants.size(); i++)
+		*f << (char)gdata->_knownEnchants[i];
+
+
+	//		GAME PROGRESS	//
+	*f << (char)gdata->_gameProgress._killedRotking;
+	*f << (char)gdata->_gameProgress._killedHellboss;
+
+
+
+	//		EQUIPMENT		//
+
+	//	Currently equipped
 	for (auto it : gdata->_player->getAllEquippedItems())
 	{
 		//	Test for existence of item in this slot. If none, push a 0; otherwise, push a 1.
@@ -196,6 +341,45 @@ void savegame::save_to_file(ofstream* f, gamedataPtr gdata)
 			*f << serialize_item(it);
 		}
 	}
+
+	//	Flask
+	*f << char(1);
+	*f << serialize_item(p->_currentFlask);
+
+	//	Alt items
+	auto alts = { p->_secondaryMainHand, p->_secondaryOffhand };
+	for (auto it : alts)
+	{
+		if (it == nullptr)
+			*f << (char)0;
+		else
+		{
+			*f << (char)1;
+			*f << serialize_item(it);
+		}
+	}
+
+
+	//		STASHED ITEMS	//
+	
+	*f << (char)gdata->_carriedItems.size();
+	for (auto it : gdata->_carriedItems)
+		*f << serialize_item(it);
+
+	*f << (char)gdata->_stashItems.size();
+	for (auto it : gdata->_stashItems)
+		*f << serialize_item(it);
+
+	*f << (char)gdata->_stashedMaterials.size();
+	for (auto it : gdata->_stashedMaterials)
+		*f << serialize_item(it);
+
+	*f << (char)gdata->_stashedGems.size();
+	for (auto it : gdata->_stashedGems)
+		*f << serialize_item(it);
+
+
+	//	Finished.
 	messages::add(gdata, "Saved game.");
 }
 

@@ -373,16 +373,6 @@ void tryEnhanceRune(gamedataPtr gdata)
 }
 
 
-//	Gives us a random selection of new spells we can learn.
-void openMeditationShrine(gamedataPtr gdata, int dl)
-{
-	gdata->_state = STATE_LEARN_SPELL;
-	gdata->_spellsToLearn = lootgen::rollSpellsToLearn(1);
-	gdata->_idx = 0;
-}
-
-
-
 //	Adds all spellrunes from stash AND inventory to the current item list.
 void populateCurrentItemListWithRunes(gamedataPtr gdata)
 {

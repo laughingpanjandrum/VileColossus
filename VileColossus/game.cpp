@@ -10,19 +10,16 @@ TODO
 */
 
 
-game::game() :
-	_isGameOver(false)
+game::game() : _isGameOver(false)
 {
+	initrand();
+	_ih = inputHandlerPtr(new inputHandler());
 }
 
 
 void game::start()
 {
-	//	seed the RNG
-	initrand();
-
-	//	create elements
-	_ih = inputHandlerPtr(new inputHandler());
+	//	base game data element
 	_gdata = gamedataPtr(new gamedata()); 
 
 	//	title screen

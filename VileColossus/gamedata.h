@@ -53,7 +53,6 @@ struct gamedata
 	int _idx;
 	EquipmentSlot _selectedSlot;
 	int _aimingSpellIdx;
-	vector<Spell> _spellsToLearn;
 
 	//	Map metadata
 	int _depth;

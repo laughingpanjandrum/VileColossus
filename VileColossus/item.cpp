@@ -29,7 +29,7 @@ item::item(string name, ItemCategory cat, const int rarity)
 
 	//	default durability (N/A)
 	_damageTaken = 0;
-	_maxDurability = -1;
+	_maxDurability = 0;
 }
 
 
@@ -254,7 +254,7 @@ void item::reduceMaxDurability(int amt)
 //	Tests whether the item can suffer durability loss.
 bool item::subjectToDurabilityLoss() const
 {
-	return _maxDurability > -1;
+	return _maxDurability > 0;
 }
 
 
@@ -290,7 +290,7 @@ void item::takePercentDamage(const int per)
 //	Tests whether the item is broken, ie damage exceeds max durability.
 bool item::isBroken() const
 {
-	return _maxDurability > -1 && _damageTaken >= _maxDurability;
+	return _maxDurability > 0 && _damageTaken >= _maxDurability;
 }
 
 

@@ -26,6 +26,8 @@ public:
 	int getBaseAttribute(const Attribute attr) const;
 	int getDerivedAttribute(const Attribute attr) const;
 
+	void setAttributeValue(const Attribute attr, const int to) { _Attributes[attr] = to; }
+
 	void raiseAttribute(const Attribute attr, const int amt = 1) { _Attributes[attr] += amt; }
 
 	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED); }
@@ -180,6 +182,12 @@ public:
 	int _PerkLevel;
 
 
+	//	Other public data
+
+	itemPtr _secondaryMainHand;
+	itemPtr _secondaryOffhand;
+
+
 protected:
 
 	int getTotalGemBonusFromSlots(const vector<EquipmentSlot> slots, const GemType gem) const;
@@ -188,9 +196,6 @@ protected:
 	vector<int> _PerkRanks;
 	vector<itemPtr> _Equipped;
 	vector<bool> _HasNewForSlot;
-
-	itemPtr _secondaryMainHand;
-	itemPtr _secondaryOffhand;
 
 	int _magicExpended;
 	int _magicRegenTicks;
