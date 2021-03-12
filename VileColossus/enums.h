@@ -49,7 +49,7 @@ string getItemCategoryName(const ItemCategory cat);
 
 //	Armour subcategories
 
-enum ArmourCategory { ARMOUR_LIGHT, ARMOUR_HEAVY, ARMOUR__NONE, };
+enum class ArmourCategory { ARMOUR_LIGHT, ARMOUR_HEAVY, ARMOUR__NONE, };
 
 string getArmourCategoryName(const ArmourCategory cat);
 

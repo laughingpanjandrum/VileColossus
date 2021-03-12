@@ -97,8 +97,8 @@ string getArmourCategoryName(const ArmourCategory cat)
 {
 	switch (cat)
 	{
-	case(ARMOUR_LIGHT):			return "Light";
-	case(ARMOUR_HEAVY):			return "Heavy";
+	case(ArmourCategory::ARMOUR_LIGHT):			return "Light";
+	case(ArmourCategory::ARMOUR_HEAVY):			return "Heavy";
 	default:
 		return "";
 	}

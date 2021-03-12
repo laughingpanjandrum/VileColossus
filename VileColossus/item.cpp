@@ -6,11 +6,14 @@ item::item(string name, ItemCategory cat, const int rarity)
 	//	basic values
 	_name = name;
 	_category = cat;
-	_isNewItem = true;
-	_isTwoHanded = false;
 	_rarity = rarity;
+	_tier = 1;
 	_amountLeft = 1;
 	_enhancementLevel = 0;
+
+	//	flags
+	_isNewItem = true;
+	_isTwoHanded = false;
 	_markedAsValuable = false;
 
 	//	list of properties
@@ -27,6 +30,9 @@ item::item(string name, ItemCategory cat, const int rarity)
 	_containsSpell = Spell::__NONE;
 	_spellLevel = 0;
 
+	//	for gems only
+	_gemType = GemType::__NONE;
+
 	//	default durability (N/A)
 	_damageTaken = 0;
 	_maxDurability = 0;
@@ -35,8 +41,7 @@ item::item(string name, ItemCategory cat, const int rarity)
 
 bool item::isArmourPiece() const
 {
-	return _armourCategory != ARMOUR__NONE;
-	//return _category == ITEM_BOOTS || _category == ITEM_BRACERS || _category == ITEM_CHESTPIECE || _category == ITEM_GLOVES || _category == ITEM_HELMET || _category == ITEM_SHOULDERS;
+	return _armourCategory != ArmourCategory::ARMOUR__NONE;
 }
 
 
