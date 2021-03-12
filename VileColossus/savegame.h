@@ -23,6 +23,7 @@ namespace savegame
 	//	Loading
 
 	itemPtr load_equipment_item(ifstream* f);
+	void loadItemList(vector<itemPtr>* ilist, ifstream* f);
 
 	void load_from_file(ifstream* f, gamedataPtr gdata);
 	void load_from_file(const string name, gamedataPtr gdata);

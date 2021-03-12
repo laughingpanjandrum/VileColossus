@@ -28,6 +28,41 @@ void game::start()
 }
 
 
+//	Start our saved game.
+void game::startFromSave()
+{
+	//	starting character
+	_gdata->_player = playerPtr(new player());
+
+
+	//	Load save data.
+	savegame::load_from_file("test.txt", _gdata);
+
+
+	//	Generate permanent maps.
+	_gdata->_homeBase = mapgen::generate_HomeBase();
+	_gdata->_helltemple = mapgen::generate_HellTemple();
+
+
+	//	Morph starting maps if necessary.
+	if (_gdata->_gameProgress._killedRotking > 0)
+		mapgen::openHellPortal(_gdata->_homeBase);
+	if (_gdata->_gameProgress._killedHellboss > 0)
+		mapgen::openTemplePortal(_gdata->_homeBase);
+
+
+	//	Add player to the starting map.
+	_gdata->_depth = 0;
+	_gdata->_map = _gdata->_homeBase;
+	_gdata->_map->addCreature(_gdata->_player, _gdata->_map->_startPt);
+	_gdata->_map->setFOVMapCentre(_gdata->_player->_pos);
+
+
+	//	Set state.
+	_gdata->_state = STATE_NORMAL;
+}
+
+
 //	We loop here prior to the game start.
 void game::menuLoop()
 {
@@ -36,8 +71,6 @@ void game::menuLoop()
 		drawScreen();
 		processInput();
 	}
-	cout << "Selected game mode: " << getGameModeName() << endl;
-	newgame();
 	mainGameLoop();
 }
 
@@ -53,6 +86,10 @@ void game::selectGameMode()
 	case('3'):	_gdata->_mode = GameMode::PERMADEATH; break;
 	default:	_gdata->_state = STATE_SELECT_MODE;		//	cancel, we didn't pick a valid option
 	}
+
+	//	If we picked a mode, setup a new game.
+	if (_gdata->_state == STATE_NORMAL)
+		newgame();
 }
 
 
@@ -451,8 +488,10 @@ void game::processInput()
 
 			//	Starting the game.
 		case(STATE_TITLE):
-			if (_ih->isKeyPressed(TCODK_ENTER))
+			if (_ih->isKeyPressed(TCODK_1))
 				_gdata->_state = STATE_SELECT_MODE;
+			else if (_ih->isKeyPressed(TCODK_2))
+				startFromSave();
 			break;
 		case(STATE_SELECT_MODE):
 			selectGameMode();
@@ -537,8 +576,8 @@ void game::mainGameInput()
 	//	Save/load test
 	else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
 		savegame::save_to_file("test.txt", _gdata);
-	else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
-		savegame::load_from_file("test.txt", _gdata);
+	/*else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
+		savegame::load_from_file("test.txt", _gdata);*/
 }
 
 

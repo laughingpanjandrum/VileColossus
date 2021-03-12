@@ -89,6 +89,24 @@ itemPtr savegame::load_equipment_item(ifstream* f)
 	return it;
 }
 
+
+//	Loads a list of saved items.
+void savegame::loadItemList(vector<itemPtr>* ilist, ifstream* f)
+{
+	//	Clear list first, just in case.
+	ilist->clear();
+
+	//	Length of list.
+	const int dlen = f->get();
+
+	//	Load each item and append to list.
+	for (unsigned i = 0; i < dlen; i++)
+	{
+		auto it = load_equipment_item(f);
+		ilist->push_back(it);
+	}
+}
+
 /*
 SAVE GAME FORMAT:
 
@@ -129,6 +147,7 @@ void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 
 
 	//		PLAYER DATA			//
+	cout << " Loading player data..." << endl;
 	p->_level = f->get();
 	p->_PerkLevel = f->get();
 	p->setAttributeValue(ATTR_DEXTERITY, f->get());
@@ -142,10 +161,14 @@ void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 	gdata->_xp = compose_intpair(v1, v2);
 	gdata->_attributePointsLeft = f->get();
 	gdata->_perkPoints = f->get();
-	gdata->_townPortalCharge = f->get();
+
+	v1 = f->get();
+	v2 = f->get();
+	gdata->_townPortalCharge = compose_intpair(v1, v2);
 
 
 	//	known enchants
+	cout << " Loading enchants list..." << endl;
 	gdata->_knownEnchants.clear();
 	dlen = f->get();
 	for (unsigned i = 0; i < dlen; i++)
@@ -156,11 +179,13 @@ void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 
 	
 	//		GAME PROGRESS		//
+	cout << " Loading game progress flags..." << endl;
 	gdata->_gameProgress._killedRotking = f->get();
 	gdata->_gameProgress._killedHellboss = f->get();
 
 
-	//		EQUIPMENT
+	//		EQUIPMENT			//
+	cout << " Loading equipped items..." << endl;
 	for (unsigned i = 0; i < SLOT__NONE; i++)
 	{
 		flag = f->get();
@@ -172,16 +197,27 @@ void savegame::load_from_file(ifstream* f, gamedataPtr gdata)
 	}
 
 	//	Flask
+	cout << " Loading current flask..." << endl;
 	f->get();
 	p->_currentFlask = load_equipment_item(f);
 
 	//	Alt items
+	cout << " Loading alt items... " << endl;
 	flag = f->get();
 	if (flag == 1)
 		p->_secondaryMainHand = load_equipment_item(f);
 	flag = f->get();
 	if (flag == 1)
 		p->_secondaryOffhand = load_equipment_item(f);
+
+
+
+	//		STASHED ITEMS		//
+	cout << " Loading inventory items..." << endl;
+	loadItemList(&gdata->_carriedItems, f);
+	loadItemList(&gdata->_stashItems, f);
+	loadItemList(&gdata->_stashedMaterials, f);
+	loadItemList(&gdata->_stashedGems, f);
 		
 		
 	cout << "END OF FILE" << endl;
@@ -313,7 +349,10 @@ void savegame::save_to_file(ofstream* f, gamedataPtr gdata)
 	*f << (char)vpair.second;
 	*f << (char)gdata->_attributePointsLeft;
 	*f << (char)gdata->_perkPoints;
-	*f << (char)gdata->_townPortalCharge;
+
+	vpair = decompose_int(gdata->_townPortalCharge);
+	*f << (char)vpair.first;
+	*f << (char)vpair.second;
 
 	//	list of known enchants
 	*f << (char)gdata->_knownEnchants.size();

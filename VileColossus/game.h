@@ -25,6 +25,8 @@ public:
 	~game() {}
 
 	void start();
+	void startFromSave();
+
 	void menuLoop();
 	void selectGameMode();
 	void newgame();

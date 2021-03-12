@@ -78,11 +78,17 @@ void display::title()
 			case('x'):	col = TCODColor::red; break;
 			case('.'):	gl = ' '; break;
 			}
+			
+			float f = 1.3f * (float)(x + y) / (float)(_title->size() + _title->at(x).size());
+			col.scaleHSV(1.0f, f);
+
 			_win.writec(y + 10, x + 10, gl, col);
 		}
 	}
 
-	writeFormatted(20, 44, "#PRESS #ENTER #TO BEGIN", { TCODColor::red, TCODColor::lightRed, TCODColor::red });
+	writeFormatted(24, 46, "#1 @START A NEW GAME", { COLOR_LIGHT });
+	writeFormatted(24, 48, "#2 @LOAD A SAVED GAME", { COLOR_LIGHT });
+	
 	writeFormatted(60, 63, "#ctrl-f @toggles fullscreen", { COLOR_LIGHT });
 }
 
