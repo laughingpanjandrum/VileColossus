@@ -346,7 +346,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 
 	//	Generate the actual item
 	auto it = itemPtr(new item(name, ITEM_FLASK, rarity));
-	it->setProperty(PROP_HEAL_ON_USE, getBaseHealthForLevel(randint(2, 6) * tier * 25));
+	it->setProperty(PROP_HEAL_ON_USE, randint(2, 6) * tier * 25);
 	it->setProperty(PROP_MAX_CHARGES, randint(2, 3));
 	it->setProperty(PROP_CHARGES_ON_HIT, randint(2, 5 + tier + rarity));
 	it->setProperty(PROP_CHARGE_REGAIN_RATE, randint(10, 25));

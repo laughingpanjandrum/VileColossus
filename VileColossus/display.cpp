@@ -87,7 +87,7 @@ void display::title()
 	}
 
 	writeFormatted(24, 46, "#1 @START A NEW GAME", { COLOR_LIGHT });
-	writeFormatted(24, 48, "#2 @LOAD A SAVED GAME", { COLOR_LIGHT });
+	//writeFormatted(24, 48, "#2 @LOAD A SAVED GAME", { COLOR_LIGHT });
 	
 	writeFormatted(60, 63, "#ctrl-f @toggles fullscreen", { COLOR_LIGHT });
 }
