@@ -2,51 +2,6 @@
 
 
 
-//	Turns a single int into 2 parts, each <256.
-intpair savegame::decompose_int(const int v)
-{
-	auto v1 = (v & 0b1111111100000000) >> 8;
-	auto v2 = (v & 0b0000000011111111);
-	return intpair(v1, v2);
-}
-
-//	Re-composes two such decomposed ints.
-int savegame::compose_intpair(const int v1, const int v2)
-{
-	auto v = (v1 << 8);
-	v += v2;
-	return v;
-}
-
-
-const string savegame::get_int_as_pair(const int v)
-{
-	string vstr = "";
-	const intpair vpair = decompose_int(v);
-	vstr += (char)vpair.first;
-	vstr += (char)vpair.second;
-	return vstr;
-}
-
-//	Breaks an int into two parts and pushes each part sequentially to the given filestream.
-void savegame::push_int_as_pair(ofstream* f, const int v)
-{
-	const intpair vpair = decompose_int(v);
-	*f << (char)vpair.first;
-	*f << (char)vpair.second;
-}
-
-
-//	Re-composes the next two ints from the given filestream and returns them.
-int savegame::load_composite_int(ifstream* f)
-{
-	auto c1 = f->get();
-	auto c2 = f->get();
-	return compose_intpair(c1, c2);
-}
-
-
-
 /*
 SAVE GAME FORMAT:
 
@@ -157,8 +112,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	////		STASHED ITEMS		//
 	cout << " Loading inventory items..." << endl;
 	read_item_list(f, &gdata->_carriedItems);
+	cout << " Loading stashed gems.." << endl;
 	read_item_list(f, &gdata->_stashedGems);
+	cout << " Loading material stash..." << endl;
 	read_item_list(f, &gdata->_stashedMaterials);
+	cout << " Loading stashed items..." << endl;
 	read_item_list(f, &gdata->_stashItems);
 		
 		
@@ -399,6 +357,7 @@ SAVE GAME FORMAT:
 void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 {
 	auto p = gdata->_player;
+	messages::add(gdata, "Saving...");
 
 
 	//		PLAYER DATA		//

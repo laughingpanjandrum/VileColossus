@@ -16,15 +16,6 @@ namespace savegame
 	const string SAVE_FILE_DEFAULT_NAME = "save";
 
 
-	//	Decompose an int into two parts, neither of which is greater than 255.
-	intpair decompose_int(const int v);
-	int compose_intpair(const int v1, const int v2);
-
-	const string get_int_as_pair(const int v);
-	void push_int_as_pair(ofstream* f, const int v);
-	int load_composite_int(ifstream* f);
-
-
 	//	Loading
 
 

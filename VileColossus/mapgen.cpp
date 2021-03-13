@@ -1536,6 +1536,9 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_STAIRS_DOWN, 11, 6);
 	m->_startPt = intpair(11, 6);
 
+	//	save point
+	m->setTile(MT_MEDITATION_SHRINE, 15, 10);
+
 	//	additional stairs down
 	fillRegion(m, MT_WALL_STONE, 28, 11, 7, 8);
 	fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_BUSH }, 29, 12, 5, 6);

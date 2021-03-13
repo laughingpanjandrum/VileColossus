@@ -21,6 +21,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	case(MT_BARREL):
 	case(MT_PEW_WOODEN):
 	case(MT_TABLE_WOODEN):
+	case(MT_TREE_DEAD):
 	case(MT_TOMBSTONE):
 		messages::add(gdata, "You smash the #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
 		addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(tl)));
@@ -69,6 +70,11 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 		break;
 	case(MT_DEMONFORGE):
 		openDemonforge(gdata);
+		break;
+
+		//	Saving
+	case(MT_MEDITATION_SHRINE):
+		gdata->_state = STATE_SAVE_GAME;
 		break;
 
 		//	Just prevented from moving

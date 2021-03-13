@@ -6,6 +6,11 @@
 TODO
 
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
+	save games not working?
+
+	show level / alvl on attribute screen
+	properly fit monster tags to screen
+	reduce Wrath on Kill enchant max
 
 */
 
@@ -66,12 +71,14 @@ void game::startFromSave()
 //	We loop here prior to the game start.
 void game::menuLoop()
 {
-	while (_gdata->_state != STATE_NORMAL)
+	while (_gdata->_state != STATE_NORMAL && !_isGameOver)
 	{
 		drawScreen();
 		processInput();
 	}
-	mainGameLoop();
+
+	if (!_isGameOver)
+		mainGameLoop();
 }
 
 
@@ -138,6 +145,13 @@ void game::mainGameLoop()
 		//	check for automatic behaviours
 		if (_gdata->_automoveDist > 0)
 			doAutomove(_gdata);
+
+		//	saving
+		else if (_gdata->_state == STATE_SAVE_GAME)
+		{
+			savegame::save_to_file(savegame::SAVE_FILE_DEFAULT_NAME, _gdata);
+			_gdata->_state = STATE_NORMAL;
+		}
 
 		//	otherwise, fetch normal input
 		else
@@ -761,6 +775,9 @@ void game::returnToHomeBase()
 	_gdata->_depth = 0;
 	_gdata->_player->healToMax();
 	_gdata->_state = STATE_NORMAL;
+
+	//	Autosave
+	savegame::save_to_file(savegame::SAVE_FILE_DEFAULT_NAME, _gdata);
 }
 
 
