@@ -27,16 +27,18 @@ namespace savegame
 
 	//	Loading
 
-	void load_from_file(ifstream& f, gamedataPtr gdata);
-	void load_from_file(const string name, gamedataPtr gdata);
-
 
 	void read_into_string(ifstream& f, string* s, const unsigned len);
 	void read_into_string(ifstream& f, string* s);
 
 	int read_int(ifstream& f);
+	size_t read_size_t(ifstream& f);
 
 	itemPtr deserialize_item(ifstream& f);
+	void read_item_list(ifstream& f, vector<itemPtr>* ilist);
+
+	void load_from_file(ifstream& f, gamedataPtr gdata);
+	void load_from_file(const string name, gamedataPtr gdata);
 
 	void test_load(gamedataPtr gdata);
 
@@ -48,7 +50,7 @@ namespace savegame
 	void serialize_int(ofstream& f, const int i);
 	void serialize_size_t(ofstream& f, const size_t sz);
 
-	void serialize_to_file(ofstream& f, const itemPtr it);
+	void serialize_item(ofstream& f, const itemPtr it);
 
 
 	//	Saving
