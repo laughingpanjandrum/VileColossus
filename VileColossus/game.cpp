@@ -10,7 +10,6 @@ TODO
 
 	show level / alvl on attribute screen
 	properly fit monster tags to screen
-	reduce Wrath on Kill enchant max
 
 */
 

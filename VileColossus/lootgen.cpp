@@ -75,7 +75,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 					ENCH_MANALEECH, ENCH_RAGE, ENCH_SHARPNESS, ENCH_SLAYING, ENCH_WOUNDING, };
 
 	case(ITEM_SHIELD):
-		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_MAGIC, ENCH_RESISTANCE, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_THORNS, ENCH_WOUNDING, };
+		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_MAGIC, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_WEAPON):
 		return { ENCH_ACCURACY, ENCH_ARCANE, ENCH_ARMOURING, ENCH_BURNING, ENCH_DEFENCE, ENCH_FURY,
@@ -170,7 +170,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_MAGIC_RESTORE):	return randint(1, 6);
 	case(ENCH_MANALEECH):		return randint(1, 2);
 	case(ENCH_POISON_WARD):		return randint(5, 15);
-	case(ENCH_RAGE):			return randint(5, 25);
+	case(ENCH_RAGE):			return randint(5, 10);
 	case(ENCH_REGEN):			return randint(4, 8);
 	case(ENCH_RESISTANCE):		return randint(8, 13);
 	case(ENCH_SHARPNESS):		return randint(1, 5);
@@ -220,12 +220,12 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 	case(ENCH_FURY):
 	case(ENCH_HASTE):
 	case(ENCH_POISON_WARD):
+	case(ENCH_RAGE):
 	case(ENCH_REGEN):
 	case(ENCH_RESISTANCE):
 	case(ENCH_SPELLWARD):
 	case(ENCH_STONESKIN):
 	case(ENCH_STORMWARD):
-	case(ENCH_WRATH):
 		return 5;
 
 	case(ENCH_AFF_ARCANE):
@@ -237,7 +237,7 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 		
 	case(ENCH_CHARGING):
 	case(ENCH_EMPOWERING):
-	case(ENCH_RAGE):
+	case(ENCH_WRATH):
 		return 20;
 
 	case(ENCH_GREED):
