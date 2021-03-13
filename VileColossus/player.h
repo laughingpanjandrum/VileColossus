@@ -38,6 +38,7 @@ public:
 	bool canGainPerks() const { return _level > 30; }
 
 	void addPerkRank(const Perk pk) { _PerkRanks[pk]++; }
+	void setPerkRank(const Perk pk, int to) { _PerkRanks[pk] = to; }
 
 	int getPerkRank(const Perk pk) const { return _PerkRanks[pk]; }
 	int getPerkBonus(const Perk pk) const { return getPerkRank(pk) * getPerkBonusPerRank(pk); }

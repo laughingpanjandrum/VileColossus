@@ -94,23 +94,24 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	p->setAttributeValue(ATTR_STRENGTH, read_int(f));
 	p->setAttributeValue(ATTR_WILLPOWER, read_int(f));
 
+	//	perk ranks
+	for (unsigned i = 0; i < PERK__MAX; i++)
+	{
+		p->setPerkRank(static_cast<Perk>(i), read_int(f));
+	}
+
 
 	////		METADATA			//
+	cout << " Loading metadata..." << endl;
 	gdata->_xp = read_int(f);
 	gdata->_attributePointsLeft = read_int(f);
 	gdata->_perkPoints = read_int(f);
 	gdata->_townPortalCharge = read_int(f);
+	gdata->_mode = static_cast<GameMode>(read_int(f));
 
 
 	////	known enchants
-	//cout << " Loading enchants list..." << endl;
-	//gdata->_knownEnchants.clear();
-	//dlen = getch_safe(f);
-	//for (unsigned i = 0; i < dlen; i++)
-	//{
-	//	auto v = getch_safe(f);
-	//	gdata->_knownEnchants.push_back(static_cast<ItemEnchantment>(v));
-	//}
+	cout << " Loading enchants list..." << endl;
 	gdata->_knownEnchants.clear();
 	auto dlen = read_size_t(f);
 	for (unsigned i = 0; i < dlen; i++)
@@ -127,7 +128,7 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 
 	////		EQUIPMENT			//
-	//cout << " Loading equipped items..." << endl;
+	cout << " Loading equipped items..." << endl;
 	for (unsigned i = 0; i < SLOT__NONE; i++)
 	{
 		auto flag = read_int(f);
@@ -139,11 +140,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	}
 
 	////	Flask
-	//cout << " Loading current flask..." << endl;
+	cout << " Loading current flask..." << endl;
 	p->_currentFlask = deserialize_item(f);
 
 	////	Alt items
-	//cout << " Loading alt items... " << endl;
+	cout << " Loading alt items... " << endl;
 	flag = read_int(f);
 	if (flag == 1)
 		p->_secondaryMainHand = deserialize_item(f);
@@ -154,7 +155,7 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 
 	////		STASHED ITEMS		//
-	//cout << " Loading inventory items..." << endl;
+	cout << " Loading inventory items..." << endl;
 	read_item_list(f, &gdata->_carriedItems);
 	read_item_list(f, &gdata->_stashedGems);
 	read_item_list(f, &gdata->_stashedMaterials);
@@ -407,6 +408,10 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_int(f, p->getBaseAttribute(ATTR_STRENGTH));
 	serialize_int(f, p->getBaseAttribute(ATTR_WILLPOWER));
 
+	//	perk levels
+	for (unsigned i = 0; i < PERK__MAX; i++)
+		serialize_int(f, p->getPerkRank(static_cast<Perk>(i)));
+
 
 
 	////		METADATA		//
@@ -414,6 +419,7 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_int(f, gdata->_attributePointsLeft);
 	serialize_int(f, gdata->_perkPoints);
 	serialize_int(f, gdata->_townPortalCharge);
+	serialize_int(f, (int)gdata->_mode);
 
 	//	all known enchants
 	serialize_size_t(f, gdata->_knownEnchants.size());

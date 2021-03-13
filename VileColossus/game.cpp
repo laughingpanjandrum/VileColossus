@@ -576,8 +576,8 @@ void game::mainGameInput()
 	//	Save/load test
 	else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
 		savegame::save_to_file(savegame::SAVE_FILE_DEFAULT_NAME, _gdata);
-	else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
-		savegame::test_load(_gdata);
+	/*else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
+		savegame::test_load(_gdata);*/
 }
 
 
