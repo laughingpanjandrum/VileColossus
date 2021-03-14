@@ -139,6 +139,15 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	}
 
 
+	drawBox(x + 18, 7, 3, 2, COLOR_DARK);
+	_win.write(x + 19, 8, extendInteger(p->_level, 2), COLOR_LIGHT);
+	_win.write(x + 18, 10, "XLVL", COLOR_MEDIUM);
+
+	drawBox(x + 18, 12, 3, 2, COLOR_DARK);
+	_win.write(x + 19, 13, extendInteger(p->_PerkLevel, 2), p->_PerkLevel > 0 ? COLOR_LIGHT : COLOR_DARK);
+	_win.write(x + 18, 15, "ALVL", COLOR_MEDIUM);
+
+
 	//	VITAL STATISTICS
 
 	y += 2;
