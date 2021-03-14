@@ -1928,6 +1928,10 @@ void display::drawMainInterface(gamedataPtr gdata)
 		_win.writec(4, 51, getMaptileGlyph(tl), getMaptileColor(tl));
 		_win.write(6, 51, getMaptileName(tl), getMaptileColor(tl));
 
+		//	special info?
+		if (isSpecialMaptile(tl))
+			_win.writeWrapped(6, 53, 75, getMaptileDescription(tl), COLOR_DARK);
+
 		//	surface here, if any
 		auto sf = gdata->_map->getSurface(gdata->_cursorPt);
 		if (sf != Surface::__NONE)

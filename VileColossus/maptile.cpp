@@ -356,6 +356,27 @@ const bool drawMaptileOverSurface(const Maptile tl)
 	return isMaptileStairs(tl) || tl == MT_CHEST_GLOWING || tl == MT_CHEST_LUMINOUS || tl == MT_CHEST_RADIANT || tl == MT_CHEST_SMALL || tl == MT_THORNS || tl == MT_LAVA || tl == MT_WATER;
 }
 
+const bool isSpecialMaptile(const Maptile tl)
+{
+	return tl == MT_ANVIL || tl == MT_DEMONFORGE || tl == MT_FORGE || tl == MT_GEMSTONE_PRESS || tl == MT_HEALING_FOUNTAIN || tl == MT_MEDITATION_SHRINE || tl == MT_RUNE_IMPRINTER || tl == MT_STASH;
+}
+
+const string getMaptileDescription(const Maptile tl)
+{
+	switch (tl)
+	{
+	case(MT_ANVIL):				return "Move into this tile to open the Anvil. Here you can disassemble and repair items in your inventory.";
+	case(MT_DEMONFORGE):		return "Move into this tile to open the Demonforge. Here you can fabricate items and transmute materials.";
+	case(MT_FORGE):				return "Move into this tile to open the Enchanted Forge. Here you can repair and enhance your equipped items.";
+	case(MT_GEMSTONE_PRESS):	return "Move into this tile to open the Gemstone Press. Here you can fabricate gems and embed them into your equipment.";
+	case(MT_HEALING_FOUNTAIN):	return "Move into this tile to heal yourself to full and replenished your flask's charges.";
+	case(MT_MEDITATION_SHRINE):	return "Move into this tile to save your game.";
+	case(MT_RUNE_IMPRINTER):	return "Move into this tile to memorize or enhance spell runes.";
+	case(MT_STASH):				return "Move into this tile to manage your stash. Here you can store and retrieve items for use later. Items in the stash are safe from loss.";
+	}
+	return "";
+}
+
 
 
 const string getSurfaceName(const Surface sf)

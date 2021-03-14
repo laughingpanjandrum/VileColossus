@@ -53,6 +53,10 @@ const bool isMaptileStairs(const Maptile tl);
 const bool drawMaptileOverSurface(const Maptile tl);
 
 
+const bool isSpecialMaptile(const Maptile tl);
+const string getMaptileDescription(const Maptile tl);
+
+
 //	SURFACES
 
 enum class Surface { BONES, CORPSE, FIRE, POISON_OOZE, SLUDGE, WEB, __NONE, };
