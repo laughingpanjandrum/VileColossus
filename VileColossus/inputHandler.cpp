@@ -31,7 +31,8 @@ bool inputHandler::isDirectionalKeyPressed() const
 	return _key.c == 'h' || _key.c == 'j' || _key.c == 'k' || _key.c == 'l' || _key.c == 'y' || _key.c == 'u' || _key.c == 'b' || _key.c == 'n' ||
 		_key.c == 'H' || _key.c == 'J' || _key.c == 'K' || _key.c == 'L' || _key.c == 'Y' || _key.c == 'U' || _key.c == 'B' || _key.c == 'N' ||
 		_key.vk == TCODK_KP1 || _key.vk == TCODK_KP2 || _key.vk == TCODK_KP3 || _key.vk == TCODK_KP4 ||
-		_key.vk == TCODK_KP6 || _key.vk == TCODK_KP7 || _key.vk == TCODK_KP8 || _key.vk == TCODK_KP9;
+		_key.vk == TCODK_KP6 || _key.vk == TCODK_KP7 || _key.vk == TCODK_KP8 || _key.vk == TCODK_KP9 ||
+		_key.vk == TCODK_UP || _key.vk == TCODK_DOWN || _key.vk == TCODK_LEFT || _key.vk == TCODK_RIGHT;
 }
 
 //		Returns movement vector based on the directional key currently pressed.
@@ -62,11 +63,15 @@ intpair inputHandler::getVectorFromKeypress() const
 	switch (_key.vk)
 	{
 	case(TCODK_KP1):	return intpair(-1, 1);
+	case(TCODK_DOWN):
 	case(TCODK_KP2):	return intpair(0, 1);
 	case(TCODK_KP3):	return intpair(1, 1);
+	case(TCODK_LEFT):
 	case(TCODK_KP4):	return intpair(-1, 0);
+	case(TCODK_RIGHT):
 	case(TCODK_KP6):	return intpair(1, 0);
 	case(TCODK_KP7):	return intpair(-1, -1);
+	case(TCODK_UP):
 	case(TCODK_KP8):	return intpair(0, -1);
 	case(TCODK_KP9):	return intpair(1, -1);
 	}
