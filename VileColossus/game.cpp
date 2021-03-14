@@ -27,6 +27,7 @@ void game::start()
 
 	//	title screen
 	_gdata->_state = STATE_TITLE;
+	messages::add(_gdata, "Press #? @to view controls.", { COLOR_LIGHT });
 	menuLoop();
 }
 
@@ -170,6 +171,10 @@ void game::drawScreen()
 	{
 	case(STATE_TITLE):
 		_disp.title();
+		break;
+
+	case(STATE_VIEW_CONTROLS):
+		_disp.drawControls();
 		break;
 
 	case(STATE_SELECT_MODE):
@@ -570,7 +575,7 @@ void game::mainGameInput()
 		castTownPortal();
 
 	//	View menus
-	else if (_ih->isKeyPressed('@'))
+	else if (_ih->isKeyPressed('A'))
 		_gdata->_state = STATE_CHARACTER_SHEET;
 	else if (_ih->isKeyPressed('a'))
 		openAttributeMenu(_gdata);
@@ -581,14 +586,17 @@ void game::mainGameInput()
 	else if (_ih->isKeyPressed('m'))
 		openSpellList(_gdata);
 
+	else if (_ih->isKeyPressed('?') || _ih->isKeyPressed('/'))
+		_gdata->_state = STATE_VIEW_CONTROLS;
+
 	//	Debug
 	else if (_ih->isKeyPressed('`'))
 		awaitDebugCommand();
 
 	//	Save/load test
-	else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
+	/*else if (_ih->isKeyPressed('s') && _ih->isCtrlPressed())
 		savegame::save_to_file(savegame::SAVE_FILE_DEFAULT_NAME, _gdata);
-	/*else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
+	else if (_ih->isKeyPressed('p') && _ih->isCtrlPressed())
 		savegame::test_load(_gdata);*/
 }
 

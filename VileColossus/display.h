@@ -35,6 +35,8 @@ public:
 
 	void toggleFullscreen() { _win.toggle_fullscreen(); }
 
+	void drawControls();
+
 
 	//	Character information
 

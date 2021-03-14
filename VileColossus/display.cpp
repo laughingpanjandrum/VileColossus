@@ -113,6 +113,69 @@ void display::drawModeSelection()
 }
 
 
+//	All game controls.
+void display::drawControls()
+{
+	_win.write(3, 3, "MOVEMENT", COLOR_WHITE);
+
+	_win.write(4, 5, "numpad", COLOR_MEDIUM);
+	_win.write(4, 6, "7 8 9", COLOR_LIGHT);
+	_win.write(4, 7, "4   6", COLOR_LIGHT);
+	_win.write(4, 8, "1 2 3", COLOR_MEDIUM);
+
+	_win.write(15, 5, "vi-keys", COLOR_MEDIUM);
+	_win.write(15, 6, "y k u", COLOR_LIGHT);
+	_win.write(15, 7, "h   l", COLOR_LIGHT);
+	_win.write(15, 8, "b j n", COLOR_LIGHT);
+
+	_win.write(26, 6, "\\ | /", COLOR_LIGHT);
+	_win.write(26, 7, "-   -", COLOR_LIGHT);
+	_win.write(26, 8, "/ | \\", COLOR_LIGHT);
+
+	writeFormatted(4, 10, "#ctrl+direction @to move several times in a row.", { COLOR_LIGHT });
+	writeFormatted(4, 11, "#z or 5 @to wait for one turn.", { COLOR_LIGHT });
+
+	writeFormatted(4, 12, "#Bump into @certain objects to interact with them.", { COLOR_LIGHT });
+
+
+	_win.write(3, 15, "COMBAT", COLOR_WHITE);
+
+	writeFormatted(4, 17, "#Bump into enemies @to attack in melee.", { COLOR_LIGHT });
+	writeFormatted(4, 18, "#shift+direction @performs a ranged attack, if available.", { COLOR_LIGHT });
+	writeFormatted(4, 20, "#TAB @to auto-attack an adjacent enemy.", { COLOR_LIGHT });
+
+	writeFormatted(4, 22, "#q @to quaff your equipped flask.", { COLOR_LIGHT });
+	writeFormatted(4, 24, "#w @to swap to your secondary weapons.", { COLOR_LIGHT });
+
+
+	_win.write(3, 27, "MENUS AND ITEMS", COLOR_WHITE);
+
+	writeFormatted(4, 29, "#e @View or change equipment.", { COLOR_LIGHT });
+	writeFormatted(4, 30, "#i @View carried items.", { COLOR_LIGHT });
+	writeFormatted(4, 31, "#m @View spell information.", { COLOR_LIGHT });
+	writeFormatted(4, 32, "#a @View and spend attribute points.", { COLOR_LIGHT });
+
+	writeFormatted(4, 34, "#shift+a @View detailed character sheet.", { COLOR_LIGHT });
+
+
+	_win.write(3, 37, "MAP INTERACTION", COLOR_WHITE);
+
+	writeFormatted(4, 39, "#g @Get items from the floor.", { COLOR_LIGHT });
+
+	writeFormatted(4, 41, "#SPACE @to use a staircase or portal you're standing on.", { COLOR_LIGHT });
+	writeFormatted(4, 42, "#shift+t @to teleport to the surface, if your portal is charged.", { COLOR_LIGHT });
+
+
+	_win.write(3, 45, "LOOKING AROUND", COLOR_WHITE);
+
+	writeFormatted(4, 47, "#x @Enter look mode.", { COLOR_LIGHT });
+
+	_win.write(4, 49, "While in look mode:", COLOR_MEDIUM);
+	writeFormatted(5, 50, "#directional keys @move the cursor around.", { COLOR_LIGHT });
+	writeFormatted(5, 51, "#TAB @cycles between visible enemies.", { COLOR_LIGHT });
+}
+
+
 //	Character info
 void display::drawCharacterSheet(gamedataPtr gdata)
 {
