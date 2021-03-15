@@ -201,11 +201,8 @@ void item::addEnchantment(const ItemEnchantment en, const int bns)
 	//	Apply stat adjustments, if any.
 	switch (en)
 	{
-	case(ENCH_CAPACITY):	adjustProperty(PROP_MAX_CHARGES, bns); break;
-	case(ENCH_CHARGING):	adjustProperty(PROP_CHARGE_REGAIN_RATE, bns); break;
-	case(ENCH_HASTE):		adjustProperty(PROP_HASTE_BUFF, bns); break;
-	case(ENCH_STONESKIN):	adjustProperty(PROP_STONESKIN_BUFF, bns); break;
-	case(ENCH_WRATH):		adjustProperty(PROP_WRATH_BUFF, bns); break;
+//	case(ENCH_CAPACITY):	adjustProperty(PROP_MAX_CHARGES, bns); break;
+//	case(ENCH_CHARGING):	adjustProperty(PROP_CHARGE_REGAIN_RATE, bns); break;
 	}
 }
 
@@ -305,7 +302,7 @@ void item::regenerateCharge(int amt)
 	_chargeRegeneration += amt;
 	if (_chargeRegeneration >= 100)
 	{
-		if (_chargesLeft < getProperty(PROP_MAX_CHARGES))
+		if (_chargesLeft < getMaxCharges())
 		{
 			_chargeRegeneration -= 100;
 			gainCharge();

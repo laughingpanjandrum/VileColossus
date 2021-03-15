@@ -73,7 +73,9 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	{
 		auto v = read_int(f);
 		gdata->_knownEnchants.push_back(static_cast<ItemEnchantment>(v));
+		cout << getItemEnchantmentName(static_cast<ItemEnchantment>(v)) << " ";
 	}
+	cout << endl;
 
 
 	//
@@ -92,11 +94,10 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 			auto it = deserialize_item(f);
 			gdata->_player->equipInSlot(it, static_cast<EquipmentSlot>(i));
 		}
+		else
+			cout << " [empty equipment slot]" << endl;
 	}
 
-	////	Flask
-	cout << " Loading current flask..." << endl;
-	p->_currentFlask = deserialize_item(f);
 
 	////	Alt items
 	cout << " Loading alt items... " << endl;
@@ -106,6 +107,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	flag = read_int(f);
 	if (flag == 1)
 		p->_secondaryOffhand = deserialize_item(f);
+
+
+	////	Flask
+	cout << " Loading current flask..." << endl;
+	p->_currentFlask = deserialize_item(f);
 
 
 
@@ -168,10 +174,12 @@ size_t savegame::read_size_t(ifstream& f)
 
 itemPtr savegame::deserialize_item(ifstream& f)
 {
+	cout << "  - Loading item ";
 	auto it = itemPtr(new item());
 	
 	read_into_string(f, &it->_name);
 	read_into_string(f, &it->_nickname);
+	cout << "named " << it->_name << " '" << it->_nickname << "' ";
 
 	it->_amountLeft = read_int(f);
 	it->_armourCategory = static_cast<ArmourCategory>(read_int(f));
@@ -191,11 +199,12 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	it->_spellLevel = read_int(f);
 	it->_tier = read_int(f);
 
+	cout << " - Reading properties - ";
 	for (unsigned i = 0; i < PROP__NONE; i++)
 		it->setProperty(static_cast<ItemProperty>(i), read_int(f));
 
-	size_t sz;
-	f.read(reinterpret_cast<char*>(&sz), sizeof(size_t));
+	size_t sz = read_size_t(f);
+	cout << " - Read no. of enchants: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto e = static_cast<ItemEnchantment>(read_int(f));
@@ -203,7 +212,8 @@ itemPtr savegame::deserialize_item(ifstream& f)
 		it->addEnchantment(e, v);
 	}
 
-	f.read(reinterpret_cast<char*>(&sz), sizeof(size_t));
+	sz = read_size_t(f);
+	cout << " - Read no. of sockets: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto t = static_cast<GemType>(read_int(f));
@@ -212,6 +222,7 @@ itemPtr savegame::deserialize_item(ifstream& f)
 		it->_socketLevels.push_back(l);
 	}
 	
+	cout << "; DONE " << endl;
 	return it;
 }
 
@@ -221,10 +232,10 @@ void savegame::read_item_list(ifstream& f, vector<itemPtr>* ilist)
 {
 	ilist->clear();
 	auto sz = read_size_t(f);
+	cout << " >item list size: " << sz << endl;
 	for (unsigned i = 0; i < sz; i++)
 		ilist->push_back(deserialize_item(f));
 }
-
 
 
 //	DEBUG: attempt to load serialized items
@@ -280,8 +291,6 @@ void savegame::serialize_size_t(ofstream& f, const size_t sz)
 //	Push an entire item to file.
 void savegame::serialize_item(ofstream& f, const itemPtr it)
 {
-	int sz;
-
 	serialize_string(f, it->_name);
 	serialize_string(f, it->_nickname);
 
@@ -407,9 +416,6 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 		}
 	}
 
-	//	Flask
-	serialize_item(f, p->_currentFlask);
-
 	//	Alt items
 	auto alts = { p->_secondaryMainHand, p->_secondaryOffhand };
 	for (auto it : alts)
@@ -422,6 +428,10 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 			serialize_item(f, it);
 		}
 	}
+
+	//	Flask
+	serialize_item(f, p->_currentFlask);
+
 
 
 	//		STASHED ITEMS	//

@@ -2025,7 +2025,7 @@ void display::drawSidebar(gamedataPtr gdata)
 
 		//	name of flask
 		writeFormatted(x + 4, y + 1, "#" + p->_currentFlask->getName(), { p->_currentFlask->getColor() });
-		drawProgressDots(x + 5, y + 2, p->_currentFlask->getChargesLeft(), p->_currentFlask->getProperty(PROP_MAX_CHARGES), TCODColor::crimson);
+		drawProgressDots(x + 5, y + 2, p->_currentFlask->getChargesLeft(), p->_currentFlask->getMaxCharges(), TCODColor::crimson);
 	}
 
 

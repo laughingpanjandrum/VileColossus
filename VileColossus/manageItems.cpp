@@ -24,12 +24,12 @@ void applyFlaskEffect(gamedataPtr gdata, itemPtr it)
 		gdata->_player->restoreMagic(it->getEnchantmentValue(ENCH_MAGIC_RESTORE));
 	if (it->hasEnchantment(ENCH_EMPOWERING))
 		gdata->_player->addBuff(BUFF_EMPOWERED, it->getEnchantmentValue(ENCH_EMPOWERING));
-	if (it->hasProperty(PROP_HASTE_BUFF))
-		gdata->_player->addBuff(BUFF_HASTE, it->getProperty(PROP_HASTE_BUFF));
-	if (it->hasProperty(PROP_STONESKIN_BUFF))
-		gdata->_player->addBuff(BUFF_STONESKIN, it->getProperty(PROP_STONESKIN_BUFF));
-	if (it->hasProperty(PROP_WRATH_BUFF))
-		gdata->_player->addBuff(BUFF_WRATH, it->getProperty(PROP_WRATH_BUFF));
+	if (it->hasEnchantment(ENCH_HASTE))
+		gdata->_player->addBuff(BUFF_HASTE, it->getEnchantmentValue(ENCH_HASTE));
+	if (it->hasEnchantment(ENCH_STONESKIN))
+		gdata->_player->addBuff(BUFF_STONESKIN, it->getEnchantmentValue(ENCH_STONESKIN));
+	if (it->hasEnchantment(ENCH_WRATH))
+		gdata->_player->addBuff(BUFF_WRATH, it->getEnchantmentValue(ENCH_WRATH));
 }
 
 

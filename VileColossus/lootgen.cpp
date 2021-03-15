@@ -353,6 +353,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 
 	//	Enchantment level. Always has the maximum amount.
 	it->_enhancementLevel = rarity;
+	it->_tier = tier;
 
 	return it;
 }

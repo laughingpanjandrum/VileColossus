@@ -698,7 +698,7 @@ void player::swapToSecondaryItems()
 void player::chargeFlaskOnKill()
 {
 	if (_currentFlask != nullptr)
-		_currentFlask->regenerateCharge(_currentFlask->getProperty(PROP_CHARGE_REGAIN_RATE));
+		_currentFlask->regenerateCharge(_currentFlask->getTotalChargeOnKill());
 }
 void player::chargeFlaskOnHit()
 {

@@ -211,7 +211,6 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_CRITICAL_DAMAGE):			return "Crit Damage";
 	case(PROP_DAMAGE_VARIANCE):			return "Damage Variance";
 	case(PROP_DEFENCE):					return "Defence";
-	case(PROP_HASTE_BUFF):				return "Haste";
 	case(PROP_HEAL_ON_USE):				return "Heals";
 	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
@@ -223,8 +222,6 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_RIPOSTE_DAMAGE):			return "Riposte Damage";
 	case(PROP_STAGGER_CHANCE):			return "Stagger Chance";
 	case(PROP_STAGGER_DURATION):		return "Stagger Duration";
-	case(PROP_STONESKIN_BUFF):			return "Stoneskin";
-	case(PROP_WRATH_BUFF):				return "Wrath";
 	default:
 		return "item property " + to_string(prop);
 	}

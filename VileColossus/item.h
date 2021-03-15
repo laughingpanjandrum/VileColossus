@@ -94,8 +94,10 @@ public:
 	//	Charges
 
 	void clearAllCharges() { _chargesLeft = 0; }
-	void restoreAllCharges() { _chargesLeft = getProperty(PROP_MAX_CHARGES); }
+	void restoreAllCharges() { _chargesLeft = getMaxCharges(); }
 	void regenerateCharge(int amt);
+
+	int getMaxCharges() const { return getProperty(PROP_MAX_CHARGES) + getEnchantmentValue(ENCH_CAPACITY); }
 
 	bool hasChargesLeft() const { return _chargesLeft > 0; }
 	int getChargesLeft() const { return _chargesLeft; }
@@ -104,6 +106,8 @@ public:
 
 	void gainCharge();
 	void expendCharge() { _chargesLeft -= 1; }
+
+	int getTotalChargeOnKill() const { return getProperty(PROP_CHARGE_REGAIN_RATE) + getEnchantmentValue(ENCH_CHARGING); }
 
 
 	//	Enhancement
