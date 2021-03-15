@@ -81,6 +81,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 
 
+	//	Equipped spells
+	cout << "Loading equipped spells..." << endl;
+	read_item_list(f, &p->_ImprintedRunes);
+
+
 	////		STASHED ITEMS		//
 	cout << " Loading inventory items..." << endl;
 	read_item_list(f, &gdata->_carriedItems);
@@ -150,12 +155,10 @@ bool savegame::read_bool(ifstream& f)
 
 itemPtr savegame::deserialize_item(ifstream& f)
 {
-	cout << "  - Loading item ";
 	auto it = itemPtr(new item());
 	
 	read_into_string(f, &it->_name);
 	read_into_string(f, &it->_nickname);
-	cout << "named " << it->_name << " '" << it->_nickname << "' ";
 
 	it->_amountLeft = read_int(f);
 	it->_armourCategory = static_cast<ArmourCategory>(read_int(f));
@@ -175,12 +178,10 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	it->_spellLevel = read_int(f);
 	it->_tier = read_int(f);
 
-	cout << " - Loading properties... ";
 	for (unsigned i = 0; i < PROP__NONE; i++)
 		it->setProperty(static_cast<ItemProperty>(i), read_int(f));
 
 	size_t sz = read_size_t(f);
-	cout << " - enchants: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto e = static_cast<ItemEnchantment>(read_int(f));
@@ -189,7 +190,6 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	}
 
 	sz = read_size_t(f);
-	cout << " - sockets: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto t = static_cast<GemType>(read_int(f));
@@ -198,7 +198,6 @@ itemPtr savegame::deserialize_item(ifstream& f)
 		it->_socketLevels.push_back(l);
 	}
 	
-	cout << "; DONE " << endl;
 	return it;
 }
 
@@ -393,6 +392,12 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 
 	//	Flask
 	serialize_item(f, p->_currentFlask);
+
+
+	//	Equipped spells
+	serialize_size_t(f, p->_ImprintedRunes.size());
+	for (auto sp : p->_ImprintedRunes)
+		serialize_item(f, sp);
 
 
 

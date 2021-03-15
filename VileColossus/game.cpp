@@ -6,7 +6,6 @@
 TODO
 
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
-	save games not working?
 
 	properly fit monster tags to screen
 
