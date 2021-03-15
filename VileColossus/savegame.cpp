@@ -2,43 +2,11 @@
 
 
 
-/*
-SAVE GAME FORMAT:
-
-	-> PLAYER DATA
-		Level
-		Perk Level
-		Attribute values
-		Perk values*
-
-	-> METADATA
-		xp
-		attribute points
-		perk points
-		town portal charge
-		known enchants
-
-	-> GAME PROGRESS
-		Rotking Kills
-		Hellboss Kills
-
-	-> EQUIPMENT
-		Equipment
-		Current Flask
-		Alt Items
-
-	-> ITEMS
-		Inventory
-		Stash
-		Material Stash
-		Gem Stash
-
-*/
 void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 {
 	cout << "LOADING FILE..." << endl;
 	auto p = gdata->_player;
-	int flag;
+	bool flag;
 	
 
 	//		PLAYER DATA			//
@@ -51,9 +19,7 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 	//	perk ranks
 	for (unsigned i = 0; i < PERK__MAX; i++)
-	{
 		p->setPerkRank(static_cast<Perk>(i), read_int(f));
-	}
 
 
 	////		METADATA			//
@@ -78,7 +44,7 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	cout << endl;
 
 
-	//
+	
 	////		GAME PROGRESS		//
 	gdata->_gameProgress._killedHellboss = read_int(f);
 	gdata->_gameProgress._killedRotking = read_int(f);
@@ -88,8 +54,8 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	cout << " Loading equipped items..." << endl;
 	for (unsigned i = 0; i < SLOT__NONE; i++)
 	{
-		auto flag = read_int(f);
-		if (flag == 1)
+		flag = read_bool(f);
+		if (flag)
 		{
 			auto it = deserialize_item(f);
 			gdata->_player->equipInSlot(it, static_cast<EquipmentSlot>(i));
@@ -101,11 +67,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 	////	Alt items
 	cout << " Loading alt items... " << endl;
-	flag = read_int(f);
-	if (flag == 1)
+	flag = read_bool(f);
+	if (flag)
 		p->_secondaryMainHand = deserialize_item(f);
-	flag = read_int(f);
-	if (flag == 1)
+	flag = read_bool(f);
+	if (flag)
 		p->_secondaryOffhand = deserialize_item(f);
 
 
@@ -133,7 +99,8 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 //	current test - just generates all the items saved in the test file
 void savegame::load_from_file(const string name, gamedataPtr gdata)
 {
-	auto f = ifstream(FILE_PATH + name);
+	const string fname = FILE_PATH + SAVE_FILE_DEFAULT_NAME;
+	auto f = ifstream(fname, ios::in | ios::binary);
 	if (f.is_open())
 		load_from_file(f, gdata);
 	else
@@ -157,18 +124,27 @@ void savegame::read_into_string(ifstream& f, string* s)
 	read_into_string(f, s, dlen);
 }
 
-int savegame::read_int(ifstream& f)
+uint32_t savegame::read_int(ifstream& f)
 {
-	int dlen;
-	f.read(reinterpret_cast<char*>(&dlen), sizeof(int));
-	return dlen;
+	uint32_t v;
+	f.read(reinterpret_cast<char*>(&v), sizeof(uint32_t));
+	cout << v << ",";
+	return v;
 }
 
 size_t savegame::read_size_t(ifstream& f)
 {
 	size_t dlen;
 	f.read(reinterpret_cast<char*>(&dlen), sizeof(size_t));
+	cout << "[" << dlen << "] ";
 	return dlen;
+}
+
+bool savegame::read_bool(ifstream& f)
+{
+	bool b;
+	f.read(reinterpret_cast<char*>(&b), sizeof(bool));
+	return b;
 }
 
 
@@ -199,12 +175,12 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	it->_spellLevel = read_int(f);
 	it->_tier = read_int(f);
 
-	cout << " - Reading properties - ";
+	cout << " - Loading properties... ";
 	for (unsigned i = 0; i < PROP__NONE; i++)
 		it->setProperty(static_cast<ItemProperty>(i), read_int(f));
 
 	size_t sz = read_size_t(f);
-	cout << " - Read no. of enchants: " << sz;
+	cout << " - enchants: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto e = static_cast<ItemEnchantment>(read_int(f));
@@ -213,7 +189,7 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	}
 
 	sz = read_size_t(f);
-	cout << " - Read no. of sockets: " << sz;
+	cout << " - sockets: " << sz;
 	for (unsigned i = 0; i < sz; i++)
 	{
 		auto t = static_cast<GemType>(read_int(f));
@@ -276,12 +252,16 @@ void savegame::serialize_string(ofstream& f, const string s)
 }
 
 
-//	Serializes an integer to file.
-void savegame::serialize_int(ofstream& f, const int i)
+//	Serializing different data types	//
+
+void savegame::serialize_bool(ofstream& f, const bool b)
+{
+	f.write((const char*)&b, sizeof(b));
+}
+void savegame::serialize_int(ofstream& f, const uint32_t i)
 {
 	f.write((const char*)&i, sizeof(int));
 }
-
 void savegame::serialize_size_t(ofstream& f, const size_t sz)
 {
 	f.write((const char*)&sz, sizeof(size_t));
@@ -293,29 +273,35 @@ void savegame::serialize_item(ofstream& f, const itemPtr it)
 {
 	serialize_string(f, it->_name);
 	serialize_string(f, it->_nickname);
+	cout << "Serializing " << it->_name << " '" << it->_nickname << "' ";
 
 	serialize_int(f, it->_amountLeft);
-	serialize_int(f, (int)it->_armourCategory);
+	serialize_int(f, static_cast<uint32_t>(it->_armourCategory));
 	serialize_int(f, it->_category);
 	serialize_int(f, it->_chargeRegeneration);
 	serialize_int(f, it->_chargesLeft);
-	serialize_int(f, (int)it->_containsSpell);
+	serialize_int(f, static_cast<uint32_t>(it->_containsSpell));
 	serialize_int(f, it->_damageTaken);
 	serialize_int(f, it->_enhancementLevel);
-	serialize_int(f, (int)it->_gemType);
+	serialize_int(f, static_cast<uint32_t>(it->_gemType));
 	serialize_int(f, it->_isNewItem);
 	serialize_int(f, it->_isTwoHanded);
 	serialize_int(f, it->_markedAsValuable);
-	serialize_int(f, (int)it->_material);
+	serialize_int(f, static_cast<uint32_t>(it->_material));
 	serialize_int(f, it->_maxDurability);
 	serialize_int(f, it->_rarity);
 	serialize_int(f, it->_spellLevel);
 	serialize_int(f, it->_tier);
 
 	for (unsigned i = 0; i < PROP__NONE; i++)
-		serialize_int(f, it->_Property[i]);
+	{
+		auto p = static_cast<ItemProperty>(i);
+		auto v = it->getProperty(p);
+		serialize_int(f, v);
+	}
 	
 	serialize_size_t(f, it->_Enchants.size());
+	cout << " > enchants " << it->_Enchants.size();
 	for (unsigned i = 0; i < it->_Enchants.size(); i++)
 	{
 		serialize_int(f, it->_Enchants[i]);
@@ -323,50 +309,24 @@ void savegame::serialize_item(ofstream& f, const itemPtr it)
 	}
 
 	serialize_size_t(f, it->_socketSlots.size());
+	cout << " > sockets " << it->_socketSlots.size();
 	for (unsigned i = 0; i < it->_socketSlots.size(); i++)
 	{
-		serialize_int(f, (int)it->_socketSlots[i]);
+		serialize_int(f, static_cast<uint32_t>(it->_socketSlots[i]));
 		serialize_int(f, it->_socketLevels[i]);
 	}
+
+	cout << endl;
 }
 
 
-/*
-SAVE GAME FORMAT:
-	
-	-> PLAYER DATA
-		Level
-		Perk Level
-		Attribute values
-		Perk values*
 
-	-> METADATA
-		xp
-		attribute points
-		perk points
-		town portal charge
-		known enchants
 
-	-> GAME PROGRESS
-		Rotking Kills
-		Hellboss Kills
-
-	-> EQUIPMENT
-		Equipment
-		Current Flask
-		Alt Items
-
-	-> ITEMS
-		Inventory
-		Gem Stash
-		Material Stash
-		Stash
-
-*/
 void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 {
 	auto p = gdata->_player;
 	messages::add(gdata, "Saving...");
+	f.clear();
 
 
 	//		PLAYER DATA		//
@@ -387,7 +347,7 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_int(f, gdata->_attributePointsLeft);
 	serialize_int(f, gdata->_perkPoints);
 	serialize_int(f, gdata->_townPortalCharge);
-	serialize_int(f, (int)gdata->_mode);
+	serialize_int(f, static_cast<uint32_t>(gdata->_mode));
 
 	//	all known enchants
 	serialize_size_t(f, gdata->_knownEnchants.size());
@@ -404,14 +364,16 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	//		EQUIPMENT		//
 
 	//	Currently equipped
-	for (auto it : gdata->_player->getAllEquippedItems())
+	for (unsigned i = 0; i < SLOT__NONE; i++)
 	{
+		auto it = p->getItemInSlot(static_cast<EquipmentSlot>(i));
+
 		//	Test for existence of item in this slot. If none, push a 0; otherwise, push a 1.
 		if (it == nullptr)
-			serialize_int(f, 0);
+			serialize_bool(f, false);
 		else
 		{
-			serialize_int(f, 1);
+			serialize_bool(f, true);
 			serialize_item(f, it);
 		}
 	}
@@ -421,10 +383,10 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	for (auto it : alts)
 	{
 		if (it == nullptr)
-			serialize_int(f, 0);
+			serialize_bool(f, false);
 		else
 		{
-			serialize_int(f, 1);
+			serialize_bool(f, true);
 			serialize_item(f, it);
 		}
 	}
@@ -435,21 +397,24 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 
 
 	//		STASHED ITEMS	//
-	
 
 	serialize_size_t(f, gdata->_carriedItems.size());
+	cout << " Carried items count: " << gdata->_carriedItems.size() << endl;
 	for (auto it : gdata->_carriedItems)
 		serialize_item(f, it);
 
 	serialize_size_t(f, gdata->_stashedGems.size());
+	cout << " Stashed gems count: " << gdata->_stashedGems.size() << endl;
 	for (auto it : gdata->_stashedGems)
 		serialize_item(f, it);
 
 	serialize_size_t(f, gdata->_stashedMaterials.size());
+	cout << " Stashed materials: " << gdata->_stashedMaterials.size() << endl;
 	for (auto it : gdata->_stashedMaterials)
 		serialize_item(f, it);
 
 	serialize_size_t(f, gdata->_stashItems.size());
+	cout << " Stashed items count: " << gdata->_stashItems.size() << endl;
 	for (auto it : gdata->_stashItems)
 		serialize_item(f, it);
 

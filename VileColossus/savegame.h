@@ -22,8 +22,9 @@ namespace savegame
 	void read_into_string(ifstream& f, string* s, const unsigned len);
 	void read_into_string(ifstream& f, string* s);
 
-	int read_int(ifstream& f);
+	uint32_t read_int(ifstream& f);
 	size_t read_size_t(ifstream& f);
+	bool read_bool(ifstream& f);
 
 	itemPtr deserialize_item(ifstream& f);
 	void read_item_list(ifstream& f, vector<itemPtr>* ilist);
@@ -38,7 +39,8 @@ namespace savegame
 	//	Serializers
 
 	void serialize_string(ofstream& f, const string s);
-	void serialize_int(ofstream& f, const int i);
+	void serialize_bool(ofstream& f, const bool b);
+	void serialize_int(ofstream& f, const uint32_t i);
 	void serialize_size_t(ofstream& f, const size_t sz);
 
 	void serialize_item(ofstream& f, const itemPtr it);
