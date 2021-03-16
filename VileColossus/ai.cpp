@@ -81,6 +81,17 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 }
 
 
+//	Surround victim with ice.
+void ai::castIceWall(gamedataPtr gdata, monsterPtr ai)
+{
+	for (auto pt : getAdjacentFreePoints(gdata, ai->_target, ai->_target->_pos))
+	{
+		if (roll_one_in(2))
+			gdata->_map->setTile(MT_WALL_ICE, pt);
+	}
+}
+
+
 //	Random point nearby for teleporting monsters.
 intpair ai::getTeleportPoint(gamedataPtr gdata, monsterPtr ai)
 {
@@ -203,6 +214,13 @@ bool ai::tryUseAbility(gamedataPtr gdata, monsterPtr ai)
 			addAnimation(gdata, anim_FlashGlyph(pt, '*', TCODColor::purple));
 			ai->_pos = pt;
 			ai->spendActionEnergy();
+			return true;
+		}
+
+		//	Ice wall
+		else if (ai->hasFlag("casts_ice_wall") && roll_one_in(10))
+		{
+			castIceWall(gdata, ai);
 			return true;
 		}
 	}

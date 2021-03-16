@@ -1338,6 +1338,13 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	scatterOnMap(m, MT_WATER, 0.1);
 	m->_name = "The Outer Dark";
 
+	auto nodes = createNodeMap(m);
+	for (auto n : nodes)
+	{
+		auto mlist = rollMonsterGroup(dl, MonsterType::ABYSSAL_WRAITH);
+		addMonsterGroupToNode(m, &mlist, n);
+	}
+
 	addAbyssTreasures(m);
 	addStairsToMap(m, dl, descending);
 	return m;
@@ -1435,11 +1442,13 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 	else if (dl == 15)
 		m = generate_Hellfort(dl, descending, progress->_killedRotking);
 
-	//	HELL: Random selection of map types
+	//	ABYSS
+	else if (dl > 15)
+		m = generate_OuterDark(dl, descending);
+
+	//	HELL
 	else if (dl >= 12)
-	{
 		m = generate_HellDepths(dl, descending);
-	}
 
 	//	Entrance to HELL
 	else if (dl > 9)
@@ -1599,6 +1608,10 @@ gridmapPtr mapgen::generate_HellTemple()
 	//	Portal home
 	m->setTile(MT_TEMPLE_PORTAL, 9, 12);
 	m->_startPt = intpair(9, 12);
+
+
+	//	DOWNWARD
+	m->setTile(MT_ABYSSAL_GATE, 11, 14);
 
 
 	//	Other stuff

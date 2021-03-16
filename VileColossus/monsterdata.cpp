@@ -217,6 +217,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 {
 	switch (id)
 	{
+	case(MonsterType::ABYSSAL_WRAITH):
+		return { "flits", "ethereal", "undead", "immune_poison", "casts_ice_wall", };
+
 	case(MonsterType::BLOAT):
 		return { "flits", "poison_burst", "less_health", "less_defence", "flying", };
 
@@ -450,64 +453,65 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 {
 	switch (id)
 	{
-	case(MonsterType::BLOAT):				return make_tuple("bloat", 'b', TCODColor::lightLime);
-	case(MonsterType::CARRION_PRINCE):		return make_tuple("CARRION PRINCE", 'P', TCODColor::lime);
-	case(MonsterType::COLOSSUS_IRON):		return make_tuple("IRON COLOSSUS", 'N', TCODColor::silver);
-	case(MonsterType::CORPSEFLY):			return make_tuple("corpsefly", 'f', TCODColor::lightLime);
-	case(MonsterType::CORPSE_COLOSSUS):		return make_tuple("CORPSE COLOSSUS", 'C', TCODColor::pink);
-	case(MonsterType::CULTIST):				return make_tuple("cultist", 'u', TCODColor::pink);
-	case(MonsterType::CULTIST_ASCENDED):	return make_tuple("ascended cultist", 'U', TCODColor::purple);
-	case(MonsterType::CULTIST_INFESTED):	return make_tuple("infested cultist", 'u', TCODColor::lime);
-	case(MonsterType::CULTIST_MUTTERING):	return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
-	case(MonsterType::CULTIST_WINGED):		return make_tuple("winged cultist", 'U', TCODColor::pink);
-	case(MonsterType::DEMON_PRINCE):		return make_tuple("DEMON PRINCE", 'P', TCODColor::flame);
-	case(MonsterType::FLAME_CONJURER):		return make_tuple("Flame Conjurer", 'F', TCODColor::flame);
-	case(MonsterType::GRIM_KNIGHT):			return make_tuple("Grim Knight", 'N', TCODColor::lightPurple);
-	case(MonsterType::IMP):					return make_tuple("imp", 'i', TCODColor::flame);
-	case(MonsterType::IMP_MEGA):			return make_tuple("mega-imp", 'I', TCODColor::flame);
-	case(MonsterType::OGRE):				return make_tuple("ogre rockthrower", 'O', TCODColor::pink);
-	case(MonsterType::OGRE_BERSERKER):		return make_tuple("Ogre Berserker", 'O', TCODColor::darkRed);
-	case(MonsterType::OGRE_BRUTE):			return make_tuple("ogre brute", 'O', TCODColor::orange);
-	case(MonsterType::OOZE_ELECTRIC):		return make_tuple("electric ooze", 'o', TCODColor::yellow);
-	case(MonsterType::OOZE_SLUDGE):			return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
-	case(MonsterType::LIGHTNING_SPIRE):		return make_tuple("lightning spire", 234, TCODColor::yellow);
-	case(MonsterType::ORB_FLAME):			return make_tuple("orb of flame", '*', TCODColor::flame);
-	case(MonsterType::QUASIT):				return make_tuple("quasit", 'q', TCODColor::lightPurple);
-	case(MonsterType::RAT_GIANT):			return make_tuple("giant rat", 'r', TCODColor::darkGreen);
-	case(MonsterType::RAT_KING):			return make_tuple("Rat King", 'R', TCODColor::lightSepia);
-	case(MonsterType::ROACH):				return make_tuple("roach", 'r', TCODColor::sepia);
-	case(MonsterType::SKELETON):			return make_tuple("skeleton", 'k', TCODColor::desaturatedYellow);
-	case(MonsterType::SKELETON_ARCHER):		return make_tuple("skeleton archer", 'k', TCODColor::yellow);
-	case(MonsterType::SKELETON_BURNING):	return make_tuple("burning skeleton", 'k', TCODColor::flame);
-	case(MonsterType::SKELETON_KNIGHT):		return make_tuple("skeleton knight", 'k', TCODColor::lighterGrey);
-	case(MonsterType::SKELETON_GOLD_PLATED):return make_tuple("gold-plated skeleton", 'k', TCODColor::gold);
-	case(MonsterType::SKELETON_MAGE):		return make_tuple("skeleton mage", 'k', TCODColor::fuchsia);
-	case(MonsterType::SKELETON_GIANT):		return make_tuple("giant skeleton", 'K', TCODColor::desaturatedYellow);
-	case(MonsterType::SKINLESS_KNIGHT):		return make_tuple("SKINLESS KNIGHT", 'N', TCODColor::lighterOrange);
-	case(MonsterType::SKULL_EXPLODING):		return make_tuple("exploding skull", 's', TCODColor::lightOrange);
-	case(MonsterType::SKULL_FLAMING):		return make_tuple("flaming skull", 's', TCODColor::darkFlame);
-	case(MonsterType::SKULL_FLOATING):		return make_tuple("floating skull", 's', TCODColor::lightestYellow);
-	case(MonsterType::SKULL_PILE):			return make_tuple("skull pile", 234, TCODColor::lightestYellow);
-	case(MonsterType::SPIDER):				return make_tuple("giant spider", 'm', TCODColor::lime);
-	case(MonsterType::SPIDER_FLAMING):		return make_tuple("flaming spider", 'm', TCODColor::flame);
-	case(MonsterType::SPIDER_OGRE):			return make_tuple("ogre spider", 'M', TCODColor::lime);
-	case(MonsterType::SPIDER_PHASE):		return make_tuple("phase spider", 'M', TCODColor::lightPurple);
-	case(MonsterType::SPIDER_TITAN):		return make_tuple("TITAN SPIDER", 'M', TCODColor::silver);
-	case(MonsterType::VAMPIRE):				return make_tuple("vampire", 'V', TCODColor::lightRed);
-	case(MonsterType::VAMPIRE_PRINCE):		return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
-	case(MonsterType::VAMPIRE_SPAWN):		return make_tuple("Vampire spawn", 'v', TCODColor::red);
-	case(MonsterType::WALKING_SKULL_PILE):	return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
-	case(MonsterType::WORM_DEMON):			return make_tuple("Worm Demon", 'O', TCODColor::lightGrey);
-	case(MonsterType::WRAITH):				return make_tuple("wraith", 'w', TCODColor::lightPurple);
-	case(MonsterType::WRAITH_GREAT):		return make_tuple("great wraith", 'W', TCODColor::lighterPurple);
-	case(MonsterType::WRAITH_MOON):			return make_tuple("moon wraith", 'w', TCODColor::lightYellow);
-	case(MonsterType::WRETCH):				return make_tuple("wretch", 'e', TCODColor::crimson);
-	case(MonsterType::WRETCH_PUKING):		return make_tuple("puking wretch", 'e', TCODColor::lime);
-	case(MonsterType::ZOMBIE):				return make_tuple("zombie", 'z', TCODColor::green);
-	case(MonsterType::ZOMBIE_INFUSED):		return make_tuple("infused zombie", 'z', TCODColor::fuchsia);
-	case(MonsterType::ZOMBIE_LARGE):		return make_tuple("large zombie", 'Z', TCODColor::lightGreen);
-	case(MonsterType::ZOMBIE_MASS):			return make_tuple("Zombie Mass", 'Z', TCODColor::lightPink);
-	case(MonsterType::ZOMBIE_ROTTED):		return make_tuple("rotted zombie", 'z', TCODColor::darkLime);
+	case(MonsterType::ABYSSAL_WRAITH):			return make_tuple("abyssal wraith", 'w', TCODColor::cyan);
+	case(MonsterType::BLOAT):					return make_tuple("bloat", 'b', TCODColor::lightLime);
+	case(MonsterType::CARRION_PRINCE):			return make_tuple("CARRION PRINCE", 'P', TCODColor::lime);
+	case(MonsterType::COLOSSUS_IRON):			return make_tuple("IRON COLOSSUS", 'N', TCODColor::silver);
+	case(MonsterType::CORPSEFLY):				return make_tuple("corpsefly", 'f', TCODColor::lightLime);
+	case(MonsterType::CORPSE_COLOSSUS):			return make_tuple("CORPSE COLOSSUS", 'C', TCODColor::pink);
+	case(MonsterType::CULTIST):					return make_tuple("cultist", 'u', TCODColor::pink);
+	case(MonsterType::CULTIST_ASCENDED):		return make_tuple("ascended cultist", 'U', TCODColor::purple);
+	case(MonsterType::CULTIST_INFESTED):		return make_tuple("infested cultist", 'u', TCODColor::lime);
+	case(MonsterType::CULTIST_MUTTERING):		return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
+	case(MonsterType::CULTIST_WINGED):			return make_tuple("winged cultist", 'U', TCODColor::pink);
+	case(MonsterType::DEMON_PRINCE):			return make_tuple("DEMON PRINCE", 'P', TCODColor::flame);
+	case(MonsterType::FLAME_CONJURER):			return make_tuple("Flame Conjurer", 'F', TCODColor::flame);
+	case(MonsterType::GRIM_KNIGHT):				return make_tuple("Grim Knight", 'N', TCODColor::lightPurple);
+	case(MonsterType::IMP):						return make_tuple("imp", 'i', TCODColor::flame);
+	case(MonsterType::IMP_MEGA):				return make_tuple("mega-imp", 'I', TCODColor::flame);
+	case(MonsterType::OGRE):					return make_tuple("ogre rockthrower", 'O', TCODColor::pink);
+	case(MonsterType::OGRE_BERSERKER):			return make_tuple("Ogre Berserker", 'O', TCODColor::darkRed);
+	case(MonsterType::OGRE_BRUTE):				return make_tuple("ogre brute", 'O', TCODColor::orange);
+	case(MonsterType::OOZE_ELECTRIC):			return make_tuple("electric ooze", 'o', TCODColor::yellow);
+	case(MonsterType::OOZE_SLUDGE):				return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
+	case(MonsterType::LIGHTNING_SPIRE):			return make_tuple("lightning spire", 234, TCODColor::yellow);
+	case(MonsterType::ORB_FLAME):				return make_tuple("orb of flame", '*', TCODColor::flame);
+	case(MonsterType::QUASIT):					return make_tuple("quasit", 'q', TCODColor::lightPurple);
+	case(MonsterType::RAT_GIANT):				return make_tuple("giant rat", 'r', TCODColor::darkGreen);
+	case(MonsterType::RAT_KING):				return make_tuple("Rat King", 'R', TCODColor::lightSepia);
+	case(MonsterType::ROACH):					return make_tuple("roach", 'r', TCODColor::sepia);
+	case(MonsterType::SKELETON):				return make_tuple("skeleton", 'k', TCODColor::desaturatedYellow);
+	case(MonsterType::SKELETON_ARCHER):			return make_tuple("skeleton archer", 'k', TCODColor::yellow);
+	case(MonsterType::SKELETON_BURNING):		return make_tuple("burning skeleton", 'k', TCODColor::flame);
+	case(MonsterType::SKELETON_KNIGHT):			return make_tuple("skeleton knight", 'k', TCODColor::lighterGrey);
+	case(MonsterType::SKELETON_GOLD_PLATED):	return make_tuple("gold-plated skeleton", 'k', TCODColor::gold);
+	case(MonsterType::SKELETON_MAGE):			return make_tuple("skeleton mage", 'k', TCODColor::fuchsia);
+	case(MonsterType::SKELETON_GIANT):			return make_tuple("giant skeleton", 'K', TCODColor::desaturatedYellow);
+	case(MonsterType::SKINLESS_KNIGHT):			return make_tuple("SKINLESS KNIGHT", 'N', TCODColor::lighterOrange);
+	case(MonsterType::SKULL_EXPLODING):			return make_tuple("exploding skull", 's', TCODColor::lightOrange);
+	case(MonsterType::SKULL_FLAMING):			return make_tuple("flaming skull", 's', TCODColor::darkFlame);
+	case(MonsterType::SKULL_FLOATING):			return make_tuple("floating skull", 's', TCODColor::lightestYellow);
+	case(MonsterType::SKULL_PILE):				return make_tuple("skull pile", 234, TCODColor::lightestYellow);
+	case(MonsterType::SPIDER):					return make_tuple("giant spider", 'm', TCODColor::lime);
+	case(MonsterType::SPIDER_FLAMING):			return make_tuple("flaming spider", 'm', TCODColor::flame);
+	case(MonsterType::SPIDER_OGRE):				return make_tuple("ogre spider", 'M', TCODColor::lime);
+	case(MonsterType::SPIDER_PHASE):			return make_tuple("phase spider", 'M', TCODColor::lightPurple);
+	case(MonsterType::SPIDER_TITAN):			return make_tuple("TITAN SPIDER", 'M', TCODColor::silver);
+	case(MonsterType::VAMPIRE):					return make_tuple("vampire", 'V', TCODColor::lightRed);
+	case(MonsterType::VAMPIRE_PRINCE):			return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
+	case(MonsterType::VAMPIRE_SPAWN):			return make_tuple("Vampire spawn", 'v', TCODColor::red);
+	case(MonsterType::WALKING_SKULL_PILE):		return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
+	case(MonsterType::WORM_DEMON):				return make_tuple("Worm Demon", 'O', TCODColor::lightGrey);
+	case(MonsterType::WRAITH):					return make_tuple("wraith", 'w', TCODColor::lightPurple);
+	case(MonsterType::WRAITH_GREAT):			return make_tuple("great wraith", 'W', TCODColor::lighterPurple);
+	case(MonsterType::WRAITH_MOON):				return make_tuple("moon wraith", 'w', TCODColor::lightYellow);
+	case(MonsterType::WRETCH):					return make_tuple("wretch", 'e', TCODColor::crimson);
+	case(MonsterType::WRETCH_PUKING):			return make_tuple("puking wretch", 'e', TCODColor::lime);
+	case(MonsterType::ZOMBIE):					return make_tuple("zombie", 'z', TCODColor::green);
+	case(MonsterType::ZOMBIE_INFUSED):			return make_tuple("infused zombie", 'z', TCODColor::fuchsia);
+	case(MonsterType::ZOMBIE_LARGE):			return make_tuple("large zombie", 'Z', TCODColor::lightGreen);
+	case(MonsterType::ZOMBIE_MASS):				return make_tuple("Zombie Mass", 'Z', TCODColor::lightPink);
+	case(MonsterType::ZOMBIE_ROTTED):			return make_tuple("rotted zombie", 'z', TCODColor::darkLime);
 
 	case(MonsterType::BOSS_PALLID_ROTKING):		return make_tuple("= PALLID ROTKING =", 'A', TCODColor::lightLime);
 	case(MonsterType::BOSS_ROTKING_BURNED):		return make_tuple("= BURNED ROTKING =", 'A', TCODColor::flame);

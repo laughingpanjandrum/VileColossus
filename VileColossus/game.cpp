@@ -749,7 +749,7 @@ void game::moveToNewMap(int vec)
 void game::tryUseStairs()
 {
 	auto tl = _gdata->_map->getTile(_gdata->_player->_pos);
-	if (tl == MT_STAIRS_DOWN)
+	if (tl == MT_STAIRS_DOWN || tl == MT_ABYSSAL_GATE)
 		moveToNewMap(1);
 	else if (tl == MT_STAIRS_UP)
 		moveToNewMap(-1);

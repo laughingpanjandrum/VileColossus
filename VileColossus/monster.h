@@ -46,6 +46,8 @@ enum class MonsterType
 
 	//	Abyss monsters
 
+	ABYSSAL_WRAITH,
+
 
 	__NONE,
 };

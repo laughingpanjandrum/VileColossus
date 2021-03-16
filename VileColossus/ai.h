@@ -28,7 +28,7 @@ namespace ai
 	//		Special abilities.
 
 	bool castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, const string spell);
-
+	void castIceWall(gamedataPtr gdata, monsterPtr ai);
 	intpair getTeleportPoint(gamedataPtr gdata, monsterPtr ai);
 
 

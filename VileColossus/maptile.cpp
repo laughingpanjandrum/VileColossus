@@ -4,6 +4,7 @@ const string getMaptileName(const Maptile tl)
 {
 	switch (tl)
 	{
+	case(MT_ABYSSAL_GATE):		return "Abyssal Gate";
 	case(MT_ALCHEMY):			return "alembic of alchemy";
 	case(MT_ANVIL):				return "anvil";
 	case(MT_BARREL):			return "wooden barrel";
@@ -74,6 +75,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_BARREL):
 		return '0';
 
+	case(MT_ABYSSAL_GATE):
 	case(MT_HELLPORTAL_DOWN):
 	case(MT_HELLPORTAL_UP):
 	case(MT_TEMPLE_PORTAL):
@@ -266,6 +268,8 @@ const colorType getMaptileColor(const Maptile tl)
 	case(MT_THORNS):
 		return TCODColor::lightGreen;
 
+	case(MT_ABYSSAL_GATE):
+		return TCODColor::lightPurple;
 	case(MT_HELLPORTAL_DOWN):
 		return TCODColor::orange;
 	case(MT_HELLPORTAL_UP):
@@ -342,12 +346,12 @@ const bool isMaptileBreakable(const Maptile tl)
 const bool doesMaptileFlicker(const Maptile tl)
 {
 	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
-		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL || tl == MT_FLOOR_VOID;
+		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL || tl == MT_FLOOR_VOID || tl == MT_ABYSSAL_GATE;
 }
 
 const bool isMaptileStairs(const Maptile tl)
 {
-	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG || tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_TEMPLE_PORTAL;
+	return tl == MT_STAIRS_DOWN || tl == MT_STAIRS_UP || tl == MT_STAIRS_UP_LONG || tl == MT_STAIRS_DOWN_LONG || tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_TEMPLE_PORTAL || tl == MT_ABYSSAL_GATE;
 }
 
 //	Returns True if a maptile should have draw priority over surfaces.
@@ -358,7 +362,8 @@ const bool drawMaptileOverSurface(const Maptile tl)
 
 const bool isSpecialMaptile(const Maptile tl)
 {
-	return tl == MT_ANVIL || tl == MT_DEMONFORGE || tl == MT_FORGE || tl == MT_GEMSTONE_PRESS || tl == MT_HEALING_FOUNTAIN || tl == MT_MEDITATION_SHRINE || tl == MT_RUNE_IMPRINTER || tl == MT_STASH;
+	return tl == MT_ANVIL || tl == MT_DEMONFORGE || tl == MT_FORGE || tl == MT_GEMSTONE_PRESS || tl == MT_HEALING_FOUNTAIN || tl == MT_MEDITATION_SHRINE || tl == MT_RUNE_IMPRINTER || tl == MT_STASH ||
+		tl == MT_ABYSSAL_GATE;
 }
 
 const string getMaptileDescription(const Maptile tl)

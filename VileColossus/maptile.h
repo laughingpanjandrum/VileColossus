@@ -37,6 +37,7 @@ enum Maptile
 	MT_STAIRS_UP_LONG, MT_STAIRS_DOWN_LONG,
 	MT_HELLPORTAL_DOWN, MT_HELLPORTAL_UP,
 	MT_TEMPLE_PORTAL,
+	MT_ABYSSAL_GATE,
 };
 
 const string getMaptileName(const Maptile tl);

@@ -60,13 +60,10 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 			auto it = deserialize_item(f);
 			gdata->_player->equipInSlot(it, static_cast<EquipmentSlot>(i));
 		}
-		else
-			cout << " [empty equipment slot]" << endl;
 	}
 
 
 	////	Alt items
-	cout << " Loading alt items... " << endl;
 	flag = read_bool(f);
 	if (flag)
 		p->_secondaryMainHand = deserialize_item(f);
@@ -76,13 +73,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 
 	////	Flask
-	cout << " Loading current flask..." << endl;
 	p->_currentFlask = deserialize_item(f);
 
 
 
 	//	Equipped spells
-	cout << "Loading equipped spells..." << endl;
 	read_item_list(f, &p->_ImprintedRunes);
 
 
