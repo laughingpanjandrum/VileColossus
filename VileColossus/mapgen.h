@@ -157,6 +157,10 @@ namespace mapgen
 
 	void addAbyssTreasures(gridmapPtr m);
 
+	void abyss_DrownedCourt(gridmapPtr m, TCODBsp* n, int dl);
+	void abyss_Tomb(gridmapPtr m, TCODBsp* n, int dl);
+	void abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl);
+
 	gridmapPtr generate_OuterDark(int dl, bool descending);
 
 

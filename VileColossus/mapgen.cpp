@@ -1327,6 +1327,30 @@ void mapgen::addAbyssTreasures(gridmapPtr m)
 		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 }
 
+void mapgen::abyss_DrownedCourt(gridmapPtr m, TCODBsp* n, int dl)
+{
+	fillRegion(m, { MT_WATER, MT_WATER, MT_BUSH, MT_GRASS, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_CARPET }, n->x, n->y, n->w, n->h);
+	scatterSurface(m, Surface::SLUDGE, n->x, n->y, n->w, n->h, 0.05);
+}
+
+void mapgen::abyss_Tomb(gridmapPtr m, TCODBsp* n, int dl)
+{
+	scatterTile(m, MT_TOMBSTONE, n->x, n->y, n->w, n->h, 0.01);
+	scatterSurface(m, Surface::CORPSE, n->x, n->y, n->w, n->h, 0.15);
+	scatterSurface(m, Surface::BONES, n->x, n->y, n->w, n->h, 0.15);
+}
+
+void mapgen::abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl)
+{
+	fillRegion(m, MT_WALL_ICE, n->x + 1, n->y + 1, n->w - 2, n->h - 2);
+	fillRegion(m, MT_WATER, n->x + 3, n->y + 3, n->w - 5, n->h - 5);
+
+	const int mx = n->x + n->w / 2 - 1;
+	const int my = n->y + n->h / 2 - 1;
+	fillRegion(m, MT_FLOOR_CARPET, mx, n->y, 2, n->h);
+	fillRegion(m, MT_FLOOR_CARPET, n->x, my, n->w, 2);
+}
+
 
 
 //	Weird void maps
@@ -1336,19 +1360,38 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	fillMap(m, { MT_FLOOR_VOID });
 	scatterOnMap(m, MT_WALL_ICE, 0.05);
 	scatterOnMap(m, MT_WATER, 0.1);
-	m->_name = "The Outer Dark";
+	m->_name = "The Outer Dark [Depth " + to_string(dl) + "]";
 
+
+	//	Map theme
+	const int t = (dl > 17) ? randint(1, 3) : 4;
+
+
+	//	MAP ELEMENTS
 	auto nodes = createNodeMap(m);
-	vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
-	//vector<MonsterType> mtypes = { MonsterType::STAR_VAMPIRE };
 	for (auto n : nodes)
 	{
-		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
-		addMonsterGroupToNode(m, &mlist, n);
+		if		(t == 1)	abyss_DrownedCourt(m, n, dl);
+		else if (t == 2)	abyss_Tomb(m, n, dl);
+		else if (t == 3)	abyss_ViridianPalace(m, n, dl);
 	}
 
+	
+	//vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
+	////vector<MonsterType> mtypes = { MonsterType::STAR_VAMPIRE };
+	//for (auto n : nodes)
+	//{
+	//	auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
+	//	addMonsterGroupToNode(m, &mlist, n);
+	//}
+
+	//	special treasures
 	addAbyssTreasures(m);
-	addStairsToMap(m, dl, descending);
+	
+	//	stairs down
+	m->setTile(MT_ABYSSAL_GATE, getRandomForStairs(m));
+	m->_startPt = getRandomForStairs(m);
+
 	return m;
 }
 
