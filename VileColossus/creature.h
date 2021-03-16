@@ -29,6 +29,7 @@ public:
 
 	virtual bool isEthereal() const { return false; }
 	virtual bool isFlying() const { return false; }
+	virtual bool isInvisible() const { return false; }
 	virtual bool isUndead() const { return false; }
 
 

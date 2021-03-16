@@ -1339,9 +1339,11 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	m->_name = "The Outer Dark";
 
 	auto nodes = createNodeMap(m);
+	vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
+	//vector<MonsterType> mtypes = { MonsterType::STAR_VAMPIRE };
 	for (auto n : nodes)
 	{
-		auto mlist = rollMonsterGroup(dl, MonsterType::ABYSSAL_WRAITH);
+		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
 		addMonsterGroupToNode(m, &mlist, n);
 	}
 

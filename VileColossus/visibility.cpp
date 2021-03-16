@@ -360,6 +360,9 @@ bool canCreatureSeeCreature(gamedataPtr gdata, creaturePtr c1, creaturePtr c2)
 	if (getDistanceBetweenCreatures(c1, c2) < 2)
 		return true;
 
+	//	test invisibility
+	if (c2->isInvisible()) return false;
+
 	//	default to true
 	return true;
 }

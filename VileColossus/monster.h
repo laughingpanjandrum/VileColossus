@@ -47,6 +47,9 @@ enum class MonsterType
 	//	Abyss monsters
 
 	ABYSSAL_WRAITH,
+	NIGHTGAUNT,
+	STARSPAWN,
+	STAR_VAMPIRE,
 
 
 	__NONE,
@@ -107,6 +110,7 @@ public:
 
 	virtual bool isEthereal() const { return hasFlag("ethereal"); }
 	virtual bool isFlying() const { return hasFlag("flying"); }
+	virtual bool isInvisible() const { return hasFlag("unseen") && _damageTaken == 0; }
 	virtual bool isUndead() const { return hasFlag("undead"); }
 
 

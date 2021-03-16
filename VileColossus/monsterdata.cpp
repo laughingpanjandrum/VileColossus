@@ -14,6 +14,8 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
+	case(MonsterType::STARSPAWN):
+	case(MonsterType::STAR_VAMPIRE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::ZOMBIE_MASS):
 		return true;
@@ -263,6 +265,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::LIGHTNING_SPIRE):
 		return { "immobile", "immune_electric", "protected", "casts_lightning", "no_attack", };
 
+	case(MonsterType::NIGHTGAUNT):
+		return { "fast", "flits", "defended", };
+
 	case(MonsterType::OGRE):
 		return { "slow", "ranged_attack", "less_defence", "protected", "more_health" };
 	case(MonsterType::OGRE_BERSERKER):
@@ -328,6 +333,12 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "webs", "defended", "teleports", "immune_arcane", "arcane_attack" };
 	case(MonsterType::SPIDER_TITAN):
 		return { "webs", "protected_heavy", "spawner", "poison_attack", "slow", "inaccurate", "more_health", };
+
+	case(MonsterType::STARSPAWN):
+		return { "more_health", "resists_electric", "resists_fire", "resists_poison", "arcane_attack", "casts_arcane_bolt", };
+
+	case(MonsterType::STAR_VAMPIRE):
+		return { "more_health", "protected", "vampiric", "arcane_attack", "unseen", };
 
 	case(MonsterType::VAMPIRE):
 		return { "more_damage", "more_health", "vampiric", "undead", "resists_arcane", };
@@ -421,6 +432,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::OGRE_BERSERKER):
 	case(MonsterType::RAT_KING):
 	case(MonsterType::SPIDER_PHASE):
+	case(MonsterType::STARSPAWN):
+	case(MonsterType::STAR_VAMPIRE):
 	case(MonsterType::VAMPIRE):
 	case(MonsterType::WALKING_SKULL_PILE):
 	case(MonsterType::WORM_DEMON):
@@ -469,6 +482,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::GRIM_KNIGHT):				return make_tuple("Grim Knight", 'N', TCODColor::lightPurple);
 	case(MonsterType::IMP):						return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::IMP_MEGA):				return make_tuple("mega-imp", 'I', TCODColor::flame);
+	case(MonsterType::NIGHTGAUNT):				return make_tuple("nightgaunt", 'n', TCODColor::lightBlue);
 	case(MonsterType::OGRE):					return make_tuple("ogre rockthrower", 'O', TCODColor::pink);
 	case(MonsterType::OGRE_BERSERKER):			return make_tuple("Ogre Berserker", 'O', TCODColor::darkRed);
 	case(MonsterType::OGRE_BRUTE):				return make_tuple("ogre brute", 'O', TCODColor::orange);
@@ -497,6 +511,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SPIDER_OGRE):				return make_tuple("ogre spider", 'M', TCODColor::lime);
 	case(MonsterType::SPIDER_PHASE):			return make_tuple("phase spider", 'M', TCODColor::lightPurple);
 	case(MonsterType::SPIDER_TITAN):			return make_tuple("TITAN SPIDER", 'M', TCODColor::silver);
+	case(MonsterType::STARSPAWN):				return make_tuple("starspawn", 'X', TCODColor::pink);
+	case(MonsterType::STAR_VAMPIRE):			return make_tuple("Star Vampire", 'V', TCODColor::white);
 	case(MonsterType::VAMPIRE):					return make_tuple("vampire", 'V', TCODColor::lightRed);
 	case(MonsterType::VAMPIRE_PRINCE):			return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
 	case(MonsterType::VAMPIRE_SPAWN):			return make_tuple("Vampire spawn", 'v', TCODColor::red);
