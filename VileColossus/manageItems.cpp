@@ -2,6 +2,28 @@
 
 
 
+void openRitualAltar(gamedataPtr gdata)
+{
+	gdata->_idx = 0;
+	gdata->_state = STATE_RITUAL_ALTAR;
+	autodepositMaterials(gdata);
+}
+
+
+
+void selectRitualMaterial(gamedataPtr gdata)
+{
+	if (gdata->_idx < gdata->_stashedRitualMaterials.size())
+	{
+		auto it = gdata->_stashedRitualMaterials[gdata->_idx];
+		if (it->_material == MaterialType::VILEDRAGON_SCALE)
+			gdata->_summonedViledragon = !gdata->_summonedViledragon;
+		else
+			gdata->_ritualType = it->_material;
+	}
+}
+
+
 //	Apply 'on-use' effects of a given item
 void applyFlaskEffect(gamedataPtr gdata, itemPtr it)
 {
@@ -86,6 +108,24 @@ void tryEquipSelectedFlask(gamedataPtr gdata)
 }
 
 
+//	Add an item to the given list. Attempts to stack with existing items first, appends to end otherwise.
+void stackItemInList(gamedataPtr gdata, vector<itemPtr>* ilist, itemPtr it)
+{
+	//	Is it in the materials list already?
+	for (auto other : *ilist)
+	{
+		if (other->stacksWith(it))
+		{
+			other->_amountLeft += it->_amountLeft;
+			return;
+		}
+	}
+
+	//	If not, add it.
+	ilist->push_back(it);
+}
+
+
 void openStash(gamedataPtr gdata)
 {
 	autodepositMaterials(gdata);
@@ -137,18 +177,10 @@ void addToStash(gamedataPtr gdata, itemPtr it)
 	//	Materials go into a separate list.
 	if (it->_category == ITEM_MATERIAL)
 	{
-		//	Is it in the materials list already?
-		for (auto other : gdata->_stashedMaterials)
-		{
-			if (other->stacksWith(it))
-			{
-				other->_amountLeft += it->_amountLeft;
-				return;
-			}
-		}
-
-		//	If not, add it.
-		gdata->_stashedMaterials.push_back(it);
+		if (isRitualMaterial(it->_material))
+			stackItemInList(gdata, &gdata->_stashedRitualMaterials, it);
+		else
+			stackItemInList(gdata, &gdata->_stashedMaterials, it);
 		return;
 	}
 

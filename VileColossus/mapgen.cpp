@@ -1359,41 +1359,13 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_FLOOR_VOID });
 	scatterOnMap(m, MT_WALL_ICE, 0.05);
-	scatterOnMap(m, MT_WATER, 0.1);
+	scatterOnMap(m, MT_WATER, 0.05);
 	m->_name = "The Outer Dark [Depth " + to_string(dl) + "]";
 
-
-	//	Map theme
-	//const int t = (dl > 17) ? randint(1, 3) : 4;
-	const int t = 1; //debug
-
-
-	//	MAP ELEMENTS
-	auto nodes = createNodeMap(m);
-	for (auto n : nodes)
-	{
-		if		(t == 1)	abyss_DrownedCourt(m, n, dl);
-		else if (t == 2)	abyss_Tomb(m, n, dl);
-		else if (t == 3)	abyss_ViridianPalace(m, n, dl);
-	}
-
 	
-	//	Special monster types based on theme, plus base monsters that can appear anywhere in the abysss
-	/*vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, };
-	if (t == 1)
-	{
-		mtypes.push_back(MonsterType::CULTIST_DOGGOSAN);
-		mtypes.push_back(MonsterType::TENTACLE);
-	}
-	else if (t == 2)
-	{
-		mtypes.push_back(MonsterType::STAR_VAMPIRE);
-	}
-	else if (t == 3)
-	{
-		
-	}*/
-	vector<MonsterType> mtypes = { MonsterType::TENTACLE };
+	//	Abyssal monsters
+	auto nodes = createNodeMap(m);
+	vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
 	for (auto n : nodes)
 	{
 		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
@@ -1678,6 +1650,7 @@ gridmapPtr mapgen::generate_HellTemple()
 	//	Other stuff
 	m->setTile(MT_STASH, 8, 10);
 	m->setTile(MT_DEMONFORGE, 10, 9);
+	m->setTile(MT_ABYSSAL_ALTAR, 11, 15);
 
 
 	//	Finish

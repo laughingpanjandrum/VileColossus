@@ -246,6 +246,10 @@ void game::drawScreen()
 		_disp.drawGemstoneFabricator(_gdata);
 		break;
 
+	case(STATE_RITUAL_ALTAR):
+		_disp.drawRitualAltar(_gdata);
+		break;
+
 
 		//	Highlighting/looking
 	case(STATE_HIGHLIGHT_ENEMIES):
@@ -438,6 +442,15 @@ void game::processInput()
 				tryUpgradeDemonforge(_gdata);
 			else if (_ih->isNumberKey())
 				selectDemonforgeOption(_gdata, _ih->numberKeyToInt());
+			break;
+
+
+			//	Rituals
+		case(STATE_RITUAL_ALTAR):
+			if (_ih->isDirectionalKeyPressed())
+				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_stashedRitualMaterials.size());
+			else if (_ih->isKeyPressed(TCODK_ENTER))
+				selectRitualMaterial(_gdata);
 			break;
 
 
@@ -708,6 +721,13 @@ void game::awaitDebugCommand()
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, 500));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 250));
 		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
+	}
+	else if (txt == "ritual")
+	{
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::SODDEN_FLESH, 1));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::TOMB_IDOL, 1));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1));
+		addToInventory(_gdata, lootgen::generateMaterial(MaterialType::VIRIDIAN_GLASS, 1));
 	}
 	else if (txt == "cube")
 		_gdata->_map->addItem(lootgen::generateMaterial(MaterialType::NOTCHED_CUBE, 1), _gdata->_player->_pos);

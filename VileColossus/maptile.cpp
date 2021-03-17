@@ -4,6 +4,7 @@ const string getMaptileName(const Maptile tl)
 {
 	switch (tl)
 	{
+	case(MT_ABYSSAL_ALTAR):		return "Abyssal Altar";
 	case(MT_ABYSSAL_GATE):		return "Abyssal Gate";
 	case(MT_ALCHEMY):			return "alembic of alchemy";
 	case(MT_ANVIL):				return "anvil";
@@ -111,6 +112,7 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_SAND):
 		return 250;
 
+	case(MT_ABYSSAL_ALTAR):
 	case(MT_SARCOPHAGUS):
 	case(MT_PEW_WOODEN):
 		return 220;
@@ -169,6 +171,9 @@ const colorType getMaptileColor(const Maptile tl)
 {
 	switch (tl)
 	{
+	case(MT_ABYSSAL_ALTAR):
+		return TCODColor::lightPurple;
+
 	case(MT_ALCHEMY):
 		return TCODColor::celadon;
 
@@ -286,6 +291,7 @@ const bool isMaptileWalkable(const Maptile tl)
 {
 	switch (tl)
 	{
+	case(MT_ABYSSAL_ALTAR):
 	case(MT_ALCHEMY):
 	case(MT_ANVIL):
 	case(MT_BARREL):
@@ -345,7 +351,7 @@ const bool isMaptileBreakable(const Maptile tl)
 
 const bool doesMaptileFlicker(const Maptile tl)
 {
-	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || 
+	return tl == MT_WATER || tl == MT_HEALING_FOUNTAIN || tl == MT_ALCHEMY || tl == MT_FORGE || tl == MT_MEDITATION_SHRINE || tl == MT_LAVA || tl == MT_THORNS || tl == MT_ABYSSAL_ALTAR ||
 		tl == MT_HELLPORTAL_DOWN || tl == MT_HELLPORTAL_UP || tl == MT_CHEST_LUMINOUS || tl == MT_DEMONFORGE || tl == MT_TEMPLE_PORTAL || tl == MT_FLOOR_VOID || tl == MT_ABYSSAL_GATE;
 }
 
@@ -370,6 +376,7 @@ const string getMaptileDescription(const Maptile tl)
 {
 	switch (tl)
 	{
+	case(MT_ABYSSAL_ALTAR):		return "Move into this tile to place ritual materials to open gates into the Abyss.";
 	case(MT_ANVIL):				return "Move into this tile to open the Anvil. Here you can disassemble and repair items in your inventory.";
 	case(MT_DEMONFORGE):		return "Move into this tile to open the Demonforge. Here you can fabricate items and transmute materials.";
 	case(MT_FORGE):				return "Move into this tile to open the Enchanted Forge. Here you can repair and enhance your equipped items.";

@@ -71,6 +71,9 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	case(MT_DEMONFORGE):
 		openDemonforge(gdata);
 		break;
+	case(MT_ABYSSAL_ALTAR):
+		openRitualAltar(gdata);
+		break;
 
 		//	Saving
 	case(MT_MEDITATION_SHRINE):

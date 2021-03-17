@@ -108,15 +108,20 @@ const string getMaterialTypeName(const MaterialType mat)
 {
 	switch (mat)
 	{
-	case(MaterialType::BRIGHT_RUNE):	return "bright rune";
-	case(MaterialType::FRAGMENTS):		return "fragments";
-	case(MaterialType::GLASS_SHARD):	return "glass shards";
-	case(MaterialType::GLOWING_POWDER):	return "luminous dust";
-	case(MaterialType::MAGIC_DUST):		return "glowing goo";
-	case(MaterialType::RADIANT_ASH):	return "radiant ash";
-	case(MaterialType::RUNE_SHARD):		return "rune shards";
+	case(MaterialType::BRIGHT_RUNE):		return "bright rune";
+	case(MaterialType::FRAGMENTS):			return "fragments";
+	case(MaterialType::GLASS_SHARD):		return "glass shards";
+	case(MaterialType::GLOWING_POWDER):		return "luminous dust";
+	case(MaterialType::MAGIC_DUST):			return "glowing goo";
+	case(MaterialType::RADIANT_ASH):		return "radiant ash";
+	case(MaterialType::RUNE_SHARD):			return "rune shards";
 
-	case(MaterialType::NOTCHED_CUBE):	return "notched cube";
+	case(MaterialType::NOTCHED_CUBE):		return "notched cube";
+
+	case(MaterialType::SODDEN_FLESH):		return "sodden flesh";
+	case(MaterialType::TOMB_IDOL):			return "tomb idol";
+	case(MaterialType::VIRIDIAN_GLASS):		return "viridian glass";
+	case(MaterialType::VILEDRAGON_SCALE):	return "viledragon scale";
 	default:
 		return "material";
 	}
@@ -126,17 +131,41 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 {
 	switch (mat)
 	{
-	case(MaterialType::BRIGHT_RUNE):	return TCODColor::celadon;
-	case(MaterialType::FRAGMENTS):		return TCODColor::gold;
-	case(MaterialType::GLASS_SHARD):	return TCODColor::silver;
-	case(MaterialType::GLOWING_POWDER):	return TCODColor::lightPurple;
-	case(MaterialType::MAGIC_DUST):		return TCODColor::lighterBlue;
-	case(MaterialType::RADIANT_ASH):	return TCODColor::lightOrange;
-	case(MaterialType::RUNE_SHARD):		return TCODColor::lightFuchsia;
+	case(MaterialType::BRIGHT_RUNE):		return TCODColor::celadon;
+	case(MaterialType::FRAGMENTS):			return TCODColor::gold;
+	case(MaterialType::GLASS_SHARD):		return TCODColor::silver;
+	case(MaterialType::GLOWING_POWDER):		return TCODColor::lightPurple;
+	case(MaterialType::MAGIC_DUST):			return TCODColor::lighterBlue;
+	case(MaterialType::RADIANT_ASH):		return TCODColor::lightOrange;
+	case(MaterialType::RUNE_SHARD):			return TCODColor::lightFuchsia;
 
-	case(MaterialType::NOTCHED_CUBE):	return TCODColor::pink;
+	case(MaterialType::NOTCHED_CUBE):		return TCODColor::pink;
+
+	case(MaterialType::SODDEN_FLESH):		return TCODColor::sea;
+	case(MaterialType::TOMB_IDOL):			return TCODColor::crimson;
+	case(MaterialType::VIRIDIAN_GLASS):		return TCODColor::cyan;
+	case(MaterialType::VILEDRAGON_SCALE):	return TCODColor::flame;
 	default:
 		return COLOR_WHITE;
+	}
+}
+
+bool isRitualMaterial(const MaterialType mat)
+{
+	return mat == MaterialType::SODDEN_FLESH || mat == MaterialType::TOMB_IDOL || mat == MaterialType::VIRIDIAN_GLASS || mat == MaterialType::VILEDRAGON_SCALE;
+}
+
+const string getRitualDescription(const MaterialType mat)
+{
+	switch (mat)
+	{
+	case(MaterialType::SODDEN_FLESH):		return "Reveals a portal to the sodden realms of Drowned Dogossa, the god of the deep. Slay Dogossa's avatar to gain power and face the Vile Colossus.";
+	case(MaterialType::TOMB_IDOL):			return "Reveals a portal to the Tombs of Amog, which emanate from the infinite corpse of the dead god. Slay the avatar of Amog to gain power and face the Vile Colossus.";
+	case(MaterialType::VIRIDIAN_GLASS):		return "Reveals a portal to Lost Viridia, which was taken by the abyss when its king sinned. Slay the avatar of the Viridian King to gain power and face the Vile Colossus.";
+	case(MaterialType::VILEDRAGON_SCALE):	return "Use of this material attracts a Viledragon to the portal. These emissions of the Colossus are the most fearful horrors of the Abyss. Face one to grow in power.";
+	case(MaterialType::__NONE):				return "Reveals a portal to the Outer Dark - the abyssal space beyond time. Slay horrors there to gain ritual materials.";
+	default:
+		return "unknown ritual";
 	}
 }
 

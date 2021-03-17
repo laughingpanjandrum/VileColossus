@@ -64,10 +64,17 @@ enum class MaterialType {
 	//	Consumable types
 	NOTCHED_CUBE, 
 
+	//	Abyssal materials
+	SODDEN_FLESH, TOMB_IDOL, VIRIDIAN_GLASS,
+	VILEDRAGON_SCALE,
+
 	__NONE, };
 
 const string getMaterialTypeName(const MaterialType mat);
 const colorType getMaterialTypeColor(const MaterialType mat);
+
+bool isRitualMaterial(const MaterialType mat);
+const string getRitualDescription(const MaterialType mat);
 
 
 //	Equipment slots (distinct from item categories because we can have multiple items of the same type equipped at once)

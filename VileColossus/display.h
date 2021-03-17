@@ -114,13 +114,17 @@ public:
 	//	Map drawing & the main game interface
 
 	void drawMonsterHighlights(gamedataPtr gdata);
-	void drawMaptileHighlights(gamedataPtr gdata);
 
 	void updateVisibleMapData(gamedataPtr gdata);
 	void drawMainInterface(gamedataPtr gdata);
 
 	void drawMessages(gamedataPtr gdata);
 	void drawSidebar(gamedataPtr gdata);
+
+
+	//	Rituals (abyssal portals to the final areas)
+
+	void drawRitualAltar(gamedataPtr gdata);
 
 
 	//	Coordinate conversion

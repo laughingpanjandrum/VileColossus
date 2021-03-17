@@ -2226,6 +2226,57 @@ void display::drawSidebar(gamedataPtr gdata)
 
 
 
+void display::drawRitualAltar(gamedataPtr gdata)
+{
+	drawBox(2, 2, 40, 20, COLOR_DARK);
+	_win.write(3, 2, "SELECT RITUAL MATERIALS", COLOR_LIGHT);
+
+	//	Ritual materials
+	int y = 4;
+	for (unsigned i = 0; i < gdata->_stashedRitualMaterials.size(); i++)
+	{
+		auto selected = i == gdata->_idx;
+		auto it = gdata->_stashedRitualMaterials[i];
+		if (selected)
+			_win.write(5, y, it->getName(), COLOR_BLACK, it->getColor());
+		else
+			_win.write(4, y, it->getName(), it->getColor());
+		y++;
+
+		if (selected)
+			_win.writeWrapped(4, 15, 35, getRitualDescription(it->_material), COLOR_DARK);
+	}
+
+
+	//	Current ritual
+	drawBox(45, 2, 40, 20, COLOR_DARK);
+	_win.write(49, 2, "CURRENT RITUAL", COLOR_LIGHT);
+	y = 4;
+	
+	
+	//	portal name
+	string mtxt = "Portal to the Outer Dark";
+	auto mcol = getMaterialTypeColor(gdata->_ritualType);
+	switch (gdata->_ritualType)
+	{
+	case(MaterialType::SODDEN_FLESH):		mtxt = "Portal to the Drowned Deep"; break;
+	case(MaterialType::TOMB_IDOL):			mtxt = "Portal to the Flesh of Amog"; break;
+	case(MaterialType::VIRIDIAN_GLASS):		mtxt = "Portal to Lost Viridia"; break;
+	default:
+		mcol = TCODColor::lightBlue;
+	}
+	_win.write(46, y, mtxt, mcol);
+
+	//	description of ritual
+	y = _win.writeWrapped(47, ++y, 35, getRitualDescription(gdata->_ritualType), COLOR_MEDIUM);
+	if (gdata->_summonedViledragon)
+		_win.write(47, y + 2, "SUMMONING VILEDRAGON", TCODColor::crimson);
+
+	drawMessages(gdata);
+}
+
+
+
 //	Checks that a given display coordinate is in the bounds of the display.
 bool display::isPointOnDisplay(const intpair pt)
 {

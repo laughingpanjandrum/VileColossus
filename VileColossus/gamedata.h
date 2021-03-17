@@ -30,6 +30,7 @@ enum GameState
 	STATE_SPEND_ATTRIBUTE_POINTS,
 	STATE_ACKNOWLEDGE_DEATH,
 	STATE_HIGHLIGHT_ENEMIES, STATE_HIGHLIGHT_MAPTILES,
+	STATE_RITUAL_ALTAR,
 };
 
 struct message
@@ -64,6 +65,10 @@ struct gamedata
 	int _perkPoints = 0;
 	int _townPortalCharge = 0;
 
+	//	Ritual
+	MaterialType _ritualType = MaterialType::__NONE;
+	bool _summonedViledragon = false;
+
 	//	Inventory
 	vector<itemPtr> _carriedItems;
 	vector<itemPtr> _currentItemList;
@@ -74,6 +79,7 @@ struct gamedata
 	vector<ItemEnchantment> _knownEnchants;
 	vector<itemPtr> _stashedMaterials;
 	vector<itemPtr> _stashedGems;
+	vector<itemPtr> _stashedRitualMaterials;
 
 	//	Messages/animations
 	vector<message> _messages;
@@ -102,7 +108,4 @@ struct gamedata
 typedef shared_ptr<gamedata> gamedataPtr;
 
 
-inline void addAnimation(gamedataPtr gdata, animationPtr anim)
-{
-	gdata->_animations.push_back(anim);
-}
+inline void addAnimation(gamedataPtr gdata, animationPtr anim) { gdata->_animations.push_back(anim); }

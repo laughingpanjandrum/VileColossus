@@ -5,6 +5,13 @@
 
 
 
+//	Rituals
+
+void openRitualAltar(gamedataPtr gdata);
+void selectRitualMaterial(gamedataPtr gdata);
+
+
+
 //	Flasks
 
 void applyFlaskEffect(gamedataPtr gdata, itemPtr it);
@@ -14,6 +21,8 @@ void tryEquipSelectedFlask(gamedataPtr gdata);
 
 
 //	Stash management
+
+void stackItemInList(gamedataPtr gdata, vector<itemPtr>* ilist, itemPtr it);
 
 void openStash(gamedataPtr gdata);
 
