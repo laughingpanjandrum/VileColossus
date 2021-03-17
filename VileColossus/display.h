@@ -22,6 +22,21 @@
 #define MAP_Y_OFFSET 3
 
 
+
+
+const vector<string> HELP_SCREEN_CATEGORIES = {
+	"OVERVIEW",
+	"FLASKS",
+	"BASIC COMBAT STATS",
+	"SPECIAL COMBAT STATS",
+	"SPECIAL DAMAGE TYPES",
+	"MAGIC",
+	"EXPERIENCE AND LEVELS",
+	"ENHANCING EQUIPMENT",
+};
+
+
+
 class display
 {
 public:
@@ -36,6 +51,7 @@ public:
 	void toggleFullscreen() { _win.toggle_fullscreen(); }
 
 	void drawControls();
+	void drawHelpScreen(gamedataPtr gdata);
 
 
 	//	Character information

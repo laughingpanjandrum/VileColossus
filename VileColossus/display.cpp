@@ -173,6 +173,146 @@ void display::drawControls()
 	_win.write(4, 49, "While in look mode:", COLOR_MEDIUM);
 	writeFormatted(5, 50, "#directional keys @move the cursor around.", { COLOR_LIGHT });
 	writeFormatted(5, 51, "#TAB @cycles between visible enemies.", { COLOR_LIGHT });
+
+	writeFormatted(4, 60, "#? @again to view detailed help.", { COLOR_LIGHT });
+}
+
+
+
+//	ADDITIONAL HELP INFORMATION
+void display::drawHelpScreen(gamedataPtr gdata)
+{
+	vector<string> txt;
+
+	switch (gdata->_idx)
+	{
+	case(0):
+		txt = {
+			"#OVERVIEW", 
+			"Descend into the depths of the ruined cathedral. Loot EQUIPMENT from the dead; become more POWERFUL. Slay the VILE COLOSSUS.",
+			"#THE BASICS OF MOVING AND ATTACKING", 
+			"Move around using the numpad or vi-keys. You can also use the arrow keys, but these do not allow diagonal movement, which is essential for survival.",
+			"To attack enemies in melee, move into them. ",
+			"If you have a ranged weapon equipped, press [shift]+[a directional key] to fire the weapon in that direction.",
+			"The maximum range of your attacks is determined by your weapon and your maximum Light Radius.",
+			"#EQUIPMENT",
+			"Items are gained by killing enemies, or looted from the level. Pick them up by standing on them and pressing 'g'. Press 'e' to equip items you're carrying.",
+			"Any character can use any item - you'll have to decide which are most useful to you.",
+		};
+		break;
+	case(1):
+		txt = {
+			"#YOUR HEALING FLASK",
+			"You always have a healing flask equipped. Press 'q' to quaff it.",
+			"The flask has a limited number of charges. Regain them by attacking and killing monsters.",
+			"#SPECIAL FLASK EFFECTS",
+			"You will find new flasks much better than your starting flask. Equip them by selecting them from your inventory and pressing ENTER.",
+			"Many flasks grant special buffs in addition to healing when quaffed.",
+		};
+		break;
+	case(2):
+		txt = {
+			"#ACCURACY AND DEFENCE VALUE",
+			"Accuracy is your chance to hit enemies with weapon attacks. Each point increases your chance to hit by 5%.",
+			"Defence Value makes you less likely to be hit by weapon attacks. One point corresponds to one point of Accuracy.",
+			"Monsters also have these stats, and they work the same way.",
+			"#ARMOUR VALUE",
+			"Each point of Armour Value reduces physical damage by 1 point. It has no effect on special damage types.",
+			"#CRITICAL HITS",
+			"If an attack hits, it has a percent chance to be a Critical Hit, which adds bonus damage.",
+			"Critical hits only increase physical damage, not special damage types.",
+		};
+		break;
+	case(3):
+		txt = {
+			"#WRATH",
+			"Wrath on Kill is your percent chance to gain the Wrath status effect when you kill a monster. Some flasks also grant Wrath automatically when quaffed.",
+			"Wrath increases your physical damage inflicted by a percentage, which can be further increased by certain items. It has no effect on special damage types.",
+			"#REPRISAL DAMAGE",
+			"Enemies that hit you in melee automatically take this much physical damage.",
+			"#RIPOSTE CHANCE",
+			"Unique to swords. If an enemy misses you with a melee attack, you have a percent chance to make a free counter-attack. This attack deals extra damage.",
+			"#CLEAVE DAMAGE",
+			"Unique to axes. Physical damage is increased by this amount for each enemy adjacent to you, starting with the second.",
+			"#STAGGER CHANCE",
+			"Unique to bludgeoning weapons. Attacks have a chance to stagger the enemy, making them easier to hit and interfering with their ability to move.",
+		};
+		break;
+	case(4):
+		txt = {
+			"#SPECIAL DAMAGE TYPES",
+			"Special damage types are unaffected by Armour Value; instead, each has its own specific resistance. Some special damage types have a chance to inflict status effects on hit.",
+			"Each damage type has an associated Bonus, which increases all damage of that type that you inflict.",
+			"#ARCANE DAMAGE",
+			"Very few monsters are resistant to arcane damage, but it has no associated status effect.",
+			"#ELECTRIC DAMAGE",
+			"Has a chance to inflict Shock, which increases damage taken from all sources.",
+			"#FIRE DAMAGE",
+			"Has a chance to inflict Burn, which inflicts significant damage over time. Standing in water cures burning.",
+			"#POISON DAMAGE",
+			"Has a chance to inflict Poison, which slowly drains health over time.",
+		};
+		break;
+	case(5):
+		txt = {
+			"#SPELL RUNES",
+			"Spells are learned from Runes. You can only equip this by using the Rune Imprinter on the surface.",
+			"You can increase a spell's level at the imprinter by expending materials. Higher-level spells are more effective, but cost more Magic to cast.",
+			"#SPELL SLOTS",
+			"A starting character can memorize only 1 spell; level up the Willpower attribute to learn more, up to a maximum of 4.",
+			"Spells can be switched out freely at the Rune Imprinter.",
+			"#MAGIC POINTS",
+			"Expend Magic to cast spells. Your Magic regenerates when you kill enemies. Look for items with the 'Magic on Kill' stat to regain magic faster.",
+			"#SPELL POWER",
+			"This attribute increases spell damage by a fixed percentange.",
+		};
+		break;
+	case(6):
+		txt = {
+			"#EXPERIENCE AND LEVELS",
+			"Kill monsters to gain experience. Leveling up increases your maximum health and grants 3 attribute points.",
+			"Press 'a' to spend your attribute points.",
+			"#ASCENDANT LEVELS",
+			"After level 31, you no longer gain attribute points; instead, leveling allows you to increase specific abilities.",
+		};
+		break;
+	case(7):
+		txt = {
+			"#DISMANTLING EQUIPMENT",
+			"You can visit the Anvil on the surface to dismantle unwanted equipment. Dismantling grants materials, which you can use to enhance your items.",
+			"#ENHANCING EQUIPMENT",
+			"Enhance your equipped items using the Enchanted Forge. You can learn enchantments by dismantling items, and add them to your equipped items, if they have available slots.",
+			"#DURABILITY",
+			"Weapons take damage when you attack, and armour takes damage as you do.",
+			"If an item's durability reaches zero, it no longer provides you with any benefits. You can repair items at the Anvil or Forge.",
+			"You can also spend materials to increase an item's maximum durability.",
+		};
+		break;
+	}
+
+	//	Categories along the left
+	for (unsigned i = 0; i < HELP_SCREEN_CATEGORIES.size(); i++)
+	{
+		if (i == gdata->_idx)
+			_win.write(4, 4 + i, HELP_SCREEN_CATEGORIES[i], COLOR_BLACK, COLOR_LIGHT);
+		else
+			_win.write(4, 4 + i, HELP_SCREEN_CATEGORIES[i], COLOR_MEDIUM);
+	}
+
+	//	The actual help text
+	int y = 3;
+	for (auto line : txt)
+	{
+		auto col = COLOR_MEDIUM;
+		if (line[0] == '#')
+		{
+			++y;
+			col = COLOR_WHITE;
+			line = line.substr(1, line.size());
+		}
+		y = _win.writeWrapped(30, y, 50, line, col);
+		y += 2;
+	}
 }
 
 
@@ -239,7 +379,7 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	int dmgvar = p->getDamageVariance();
 
 	drawStatWithBox(x, y + 2, plusminus(p->getAccuracy()), "Accuracy", COLOR_MISC_STAT);
-	drawStatWithBox(x, y + 5, to_string(dmgbase), "Weapon Damage", COLOR_HEALTH);
+	drawStatWithBox(x, y + 5, to_string(dmgbase), "Physical Damage", COLOR_HEALTH);
 	drawStatWithBox(x, y + 8, extendInteger(p->getCriticalChance(), 2) + "%", "Critical Chance", TCODColor::crimson);
 	drawStatWithBox(x, y + 11, plusminus(p->getCriticalMultiplier()) + "%", "Critical Damage", TCODColor::crimson);
 	drawStatWithBox(x, y + 14, plusminus(p->getSpellPower()) + "%", "Spell Power", COLOR_MAGIC);
@@ -485,7 +625,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry, to_string(p->getMaxHealth()), "Health", COLOR_HEALTH);
 				_win.write(rx - 5, ry + 1, "+2", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Weapon Damage", COLOR_HEALTH);
+				drawStatWithBox(rx, ry + 3, to_string(p->getWeaponDamage()), "Physical Damage", COLOR_HEALTH);
 				_win.write(rx - 5, ry + 4, "+0.5", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 6, to_string(p->getResistance(DTYPE_POISON)) + "%", "Poison Resist", getDamageTypeColor(DTYPE_POISON));

@@ -175,6 +175,9 @@ void game::drawScreen()
 	case(STATE_VIEW_CONTROLS):
 		_disp.drawControls();
 		break;
+	case(STATE_HELP_SCREEN):
+		_disp.drawHelpScreen(_gdata);
+		break;
 
 	case(STATE_SELECT_MODE):
 		_disp.drawModeSelection();
@@ -511,6 +514,20 @@ void game::processInput()
 			break;
 		case(STATE_SELECT_MODE):
 			selectGameMode();
+			break;
+
+
+			//	Help.
+		case(STATE_VIEW_CONTROLS):
+			if (_ih->isKeyPressed('?') || _ih->isKeyPressed('/'))
+			{
+				_gdata->_idx = 0;
+				_gdata->_state = STATE_HELP_SCREEN;
+			}
+			break;
+		case(STATE_HELP_SCREEN):
+			if (_ih->isDirectionalKeyPressed())
+				scrollMenu(_ih->getVectorFromKeypress().second, HELP_SCREEN_CATEGORIES.size());
 			break;
 
 
