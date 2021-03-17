@@ -174,7 +174,14 @@ void display::drawControls()
 	writeFormatted(5, 50, "#directional keys @move the cursor around.", { COLOR_LIGHT });
 	writeFormatted(5, 51, "#TAB @cycles between visible enemies.", { COLOR_LIGHT });
 
-	writeFormatted(4, 60, "#? @again to view detailed help.", { COLOR_LIGHT });
+
+	_win.write(3, 54, "OTHER", COLOR_WHITE);
+
+	writeFormatted(4, 56, "#ctrl-f @Toggle fullscreen", { COLOR_LIGHT });
+	writeFormatted(4, 58, "#ctrl-q @Quit game [doesn't save!]", { COLOR_LIGHT });
+
+
+	writeFormatted(50, 60, "#? @again to view detailed help.", { COLOR_LIGHT });
 }
 
 
@@ -291,6 +298,7 @@ void display::drawHelpScreen(gamedataPtr gdata)
 	}
 
 	//	Categories along the left
+	drawBox(2, 2, 25, 11, COLOR_DARK);
 	for (unsigned i = 0; i < HELP_SCREEN_CATEGORIES.size(); i++)
 	{
 		if (i == gdata->_idx)
@@ -298,8 +306,14 @@ void display::drawHelpScreen(gamedataPtr gdata)
 		else
 			_win.write(4, 4 + i, HELP_SCREEN_CATEGORIES[i], COLOR_MEDIUM);
 	}
+	_win.writec(4, 15, 24, COLOR_LIGHT);
+	_win.writec(6, 15, 25, COLOR_LIGHT);
+	_win.write(8, 15, "Scroll categories", COLOR_MEDIUM);
+	_win.write(4, 16, "ESC", COLOR_LIGHT);
+	_win.write(8, 16, "Back out", COLOR_MEDIUM);
 
 	//	The actual help text
+	drawBox(28, 2, 60, 60, COLOR_DARK);
 	int y = 3;
 	for (auto line : txt)
 	{
