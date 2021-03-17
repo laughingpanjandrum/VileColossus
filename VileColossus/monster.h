@@ -47,9 +47,11 @@ enum class MonsterType
 	//	Abyss monsters
 
 	ABYSSAL_WRAITH,
+	CULTIST_DOGGOSAN, 
 	NIGHTGAUNT,
 	STARSPAWN,
 	STAR_VAMPIRE,
+	TENTACLE_HORROR, TENTACLE,
 
 
 	__NONE,

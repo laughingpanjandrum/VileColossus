@@ -6,6 +6,8 @@ creature::creature(string name, int glyph, colorType color) : _name(name), _glyp
 	_actionEnergy = 0;
 	_bankedAttackPoints = 0;
 
+	_grappledBy = nullptr;
+
 	for (unsigned i = 0; i < STATUS__MAX; i++)
 		_StatusEffects.push_back(0);
 	for (unsigned i = 0; i < BUFF__MAX; i++)
@@ -49,6 +51,19 @@ void creature::reduceBuffDuration(const BuffType bf)
 	if (_Buffs[bf] > 0)
 		_Buffs[bf] -= 1;
 }
+
+
+//	If we're grappled, tests to see if the grappling is still possible.
+//	IF not (grappler has moved/died), clear the grapple status.
+void creature::verifyGrappler()
+{
+	if (_grappledBy != nullptr)
+	{
+		if (_grappledBy->isDead() || (hypot(_pos.first - _grappledBy->_pos.first, _pos.second - _grappledBy->_pos.second) >= 2))
+			_grappledBy = nullptr;
+	}
+}
+
 
 //	Every 10 points of attack speed = 1 attack per turn.
 //	Fractional points are banked and added to the next turn's count, so they will eventually contribute to an additional attack.

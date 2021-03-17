@@ -126,6 +126,12 @@ public:
 	void reduceBuffDuration(const BuffType bf);
 
 
+	//	Grappling
+
+	void verifyGrappler();
+	bool isGrappled() const { return _grappledBy != nullptr; }
+
+
 	
 	//	Number of attacks
 
@@ -138,6 +144,8 @@ public:
 
 
 	//	Public data
+
+	shared_ptr<creature> _grappledBy;
 
 	intpair _pos;
 

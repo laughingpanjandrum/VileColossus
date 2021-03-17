@@ -842,6 +842,9 @@ void game::doCreatureTick(creaturePtr cr)
 	if (cr->hasBuff(BUFF_REGENERATION))
 		cr->healDamage(1  +cr->getMaxHealth() / 20);
 
+	//	Test that grapple is still valid, if applicable
+	cr->verifyGrappler();
+
 	//	PULSE
 	if (cr->isPlayer() && cr->hasBuff(BUFF_ARCANE_PULSE))
 	{

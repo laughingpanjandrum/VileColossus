@@ -25,7 +25,11 @@ void animateHit(gamedataPtr gdata, creaturePtr target, int damage, bool wasCrit,
 void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePtr target, int damage)
 {
 	if (attacker->hasFlag("vampiric"))
+	{
 		attacker->healDamage(attacker->getMaxHealth() / 4);
+	}
+	if (attacker->hasFlag("grapples"))
+		grapple(gdata, attacker, target);
 }
 
 
@@ -243,7 +247,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 
 			//	if the AUTOKILL debug flag is set, we instantly kill whatever we hit
 			if (gdata->_autokill && attacker->isPlayer())
-				killCreature(gdata, target);
+				creatureTakeDamage(gdata, target, 1000000);
 		}
 
 		//	Missed!

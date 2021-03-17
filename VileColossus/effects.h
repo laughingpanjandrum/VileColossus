@@ -37,6 +37,7 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 void testForDamageEquipment(gamedataPtr gdata, creaturePtr attacker, creaturePtr target);
 
 void knockback(gamedataPtr gdata, creaturePtr t, const intpair awayFrom, int dist);
+void grapple(gamedataPtr gdata, creaturePtr grappler, creaturePtr target);
 
 
 

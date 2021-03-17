@@ -1364,7 +1364,8 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 
 
 	//	Map theme
-	const int t = (dl > 17) ? randint(1, 3) : 4;
+	//const int t = (dl > 17) ? randint(1, 3) : 4;
+	const int t = 1; //debug
 
 
 	//	MAP ELEMENTS
@@ -1377,19 +1378,34 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	}
 
 	
-	//vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
-	////vector<MonsterType> mtypes = { MonsterType::STAR_VAMPIRE };
-	//for (auto n : nodes)
-	//{
-	//	auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
-	//	addMonsterGroupToNode(m, &mlist, n);
-	//}
+	//	Special monster types based on theme, plus base monsters that can appear anywhere in the abysss
+	/*vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, };
+	if (t == 1)
+	{
+		mtypes.push_back(MonsterType::CULTIST_DOGGOSAN);
+		mtypes.push_back(MonsterType::TENTACLE);
+	}
+	else if (t == 2)
+	{
+		mtypes.push_back(MonsterType::STAR_VAMPIRE);
+	}
+	else if (t == 3)
+	{
+		
+	}*/
+	vector<MonsterType> mtypes = { MonsterType::TENTACLE };
+	for (auto n : nodes)
+	{
+		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
+		addMonsterGroupToNode(m, &mlist, n);
+	}
 
 	//	special treasures
 	addAbyssTreasures(m);
 	
 	//	stairs down
-	m->setTile(MT_ABYSSAL_GATE, getRandomForStairs(m));
+	for (unsigned i = 0; i < 3; i++)
+		m->setTile(MT_ABYSSAL_GATE, getRandomForStairs(m));
 	m->_startPt = getRandomForStairs(m);
 
 	return m;

@@ -148,6 +148,13 @@ bool doPlayerMove(gamedataPtr gdata, const intpair vec, bool allowAttacking)
 				gdata->_player->reduceStatusEffectDuration(STATUS_ENTANGLED);
 			}
 
+			//	can't move if grappled
+			else if (gdata->_player->isGrappled())
+			{
+				messages::error(gdata, "You are grappled and can't move!");
+				gdata->_player->verifyGrappler();
+			}
+
 			//	movement
 			else
 				playerEnterTile(gdata, pt);

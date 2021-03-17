@@ -520,6 +520,19 @@ void knockback(gamedataPtr gdata, creaturePtr t, const intpair awayFrom, int dis
 }
 
 
+//	One creature tries to grapple another.
+void grapple(gamedataPtr gdata, creaturePtr grappler, creaturePtr target)
+{
+	target->verifyGrappler();
+	if (!target->isGrappled())
+	{
+		target->_grappledBy = grappler;
+		if (target->isPlayer())
+			messages::add(gdata, "#" + grappler->getName() + " @grabs you!", { grappler->getColor() });
+	}
+}
+
+
 //	Effects of standing on a tile
 void standOnTile(gamedataPtr gdata, creaturePtr cr)
 {

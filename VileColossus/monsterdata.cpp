@@ -199,6 +199,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 	case(MonsterType::SPIDER):
 		return MonsterType::SPIDER_OGRE;
 
+	case(MonsterType::TENTACLE):
+		return MonsterType::TENTACLE_HORROR;
+
 	case(MonsterType::VAMPIRE_SPAWN):
 		return MonsterType::VAMPIRE;
 
@@ -247,6 +250,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "less_health", "casts_arcane_bolt" };
 	case(MonsterType::CULTIST_WINGED):
 		return { "casts_arcane_bolt", "flying", "flits", "casts_poison_spit" };
+
+	case(MonsterType::CULTIST_DOGGOSAN):
+		return { "resists_poison", "casts_poison_spit", "poison_burst", "less_health", };
 
 	case(MonsterType::DEMON_PRINCE):
 		return { "casts_fireblast", "immune_fire", "fire_damage", "protected", "slow" };
@@ -340,6 +346,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::STAR_VAMPIRE):
 		return { "more_health", "protected", "vampiric", "arcane_attack", "unseen", };
 
+	case(MonsterType::TENTACLE):
+		return { "less_health", "grapples" };
+	case(MonsterType::TENTACLE_HORROR):
+		return { "spawner", "more_health", "more_damage", "grapples", };
+
 	case(MonsterType::VAMPIRE):
 		return { "more_damage", "more_health", "vampiric", "undead", "resists_arcane", };
 	case(MonsterType::VAMPIRE_PRINCE):
@@ -424,6 +435,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::DEMON_PRINCE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SPIDER_TITAN):
+	case(MonsterType::TENTACLE_HORROR):
 	case(MonsterType::VAMPIRE_PRINCE):
 		return 4;
 
@@ -442,6 +454,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 		return 3;
 
 	case(MonsterType::CULTIST_ASCENDED):
+	case(MonsterType::CULTIST_DOGGOSAN):
 	case(MonsterType::CULTIST_WINGED):
 	case(MonsterType::IMP_MEGA):
 	case(MonsterType::LIGHTNING_SPIRE):
@@ -474,6 +487,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CORPSE_COLOSSUS):			return make_tuple("CORPSE COLOSSUS", 'C', TCODColor::pink);
 	case(MonsterType::CULTIST):					return make_tuple("cultist", 'u', TCODColor::pink);
 	case(MonsterType::CULTIST_ASCENDED):		return make_tuple("ascended cultist", 'U', TCODColor::purple);
+	case(MonsterType::CULTIST_DOGGOSAN):		return make_tuple("cultist of Dogossa", 'u', TCODColor::green);
 	case(MonsterType::CULTIST_INFESTED):		return make_tuple("infested cultist", 'u', TCODColor::lime);
 	case(MonsterType::CULTIST_MUTTERING):		return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
 	case(MonsterType::CULTIST_WINGED):			return make_tuple("winged cultist", 'U', TCODColor::pink);
@@ -513,6 +527,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::SPIDER_TITAN):			return make_tuple("TITAN SPIDER", 'M', TCODColor::silver);
 	case(MonsterType::STARSPAWN):				return make_tuple("starspawn", 'X', TCODColor::pink);
 	case(MonsterType::STAR_VAMPIRE):			return make_tuple("Star Vampire", 'V', TCODColor::white);
+	case(MonsterType::TENTACLE):				return make_tuple("tentacle", 't', TCODColor::green);
+	case(MonsterType::TENTACLE_HORROR):			return make_tuple("Tentacle Horror", 'T', TCODColor::green);
 	case(MonsterType::VAMPIRE):					return make_tuple("vampire", 'V', TCODColor::lightRed);
 	case(MonsterType::VAMPIRE_PRINCE):			return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
 	case(MonsterType::VAMPIRE_SPAWN):			return make_tuple("Vampire spawn", 'v', TCODColor::red);
