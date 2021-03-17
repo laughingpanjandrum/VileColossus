@@ -437,3 +437,16 @@ void savegame::save_to_file(const string name, gamedataPtr gdata)
 	
 	f.close();
 }
+
+bool savegame::exists()
+{
+	const string fname = FILE_PATH + SAVE_FILE_DEFAULT_NAME;
+	ifstream f(fname, ios::in | ios::binary);
+	if (f.is_open())
+	{
+		f.close();
+		return true;
+	}
+	else
+		return false;
+}

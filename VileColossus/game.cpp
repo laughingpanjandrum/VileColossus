@@ -509,7 +509,7 @@ void game::processInput()
 		case(STATE_TITLE):
 			if (_ih->isKeyPressed(TCODK_1))
 				_gdata->_state = STATE_SELECT_MODE;
-			else if (_ih->isKeyPressed(TCODK_2))
+			else if (_ih->isKeyPressed(TCODK_2) && savegame::exists())
 				startFromSave();
 			break;
 		case(STATE_SELECT_MODE):

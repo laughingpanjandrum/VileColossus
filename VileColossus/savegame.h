@@ -51,4 +51,9 @@ namespace savegame
 	void save_to_file(ofstream& f, gamedataPtr gdata);
 	void save_to_file(const string name, gamedataPtr gdata);
 
+
+	//	Testing for existence of save file
+
+	bool exists();
+
 }

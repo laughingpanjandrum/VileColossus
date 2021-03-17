@@ -6,6 +6,7 @@
 #include "manageItems.h"
 #include "window.h"
 #include "gamedata.h"
+#include "savegame.h"
 #include "visibility.h"
 
 
