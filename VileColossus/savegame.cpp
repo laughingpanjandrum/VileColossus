@@ -49,6 +49,13 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	gdata->_gameProgress._killedHellboss = read_int(f);
 	gdata->_gameProgress._killedRotking = read_int(f);
 
+	gdata->_gameProgress._killedAmog = read_int(f);
+	gdata->_gameProgress._killedDogossa = read_int(f);
+	gdata->_gameProgress._killedSallowKing = read_int(f);
+	gdata->_gameProgress._killedColossus = read_int(f);
+
+	gdata->_gameProgress._abyssLevel = read_int(f);
+
 
 	////		EQUIPMENT			//
 	cout << " Loading equipped items..." << endl;
@@ -88,6 +95,7 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	read_item_list(f, &gdata->_stashedGems);
 	cout << " Loading material stash..." << endl;
 	read_item_list(f, &gdata->_stashedMaterials);
+	read_item_list(f, &gdata->_stashedRitualMaterials);
 	cout << " Loading stashed items..." << endl;
 	read_item_list(f, &gdata->_stashItems);
 		
@@ -350,8 +358,16 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 
 
 	//		GAME PROGRESS	//
+
 	serialize_int(f, gdata->_gameProgress._killedHellboss);
 	serialize_int(f, gdata->_gameProgress._killedRotking);
+
+	serialize_int(f, gdata->_gameProgress._killedAmog);
+	serialize_int(f, gdata->_gameProgress._killedDogossa);
+	serialize_int(f, gdata->_gameProgress._killedSallowKing);
+	serialize_int(f, gdata->_gameProgress._killedColossus);
+
+	serialize_int(f, gdata->_gameProgress._abyssLevel);
 
 
 
@@ -411,6 +427,11 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_size_t(f, gdata->_stashedMaterials.size());
 	cout << " Stashed materials: " << gdata->_stashedMaterials.size() << endl;
 	for (auto it : gdata->_stashedMaterials)
+		serialize_item(f, it);
+
+	serialize_size_t(f, gdata->_stashedRitualMaterials.size());
+	cout << " Stashed ritual materials: " << gdata->_stashedRitualMaterials.size() << endl;
+	for (auto it : gdata->_stashedRitualMaterials)
 		serialize_item(f, it);
 
 	serialize_size_t(f, gdata->_stashItems.size());

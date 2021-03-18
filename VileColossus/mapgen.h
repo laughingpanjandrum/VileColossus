@@ -18,6 +18,11 @@ namespace mapgen
 	{
 		int _killedRotking = 0;
 		int _killedHellboss = 0;
+		
+		int _killedDogossa = 0;
+		int _killedAmog = 0;
+		int _killedSallowKing = 0;
+		int _killedColossus = 0;
 
 		int _abyssLevel = 0;
 	};
