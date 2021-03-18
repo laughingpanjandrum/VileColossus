@@ -1375,9 +1375,7 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 	//	special treasures
 	addAbyssTreasures(m);
 	
-	//	stairs down
-	for (unsigned i = 0; i < 3; i++)
-		m->setTile(MT_ABYSSAL_GATE, getRandomForStairs(m));
+	//	return to hell temple
 	m->_startPt = getRandomForStairs(m);
 
 	return m;
@@ -1460,6 +1458,15 @@ int mapgen::rollMapDimension()
 	while (roll_percent(130 - sz))
 		sz += 5;
 	return sz;
+}
+
+
+//	Creates an abyssal map. Different types of maps are created depending on the ritual type selected.
+gridmapPtr mapgen::generate_Abyssal(int dl, MaterialType _ritualType)
+{
+	auto m = generate_OuterDark(dl, true);
+	m->updateTmap();
+	return m;
 }
 
 
@@ -1644,13 +1651,13 @@ gridmapPtr mapgen::generate_HellTemple()
 
 
 	//	DOWNWARD
-	m->setTile(MT_ABYSSAL_GATE, 11, 14);
+	//m->setTile(MT_ABYSSAL_GATE, 11, 14);
 
 
 	//	Other stuff
 	m->setTile(MT_STASH, 8, 10);
 	m->setTile(MT_DEMONFORGE, 10, 9);
-	m->setTile(MT_ABYSSAL_ALTAR, 11, 15);
+	m->setTile(MT_ABYSSAL_ALTAR, 12, 16);
 
 
 	//	Finish

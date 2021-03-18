@@ -6,8 +6,9 @@
 TODO
 
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
-
 	properly fit monster tags to screen
+
+	add ritual data and materials list to save games
 
 */
 
@@ -451,6 +452,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_stashedRitualMaterials.size());
 			else if (_ih->isKeyPressed(TCODK_ENTER))
 				selectRitualMaterial(_gdata);
+			else if (_ih->isKeyPressed('R'))
+				openAbyssGate(_gdata);
 			break;
 
 
@@ -743,6 +746,19 @@ void game::awaitDebugCommand()
 }
 
 
+//	Closes the portal and warps us to a special map type.
+void game::useAbyssalGate()
+{
+	_gdata->_map->setTile(MT_DRAINED_SHRINE, _gdata->_player->_pos);
+	_gdata->_map = mapgen::generate_Abyssal(17, _gdata->_ritualType);
+
+	messages::add(_gdata, "#You enter the Abyss!", { TCODColor::lightPurple });
+	auto pt = _gdata->_map->_startPt;
+	_gdata->_map->addCreature(_gdata->_player, pt);
+	setPlayerPosition(_gdata, pt);
+}
+
+
 //	Moves us between the home base and the hell temple.
 void game::useTemplePortal()
 {
@@ -786,7 +802,7 @@ void game::moveToNewMap(int vec)
 void game::tryUseStairs()
 {
 	auto tl = _gdata->_map->getTile(_gdata->_player->_pos);
-	if (tl == MT_STAIRS_DOWN || tl == MT_ABYSSAL_GATE)
+	if (tl == MT_STAIRS_DOWN)
 		moveToNewMap(1);
 	else if (tl == MT_STAIRS_UP)
 		moveToNewMap(-1);
@@ -800,6 +816,8 @@ void game::tryUseStairs()
 		moveToNewMap(-10);
 	else if (tl == MT_TEMPLE_PORTAL)
 		useTemplePortal();
+	else if (tl == MT_ABYSSAL_GATE)
+		useAbyssalGate();
 	else
 		messages::error(_gdata, "There are no stairs here!");
 }
@@ -817,6 +835,10 @@ void game::returnToHomeBase()
 	_gdata->_depth = 0;
 	_gdata->_player->healToMax();
 	_gdata->_state = STATE_NORMAL;
+
+	//	Clear current ritual, if any
+	_gdata->_ritualType = MaterialType::__NONE;
+	_gdata->_summonedViledragon = false;
 
 	//	Autosave
 	savegame::save_to_file(savegame::SAVE_FILE_DEFAULT_NAME, _gdata);

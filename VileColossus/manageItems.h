@@ -2,6 +2,7 @@
 
 #include "effects.h"
 #include "gamedata.h"
+#include "mapgen.h"
 
 
 
@@ -9,6 +10,8 @@
 
 void openRitualAltar(gamedataPtr gdata);
 void selectRitualMaterial(gamedataPtr gdata);
+
+void openAbyssGate(gamedataPtr gdata);
 
 
 
@@ -43,6 +46,7 @@ void toggleMarkedValuable(gamedataPtr gdata);
 int getCostToRepairEquipment(gamedataPtr gdata);
 
 bool hasMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
+bool spendMaterialFromList(gamedataPtr gdata, vector<itemPtr>* mlist, const MaterialType mtype, const int amt);
 void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
 
 void dismantleFromInventory(gamedataPtr gdata);

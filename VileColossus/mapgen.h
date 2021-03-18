@@ -174,6 +174,7 @@ namespace mapgen
 
 	int rollMapDimension();
 
+	gridmapPtr generate_Abyssal(int dl, MaterialType _ritualType);
 	gridmapPtr generate(int dl, game_progress* progress, bool descending = true);
 
 	void openHellPortal(gridmapPtr m);

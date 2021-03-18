@@ -40,7 +40,9 @@ public:
 
 	void awaitDebugCommand();
 
+	void useAbyssalGate();
 	void useTemplePortal();
+
 	void moveToNewMap(int vec);
 	void tryUseStairs();
 	void returnToHomeBase();

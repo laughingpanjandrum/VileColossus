@@ -4,13 +4,18 @@
 
 void openRitualAltar(gamedataPtr gdata)
 {
+	//	clear current ritual
+	gdata->_ritualType = MaterialType::__NONE;
+	gdata->_summonedViledragon = false;
+
+	//	open the menu
 	gdata->_idx = 0;
 	gdata->_state = STATE_RITUAL_ALTAR;
 	autodepositMaterials(gdata);
 }
 
 
-
+//	Add a material to the selected ritual.
 void selectRitualMaterial(gamedataPtr gdata)
 {
 	if (gdata->_idx < gdata->_stashedRitualMaterials.size())
@@ -21,6 +26,25 @@ void selectRitualMaterial(gamedataPtr gdata)
 		else
 			gdata->_ritualType = it->_material;
 	}
+}
+
+
+//	Completes the current ritual and opens an abyssal gate.
+void openAbyssGate(gamedataPtr gdata)
+{
+	//	Expend materials.
+	if (gdata->_ritualType != MaterialType::__NONE)
+		spendMaterial(gdata, gdata->_ritualType, 1);
+	if (gdata->_summonedViledragon)
+		spendMaterial(gdata, MaterialType::VILEDRAGON_SCALE, 1);
+
+	//	Open the portal.
+	gdata->_map->setTile(MT_ABYSSAL_GATE, 11, 14);
+
+	//	Flavour.
+	addAnimation(gdata, anim_Explosion(intpair(11, 14), 1, '*', TCODColor::purple));
+	messages::add(gdata, "#* OPENED ABYSSAL GATE *", { COLOR_WHITE });
+	gdata->_state = STATE_NORMAL;
 }
 
 
@@ -432,17 +456,29 @@ bool hasMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt)
 }
 
 
-//	Attempts to expend the given amount of stashed material.
-void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt)
+//	Returns True if we found the item in the list.
+bool spendMaterialFromList(gamedataPtr gdata, vector<itemPtr>* mlist, const MaterialType mtype, const int amt)
 {
-	for (auto m : gdata->_stashedMaterials)
+	for (auto m : *mlist)
 	{
 		if (m->_material == mtype)
 		{
 			m->_amountLeft -= amt;
-			return;
+			if (m->_amountLeft <= 0)
+				mlist->erase(find(mlist->begin(), mlist->end(), m));
+			return true;
 		}
 	}
+	return false;
+}
+
+
+//	Attempts to expend the given amount of stashed material.
+void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt)
+{
+	bool found = spendMaterialFromList(gdata, &gdata->_stashedMaterials, mtype, amt);
+	if (!found)
+		spendMaterialFromList(gdata, &gdata->_stashedRitualMaterials, mtype, amt);
 }
 
 
