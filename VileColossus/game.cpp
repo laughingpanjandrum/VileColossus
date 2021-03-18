@@ -9,7 +9,6 @@ TODO
 	properly fit monster tags to screen
 
 	add 'scrap all' button
-	reduce health enchant values a bit
 
 */
 
