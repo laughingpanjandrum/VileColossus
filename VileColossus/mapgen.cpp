@@ -1343,26 +1343,6 @@ void mapgen::addAbyssTreasures(gridmapPtr m)
 		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 }
 
-
-void mapgen::abyss_Tomb(gridmapPtr m, TCODBsp* n, int dl)
-{
-	scatterTile(m, MT_TOMBSTONE, n->x, n->y, n->w, n->h, 0.01);
-	scatterSurface(m, Surface::CORPSE, n->x, n->y, n->w, n->h, 0.15);
-	scatterSurface(m, Surface::BONES, n->x, n->y, n->w, n->h, 0.15);
-}
-
-void mapgen::abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl)
-{
-	fillRegion(m, MT_WALL_ICE, n->x + 1, n->y + 1, n->w - 2, n->h - 2);
-	fillRegion(m, MT_WATER, n->x + 3, n->y + 3, n->w - 5, n->h - 5);
-
-	const int mx = n->x + n->w / 2 - 1;
-	const int my = n->y + n->h / 2 - 1;
-	fillRegion(m, MT_FLOOR_CARPET, mx, n->y, 2, n->h);
-	fillRegion(m, MT_FLOOR_CARPET, n->x, my, n->w, 2);
-}
-
-
 //	COURT OF THE DROWNED GOD
 gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 {
@@ -1385,13 +1365,14 @@ gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 	return m;
 }
 
+//	FLESH OF AMOG
 gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 {
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_WALL_FLESH });
 	m->_name = "Flesh of Amog [Level " + to_string(abyss_lvl) + "]";
 
-	vector<Maptile> tiles = { MT_BLOOD_POOL, MT_BLOOD_POOL, MT_FLOOR_STONE, MT_FLOOR_STONE2 };
+	const vector<Maptile> tiles = { MT_BLOOD_POOL, MT_BLOOD_POOL, MT_FLOOR_STONE, MT_FLOOR_STONE2 };
 
 	//	carve out floors
 	vector<intpair> pts;
@@ -1421,6 +1402,47 @@ gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 	}
 
 	scatterTileOnWalkable(m, MT_TOMBSTONE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.05);
+
+	addAbyssTreasures(m);
+	return m;
+}
+
+
+//	LOST VIRIDIA
+gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
+{
+	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	fillMap(m, { MT_WATER, MT_WATER, MT_WATER, MT_FLOOR_VOID });
+	m->_name = "Lost Viridia [Level " + to_string(abyss_lvl) + "]";
+
+	auto nodes = createNodeMap(m);
+	for (auto n : nodes)
+	{
+		const int r = randint(1, 4);
+		if (r == 1)
+		{
+			scatterTile(m, MT_TREE_DEAD, n->x, n->y, n->w, n->h, 0.05);
+			scatterTile(m, MT_GRASS, n->x, n->y, n->w, n->h, 0.05);
+			scatterTile(m, MT_STATUE_MARBLE, n->x, n->y, n->w, n->h, 0.03);
+		}
+		else if (r == 2)
+		{
+			fillRegion(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_BUSH, MT_GRASS }, n->x + 2, n->y + 2, n->w - 4, n->h - 4);
+		}
+		else if (r != 4)
+		{
+			unsigned cx = n->x + n->w / 2;
+			unsigned cy = n->y + n->h / 2;
+			
+			fillRegion(m, MT_WALL_ICE, n->x, n->y, n->w, n->h);
+			fillRegion(m, MT_FLOOR_VOID, n->x + 2, n->y + 2, n->w - 3, n->h - 3);
+			
+			const int w = 3;
+			fillRegion(m, MT_FLOOR_CARPET, cx - 1, n->y, w, n->h);
+			fillRegion(m, MT_FLOOR_CARPET, n->x, cy - 1, n->w, w);
+			fillRegion(m, MT_FLOOR_CARPET, cx - 2, cy - 2, 5, 5);
+		}
+	}
 
 	addAbyssTreasures(m);
 	return m;
@@ -1544,8 +1566,9 @@ gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, MaterialType _ritualType)
 	//	Ritual type determines map generator.
 	switch (_ritualType)
 	{
-	case(MaterialType::SODDEN_FLESH):		m = generate_DrownedCourt(abyss_lvl); break;
-	case(MaterialType::TOMB_IDOL):			m = generate_AmogTomb(abyss_lvl); break;
+	case(MaterialType::SODDEN_FLESH):	m = generate_DrownedCourt(abyss_lvl); break;
+	case(MaterialType::TOMB_IDOL):		m = generate_AmogTomb(abyss_lvl); break;
+	case(MaterialType::VIRIDIAN_GLASS):	m = generate_Viridia(abyss_lvl); break;
 	default:
 		m = generate_OuterDark(abyss_lvl, true);
 	}
@@ -1582,8 +1605,8 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 
 	//	Cathedral maps from the early game
 	else
-		m = generate_Abyssal(0, MaterialType::TOMB_IDOL);
-		//m = generate_Cathedral(dl, descending);
+		//m = generate_Abyssal(0, MaterialType::VIRIDIAN_GLASS);
+		m = generate_Cathedral(dl, descending);
 
 
 	//	Map exterior is always filled with indestructible walls.
