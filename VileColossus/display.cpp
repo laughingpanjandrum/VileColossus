@@ -510,6 +510,7 @@ void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
 	if (mon->hasFlag("minion"))				flag_txt += "[Minion] ";
 	if (mon->hasFlag("berserker"))			flag_txt += "[Berserker] ";
 	if (mon->hasFlag("slow"))				flag_txt += "[Slow] ";
+	if (mon->hasFlag("fast"))				flag_txt += "[Flag] ";
 	if (mon->hasFlag("teleports"))			flag_txt += "[Teleports] ";
 	if (mon->hasFlag("ethereal"))			flag_txt += "[Ethereal] ";
 	if (mon->hasFlag("arcane_attack"))		flag_txt += "[Arcane Attack] ";
@@ -520,7 +521,10 @@ void display::drawMonsterSummary(gamedataPtr gdata, monsterPtr mon)
 	if (mon->hasFlag("casts_arcane_bolt"))	flag_txt += "[Casts Arcane Bolt] ";
 	if (mon->hasFlag("casts_firebolt"))		flag_txt += "[Casts Firebolt] ";
 	if (mon->hasFlag("casts_fireblast"))	flag_txt += "[Casts Fireblast] ";
+	if (mon->hasFlag("casts_firestorm"))	flag_txt += "[Conjures Firestorms] ";
+	if (mon->hasFlag("casts_ice_wall"))		flag_txt += "[Conjures ICe Walls] ";
 	if (mon->hasFlag("casts_lightning"))	flag_txt += "[Casts Lightning] ";
+	if (mon->hasFlag("casts_poison_spit"))	flag_txt += "[Spits Poison] ";
 	if (mon->hasFlag("spit_sludge"))		flag_txt += "[Spits Sludge] ";
 	_win.write(x + 2, y, flag_txt, COLOR_DARK);
 
