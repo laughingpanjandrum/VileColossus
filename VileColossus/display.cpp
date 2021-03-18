@@ -2235,16 +2235,25 @@ void display::drawRitualAltar(gamedataPtr gdata)
 	int y = 4;
 	for (unsigned i = 0; i < gdata->_stashedRitualMaterials.size(); i++)
 	{
+		//	material type
 		auto selected = i == gdata->_idx;
 		auto it = gdata->_stashedRitualMaterials[i];
 		if (selected)
 			_win.write(5, y, it->getName(), COLOR_BLACK, it->getColor());
 		else
 			_win.write(4, y, it->getName(), it->getColor());
-		y++;
 
+		//	mark if being used
+		if (it->_material == gdata->_ritualType)
+			_win.writec(3, y, '*', COLOR_WHITE);
+		else if (it->_material == MaterialType::VILEDRAGON_SCALE && gdata->_summonedViledragon)
+			_win.writec(3, y, '+', COLOR_WHITE);
+
+		//	material description
 		if (selected)
 			_win.writeWrapped(4, 15, 35, getRitualDescription(it->_material), COLOR_DARK);
+
+		y++;
 	}
 
 
@@ -2265,10 +2274,10 @@ void display::drawRitualAltar(gamedataPtr gdata)
 	default:
 		mcol = TCODColor::lightBlue;
 	}
-	_win.write(46, y, mtxt, mcol);
+	_win.write(47, y, mtxt, mcol);
 
 	//	description of ritual
-	y = _win.writeWrapped(47, ++y, 35, getRitualDescription(gdata->_ritualType), COLOR_MEDIUM);
+	y = _win.writeWrapped(48, ++y, 35, getRitualDescription(gdata->_ritualType), COLOR_MEDIUM);
 	if (gdata->_summonedViledragon)
 		_win.write(47, y + 2, "SUMMONING VILEDRAGON", TCODColor::crimson);
 
