@@ -8,8 +8,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
-	add 'scrap all' button
-
 */
 
 
@@ -403,6 +401,8 @@ void game::processInput()
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_currentItemList.size());
 			else if (_ih->isKeyPressed('D'))
 				dismantleFromInventory(_gdata);
+			else if (_ih->isKeyPressed('A'))
+				dismantleAll(_gdata);
 			else if (_ih->isKeyPressed('r'))
 				tryRepairSelected(_gdata);
 			else if (_ih->isKeyPressed('v'))

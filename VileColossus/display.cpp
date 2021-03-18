@@ -982,9 +982,10 @@ void display::drawAnvil(gamedataPtr gdata)
 		if (repair_cost > 0)
 			writeFormatted(47, 24, "#r @Repair for #" + to_string(repair_cost) + " @fragments", { COLOR_LIGHT, TCODColor::gold });
 
-		//	Annihilate?
-		writeFormatted(47, 26, "#D @Dismantle for materials", { COLOR_LIGHT });
-		//writeFormatted(47, 28, "#x @Extract enchantments", { COLOR_LIGHT });
+		//	Other options
+		writeFormatted(47, 25, "#M @Mark or unmark", { COLOR_LIGHT });
+		writeFormatted(47, 27, "#D @Dismantle for materials", { COLOR_LIGHT });
+		writeFormatted(47, 28, "#A @Dismantle all unmarked items", { COLOR_LIGHT });
 	}
 
 

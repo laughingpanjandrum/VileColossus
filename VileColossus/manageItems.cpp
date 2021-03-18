@@ -482,6 +482,77 @@ void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt)
 }
 
 
+//	Dismantles all unmarked items in our inventory.
+void dismantleAll(gamedataPtr gdata)
+{
+	//	Make a list of items to dismantle (we need a copy b/c items are removed from lists when dismantled)
+	vector<itemPtr> dismantle;
+	for (auto it : gdata->_carriedItems)
+	{
+		if (!it->_markedAsValuable)
+			dismantle.push_back(it);
+	}
+
+	//	Now dismantle them.
+	for (auto it : dismantle)
+		dismantleItem(gdata, it);
+}
+
+
+//	Dismantle a particular item.
+void dismantleItem(gamedataPtr gdata, itemPtr it)
+{
+	//	Amount/type of parts depend on the item.
+	int fragments = dieRoll(3, 4 + 2 * it->_rarity);
+	addToStash(gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, fragments));
+
+	//	Higher-tier and type-based stuff
+	if (it->_rarity > 1)
+		addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
+	if (it->_rarity > 2)
+		addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
+	if (it->_rarity > 3)
+		addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
+
+	//	Flask components
+	/*if (it->_category == ITEM_FLASK)
+		addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));*/
+
+		//	Spellrune components
+	else if (it->_category == ITEM_SPELLRUNE)
+	{
+		addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
+		if (it->_spellLevel >= 10)
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
+	}
+
+	//	Save any gems in the item.
+	auto gems = it->getAllSocketedGemTypes();
+	for (unsigned i = 0; i < gems->size(); i++)
+	{
+		if (gems->at(i) != GemType::__NONE)
+		{
+			auto lvl = it->getSocketLevel(i);
+			addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
+		}
+	}
+
+	//	Learn its enchants, if any
+	for (auto en : *it->getAllEnchantments())
+	{
+		if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
+		{
+			messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
+			learnEnchantment(gdata, en);
+		}
+	}
+
+	//	Destroy the item.
+	removeFromInventory(gdata, it);
+	removeFromCurrentItemList(gdata, it);
+}
+
+
 //	Take apart an item to get parts back.
 void dismantleFromInventory(gamedataPtr gdata)
 {
@@ -499,54 +570,7 @@ void dismantleFromInventory(gamedataPtr gdata)
 		
 		else
 		{
-			//	Amount/type of parts depend on the item.
-			int fragments = dieRoll(3, 4 + 2 * it->_rarity);
-			addToStash(gdata, lootgen::generateMaterial(MaterialType::FRAGMENTS, fragments));
-
-			//	Higher-tier and type-based stuff
-			if (it->_rarity > 1)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::MAGIC_DUST, randint(4, 9)));
-			if (it->_rarity > 2)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, randint(4, 9)));
-			if (it->_rarity > 3)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
-
-			//	Flask components
-			/*if (it->_category == ITEM_FLASK)
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::GLASS_SHARD, it->_rarity + 1));*/
-
-			//	Spellrune components
-			else if (it->_category == ITEM_SPELLRUNE)
-			{
-				addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
-				if (it->_spellLevel >= 10)
-					addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
-			}
-
-			//	Save any gems in the item.
-			auto gems = it->getAllSocketedGemTypes();
-			for (unsigned i = 0; i < gems->size(); i++)
-			{
-				if (gems->at(i) != GemType::__NONE)
-				{
-					auto lvl = it->getSocketLevel(i);
-					addToStash(gdata, lootgen::generateGemOfType(gems->at(i), lvl, 1));
-				}
-			}
-
-			//	Learn its enchants, if any
-			for (auto en : *it->getAllEnchantments())
-			{
-				if (!knowsEnchantmentType(gdata, en) && canLearnEnchantment(gdata, en))
-				{
-					messages::add(gdata, "Learned enchantment type: #" + getItemEnchantmentName(en), { COLOR_WHITE });
-					learnEnchantment(gdata, en);
-				}
-			}
-
-			//	Destroy the item.
-			removeFromInventory(gdata, it);
-			removeFromCurrentItemList(gdata, it);
+			dismantleItem(gdata, it);
 		}
 	}
 }

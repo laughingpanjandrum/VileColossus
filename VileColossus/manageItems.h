@@ -49,7 +49,10 @@ bool hasMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
 bool spendMaterialFromList(gamedataPtr gdata, vector<itemPtr>* mlist, const MaterialType mtype, const int amt);
 void spendMaterial(gamedataPtr gdata, const MaterialType mtype, const int amt);
 
+void dismantleAll(gamedataPtr gdata);
+void dismantleItem(gamedataPtr gdata, itemPtr it);
 void dismantleFromInventory(gamedataPtr gdata);
+
 void learnEnchantment(gamedataPtr gdata, const ItemEnchantment en);
 bool doesItemHaveUnknownEnchants(gamedataPtr gdata, itemPtr it);
 
