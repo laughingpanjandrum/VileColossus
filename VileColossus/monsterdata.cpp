@@ -576,3 +576,26 @@ monsterPtr monsterdata::generate(MonsterType id, int level)
 
 	return mon;
 }
+
+
+//	Generates a unique abyssal boss.
+monsterPtr monsterdata::generate_AbyssLord(int level)
+{
+	auto mon = monsterPtr(new monster("ABYSSAL LORD", 'A', TCODColor::lightPurple, level, 4, MonsterType::BOSS_ABYSS_LORD));
+
+	//	Choices of additional flags.
+	vector<string> flags = { "more_health", "defended", "protected" };
+	mon->addFlag(flags[randrange(flags.size())]);
+
+	flags = { "arcane_attack", "electric_attack", "fire_attack", "poison_attack" };
+	mon->addFlag(flags[randrange(flags.size())]);
+
+	flags = { "more_damage", "fast", "ranged_attack" };
+	mon->addFlag(flags[randrange(flags.size())]);
+
+	flags = { "casts_arcane_bolt", "casts_firebolt", "casts_lightning", "casts_poison_spit" };
+	mon->addFlag(flags[randrange(flags.size())]);
+
+	mon->addFlag("abysslord");
+	return mon;
+}

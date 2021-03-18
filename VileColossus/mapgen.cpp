@@ -1354,16 +1354,17 @@ void mapgen::abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl)
 
 
 //	Weird void maps
-gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
+gridmapPtr mapgen::generate_OuterDark(int abyss_lvl, bool descending)
 {
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_FLOOR_VOID });
 	scatterOnMap(m, MT_WALL_ICE, 0.05);
 	scatterOnMap(m, MT_WATER, 0.05);
-	m->_name = "The Outer Dark [Depth " + to_string(dl) + "]";
+	m->_name = "The Outer Dark [Level " + to_string(abyss_lvl) + "]";
 
 	
 	//	Abyssal monsters
+	const int dl = abyss_lvl + ABYSS_LEVEL_BASE;
 	auto nodes = createNodeMap(m);
 	vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
 	for (auto n : nodes)
@@ -1371,6 +1372,10 @@ gridmapPtr mapgen::generate_OuterDark(int dl, bool descending)
 		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
 		addMonsterGroupToNode(m, &mlist, n);
 	}
+
+	//	Special boss.
+	auto boss = monsterdata::generate_AbyssLord(dl * 2);
+	m->addCreature(boss, getRandomSafe(m));
 
 	//	special treasures
 	addAbyssTreasures(m);
@@ -1462,9 +1467,9 @@ int mapgen::rollMapDimension()
 
 
 //	Creates an abyssal map. Different types of maps are created depending on the ritual type selected.
-gridmapPtr mapgen::generate_Abyssal(int dl, MaterialType _ritualType)
+gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, MaterialType _ritualType)
 {
-	auto m = generate_OuterDark(dl, true);
+	auto m = generate_OuterDark(abyss_lvl, true);
 	m->updateTmap();
 	return m;
 }

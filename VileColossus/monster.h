@@ -53,6 +53,8 @@ enum class MonsterType
 	STAR_VAMPIRE,
 	TENTACLE_HORROR, TENTACLE,
 
+	BOSS_ABYSS_LORD,
+
 
 	__NONE,
 };

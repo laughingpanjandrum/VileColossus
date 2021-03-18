@@ -148,6 +148,14 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 			}
 		}
 	}
+
+
+	//	Abyssal lords drop ritual materials.
+	if (target->hasFlag("abysslord"))
+	{
+		auto it = lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1);
+		gdata->_map->addItem(it, pts[randrange(pts.size())]);
+	}
 }
 
 

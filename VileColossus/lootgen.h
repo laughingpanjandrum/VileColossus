@@ -126,4 +126,6 @@ namespace lootgen
 	const int rollTier(const int maxTier);
 	itemPtr rollItemDrop(const int maxTier, const int bestRarityAllowed, bool forceRarity = false);
 
+	MaterialType rollRitualMaterial();
+
 }

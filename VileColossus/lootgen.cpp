@@ -1035,3 +1035,18 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bo
 
 	return it;
 }
+
+
+//	Returns a random ritual material.
+MaterialType lootgen::rollRitualMaterial()
+{
+	const int r = randint(1, 3);
+	switch (r)
+	{
+	case(1):	return MaterialType::SODDEN_FLESH;
+	case(2):	return MaterialType::TOMB_IDOL;
+	case(3):	return MaterialType::VIRIDIAN_GLASS;
+	default:
+		return MaterialType::__NONE;
+	}
+}

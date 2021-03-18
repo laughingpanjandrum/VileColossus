@@ -750,7 +750,7 @@ void game::awaitDebugCommand()
 void game::useAbyssalGate()
 {
 	_gdata->_map->setTile(MT_DRAINED_SHRINE, _gdata->_player->_pos);
-	_gdata->_map = mapgen::generate_Abyssal(17, _gdata->_ritualType);
+	_gdata->_map = mapgen::generate_Abyssal(_gdata->_gameProgress._abyssLevel, _gdata->_ritualType);
 
 	messages::add(_gdata, "#You enter the Abyss!", { TCODColor::lightPurple });
 	auto pt = _gdata->_map->_startPt;

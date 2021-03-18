@@ -42,6 +42,7 @@ TABLE OF ALL MONSTER FLAGS
 	casts_firestorm			Like the player spell.
 	casts_ice_wall			Surround target with ice.
 	casts_lightning			Ranged electric damage.
+	casts_poison_spit		Ranged poison damage + poison pool.
 	spit_sludge				Hurls sludge pools.
 	throws_bones			Ranged attack that can spawn a skull.
 
@@ -85,5 +86,6 @@ namespace monsterdata
 
 	//	Creating monsters
 	monsterPtr generate(MonsterType id, int level);
+	monsterPtr generate_AbyssLord(int level);
 
 }

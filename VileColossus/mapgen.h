@@ -11,10 +11,15 @@
 namespace mapgen
 {
 
+	const int ABYSS_LEVEL_BASE = 16;
+
+
 	struct game_progress
 	{
 		int _killedRotking = 0;
 		int _killedHellboss = 0;
+
+		int _abyssLevel = 0;
 	};
 
 	struct metanode
@@ -174,7 +179,7 @@ namespace mapgen
 
 	int rollMapDimension();
 
-	gridmapPtr generate_Abyssal(int dl, MaterialType _ritualType);
+	gridmapPtr generate_Abyssal(int abyss_lvl, MaterialType _ritualType);
 	gridmapPtr generate(int dl, game_progress* progress, bool descending = true);
 
 	void openHellPortal(gridmapPtr m);
