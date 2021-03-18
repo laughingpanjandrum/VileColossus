@@ -8,7 +8,9 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
-	add ritual data and materials list to save games
+	prevent tier-4 monsters spawning below level ?4?ish?
+	add 'scrap all' button
+	reduce health enchant values a bit
 
 */
 

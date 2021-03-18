@@ -942,8 +942,8 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 //	3 tiers of items; better ones drop at higher levels
 int lootgen::getLootTierForMonsterLevel(const int lvl)
 {
-	if		(lvl < 12)	return 1;
-	else if (lvl < 24)	return 2;
+	if		(lvl < 14)	return 1;
+	else if (lvl < 28)	return 2;
 	else				return 3;
 }
 
@@ -964,9 +964,9 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 const int lootgen::rollRarity(const int maxRarity)
 {
 	int r = randint(1, 100);
-	if (r <= 5 && maxRarity > 3)
+	if (r <= 3 && maxRarity > 3)
 		return 4;
-	else if (r <= 20 && maxRarity > 2)
+	else if (r <= 15 && maxRarity > 2)
 		return 3;
 	else if (r <= 50 && maxRarity > 1)
 		return 2;
