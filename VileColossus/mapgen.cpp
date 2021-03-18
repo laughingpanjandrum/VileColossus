@@ -640,7 +640,7 @@ void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptio
 	}
 
 	//	Chance of miniboss
-	if (!roll_one_in(3))
+	if (!roll_one_in(3) && dl > 2)
 	{
 		auto boss_id = monsterdata::rollMinibossForLevel(dl);
 		if (boss_id != MonsterType::__NONE)
@@ -648,7 +648,7 @@ void mapgen::addMonsters(gridmapPtr m, int dl, const vector<TCODBsp*>* nodeOptio
 	}
 
 	//	Chance of BOSS
-	else if (roll_one_in(3) && dl > 1)
+	else if (roll_one_in(3) && dl > 4)
 	{
 		auto boss_id = monsterdata::rollBossForLevel(dl);
 		if (boss_id != MonsterType::__NONE)
