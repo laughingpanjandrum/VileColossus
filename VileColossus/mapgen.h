@@ -113,6 +113,8 @@ namespace mapgen
 	void addLake(gridmapPtr m, intpair ctr, int r, Maptile inner, Maptile outer);
 	void walkingTile(gridmapPtr m, const intpair start, int count, Maptile tl);
 
+	vector<intpair> getAdjacentOfType(gridmapPtr m, const intpair ctr, const Maptile tl);
+
 
 	//		Monsters.
 
@@ -162,10 +164,11 @@ namespace mapgen
 
 	void addAbyssTreasures(gridmapPtr m);
 
-	void abyss_DrownedCourt(gridmapPtr m, TCODBsp* n, int dl);
 	void abyss_Tomb(gridmapPtr m, TCODBsp* n, int dl);
 	void abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl);
 
+	gridmapPtr generate_DrownedCourt(int dl);
+	gridmapPtr generate_AmogTomb(int dl);
 	gridmapPtr generate_OuterDark(int dl, bool descending);
 
 

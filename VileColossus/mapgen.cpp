@@ -105,7 +105,7 @@ intpair mapgen::getRandomInCircle(gridmapPtr m, intpair ctr, int r)
 //	Returns true if the Maptile is considered 'safe' & thus eligible for items, stairs, etcs
 bool mapgen::isSafeTile(const Maptile tl)
 {
-	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS || tl == MT_SAND || tl == MT_FLOOR_HOT || tl == MT_FLOOR_VOID;
+	return tl == MT_FLOOR_STONE || tl == MT_BUSH || tl == MT_FLOOR_CARPET || tl == MT_FLOOR_STONE2 || tl == MT_GRASS || tl == MT_SAND || tl == MT_FLOOR_HOT || tl == MT_FLOOR_VOID || tl == MT_BLOOD_POOL;
 }
 
 //	A random point that is some type of 'safe' floor-type tile: ie no surface, no deep water, etc
@@ -542,6 +542,22 @@ void mapgen::walkingTile(gridmapPtr m, const intpair start, int count, Maptile t
 			tries--;
 		} while (pt == last || !m->inBounds(pt));
 	}
+}
+
+
+//	Returns points adjacent to the given point (NOT including the central point) that match the given tile.
+vector<intpair> mapgen::getAdjacentOfType(gridmapPtr m, const intpair ctr, const Maptile tl)
+{
+	vector<intpair> pts;
+	for (int x = ctr.first - 1; x <= ctr.first + 1; x++)
+	{
+		for (int y = ctr.second - 1; y <= ctr.second + 1; y++)
+		{
+			if (m->inBounds(x, y) && !(x == ctr.first && y == ctr.second) && m->getTile(x, y) == tl)
+				pts.push_back(intpair(x, y));
+		}
+	}
+	return pts;
 }
 
 
@@ -1327,11 +1343,6 @@ void mapgen::addAbyssTreasures(gridmapPtr m)
 		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 }
 
-void mapgen::abyss_DrownedCourt(gridmapPtr m, TCODBsp* n, int dl)
-{
-	fillRegion(m, { MT_WATER, MT_WATER, MT_BUSH, MT_GRASS, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_CARPET }, n->x, n->y, n->w, n->h);
-	scatterSurface(m, Surface::SLUDGE, n->x, n->y, n->w, n->h, 0.05);
-}
 
 void mapgen::abyss_Tomb(gridmapPtr m, TCODBsp* n, int dl)
 {
@@ -1351,6 +1362,69 @@ void mapgen::abyss_ViridianPalace(gridmapPtr m, TCODBsp* n, int dl)
 	fillRegion(m, MT_FLOOR_CARPET, n->x, my, n->w, 2);
 }
 
+
+//	COURT OF THE DROWNED GOD
+gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
+{
+	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	fillMap(m, { MT_WATER, MT_WATER, MT_BUSH, MT_GRASS, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_CARPET });
+	m->_name = "The Drowned Deep [Level " + to_string(abyss_lvl) + "]";
+
+	for (unsigned x = 3; x < m->_xsize - 4; x += 3)
+	{
+		for (unsigned y = 3; y <= m->_ysize - 4; y += 3)
+		{
+			const int r = randint(1, 3);
+			if		(r == 1)	m->setTile(MT_WALL_STONE, x, y);
+			else if (r == 2)	m->setTile(MT_WALL_BLOODY, x, y);
+		}
+	}
+	scatterSurface(m, Surface::SLUDGE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.1);
+
+	addAbyssTreasures(m);
+	return m;
+}
+
+gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
+{
+	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	fillMap(m, { MT_WALL_FLESH });
+	m->_name = "Flesh of Amog [Level " + to_string(abyss_lvl) + "]";
+
+	vector<Maptile> tiles = { MT_BLOOD_POOL, MT_BLOOD_POOL, MT_FLOOR_STONE, MT_FLOOR_STONE2 };
+
+	//	carve out floors
+	vector<intpair> pts;
+	auto at = intpair(m->_xsize / 2, m->_ysize / 2);
+	m->setTile(MT_BLOOD_POOL, at);
+	pts.push_back(at);
+	int count = 1000;
+	while (count-- > 0 && !pts.empty())
+	{
+		//	get adjacent points that are walls
+		auto adj = getAdjacentOfType(m, at, MT_WALL_FLESH);
+
+		//	if there are no adjacent walls, back up to the previous point.
+		if (adj.empty())
+		{
+			at = pts.back();
+			pts.pop_back();
+		}
+
+		//	otherwise, pick one at random and clear it.
+		else
+		{
+			at = adj[randrange(adj.size())];
+			m->setTile(tiles[randrange(tiles.size())], at);
+			pts.push_back(at);
+		}
+	}
+
+	scatterTileOnWalkable(m, MT_TOMBSTONE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.05);
+
+	addAbyssTreasures(m);
+	return m;
+}
 
 
 //	Weird void maps
@@ -1379,10 +1453,6 @@ gridmapPtr mapgen::generate_OuterDark(int abyss_lvl, bool descending)
 
 	//	special treasures
 	addAbyssTreasures(m);
-	
-	//	return to hell temple
-	m->_startPt = getRandomForStairs(m);
-
 	return m;
 }
 
@@ -1469,7 +1539,18 @@ int mapgen::rollMapDimension()
 //	Creates an abyssal map. Different types of maps are created depending on the ritual type selected.
 gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, MaterialType _ritualType)
 {
-	auto m = generate_OuterDark(abyss_lvl, true);
+	gridmapPtr m;
+
+	//	Ritual type determines map generator.
+	switch (_ritualType)
+	{
+	case(MaterialType::SODDEN_FLESH):		m = generate_DrownedCourt(abyss_lvl); break;
+	case(MaterialType::TOMB_IDOL):			m = generate_AmogTomb(abyss_lvl); break;
+	default:
+		m = generate_OuterDark(abyss_lvl, true);
+	}
+
+	m->_startPt = getRandomForStairs(m);
 	m->updateTmap();
 	return m;
 }
@@ -1501,8 +1582,8 @@ gridmapPtr mapgen::generate(int dl, game_progress* progress, bool descending)
 
 	//	Cathedral maps from the early game
 	else
-		//m = generate_OuterDark(dl, descending);
-		m = generate_Cathedral(dl, descending);
+		m = generate_Abyssal(0, MaterialType::TOMB_IDOL);
+		//m = generate_Cathedral(dl, descending);
 
 
 	//	Map exterior is always filled with indestructible walls.
