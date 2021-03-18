@@ -195,7 +195,6 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 	switch (en)
 	{
 	case(ENCH_CAPACITY):
-	case(ENCH_LIGHT):
 	case(ENCH_MAGIC):
 	case(ENCH_MAGIC_RESTORE):
 	case(ENCH_MANALEECH):
@@ -206,8 +205,12 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 	case(ENCH_ARMOURING):
 	case(ENCH_BURNING):
 	case(ENCH_DEFENCE):
+	case(ENCH_HASTE):
 	case(ENCH_LIGHTNING):
+	case(ENCH_RAGE):
+	case(ENCH_STONESKIN):
 	case(ENCH_VENOM):
+	case(ENCH_WRATH):
 		return 2;
 
 	case(ENCH_ARCANE):
@@ -218,13 +221,10 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
-	case(ENCH_HASTE):
 	case(ENCH_POISON_WARD):
-	case(ENCH_RAGE):
 	case(ENCH_REGEN):
 	case(ENCH_RESISTANCE):
 	case(ENCH_SPELLWARD):
-	case(ENCH_STONESKIN):
 	case(ENCH_STORMWARD):
 		return 5;
 
@@ -237,7 +237,6 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 		
 	case(ENCH_CHARGING):
 	case(ENCH_EMPOWERING):
-	case(ENCH_WRATH):
 		return 20;
 
 	case(ENCH_GREED):
