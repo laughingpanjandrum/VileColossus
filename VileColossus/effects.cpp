@@ -150,14 +150,14 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		else if (target->_tier == 3 && roll_one_in(2))
 			gems = randint(1, 2);
 		else if (target->_tier == 4)
-			gems = randint(2, 3);
+			gems = randint(1, 3);
 		else if (target->_tier == 5)
-			gems = randint(3, 5);
+			gems = randint(1, 4);
 
 		//	generate the gems
 		while (gems-- > 0)
 		{
-			auto tier = lootgen::getGemTierForMonsterLevel(target->_level);
+			auto tier = randint(1, lootgen::getGemTierForMonsterLevel(target->_level));
 			if (tier >= 0)
 			{
 				auto it = lootgen::generateGem(tier, 1);
@@ -300,10 +300,11 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 
 
 	//	And GEM(s)?
-	if (quality > 1)
+	if (quality > 1 && roll_one_in(4))
 	{
 		amt = randint(1, quality);
-		auto it = lootgen::generateGem(lootgen::getGemTierForMonsterLevel(6 + quality * 6), 1);
+		const int gtier = randint(1, lootgen::getGemTierForMonsterLevel(6 + quality * 6));
+		auto it = lootgen::generateGem(gtier, 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 }
