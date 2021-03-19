@@ -206,12 +206,19 @@ int player::getCriticalChance() const
 {
 	int total = getEquipmentPropertySum(PROP_CRITICAL_CHANCE);
 	total += getTotalEnchantmentBonus(ENCH_SHARPNESS);
+
+	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 10;
+	
 	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE);
+	
 	if (getVisionRadius() <= 6)
 		total += getTotalEnchantmentBonus(ENCH_SHADOWSTRIKE);
+	
 	if (hasBuff(BUFF_WRATH))
 		total += getTotalEnchantmentBonus(ENCH_DERVISH);
+	
 	total += getBuffDuration(BUFF_CRIT_BONUS);
+	
 	return total;
 }
 
@@ -227,7 +234,7 @@ int player::getCriticalMultiplier() const
 	//	Other adjustments.
 	total += getTotalEnchantmentBonus(ENCH_SLAYING);
 	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 25;
-	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
+	//total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
 
 	//	Additional adjust from special enchants
 	if (getTotalEnchantmentBonus(ENCH_AVARICE) > 0)

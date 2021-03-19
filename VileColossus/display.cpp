@@ -630,8 +630,8 @@ void display::drawAttributePoints(gamedataPtr gdata)
 				drawStatWithBox(rx, ry + 3, to_string(p->getDefenceValue()), "Defence Value", COLOR_MISC_STAT);
 				_win.write(rx - 5, ry + 4, "+0.5", COLOR_POSITIVE);
 
-				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalMultiplier()) + "%", "Critical Damage", TCODColor::crimson);
-				_win.write(rx - 5, ry + 7, "+2%", COLOR_POSITIVE);
+				drawStatWithBox(rx, ry + 6, to_string(p->getCriticalChance()) + "%", "Critical Chance", TCODColor::crimson);
+				_win.write(rx - 5, ry + 7, "+0.1%", COLOR_POSITIVE);
 
 				drawStatWithBox(rx, ry + 9, to_string(p->getResistance(DTYPE_ELECTRIC)) + "%", "Electric Resist", getDamageTypeColor(DTYPE_ELECTRIC));
 				if (base <= 50)

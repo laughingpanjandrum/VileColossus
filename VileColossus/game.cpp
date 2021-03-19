@@ -8,8 +8,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
-	remove critical damage as a boost for Dex
-	buff vampires
 */
 
 
