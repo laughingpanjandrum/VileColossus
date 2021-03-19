@@ -168,6 +168,7 @@ namespace mapgen
 	//		Abyss maps
 
 	void addAbyssTreasures(gridmapPtr m);
+	void addAbyssMonsters(gridmapPtr m, const vector<MonsterType> mlist, const int dl);
 
 	gridmapPtr generate_DrownedCourt(int abyss_lvl);
 	gridmapPtr generate_AmogTomb(int abyss_lvl);

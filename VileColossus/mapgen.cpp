@@ -1343,12 +1343,25 @@ void mapgen::addAbyssTreasures(gridmapPtr m)
 		m->setTile(MT_CHEST_RADIANT, getRandomWalkable(m));
 }
 
+//	Creates a node map and spews monsters.
+void mapgen::addAbyssMonsters(gridmapPtr m, const vector<MonsterType> mtypes, const int dl)
+{
+	auto nodes = createNodeMap(m);
+	for (auto n : nodes)
+	{
+		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
+		addMonsterGroupToNode(m, &mlist, n);
+	}
+}
+
 //	COURT OF THE DROWNED GOD
 gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 {
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_WATER, MT_WATER, MT_BUSH, MT_GRASS, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_CARPET });
 	m->_name = "The Drowned Deep [Level " + to_string(abyss_lvl) + "]";
+
+	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
 
 	for (unsigned x = 3; x < m->_xsize - 4; x += 3)
 	{
@@ -1361,6 +1374,7 @@ gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 	}
 	scatterSurface(m, Surface::SLUDGE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.1);
 
+	addAbyssMonsters(m, { MonsterType::CULTIST_DOGGOSAN, MonsterType::TENTACLE }, dlvl);
 	addAbyssTreasures(m);
 	return m;
 }
@@ -1458,20 +1472,13 @@ gridmapPtr mapgen::generate_OuterDark(int abyss_lvl, bool descending)
 	scatterOnMap(m, MT_WATER, 0.05);
 	m->_name = "The Outer Dark [Level " + to_string(abyss_lvl) + "]";
 
-	
-	//	Abyssal monsters
-	const int dl = abyss_lvl + ABYSS_LEVEL_BASE;
-	auto nodes = createNodeMap(m);
-	vector<MonsterType> mtypes = { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, };
-	for (auto n : nodes)
-	{
-		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
-		addMonsterGroupToNode(m, &mlist, n);
-	}
+	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
 
-	//	Special boss.
-	auto boss = monsterdata::generate_AbyssLord(dl * 2);
-	m->addCreature(boss, getRandomSafe(m));
+	//	Monsters
+	addAbyssMonsters(m, { MonsterType::ABYSSAL_WRAITH, MonsterType::NIGHTGAUNT, MonsterType::STARSPAWN, MonsterType::STAR_VAMPIRE, }, dlvl);
+
+	auto boss = monsterdata::generate_AbyssLord(dlvl * 2 + 1);
+	m->addCreature(boss, getRandomFree(m));
 
 	//	special treasures
 	addAbyssTreasures(m);

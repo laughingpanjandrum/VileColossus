@@ -8,6 +8,10 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
+	save games need to remember:
+		- demonforge tier
+		- current ritual information
+
 */
 
 
@@ -15,15 +19,12 @@ game::game() : _isGameOver(false)
 {
 	initrand();
 	_ih = inputHandlerPtr(new inputHandler());
+	_gdata = gamedataPtr(new gamedata());
 }
 
 
 void game::start()
 {
-	//	base game data element
-	_gdata = gamedataPtr(new gamedata()); 
-
-	//	title screenk
 	_gdata->_state = STATE_TITLE;
 	messages::add(_gdata, "Press #? @to view controls.", { COLOR_LIGHT });
 	menuLoop();

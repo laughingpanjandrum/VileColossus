@@ -194,7 +194,6 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 {
 	switch (en)
 	{
-	case(ENCH_CAPACITY):
 	case(ENCH_MAGIC):
 	case(ENCH_MAGIC_RESTORE):
 	case(ENCH_MANALEECH):
