@@ -195,6 +195,9 @@ const MonsterType monster::rollMonsterToSpawn() const
 		else		return MonsterType::WRETCH;
 		break;
 
+	case(MonsterType::BLOOD_LEECH):
+		return MonsterType::BLOOD_BLOB;
+
 	case(MonsterType::CARRION_PRINCE):
 		r = randint(1, 2);
 		if (r == 1)	return MonsterType::CORPSEFLY;

@@ -2,31 +2,6 @@
 
 
 
-//	Monster appears alone, rather than in a group.
-bool monsterdata::isSoloMonster(const MonsterType id)
-{
-	switch (id)
-	{
-	case(MonsterType::CARRION_PRINCE):
-	case(MonsterType::CULTIST_ASCENDED):
-	case(MonsterType::GRIM_KNIGHT):
-	case(MonsterType::LIGHTNING_SPIRE):
-	case(MonsterType::PALE_KNIGHT):
-	case(MonsterType::SPIDER_PHASE):
-	case(MonsterType::SKINLESS_KNIGHT):
-	case(MonsterType::SKULL_PILE):
-	case(MonsterType::STARSPAWN):
-	case(MonsterType::STAR_VAMPIRE):
-	case(MonsterType::WALKING_SKULL_PILE):
-	case(MonsterType::ZOMBIE_MASS):
-		return true;
-
-	default:
-		return false;
-	}
-}
-
-
 //	Random Tier 3 monster
 const MonsterType monsterdata::rollMinibossForLevel(const int dl)
 {
@@ -124,6 +99,10 @@ const vector<MonsterType> monsterdata::getAltVersions(const MonsterType id, cons
 	vector<MonsterType> alts;
 	switch (id)
 	{
+	case(MonsterType::BONES_BLOODY):
+		alts.push_back(MonsterType::BONES_BURNING);
+		break;
+
 	case(MonsterType::CULTIST):
 		if (dl > 1)
 			alts.push_back(MonsterType::CULTIST_MUTTERING);
@@ -182,6 +161,9 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 {
 	switch (id)
 	{
+	case(MonsterType::BLOOD_BLOB):
+		return MonsterType::BLOOD_LEECH;
+
 	case(MonsterType::CULTIST):
 	case(MonsterType::CULTIST_INFESTED):
 		if (dl > 3)
@@ -218,6 +200,37 @@ const MonsterType monsterdata::getGroupLeaderType(const MonsterType id, const in
 	return MonsterType::__NONE;
 }
 
+
+
+//	Monster appears alone, rather than in a group.
+bool monsterdata::isSoloMonster(const MonsterType id)
+{
+	switch (id)
+	{
+	case(MonsterType::CARRION_PRINCE):
+	case(MonsterType::CULTIST_ASCENDED):
+	case(MonsterType::DEMON_PUTRESCENT):
+	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::LIGHTNING_SPIRE):
+	case(MonsterType::PALE_KNIGHT):
+	case(MonsterType::SPIDER_PHASE):
+	case(MonsterType::SKINLESS_KNIGHT):
+	case(MonsterType::SKULL_PILE):
+	case(MonsterType::STARSPAWN):
+	case(MonsterType::STAR_VAMPIRE):
+	case(MonsterType::CRAB_TITAN):
+	case(MonsterType::WALKING_SKULL_PILE):
+	case(MonsterType::ZOMBIE_MASS):
+		return true;
+
+	default:
+		return false;
+	}
+}
+
+
+
+
 //  List of flags that a monster with the given ID has by default.
 vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 {
@@ -228,6 +241,16 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::BLOAT):
 		return { "flits", "poison_burst", "less_health", "less_defence", "flying", };
+
+	case(MonsterType::BLOOD_BLOB):
+		return { "flits", "vampiric", "less_health", "inaccurate" };
+	case(MonsterType::BLOOD_LEECH):
+		return { "flits", "vampiric", "spawner", "more_health", };
+
+	case(MonsterType::BONES_BLOODY):
+		return { "protected", "more_damage", "fast", "undead", "immune_poison" };
+	case(MonsterType::BONES_BURNING):
+		return { "protected", "more_damage", "undead", "immune_poison", "immune_fire", "casts_fireblast", "fire_attack" };
 
 	case(MonsterType::CARRION_PRINCE):
 		return { "spawner", "more_defence", "undead", "poison_attack", "resists_poison", };
@@ -240,6 +263,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::CORPSEFLY):
 		return { "fast", "flits", "poison_attack", "flying" };
+
+	case(MonsterType::CRAB_TITAN):
+		return { "grapples", "more_damage", "protected_heavy", "flits", "resists_fire", };
 
 	case(MonsterType::CULTIST):
 		return { "less_health", "less_damage" };
@@ -257,6 +283,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::DEMON_PRINCE):
 		return { "casts_fireblast", "immune_fire", "fire_damage", "protected", "slow" };
+
+	case(MonsterType::DEMON_PUTRESCENT):
+		return { "poison_attack", "casts_poison_spit", "resists_poison", "protected", };
 
 	case(MonsterType::FLAME_CONJURER):
 		return { "spawner", "resists_fire", "flits", "casts_firebolt" };
@@ -445,6 +474,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::VAMPIRE_PRINCE):
 		return 4;
 
+	case(MonsterType::CRAB_TITAN):
+	case(MonsterType::DEMON_PUTRESCENT):
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::OGRE_BERSERKER):
@@ -460,6 +491,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::ZOMBIE_MASS):
 		return 3;
 
+	case(MonsterType::BLOOD_LEECH):
+	case(MonsterType::BONES_BURNING):
 	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::CULTIST_DOGGOSAN):
 	case(MonsterType::CULTIST_WINGED):
@@ -488,10 +521,15 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	{
 	case(MonsterType::ABYSSAL_WRAITH):			return make_tuple("abyssal wraith", 'w', TCODColor::cyan);
 	case(MonsterType::BLOAT):					return make_tuple("bloat", 'b', TCODColor::lightLime);
+	case(MonsterType::BLOOD_BLOB):				return make_tuple("blood blob", 'o', TCODColor::lighterCrimson);
+	case(MonsterType::BLOOD_LEECH):				return make_tuple("blood leech", 'o', TCODColor::crimson);
+	case(MonsterType::BONES_BLOODY):			return make_tuple("bloody bones", 'k', TCODColor::crimson);
+	case(MonsterType::BONES_BURNING):			return make_tuple("burning bones", 'k', TCODColor::lightFlame);
 	case(MonsterType::CARRION_PRINCE):			return make_tuple("CARRION PRINCE", 'P', TCODColor::lime);
 	case(MonsterType::COLOSSUS_IRON):			return make_tuple("IRON COLOSSUS", 'N', TCODColor::silver);
 	case(MonsterType::CORPSEFLY):				return make_tuple("corpsefly", 'f', TCODColor::lightLime);
 	case(MonsterType::CORPSE_COLOSSUS):			return make_tuple("CORPSE COLOSSUS", 'C', TCODColor::pink);
+	case(MonsterType::CRAB_TITAN):				return make_tuple("Titan Crab", 'B', TCODColor::orange);
 	case(MonsterType::CULTIST):					return make_tuple("cultist", 'u', TCODColor::pink);
 	case(MonsterType::CULTIST_ASCENDED):		return make_tuple("ascended cultist", 'U', TCODColor::purple);
 	case(MonsterType::CULTIST_DOGGOSAN):		return make_tuple("cultist of Dogossa", 'u', TCODColor::green);
@@ -499,6 +537,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::CULTIST_MUTTERING):		return make_tuple("muttering cultist", 'u', TCODColor::lightPurple);
 	case(MonsterType::CULTIST_WINGED):			return make_tuple("winged cultist", 'U', TCODColor::pink);
 	case(MonsterType::DEMON_PRINCE):			return make_tuple("DEMON PRINCE", 'P', TCODColor::flame);
+	case(MonsterType::DEMON_PUTRESCENT):		return make_tuple("Putrescent Demon", 'P', TCODColor::lightGreen);
 	case(MonsterType::FLAME_CONJURER):			return make_tuple("Flame Conjurer", 'F', TCODColor::flame);
 	case(MonsterType::GRIM_KNIGHT):				return make_tuple("Grim Knight", 'N', TCODColor::lightPurple);
 	case(MonsterType::IMP):						return make_tuple("imp", 'i', TCODColor::flame);
@@ -511,7 +550,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::OOZE_SLUDGE):				return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
 	case(MonsterType::LIGHTNING_SPIRE):			return make_tuple("lightning spire", 234, TCODColor::yellow);
 	case(MonsterType::ORB_FLAME):				return make_tuple("orb of flame", '*', TCODColor::flame);
-	case(MonsterType::PALE_KNIGHT):				return make_tuple("Pale Knight", 'n', TCODColor::cyan);
+	case(MonsterType::PALE_KNIGHT):				return make_tuple("Pale Knight", 'N', TCODColor::cyan);
 	case(MonsterType::PALE_SCHOLAR):			return make_tuple("pale scholar", 's', TCODColor::lightCyan);
 	case(MonsterType::QUASIT):					return make_tuple("quasit", 'q', TCODColor::lightPurple);
 	case(MonsterType::RAT_GIANT):				return make_tuple("giant rat", 'r', TCODColor::darkGreen);
@@ -590,7 +629,7 @@ monsterPtr monsterdata::generate(MonsterType id, int level)
 //	Generates a unique abyssal boss.
 monsterPtr monsterdata::generate_AbyssLord(int level)
 {
-	auto mon = monsterPtr(new monster("ABYSSAL LORD", 'A', TCODColor::lightPurple, level, 4, MonsterType::BOSS_ABYSS_LORD));
+	auto mon = monsterPtr(new monster("ABYSSAL LORD", 'A', TCODColor::lightPurple, level, 5, MonsterType::BOSS_ABYSS_LORD));
 
 	//	Choices of additional flags.
 	vector<string> flags = { "more_health", "defended", "protected" };

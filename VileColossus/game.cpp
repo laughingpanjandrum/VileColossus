@@ -12,6 +12,10 @@ TODO
 		- demonforge tier
 		- current ritual information
 
+	perk changes:
+		- remove 'all resistances'
+		- add armour/defence up
+
 */
 
 

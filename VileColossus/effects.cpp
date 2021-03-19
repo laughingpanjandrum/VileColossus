@@ -26,6 +26,10 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 		if (gdata->_gameProgress._killedHellboss == 1)
 			mapgen::openTemplePortal(gdata->_homeBase);
 		break;
+
+	case(MonsterType::BOSS_ABYSS_LORD):
+		gdata->_gameProgress._abyssLevel++;
+		break;
 	}
 }
 

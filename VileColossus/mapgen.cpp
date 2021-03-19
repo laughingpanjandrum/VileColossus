@@ -1379,12 +1379,14 @@ gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 	return m;
 }
 
+
 //	FLESH OF AMOG
 gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 {
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_WALL_FLESH });
 	m->_name = "Flesh of Amog [Level " + to_string(abyss_lvl) + "]";
+	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
 
 	const vector<Maptile> tiles = { MT_BLOOD_POOL, MT_BLOOD_POOL, MT_FLOOR_STONE, MT_FLOOR_STONE2 };
 
@@ -1417,6 +1419,7 @@ gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 
 	scatterTileOnWalkable(m, MT_TOMBSTONE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.05);
 
+	addAbyssMonsters(m, { MonsterType::BLOOD_BLOB, MonsterType::BONES_BLOODY, MonsterType::DEMON_PUTRESCENT, }, dlvl);
 	addAbyssTreasures(m);
 	return m;
 }
@@ -1459,7 +1462,7 @@ gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 		}
 	}
 
-	addAbyssMonsters(m, { MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, }, dlvl);
+	addAbyssMonsters(m, { MonsterType::CRAB_TITAN, MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, }, dlvl);
 	addAbyssTreasures(m);
 	return m;
 }

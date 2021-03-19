@@ -62,9 +62,6 @@ namespace monsterdata
 	typedef tuple<string, int, colorType> flavourdat;
 
 
-	//	Monster placement data
-	bool isSoloMonster(const MonsterType id);
-
 
 	//	Getting monsters to emplace
 	
@@ -75,6 +72,10 @@ namespace monsterdata
 
 	const vector<MonsterType> getAltVersions(const MonsterType id, const int dl);
 	const MonsterType getGroupLeaderType(const MonsterType id, const int dl);
+
+
+	//	Monster placement data
+	bool isSoloMonster(const MonsterType id);
 
 
 	//	Basic monster data
