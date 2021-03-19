@@ -17,7 +17,7 @@ TODO
 		- add armour/defence up
 
 	make prestige levels progressively more costly
-	move stairs nearer to centre of surface map
+	add Exalted items
 	put demonforge on surface
 
 */

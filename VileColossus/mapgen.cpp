@@ -1664,6 +1664,9 @@ void mapgen::openTemplePortal(gridmapPtr m)
 	fillRegionCircular(m, MT_LAVA, 32, 35, 2);
 	fillRegionCircular(m, MT_LAVA, 22, 33, 3);
 	fillRegionCircular(m, MT_LAVA, 31, 24, 2);
+
+	m->setTile(MT_DEMONFORGE, 25, 28);
+
 	m->updateTmap();
 }
 
@@ -1712,8 +1715,8 @@ gridmapPtr mapgen::generate_HomeBase()
 	m->setTile(MT_GEMSTONE_PRESS, 21, 7);
 	m->setTile(MT_RUNE_IMPRINTER, 19, 5);
 
-	m->setTile(MT_STAIRS_DOWN, 11, 6);
-	m->_startPt = intpair(11, 6);
+	m->setTile(MT_STAIRS_DOWN, 15, 15);
+	m->_startPt = intpair(15, 15);
 
 	//	save point
 	m->setTile(MT_MEDITATION_SHRINE, 15, 10);
