@@ -27,6 +27,8 @@ void monsterSpecialHitEffects(gamedataPtr gdata, monsterPtr attacker, creaturePt
 	if (attacker->hasFlag("vampiric"))
 	{
 		attacker->healDamage(attacker->getMaxHealth() / 4);
+		attacker->adjustMaxHealth(attacker->_level * 2);
+		attacker->adjustDamage(attacker->_level / 2);
 	}
 	if (attacker->hasFlag("grapples"))
 		grapple(gdata, attacker, target);

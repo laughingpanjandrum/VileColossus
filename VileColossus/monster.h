@@ -74,6 +74,7 @@ public:
 
 	//	changing attributes of active monsters
 	void adjustDamage(const int adj) { _baseDamage += adj; }
+	void adjustMaxHealth(const int adj) { _maxHealth += adj; }
 
 
 	//	overriden from base class

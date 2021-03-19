@@ -8,6 +8,8 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
+	remove critical damage as a boost for Dex
+	buff vampires
 */
 
 
@@ -23,7 +25,7 @@ void game::start()
 	//	base game data element
 	_gdata = gamedataPtr(new gamedata()); 
 
-	//	title screen
+	//	title screenk
 	_gdata->_state = STATE_TITLE;
 	messages::add(_gdata, "Press #? @to view controls.", { COLOR_LIGHT });
 	menuLoop();
