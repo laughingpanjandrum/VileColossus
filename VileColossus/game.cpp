@@ -18,7 +18,6 @@ TODO
 
 	make prestige levels progressively more costly
 	add Exalted items
-	put demonforge on surface
 
 */
 
@@ -459,9 +458,9 @@ void game::processInput()
 		case(STATE_RITUAL_ALTAR):
 			if (_ih->isDirectionalKeyPressed())
 				scrollMenu(_ih->getVectorFromKeypress().second, _gdata->_stashedRitualMaterials.size());
-			else if (_ih->isKeyPressed(TCODK_ENTER))
+			else if (_ih->isKeyPressed('a'))
 				selectRitualMaterial(_gdata);
-			else if (_ih->isKeyPressed('R'))
+			else if (_ih->isKeyPressed(TCODK_ENTER))
 				openAbyssGate(_gdata);
 			break;
 

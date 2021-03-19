@@ -23,6 +23,8 @@ void selectRitualMaterial(gamedataPtr gdata)
 		auto it = gdata->_stashedRitualMaterials[gdata->_idx];
 		if (it->_material == MaterialType::VILEDRAGON_SCALE)
 			gdata->_summonedViledragon = !gdata->_summonedViledragon;
+		else if (gdata->_ritualType == it->_material)
+			gdata->_ritualType = MaterialType::__NONE;
 		else
 			gdata->_ritualType = it->_material;
 	}

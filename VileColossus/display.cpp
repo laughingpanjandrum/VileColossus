@@ -2294,8 +2294,8 @@ void display::drawRitualAltar(gamedataPtr gdata)
 		_win.write(47, y + 2, "SUMMONING VILEDRAGON", TCODColor::crimson);
 
 	//	controls
-	writeFormatted(4, 25, "#ENTER @Select ritual material", { COLOR_LIGHT });
-	writeFormatted(4, 26, "#    R @Open abyssal gate", { COLOR_LIGHT });
+	writeFormatted(4, 25, "#    a @Add ritual material", { COLOR_LIGHT });
+	writeFormatted(4, 26, "#ENTER @Open abyssal gate", { COLOR_LIGHT });
 
 	drawMessages(gdata);
 }
