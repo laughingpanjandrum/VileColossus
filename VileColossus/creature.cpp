@@ -45,6 +45,12 @@ void creature::reduceStatusEffectDuration(const StatusEffect st)
 		_StatusEffects[st] -= 1;
 }
 
+void creature::addBuff(const BuffType bf, int turns)
+{
+	if (_Buffs[bf] < turns)
+		_Buffs[bf] = turns;
+}
+
 //	Tick down the given buff.
 void creature::reduceBuffDuration(const BuffType bf)
 {

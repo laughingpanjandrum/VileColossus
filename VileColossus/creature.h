@@ -120,8 +120,10 @@ public:
 	bool hasBuff(const BuffType bf) const { return _Buffs[bf] > 0; }
 	int getBuffDuration(const BuffType bf) const { return _Buffs[bf]; }
 	
-	void addBuff(const BuffType bf, int turns) { _Buffs[bf] += turns; }
+	void addBuff(const BuffType bf, int turns);
+	void increaseBuff(const BuffType bf, int turns) { _Buffs[bf] += turns; }
 	void setBuffDuration(const BuffType bf, int turns) { _Buffs[bf] = turns; }
+
 	void removeBuff(const BuffType bf) { _Buffs[bf] = 0; }
 	void reduceBuffDuration(const BuffType bf);
 

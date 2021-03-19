@@ -27,9 +27,9 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 			mapgen::openTemplePortal(gdata->_homeBase);
 		break;
 
-	case(MonsterType::BOSS_ABYSS_LORD):
+	/*case(MonsterType::BOSS_ABYSS_LORD):
 		gdata->_gameProgress._abyssLevel++;
-		break;
+		break;*/
 
 	case(MonsterType::BOSS_DROWNED_DOGOSSA):
 		gdata->_gameProgress._killedDogossa++;
@@ -391,7 +391,7 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 			gdata->_player->restoreMagic(gdata->_player->getManaleech());
 			gdata->_player->chargeFlaskOnKill();
 			if (roll_percent(gdata->_player->getWrathOnKillChance()))
-				gdata->_player->addBuff(BUFF_WRATH, 1 + mon->_tier * 2);
+				gdata->_player->increaseBuff(BUFF_WRATH, 1 + mon->_tier * 2);
 
 			//	special events when we kill a boss
 			if (mon->_tier == 5)
