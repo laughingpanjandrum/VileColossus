@@ -11,6 +11,7 @@ bool monsterdata::isSoloMonster(const MonsterType id)
 	case(MonsterType::CULTIST_ASCENDED):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::LIGHTNING_SPIRE):
+	case(MonsterType::PALE_KNIGHT):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::SKINLESS_KNIGHT):
 	case(MonsterType::SKULL_PILE):
@@ -289,6 +290,11 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::ORB_FLAME):
 		return { "immobile", "flying", "less_health", "immune_fire", "casts_firebolt", "no_corpse", };
 
+	case(MonsterType::PALE_KNIGHT):
+		return { "protected_heavy", "ethereal", "arcane_attack", "undead", "more_damage", "more_health", "resists_fire", };
+	case(MonsterType::PALE_SCHOLAR):
+		return { "resists_arcane", "casts_arcane_bolt", "defended", "ethereal", "electric_attack", "more_damage", };
+
 	case(MonsterType::QUASIT):
 		return { "flying", "flits", "casts_arcane_bolt", "casts_lightning", "teleports", "less_health", "less_damage", };
 
@@ -442,6 +448,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
 	case(MonsterType::OGRE_BERSERKER):
+	case(MonsterType::PALE_KNIGHT):
 	case(MonsterType::RAT_KING):
 	case(MonsterType::SPIDER_PHASE):
 	case(MonsterType::STARSPAWN):
@@ -504,6 +511,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::OOZE_SLUDGE):				return make_tuple("sludge ooze", 'o', TCODColor::lightSepia);
 	case(MonsterType::LIGHTNING_SPIRE):			return make_tuple("lightning spire", 234, TCODColor::yellow);
 	case(MonsterType::ORB_FLAME):				return make_tuple("orb of flame", '*', TCODColor::flame);
+	case(MonsterType::PALE_KNIGHT):				return make_tuple("Pale Knight", 'n', TCODColor::cyan);
+	case(MonsterType::PALE_SCHOLAR):			return make_tuple("pale scholar", 's', TCODColor::lightCyan);
 	case(MonsterType::QUASIT):					return make_tuple("quasit", 'q', TCODColor::lightPurple);
 	case(MonsterType::RAT_GIANT):				return make_tuple("giant rat", 'r', TCODColor::darkGreen);
 	case(MonsterType::RAT_KING):				return make_tuple("Rat King", 'R', TCODColor::lightSepia);

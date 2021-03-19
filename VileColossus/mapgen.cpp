@@ -1428,6 +1428,7 @@ gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
 	fillMap(m, { MT_WATER, MT_WATER, MT_WATER, MT_FLOOR_VOID });
 	m->_name = "Lost Viridia [Level " + to_string(abyss_lvl) + "]";
+	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
 
 	auto nodes = createNodeMap(m);
 	for (auto n : nodes)
@@ -1458,6 +1459,7 @@ gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 		}
 	}
 
+	addAbyssMonsters(m, { MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, }, dlvl);
 	addAbyssTreasures(m);
 	return m;
 }
