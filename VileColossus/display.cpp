@@ -2144,9 +2144,16 @@ void display::drawSidebar(gamedataPtr gdata)
 
 	//	Level
 
-	_win.write(x, ++y, "LV " + to_string(p->_level), { COLOR_MEDIUM });
-	if (gdata->_attributePointsLeft > 0)
+	if (p->_PerkLevel > 0)
+		writeFormatted(x, ++y, "LV #" + to_string(p->_level + p->_PerkLevel), { COLOR_LIGHT });
+	else
+		_win.write(x, ++y, "LV " + to_string(p->_level), COLOR_MEDIUM);
+	if (gdata->_attributePointsLeft > 0 || gdata->_perkPoints > 0)
 		_win.writec(x - 1, y, '+', COLOR_POSITIVE);
+
+
+	//	XP
+
 	int xp_per = 100.0f * (float)gdata->_xp / (float)XP_PER_LEVEL;
 	drawFilledBar(x + 6, y, xp_per / 5, 20, TCODColor::silver, ' ' + to_string(xp_per) + "%");
 	y++;
