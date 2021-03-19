@@ -1480,7 +1480,7 @@ gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 //	Weird void maps
 gridmapPtr mapgen::generate_OuterDark(int abyss_lvl, bool descending)
 {
-	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	auto m = gridmapPtr(new gridmap(randint(30, 60), randint(30, 60)));
 	fillMap(m, { MT_FLOOR_VOID });
 	scatterOnMap(m, MT_WALL_ICE, 0.05);
 	scatterOnMap(m, MT_WATER, 0.05);

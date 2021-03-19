@@ -303,6 +303,7 @@ const int lootgen::getMaterialRarity(const MaterialType mat)
 	}
 }
 
+
 //	Generates some material. 'qty' determines how much.
 itemPtr lootgen::generateMaterial(const MaterialType mat, const int qty)
 {
@@ -311,6 +312,7 @@ itemPtr lootgen::generateMaterial(const MaterialType mat, const int qty)
 	it->_amountLeft = qty;
 	return it;
 }
+
 
 //	Creates a gem of the given tier.
 itemPtr lootgen::generateGemOfType(const GemType gem, const int tier, const int rarity)
@@ -492,7 +494,7 @@ itemPtr lootgen::generateArmourPiece(const int tier, const int rarity)
 {
 	auto it = generateArmourPieceOfType(ARMOUR_CATEGORIES[randrange(ARMOUR_CATEGORIES.size())], tier);
 	it->_rarity = rarity;
-	it->_enhancementLevel = 1 + randint(0, it->_rarity);
+	it->_enhancementLevel = randint(it->_rarity - 1, it->_rarity);
 	return it;
 }
 
@@ -715,7 +717,7 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 
 	//	complete item
 	it->_rarity = rarity;
-	it->_enhancementLevel = 1 + randint(0, it->_rarity);
+	it->_enhancementLevel = randint(it->_rarity - 1, it->_rarity);
 
 	return it;
 }
