@@ -118,8 +118,9 @@ const string getMaterialTypeName(const MaterialType mat)
 
 	case(MaterialType::NOTCHED_CUBE):		return "notched cube";
 
+	case(MaterialType::DEAD_GODS_EYE):		return "dead god's eye";
 	case(MaterialType::SODDEN_FLESH):		return "sodden flesh";
-	case(MaterialType::TOMB_IDOL):			return "tomb idol";
+	case(MaterialType::TOMB_IDOL):			return "tomb mould";
 	case(MaterialType::VIRIDIAN_GLASS):		return "viridian glass";
 	case(MaterialType::VILEDRAGON_SCALE):	return "viledragon scale";
 	default:
@@ -141,6 +142,7 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 
 	case(MaterialType::NOTCHED_CUBE):		return TCODColor::pink;
 
+	case(MaterialType::DEAD_GODS_EYE):		return TCODColor::gold;
 	case(MaterialType::SODDEN_FLESH):		return TCODColor::sea;
 	case(MaterialType::TOMB_IDOL):			return TCODColor::crimson;
 	case(MaterialType::VIRIDIAN_GLASS):		return TCODColor::cyan;
@@ -152,13 +154,14 @@ const colorType getMaterialTypeColor(const MaterialType mat)
 
 bool isRitualMaterial(const MaterialType mat)
 {
-	return mat == MaterialType::SODDEN_FLESH || mat == MaterialType::TOMB_IDOL || mat == MaterialType::VIRIDIAN_GLASS || mat == MaterialType::VILEDRAGON_SCALE;
+	return mat == MaterialType::DEAD_GODS_EYE || mat == MaterialType::SODDEN_FLESH || mat == MaterialType::TOMB_IDOL || mat == MaterialType::VIRIDIAN_GLASS || mat == MaterialType::VILEDRAGON_SCALE;
 }
 
 const string getRitualDescription(const MaterialType mat)
 {
 	switch (mat)
 	{
+	case(MaterialType::DEAD_GODS_EYE):		return "Reveals a portal to the heart of the abyss, where the Vile Colossus festers, sweating decay and corruption.";
 	case(MaterialType::SODDEN_FLESH):		return "Reveals a portal to the sodden realms of Drowned Dogossa, the god of the deep. Slay Dogossa's avatar to gain power and face the Vile Colossus.";
 	case(MaterialType::TOMB_IDOL):			return "Reveals a portal to the Tombs of Amog, which emanate from the infinite corpse of the dead god. Slay the avatar of Amog to gain power and face the Vile Colossus.";
 	case(MaterialType::VIRIDIAN_GLASS):		return "Reveals a portal to Lost Viridia, which was taken by the abyss when its king sinned. Slay the avatar of the Viridian King to gain power and face the Vile Colossus.";
@@ -667,7 +670,7 @@ string getGemTypeFullName(const GemType gem, const int tier)
 	string name = getGemTypeName(gem);
 	switch (tier)
 	{
-	case(1):	return "cracked " + name;
+	case(1):	return "broken " + name;
 	case(2):	return "chipped " + name;
 	case(3):	return name + " shard";
 	case(4):	return name + " chunk";

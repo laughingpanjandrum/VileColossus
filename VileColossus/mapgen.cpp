@@ -1357,7 +1357,7 @@ void mapgen::addAbyssMonsters(gridmapPtr m, const vector<MonsterType> mtypes, co
 //	COURT OF THE DROWNED GOD
 gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 {
-	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	auto m = gridmapPtr(new gridmap(randint(30, 60), randint(30, 60)));
 	fillMap(m, { MT_WATER, MT_WATER, MT_BUSH, MT_GRASS, MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_CARPET });
 	m->_name = "The Drowned Deep [Level " + to_string(abyss_lvl) + "]";
 
@@ -1375,6 +1375,9 @@ gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 	scatterSurface(m, Surface::SLUDGE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.1);
 
 	addAbyssMonsters(m, { MonsterType::CULTIST_DOGGOSAN, MonsterType::TENTACLE }, dlvl);
+	auto boss = monsterdata::generate(MonsterType::BOSS_DROWNED_DOGOSSA, dlvl * 2 + 1);
+	m->addCreature(boss, getRandomFree(m));
+
 	addAbyssTreasures(m);
 	return m;
 }
@@ -1383,7 +1386,7 @@ gridmapPtr mapgen::generate_DrownedCourt(int abyss_lvl)
 //	FLESH OF AMOG
 gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 {
-	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	auto m = gridmapPtr(new gridmap(randint(30, 60), randint(30, 60)));
 	fillMap(m, { MT_WALL_FLESH });
 	m->_name = "Flesh of Amog [Level " + to_string(abyss_lvl) + "]";
 	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
@@ -1420,6 +1423,9 @@ gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 	scatterTileOnWalkable(m, MT_TOMBSTONE, 0, 0, m->_xsize - 1, m->_ysize - 1, 0.05);
 
 	addAbyssMonsters(m, { MonsterType::BLOOD_BLOB, MonsterType::BONES_BLOODY, MonsterType::DEMON_PUTRESCENT, }, dlvl);
+	auto boss = monsterdata::generate(MonsterType::BOSS_TOMB_LORD_AMOG, dlvl * 2 + 1);
+	m->addCreature(boss, getRandomFree(m));
+
 	addAbyssTreasures(m);
 	return m;
 }
@@ -1428,7 +1434,7 @@ gridmapPtr mapgen::generate_AmogTomb(int abyss_lvl)
 //	LOST VIRIDIA
 gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 {
-	auto m = gridmapPtr(new gridmap(randint(50, 80), randint(50, 80)));
+	auto m = gridmapPtr(new gridmap(randint(30, 60), randint(30, 60)));
 	fillMap(m, { MT_WATER, MT_WATER, MT_WATER, MT_FLOOR_VOID });
 	m->_name = "Lost Viridia [Level " + to_string(abyss_lvl) + "]";
 	const int dlvl = ABYSS_LEVEL_BASE + abyss_lvl;
@@ -1463,6 +1469,9 @@ gridmapPtr mapgen::generate_Viridia(int abyss_lvl)
 	}
 
 	addAbyssMonsters(m, { MonsterType::CRAB_TITAN, MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, }, dlvl);
+	auto boss = monsterdata::generate(MonsterType::BOSS_VIRIDIAN_PRINCE, dlvl * 2 + 1);
+	m->addCreature(boss, getRandomFree(m));
+
 	addAbyssTreasures(m);
 	return m;
 }

@@ -954,8 +954,7 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 	else if (lvl <= 24)	return 2;
 	else if (lvl <= 30)	return 3;
 	else if (lvl <= 36)	return 4;
-	else if (lvl <= 42) return 5;
-	else				return 6;
+	else				return 5;
 }
 
 

@@ -195,6 +195,15 @@ const MonsterType monster::rollMonsterToSpawn() const
 		else		return MonsterType::WRETCH;
 		break;
 
+	case(MonsterType::BOSS_DROWNED_DOGOSSA):
+		return MonsterType::TENTACLE_HORROR;
+
+	case(MonsterType::BOSS_TOMB_LORD_AMOG):
+		return MonsterType::BLOOD_LEECH;
+
+	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
+		return MonsterType::LIGHTNING_SPIRE;
+
 	case(MonsterType::BLOOD_LEECH):
 		return MonsterType::BLOOD_BLOB;
 

@@ -440,6 +440,14 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 
 	case(MonsterType::BOSS_WRETCHED_PRINCE):
 		return { "spawner", "megaspawner", "more_health", "protected_heavy", "flits", "casts_lightning", };
+
+
+	case(MonsterType::BOSS_DROWNED_DOGOSSA):
+		return { "immune_poison", "casts_poison_spit", "more_health", "more_damage", "grapples", "defended", "poison_attack", "spawner", "avatar", };
+	case(MonsterType::BOSS_TOMB_LORD_AMOG):
+		return { "undead", "casts_arcane_bolt", "more_health", "more_damage", "arcane_attack", "spawner", "avatar", };
+	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
+		return { "ethereal", "casts_lightning", "spawner", "immune_electric", "electric_attack", "teleports", "avatar", };
 		
 
 	default:
@@ -461,6 +469,10 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::BOSS_DEMON_LORD):
 	case(MonsterType::BOSS_WRETCHED_PRINCE):
 	case(MonsterType::BOSS_WRAITH_KING):
+
+	case(MonsterType::BOSS_DROWNED_DOGOSSA):
+	case(MonsterType::BOSS_TOMB_LORD_AMOG):
+	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
 		
 		return 5;
 
@@ -601,6 +613,10 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::BOSS_DEMON_LORD):			return make_tuple("= DEMON LORD =", 'D', TCODColor::flame);
 	case(MonsterType::BOSS_WRAITH_KING):		return make_tuple("= WRAITH KING =", 'W', TCODColor::pink);
 	case(MonsterType::BOSS_WRETCHED_PRINCE):	return make_tuple("= WRETCHED PRINCE =", 'L', TCODColor::crimson);
+
+	case(MonsterType::BOSS_DROWNED_DOGOSSA):	return make_tuple("= AVATAR OF DROWNED DOGOSSA =", 'G', TCODColor::lime);
+	case(MonsterType::BOSS_TOMB_LORD_AMOG):		return make_tuple("= AVATAR OF THE TOMB LORD =", 'T', TCODColor::brass);
+	case(MonsterType::BOSS_VIRIDIAN_PRINCE):	return make_tuple("= LOST PRINCE OF VIRIDIA =", 'P', TCODColor::silver);
 
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);

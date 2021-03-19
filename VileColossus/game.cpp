@@ -16,6 +16,10 @@ TODO
 		- remove 'all resistances'
 		- add armour/defence up
 
+	make prestige levels progressively more costly
+	generate items with at most 1-2 free enchant slots
+	reduce size of Outer Dark
+
 */
 
 

@@ -11,7 +11,7 @@
 namespace mapgen
 {
 
-	const int ABYSS_LEVEL_BASE = 16;
+	const int ABYSS_LEVEL_BASE = 18;
 
 
 	struct game_progress

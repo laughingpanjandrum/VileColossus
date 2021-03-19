@@ -67,6 +67,7 @@ enum class MaterialType {
 	//	Abyssal materials
 	SODDEN_FLESH, TOMB_IDOL, VIRIDIAN_GLASS,
 	VILEDRAGON_SCALE,
+	DEAD_GODS_EYE,
 
 	__NONE, };
 

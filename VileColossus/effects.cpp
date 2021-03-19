@@ -30,6 +30,19 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 	case(MonsterType::BOSS_ABYSS_LORD):
 		gdata->_gameProgress._abyssLevel++;
 		break;
+
+	case(MonsterType::BOSS_DROWNED_DOGOSSA):
+		gdata->_gameProgress._killedDogossa++;
+		gdata->_gameProgress._abyssLevel++;
+		break;
+	case(MonsterType::BOSS_TOMB_LORD_AMOG):
+		gdata->_gameProgress._killedAmog++;
+		gdata->_gameProgress._abyssLevel++;
+		break;
+	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
+		gdata->_gameProgress._killedSallowKing++;
+		gdata->_gameProgress._abyssLevel++;
+		break;
 	}
 }
 
@@ -158,6 +171,11 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	if (target->hasFlag("abysslord"))
 	{
 		auto it = lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1);
+		gdata->_map->addItem(it, pts[randrange(pts.size())]);
+	}
+	else if (target->hasFlag("avatar"))
+	{
+		auto it = lootgen::generateMaterial(MaterialType::DEAD_GODS_EYE, 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
 	}
 }
