@@ -8,10 +8,6 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
-	save games need to remember:
-		- demonforge tier
-		- current ritual information
-
 	add Exalted items
 
 */

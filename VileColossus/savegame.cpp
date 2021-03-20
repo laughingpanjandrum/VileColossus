@@ -57,6 +57,11 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	gdata->_gameProgress._abyssLevel = read_int(f);
 
 
+	//	Current ritual
+	gdata->_ritualType = static_cast<MaterialType>(read_int(f));
+	gdata->_summonedViledragon = read_bool(f);
+
+
 	////		EQUIPMENT			//
 	cout << " Loading equipped items..." << endl;
 	for (unsigned i = 0; i < SLOT__NONE; i++)
@@ -81,7 +86,6 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 
 	////	Flask
 	p->_currentFlask = deserialize_item(f);
-
 
 
 	//	Equipped spells
@@ -368,6 +372,11 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_int(f, gdata->_gameProgress._killedColossus);
 
 	serialize_int(f, gdata->_gameProgress._abyssLevel);
+
+
+	//	Current ritual
+	serialize_int(f, static_cast<int>(gdata->_ritualType));
+	serialize_bool(f, gdata->_summonedViledragon);
 
 
 
