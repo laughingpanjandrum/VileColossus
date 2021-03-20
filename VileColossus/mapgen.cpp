@@ -1693,7 +1693,7 @@ void mapgen::openTemplePortal(gridmapPtr m)
 	fillRegionCircular(m, MT_LAVA, 22, 33, 3);
 	fillRegionCircular(m, MT_LAVA, 31, 24, 2);
 
-	m->setTile(MT_DEMONFORGE, 25, 28);
+	m->setTile(MT_DEMONFORGE, 25, 24);
 
 	m->updateTmap();
 }

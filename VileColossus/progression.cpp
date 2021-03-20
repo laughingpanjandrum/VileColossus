@@ -1,6 +1,15 @@
 #include "progression.h"
 
 
+
+//	XP cost to gain a level.
+//	Changes once we reach ascension levels.
+const int getXPForLevel(gamedataPtr gdata)
+{
+	return XP_PER_LEVEL + XP_PER_PERK * gdata->_player->_PerkLevel;
+}
+
+
 //	Advance a level, gain the requisite bonuses, restore all health.
 void playerGainLevel(gamedataPtr gdata)
 {
@@ -47,7 +56,7 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 		base_xp *= 5;*/
 
 	//	Monsters of higher level grant slightly more xp
-	int lvl_diff = target->_level - gdata->_player->_level;
+	int lvl_diff = MIN(5, target->_level - gdata->_player->_level);
 	if (lvl_diff > 0)
 		base_xp += (float)base_xp * (float)lvl_diff * 0.1f;
 
@@ -68,9 +77,10 @@ void addKillXP(gamedataPtr gdata, monsterPtr target)
 
 	//	Grant it, check for level-up
 	gdata->_xp += base_xp;
-	if (gdata->_xp >= XP_PER_LEVEL)
+	const int cost = getXPForLevel(gdata);
+	if (gdata->_xp >= cost)
 	{
-		gdata->_xp -= XP_PER_LEVEL;
+		gdata->_xp -= cost;
 		playerGainLevel(gdata);
 	}
 
