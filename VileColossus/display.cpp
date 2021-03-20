@@ -1986,9 +1986,14 @@ void display::updateVisibleMapData(gamedataPtr gdata)
 			_visibleGlyphs[dpt.first][dpt.second] = it->getGlyph();
 			_visibleColors[dpt.first][dpt.second] = it->getColor();
 
-			//	if the underlying tile is lava, reveal it
-			if (gdata->_map->getTile(icp->_pos) == MT_LAVA)
-				_visibleBgcolors[dpt.first][dpt.second] = getMaptileColor(MT_LAVA);
+			//	certain underlying tiles may still reveal a bgcolor
+			switch (gdata->_map->getTile(icp->_pos))
+			{
+			case(MT_LAVA):			_visibleBgcolors[dpt.first][dpt.second] = getMaptileColor(MT_LAVA); break;
+			case(MT_WALL_ICE):		_visibleBgcolors[dpt.first][dpt.second] = getMaptileColor(MT_WALL_ICE); break;
+			default:
+				_visibleBgcolors[dpt.first][dpt.second] = COLOR_BLACK;
+			}
 		}
 	}
 

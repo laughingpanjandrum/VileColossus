@@ -111,7 +111,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	}
 
 	//	Chance to exalt
-	bool exalt = roll_percent(exalt_odds) && target->_level > 0;
+	bool exalt = roll_percent(exalt_odds) && target->_level >= 30;
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
