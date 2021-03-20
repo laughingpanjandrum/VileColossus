@@ -157,6 +157,7 @@ int player::getDefenceValue() const
 	int total = getDerivedAttribute(ATTR_DEXTERITY) / 2;
 	total += getTotalEnchantmentBonus(ENCH_DEFENCE);
 	total += getEquipmentPropertySum(PROP_DEFENCE);
+	total += getPerkBonus(PERK_DEFENCE);
 	return total;
 }
 
@@ -167,6 +168,7 @@ int player::getArmourValue() const
 	if (hasBuff(BUFF_STONESKIN))
 		total += _level * 2 + getTotalEnchantmentBonus(ENCH_PETRIFYING);
 	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 2;
+	total += getPerkBonus(PERK_ARMOUR);
 	return total;
 }
 
@@ -276,7 +278,6 @@ int player::getResistance(const DamageType dt) const
 {
 	int total = 0;
 	total += getTotalEnchantmentBonus(ENCH_RESISTANCE);
-	total += getPerkBonus(PERK_RESISTANCE);
 	
 	switch (dt)
 	{

@@ -12,12 +12,6 @@ TODO
 		- demonforge tier
 		- current ritual information
 
-	perk changes:
-		- remove 'all resistances'
-		- add armour/defence up
-		- fragment gain
-
-	make prestige levels progressively more costly
 	add Exalted items
 
 */

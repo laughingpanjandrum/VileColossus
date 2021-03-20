@@ -30,7 +30,7 @@ public:
 
 	void raiseAttribute(const Attribute attr, const int amt = 1) { _Attributes[attr] += amt; }
 
-	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED); }
+	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED) + getPerkBonus(PERK_FRAGMENTS_GAINED); }
 
 
 	//	Perks

@@ -2157,7 +2157,7 @@ void display::drawSidebar(gamedataPtr gdata)
 	int xp_per = 100.0f * (float)gdata->_xp / (float)getXPForLevel(gdata);
 	drawFilledBar(x + 6, y, xp_per / 5, 20, TCODColor::silver, ' ' + to_string(xp_per) + "%");
 	y++;
-	_win.write(x + 7, y, to_string(gdata->_xp) + "/" + to_string(getXPForLevel(gdata)), COLOR_WHITE);
+	//_win.write(x + 7, y, to_string(gdata->_xp) + "/" + to_string(getXPForLevel(gdata)), COLOR_WHITE);
 
 
 	//	State
