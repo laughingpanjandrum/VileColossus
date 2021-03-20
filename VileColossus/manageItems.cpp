@@ -931,7 +931,6 @@ const vector<itemPtr> getGemstonesWeCanFabricate(gamedataPtr gdata)
 		if (it->_amountLeft >= 3 && it->_enhancementLevel < GEM_MAX_TIER)
 		{
 			auto gem = lootgen::generateGemOfType(it->_gemType, it->_enhancementLevel + 1, it->_rarity);
-			//if (hasMaterial(gdata, MaterialType::FRAGMENTS, getGemstoneFabricateCost(gem)))
 			gems.push_back(gem);
 		}
 	}

@@ -708,7 +708,7 @@ void game::awaitDebugCommand()
 	else if (txt == "drop10")
 	{
 		for (unsigned i = 0; i < 10; i++)
-			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4), _gdata->_player->_pos);
+			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, roll_one_in(5)), _gdata->_player->_pos);
 	}
 	else if (txt == "dropleg")
 		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, true), _gdata->_player->_pos);

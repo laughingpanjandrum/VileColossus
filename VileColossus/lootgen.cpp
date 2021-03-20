@@ -996,7 +996,7 @@ const int lootgen::rollTier(const int maxTier)
 
 //	Generic item roller. Higher tiers/rarities are somewhat less likely.
 //	If 'forceRarity' is set, the item is guaranteed to have the maximum possible rarity.
-itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bool forceRarity)
+itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bool forceRarity, bool exalt)
 {
 	//	Roll actual tier and rarity
 	int tier = rollTier(maxTier);
@@ -1019,6 +1019,11 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bo
 		else if (r <= 95)	it = generateJewel(tier, rarity);
 		else				it = generateFlask(tier, rarity);
 	}
+
+
+	//	Certain item categories can't be exalted
+	if (it->_category != ITEM_AMULET && it->_category != ITEM_RING && it->_category != ITEM_SPELLRUNE)
+		it->_exalted = exalt;
 
 
 	//	Random enchantments.

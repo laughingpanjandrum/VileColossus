@@ -18,6 +18,7 @@ item::item(string name, ItemCategory cat, const int rarity)
 	_isNewItem = true;
 	_isTwoHanded = false;
 	_markedAsValuable = false;
+	_exalted = false;
 
 	//	list of properties
 	for (unsigned i = 0; i < PROP__NONE; i++)
@@ -166,15 +167,22 @@ colorType item::getColor() const
 	//	Based on rarity
 	else
 	{
+		colorType col;
 		switch (_rarity)
 		{
-		case(1):	return TCODColor::lightGrey;
-		case(2):	return TCODColor::lighterBlue;
-		case(3):	return TCODColor::lightPurple;
-		case(4):	return TCODColor::orange;
+		case(1):	col = TCODColor::lightGrey; break;
+		case(2):	col = TCODColor::lighterBlue; break;
+		case(3):	col = TCODColor::lightPurple; break;
+		case(4):	col = TCODColor::orange; break;
 		default:
 			return COLOR_WHITE;
 		}
+		if (_exalted)
+		{
+			auto f = 0.5f + (float)randint(-10, 10) * 0.01f;
+			col = TCODColor::lerp(col, COLOR_WHITE, f);
+		}
+		return col;
 	}
 }
 

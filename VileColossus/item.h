@@ -160,6 +160,7 @@ public:
 
 	bool _isTwoHanded;
 	bool _isNewItem;	//	just picked up and not inspected yet
+	bool _exalted;
 
 	bool _markedAsValuable;
 

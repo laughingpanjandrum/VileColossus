@@ -67,6 +67,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	//	Determine number of drops & their best possible quality
 	int drop_amt = 0;
 	int rarity = target->_tier;
+	int exalt_odds = 0;
 
 	//	At higher level diffs, monsters drop loot as though they were a lower tier.
 	int tier = target->_tier;
@@ -95,16 +96,22 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	case(3):
 		drop_amt = randint(3, 5);
 		if (roll_one_in(20)) rarity++;
+		exalt_odds = 25;
 		break;
 
 	case(4):
 		drop_amt = randint(3, 6);
+		exalt_odds = 75;
 		break;
 
 	case(5):
 		drop_amt = 8 + dieRoll(4, 2);
+		exalt_odds = 90;
 		break;
 	}
+
+	//	Chance to exalt
+	bool exalt = roll_percent(exalt_odds) && target->_level > 0;
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
@@ -115,7 +122,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	{
 		//	Random point and item
 		auto pt = pts[randrange(pts.size())];
-		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity);
+		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, exalt);
 		gdata->_map->addItem(it, pt);
 
 		//	Animation

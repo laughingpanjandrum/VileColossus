@@ -1556,10 +1556,9 @@ void display::drawItemInfo(gamedataPtr gdata, itemPtr it, int atx, int aty, item
 		writeFormatted(atx + 29, aty, "CND: #" + to_string(dleft) + "@/" + to_string(it->_maxDurability), { dcol });
 	}
 
-
-	//	armour type
-	if (it->isArmourPiece())
-		_win.write(atx, ++aty, getArmourCategoryName(it->_armourCategory) + " Armour", COLOR_DARK);
+	//	exaltation
+	if (it->_exalted)
+		writeFormatted(atx, ++aty, "#Exalted #[+" + to_string(it->_exaltLevel) + "]", { TCODColor::gold, TCODColor::silver });
 
 
 	//	info about gems
