@@ -678,10 +678,8 @@ string getGemTypeFullName(const GemType gem, const int tier)
 	{
 	case(1):	return "broken " + name;
 	case(2):	return "chipped " + name;
-	case(3):	return name + " shard";
-	case(4):	return name + " chunk";
-	case(5):	return "whole " + name;
-	case(6):	return "pure " + name;
+	case(3):	return "whole " + name;
+	case(4):	return "pure " + name;
 	default:
 		return "error_tier " + name;
 	}

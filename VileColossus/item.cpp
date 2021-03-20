@@ -9,7 +9,10 @@ item::item(string name, ItemCategory cat, const int rarity)
 	_rarity = rarity;
 	_tier = 1;
 	_amountLeft = 1;
+
+	//	enhancement
 	_enhancementLevel = 0;
+	_exaltLevel = 0;
 
 	//	flags
 	_isNewItem = true;

@@ -108,7 +108,7 @@ int player::getMaxHealth() const
 	int total = 25 + _level * 5 + getDerivedAttribute(ATTR_STRENGTH) * 2;
 	total += getPerkBonus(PERK_HEALTH);
 	total += getTotalEnchantmentBonus(ENCH_LIFE);
-	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 20;
+	total += getTotalGemBonusFromJewels(GemType::FLAMESTONE) * 25;
 	return total;
 }
 
@@ -117,7 +117,7 @@ int player::getMaxMagic() const
 	int total = 2 + (getDerivedAttribute(ATTR_WILLPOWER) - 10) / 2;
 	total += getPerkBonus(PERK_MAGIC);
 	total += getTotalEnchantmentBonus(ENCH_MAGIC);
-	total += getTotalGemBonusFromJewels(GemType::SILVERSTONE);
+	total += getTotalGemBonusFromJewels(GemType::SILVERSTONE) * 3;
 	return total;
 }
 
@@ -167,7 +167,7 @@ int player::getArmourValue() const
 	total += getTotalEnchantmentBonus(ENCH_ARMOURING);
 	if (hasBuff(BUFF_STONESKIN))
 		total += _level * 2 + getTotalEnchantmentBonus(ENCH_PETRIFYING);
-	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 2;
+	total += getTotalGemBonusFromArmour(GemType::BLACKSTONE) * 3;
 	total += getPerkBonus(PERK_ARMOUR);
 	return total;
 }
@@ -211,7 +211,7 @@ int player::getCriticalChance() const
 
 	total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) / 10;
 	
-	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE);
+	total += getTotalGemBonusFromJewels(GemType::SPIDERSTONE) * 2;
 	
 	if (getVisionRadius() <= 6)
 		total += getTotalEnchantmentBonus(ENCH_SHADOWSTRIKE);
@@ -229,13 +229,13 @@ int player::getCriticalMultiplier() const
 {
 	//	Base (From weapons); averaged if dualwielding.
 	int total = getEquipmentPropertySum(PROP_CRITICAL_DAMAGE);
-	total += getPerkBonus(PERK_CRIT_DAMAGE);
 	if (usingOffhandWeapon())
 		total /= 2;
 
 	//	Other adjustments.
+	total += getPerkBonus(PERK_CRIT_DAMAGE);
 	total += getTotalEnchantmentBonus(ENCH_SLAYING);
-	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 25;
+	total += getTotalGemBonusFromJewels(GemType::BLACKSTONE) * 50;
 	//total += (getDerivedAttribute(ATTR_DEXTERITY) - 10) * 2;
 
 	//	Additional adjust from special enchants

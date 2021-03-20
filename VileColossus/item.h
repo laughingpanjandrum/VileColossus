@@ -148,6 +148,7 @@ public:
 	int _maxDurability;
 
 	int _enhancementLevel;
+	int _exaltLevel;
 
 	ItemCategory _category;
 	ArmourCategory _armourCategory;

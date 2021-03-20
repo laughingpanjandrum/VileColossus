@@ -1715,8 +1715,8 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 	switch (gem)
 	{
 	case(GemType::BLACKSTONE):
-		armour = plusminus(tier * 2) + " #Armour Value";
-		jewel = plusminus(tier * 25) + "% #Critical Damage";
+		armour = plusminus(tier * 3) + " #Armour Value";
+		jewel = plusminus(tier * 50) + "% #Critical Damage";
 		weapon = plusminus(tier * 4) + " #Physical Damage";
 		break;
 
@@ -1728,19 +1728,19 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 
 	case(GemType::FLAMESTONE):
 		armour = plusminus(tier * 5) + "% #Fire Resistance";
-		jewel = plusminus(tier * 20) + " #Max Health";
+		jewel = plusminus(tier * 25) + " #Max Health";
 		weapon = plusminus(tier * 3) + " #Fire Damage";
 		break;
 
 	case(GemType::SILVERSTONE):
 		armour = plusminus(tier * 5) + "% #Arcane Resistance";
-		jewel = plusminus(tier) + " #Max Magic";
+		jewel = plusminus(tier * 3) + " #Max Magic";
 		weapon = plusminus(tier * 3) + " #Arcane Damage";
 		break;
 
 	case(GemType::SPIDERSTONE):
 		armour = plusminus(tier * 5) + "% #Poison Resistance";
-		jewel = plusminus(tier) + "% #Critical Chance";
+		jewel = plusminus(tier * 2) + "% #Critical Chance";
 		weapon = plusminus(tier * 3) + " #Poison Damage";
 		break;
 	}
