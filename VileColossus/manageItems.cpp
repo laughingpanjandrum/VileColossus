@@ -945,9 +945,8 @@ const int getGemstoneFabricateCost(itemPtr it)
 	switch (it->_enhancementLevel)
 	{
 	case(2):	return 100;
-	case(3):	return 500;
-	case(4):	return 2500;
-	case(5):	return 10000;
+	case(3):	return 1000;
+	case(4):	return 10000;
 	default:
 		return 0;
 	}
