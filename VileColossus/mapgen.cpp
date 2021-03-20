@@ -1500,6 +1500,31 @@ gridmapPtr mapgen::generate_OuterDark(int abyss_lvl, bool descending)
 }
 
 
+//	Final zone, with the final boss
+gridmapPtr mapgen::generate_AbyssHeart(game_progress* progress)
+{
+	auto m = gridmapPtr(new gridmap(30, 30));
+	fillMap(m, { MT_FLOOR_VOID });
+	scatterOnMap(m, MT_WALL_ICE, 0.05);
+	scatterOnMap(m, MT_BUSH, 0.05);
+	scatterOnMap(m, MT_LAVA, 0.05);
+	m->_name = "HEART OF THE ABYSS";
+
+	auto boss = monsterdata::generate(MonsterType::BOSS_VILE_COLOSSUS, 40 + 5 * progress->_killedColossus);
+	m->addCreature(boss, 15, 15);
+
+	auto n = new TCODBsp(10, 10, 10, 10);
+	vector<MonsterType> mtypes = { MonsterType::KNIGHT_DREAD, MonsterType::VILESPAWN };
+	for (auto mt : mtypes)
+	{
+		auto mlist = rollMonsterGroup(20, mt);
+		addMonsterGroupToNode(m, &mlist, n);
+	}
+
+	return m;
+}
+
+
 
 //	BOSS MAP: The Pallid Rotking
 gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount)
@@ -1580,7 +1605,7 @@ int mapgen::rollMapDimension()
 
 
 //	Creates an abyssal map. Different types of maps are created depending on the ritual type selected.
-gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, MaterialType _ritualType)
+gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, game_progress* progress, MaterialType _ritualType)
 {
 	gridmapPtr m;
 
@@ -1590,6 +1615,9 @@ gridmapPtr mapgen::generate_Abyssal(int abyss_lvl, MaterialType _ritualType)
 	case(MaterialType::SODDEN_FLESH):	m = generate_DrownedCourt(abyss_lvl); break;
 	case(MaterialType::TOMB_IDOL):		m = generate_AmogTomb(abyss_lvl); break;
 	case(MaterialType::VIRIDIAN_GLASS):	m = generate_Viridia(abyss_lvl); break;
+
+	case(MaterialType::DEAD_GODS_EYE):	m = generate_AbyssHeart(progress); break;
+
 	default:
 		m = generate_OuterDark(abyss_lvl, true);
 	}

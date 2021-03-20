@@ -175,6 +175,8 @@ namespace mapgen
 	gridmapPtr generate_Viridia(int abyss_lvl);
 	gridmapPtr generate_OuterDark(int dl, bool descending);
 
+	gridmapPtr generate_AbyssHeart(game_progress* progress);
+
 
 	//		Boss maps
 
@@ -186,7 +188,7 @@ namespace mapgen
 
 	int rollMapDimension();
 
-	gridmapPtr generate_Abyssal(int abyss_lvl, MaterialType _ritualType);
+	gridmapPtr generate_Abyssal(int abyss_lvl, game_progress* progress, MaterialType _ritualType);
 	gridmapPtr generate(int dl, game_progress* progress, bool descending = true);
 
 	void openHellPortal(gridmapPtr m);

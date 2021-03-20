@@ -298,6 +298,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::IMP_MEGA):
 		return { "protected", "immune_fire", "casts_firebolt", "less_damage", };
 
+	case(MonsterType::KNIGHT_DREAD):
+		return { "protected_heavy", "slow", "more_damage", "electric_attack", "resists_fire", "resists_electric" };
+
 	case(MonsterType::LIGHTNING_SPIRE):
 		return { "immobile", "immune_electric", "protected", "casts_lightning", "no_attack", };
 
@@ -393,6 +396,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::VAMPIRE_SPAWN):
 		return { "vampiric", "undead", "resists_arcane", };
 
+	case(MonsterType::VILESPAWN):
+		return { "casts_poison_spit", "resists_poison", "flits", "fast", };
+
 	case(MonsterType::WORM_DEMON):
 		return { "protected_heavy", "slow", "more_damage", "inaccurate", "more_health", };
 
@@ -449,6 +455,8 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
 		return { "ethereal", "casts_lightning", "spawner", "immune_electric", "electric_attack", "teleports", "avatar", };
 		
+	case(MonsterType::BOSS_VILE_COLOSSUS):
+		return { "more_health", "more_damage", "defended", "protected", "resists_arcane", "resists_electric", "resists_fire", "resists_poison", "megaspawner", "flits", "casts_lightning", };
 
 	default:
 		return {};
@@ -473,6 +481,8 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::BOSS_DROWNED_DOGOSSA):
 	case(MonsterType::BOSS_TOMB_LORD_AMOG):
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
+
+	case(MonsterType::BOSS_VILE_COLOSSUS):
 		
 		return 5;
 
@@ -490,6 +500,7 @@ int monsterdata::getDefaultMonsterTier(const MonsterType id)
 	case(MonsterType::DEMON_PUTRESCENT):
 	case(MonsterType::FLAME_CONJURER):
 	case(MonsterType::GRIM_KNIGHT):
+	case(MonsterType::KNIGHT_DREAD):
 	case(MonsterType::OGRE_BERSERKER):
 	case(MonsterType::PALE_KNIGHT):
 	case(MonsterType::RAT_KING):
@@ -555,6 +566,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::IMP):						return make_tuple("imp", 'i', TCODColor::flame);
 	case(MonsterType::IMP_MEGA):				return make_tuple("mega-imp", 'I', TCODColor::flame);
 	case(MonsterType::NIGHTGAUNT):				return make_tuple("nightgaunt", 'n', TCODColor::lightBlue);
+	case(MonsterType::KNIGHT_DREAD):			return make_tuple("Dread Knight", 'N', TCODColor::red);
 	case(MonsterType::OGRE):					return make_tuple("ogre rockthrower", 'O', TCODColor::pink);
 	case(MonsterType::OGRE_BERSERKER):			return make_tuple("Ogre Berserker", 'O', TCODColor::darkRed);
 	case(MonsterType::OGRE_BRUTE):				return make_tuple("ogre brute", 'O', TCODColor::orange);
@@ -592,6 +604,7 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::VAMPIRE):					return make_tuple("vampire", 'V', TCODColor::lightRed);
 	case(MonsterType::VAMPIRE_PRINCE):			return make_tuple("VAMPIRE PRINCE", 'V', TCODColor::fuchsia);
 	case(MonsterType::VAMPIRE_SPAWN):			return make_tuple("Vampire spawn", 'v', TCODColor::red);
+	case(MonsterType::VILESPAWN):				return make_tuple("vilespawn", 'v', TCODColor::lime);
 	case(MonsterType::WALKING_SKULL_PILE):		return make_tuple("Walking Skull Pile", 'S', TCODColor::desaturatedYellow);
 	case(MonsterType::WORM_DEMON):				return make_tuple("Worm Demon", 'O', TCODColor::lightGrey);
 	case(MonsterType::WRAITH):					return make_tuple("wraith", 'w', TCODColor::lightPurple);
@@ -617,6 +630,8 @@ monsterdata::flavourdat monsterdata::get_flavourdat_for_monster_id(MonsterType i
 	case(MonsterType::BOSS_DROWNED_DOGOSSA):	return make_tuple("= AVATAR OF DROWNED DOGOSSA =", 'G', TCODColor::lime);
 	case(MonsterType::BOSS_TOMB_LORD_AMOG):		return make_tuple("= AVATAR OF THE TOMB LORD =", 'T', TCODColor::brass);
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):	return make_tuple("= LOST PRINCE OF VIRIDIA =", 'P', TCODColor::silver);
+
+	case(MonsterType::BOSS_VILE_COLOSSUS):		return make_tuple("== THE VILE COLOSSUS =", 'X', TCODColor::gold);
 
 	default:
 		return make_tuple("error_id", '?', COLOR_WHITE);

@@ -204,6 +204,12 @@ const MonsterType monster::rollMonsterToSpawn() const
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
 		return MonsterType::LIGHTNING_SPIRE;
 
+		
+	case(MonsterType::BOSS_VILE_COLOSSUS):
+		return MonsterType::VILESPAWN;
+
+
+
 	case(MonsterType::BLOOD_LEECH):
 		return MonsterType::BLOOD_BLOB;
 
