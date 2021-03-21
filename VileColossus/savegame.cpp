@@ -39,7 +39,6 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	{
 		auto v = read_int(f);
 		gdata->_knownEnchants.push_back(static_cast<ItemEnchantment>(v));
-		cout << getItemEnchantmentName(static_cast<ItemEnchantment>(v)) << " ";
 	}
 	cout << endl;
 
@@ -148,7 +147,6 @@ size_t savegame::read_size_t(ifstream& f)
 {
 	size_t dlen;
 	f.read(reinterpret_cast<char*>(&dlen), sizeof(size_t));
-	cout << "[" << dlen << "] ";
 	return dlen;
 }
 
@@ -175,6 +173,8 @@ itemPtr savegame::deserialize_item(ifstream& f)
 	it->_containsSpell = static_cast<Spell>(read_int(f));
 	it->_damageTaken = read_int(f);
 	it->_enhancementLevel = read_int(f);
+	it->_exalted = read_bool(f);
+	it->_exaltLevel = read_int(f);
 	it->_gemType = static_cast<GemType>(read_int(f));
 	it->_isNewItem = read_int(f);
 	it->_isTwoHanded = read_int(f);
@@ -289,6 +289,8 @@ void savegame::serialize_item(ofstream& f, const itemPtr it)
 	serialize_int(f, static_cast<uint32_t>(it->_containsSpell));
 	serialize_int(f, it->_damageTaken);
 	serialize_int(f, it->_enhancementLevel);
+	serialize_bool(f, it->_exalted);
+	serialize_int(f, it->_exaltLevel);
 	serialize_int(f, static_cast<uint32_t>(it->_gemType));
 	serialize_int(f, it->_isNewItem);
 	serialize_int(f, it->_isTwoHanded);
@@ -307,7 +309,6 @@ void savegame::serialize_item(ofstream& f, const itemPtr it)
 	}
 	
 	serialize_size_t(f, it->_Enchants.size());
-	cout << " > enchants " << it->_Enchants.size();
 	for (unsigned i = 0; i < it->_Enchants.size(); i++)
 	{
 		serialize_int(f, it->_Enchants[i]);
@@ -315,7 +316,6 @@ void savegame::serialize_item(ofstream& f, const itemPtr it)
 	}
 
 	serialize_size_t(f, it->_socketSlots.size());
-	cout << " > sockets " << it->_socketSlots.size();
 	for (unsigned i = 0; i < it->_socketSlots.size(); i++)
 	{
 		serialize_int(f, static_cast<uint32_t>(it->_socketSlots[i]));
