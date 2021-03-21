@@ -118,6 +118,8 @@ public:
 	int getReinforceCost() const;
 	MaterialType getEnhanceMaterial() const;
 
+	void addExaltLevel();
+
 
 	//	Socketed gems
 

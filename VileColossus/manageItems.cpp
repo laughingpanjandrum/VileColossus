@@ -751,6 +751,155 @@ void selectDemonforgeOption(gamedataPtr gdata, const int num)
 }
 
 
+//	Tests whether we have a given no. of gems of the given type and tier stashed.
+bool hasGemsOfType(gamedataPtr gdata, const GemType gtype, const int tier, const int qty)
+{
+	for (auto it : gdata->_stashedGems)
+	{
+		if (it->_gemType == gtype && it->_enhancementLevel == tier)
+		{
+			return it->_amountLeft >= qty;
+		}
+	}
+	return false;
+}
+
+
+//	Lose the given no. of gems of the given type and tier.
+void expendGems(gamedataPtr gdata, const GemType gtype, const int tier, const int qty)
+{
+	for (unsigned i = 0; i < gdata->_stashedGems.size(); i++)
+	{
+		auto it = gdata->_stashedGems[i];
+		if (it->_gemType == gtype && it->_enhancementLevel == tier)
+		{
+			//	expend the gems
+			it->_amountLeft -= qty;
+
+			//	remove from list if none are left
+			if (it->_amountLeft < 0)
+				gdata->_stashedGems.erase(gdata->_stashedGems.begin() + i);
+			return;
+		}
+	}
+}
+
+
+//	Type of gem required to exalt an item, and the minimum tier.
+const pair<GemType, int> getGemForExalt(const itemPtr it)
+{
+	pair<GemType, int> cost;
+
+	//	Type of gem determined by category
+	switch (it->_category)
+	{
+	case(ITEM_BOOTS):
+	case(ITEM_BRACERS):
+	case(ITEM_GLOVES):
+	case(ITEM_HELMET):
+	case(ITEM_SHOULDERS):
+		cost.first = GemType::BLACKSTONE;
+		break;
+
+	case(ITEM_CHESTPIECE):
+		cost.first = GemType::BOLTSTONE;
+		break;
+
+	case(ITEM_QUIVER):
+	case(ITEM_SHIELD):
+		cost.first = GemType::FLAMESTONE;
+		break;
+
+	case(ITEM_WEAPON):
+		cost.first = GemType::SPIDERSTONE;
+		break;
+	}
+
+
+	//	Tier determined by exalt level
+	if		(it->_exaltLevel < 2)	cost.second = 1;
+	else if (it->_exaltLevel < 4)	cost.second = 2;
+	else if (it->_exaltLevel < 6)	cost.second = 3;
+	else							cost.second = 4;
+
+	return cost;
+}
+
+//	No. of gems required to exalt an item.
+const int getGemQuantityForExalt(const itemPtr it)
+{
+	switch (it->_category)
+	{
+	case(ITEM_BOOTS):
+	case(ITEM_BRACERS):
+	case(ITEM_GLOVES):
+	case(ITEM_HELMET):
+	case(ITEM_SHOULDERS):
+		return 1;
+
+	case(ITEM_CHESTPIECE):
+		return 5;
+
+	case(ITEM_QUIVER):
+	case(ITEM_SHIELD):
+		return 3;
+
+	case(ITEM_WEAPON):
+		return 3;
+	}
+}
+
+
+//	Type and qty of materials required to exalt an item.
+const pair<MaterialType, int> getMaterialForExalt(const itemPtr it)
+{
+	pair<MaterialType, int> cost;
+
+	//	Material type
+	if (it->_exaltLevel < 3)
+	{
+		cost.first = MaterialType::MAGIC_DUST;
+		cost.second = (it->_exaltLevel + 1) * 50;
+	}
+	else if (it->_exaltLevel < 6)
+	{
+		cost.first = MaterialType::GLOWING_POWDER;
+		cost.second = (it->_exaltLevel - 2) * 50;
+	}
+	else
+	{
+		cost.first = MaterialType::RADIANT_ASH;
+		cost.second = it->_exaltLevel - 5;
+	}
+
+	return cost;
+}
+
+
+//	Attempt to increase the exalt level of the selected equipment item
+void tryExaltItem(gamedataPtr gdata)
+{
+	if (gdata->_idx < SLOT__NONE)
+	{
+		auto it = gdata->_player->getItemInSlot(static_cast<EquipmentSlot>(gdata->_idx));
+		if (it != nullptr && it->_exalted)
+		{
+			//	Make sure we can pay for it
+			auto gcost = getGemForExalt(it);
+			auto gqty = getGemQuantityForExalt(it);
+			auto mcost = getMaterialForExalt(it);
+
+			//	Do the thing
+			if (hasGemsOfType(gdata, gcost.first, gcost.second, gqty) && hasMaterial(gdata, mcost.first, mcost.second))
+			{
+				it->addExaltLevel();
+				spendMaterial(gdata, mcost.first, mcost.second);
+				expendGems(gdata, gcost.first, gcost.second, gqty);
+			}
+		}
+	}
+}
+
 void openDemonforge(gamedataPtr gdata)
 {
 	autodepositMaterials(gdata);

@@ -438,10 +438,10 @@ void game::processInput()
 
 			//	Demonforge
 		case(STATE_DEMONFORGE):
-			if (_ih->isKeyPressed('U'))
-				tryUpgradeDemonforge(_gdata);
-			else if (_ih->isNumberKey())
-				selectDemonforgeOption(_gdata, _ih->numberKeyToInt());
+			if (_ih->isDirectionalKeyPressed())
+				scrollMenu(_ih->getVectorFromKeypress().second, SLOT__NONE);
+			else if (_ih->isKeyPressed('e'))
+				tryExaltItem(_gdata);
 			break;
 
 
@@ -708,14 +708,14 @@ void game::awaitDebugCommand()
 	else if (txt == "drop10")
 	{
 		for (unsigned i = 0; i < 10; i++)
-			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, roll_one_in(5)), _gdata->_player->_pos);
+			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, roll_one_in(4)), _gdata->_player->_pos);
 	}
 	else if (txt == "dropleg")
 		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, true), _gdata->_player->_pos);
 	else if (txt == "gems10")
 	{
 		for (unsigned i = 0; i < 10; i++)
-			_gdata->_map->addItem(lootgen::generateGem(randint(1, 5), 1), _gdata->_player->_pos);
+			_gdata->_map->addItem(lootgen::generateGem(randint(1, 4), 1), _gdata->_player->_pos);
 	}
 	else if (txt == "materials")
 	{

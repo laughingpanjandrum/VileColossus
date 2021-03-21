@@ -1123,42 +1123,83 @@ void display::drawAlchemy(gamedataPtr gdata)
 void display::drawDemonforge(gamedataPtr gdata)
 {
 	//	Base
-	drawBox(2, 2, 50, 10, COLOR_DARK);
+	drawBox(2, 2, 40, 31, COLOR_DARK);
 	_win.write(3, 2, "THE DEMONFORGE", TCODColor::orange);
-	_win.write(41, 2, "Tier " + to_string(gdata->_demonforgeTier), TCODColor::white);
+	int x = 4, y = 4;
 
 
 	//	Forges
-
-	auto cost = getCostToForgeItem(3);
-	//drawProgressDots(4, 4, 3, 4, TCODColor::gold);
-	writeFormatted(4, 4, "#1 @Forge a random item for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { COLOR_LIGHT, getMaterialTypeColor(cost.first) });
-
-	cost = getCostToForgeItem(4);
-	//drawProgressDots(4, 5, 4, 4, TCODColor::gold);
-	writeFormatted(4, 5, "#2 @Forge a random item for #" + to_string(cost.second) + " " + getMaterialTypeName(cost.first), { COLOR_LIGHT, getMaterialTypeColor(cost.first) });
-
-
-	//	Transmutations
-	writeFormatted(4, 7, "#3 @Transmute #500 glowing goo @to #100 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
-	writeFormatted(4, 8, "#4 @Transmute #500 luminous dust @to #1 radiant ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
-
-
-	//	Other fabrications
-	writeFormatted(4, 9, "#5 @Create a #notched cube @for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::NOTCHED_CUBE), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
-
-
-	//	Upgrades
-	switch (gdata->_demonforgeTier)
+	for (unsigned i = 0; i < SLOT__NONE; i++)
 	{
-	case(1):	writeFormatted(4, 12, "#U @Upgrade forge to Tier 2 for #500 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST) }); break;
-	case(2):	writeFormatted(4, 12, "#U @Upgrade forge to Tier 3 for #250 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER) }); break;
+		auto slot = static_cast<EquipmentSlot>(i);
+		_win.write(x, ++y, getEquipmentSlotName(slot), COLOR_DARK);
+
+		bool selected = i == gdata->_idx;
+		if (selected)
+			_win.writec(x - 1, y, '>', COLOR_HIGHLIGHT);
+
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			if (selected)
+			{
+				_win.writec(x + 9, y, it->getGlyph(), it->getColor());
+				_win.write(x + 11, y, it->getName(), COLOR_BLACK, it->getColor());
+			}
+			else
+			{
+				_win.writec(x + 8, y, it->getGlyph(), it->getColor());
+				_win.write(x + 10, y, it->getName(), it->getColor());
+			}
+		}
+		else
+			_win.write(x + 15, y, "---", TCODColor::darkGrey);
+	}
+
+
+	//	Description of selected
+	if (gdata->_idx < SLOT__NONE)
+	{
+		auto slot = static_cast<EquipmentSlot>(gdata->_idx);
+		auto it = gdata->_player->getItemInSlot(slot);
+		if (it != nullptr)
+		{
+			//	item info
+			drawItemInfo(gdata, it, 47, 4);
+
+			//	enhance cost
+			y += 4;
+			if (it->_exalted)
+			{
+				//	key prompt
+				writeFormatted(x, y, "#e @Exalt item to +" + to_string(it->_exaltLevel + 1), { COLOR_LIGHT });
+
+				//	get requirements
+				auto gcost = getGemForExalt(it);
+				auto gqty = getGemQuantityForExalt(it);
+				auto mcost = getMaterialForExalt(it);
+
+				//	display requirements
+				y += 2;
+				_win.write(x, y, "Requires:", COLOR_MEDIUM);
+
+				_win.write(x + 2, ++y, "x" + to_string(gqty) + " " + getGemTypeFullName(gcost.first, gcost.second), getGemTypeColor(gcost.first));
+				if (!hasGemsOfType(gdata, gcost.first, gcost.second, gqty))
+					_win.writec(x, y, 'x', COLOR_NEGATIVE);
+
+				_win.write(x + 2, ++y, "x" + to_string(mcost.second) + " " + getMaterialTypeName(mcost.first), getMaterialTypeColor(mcost.first));
+				if (!hasMaterial(gdata, mcost.first, mcost.second))
+					_win.writec(x, y, 'x', COLOR_NEGATIVE);
+			}
+			else
+				writeFormatted(x, y, "Only #exalted @items can be forged.", { COLOR_MEDIUM });
+		}
 	}
 
 	
 	//	OTHER STUFF
-	drawStashedMaterials(gdata, 55, 4);
-	drawMessages(gdata);
+	drawStashedMaterials(gdata, 47, 25);
+	drawStashedGemstones(gdata, 47, 37);
 }
 
 

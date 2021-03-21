@@ -400,6 +400,39 @@ MaterialType item::getEnhanceMaterial() const
 	}
 }
 
+
+//	Juices up an item. Effects depend on item type.
+void item::addExaltLevel()
+{
+	_exaltLevel++;
+
+	//	properties change
+	switch (_category)
+	{
+	case(ITEM_BOOTS):
+	case(ITEM_BRACERS):
+	case(ITEM_CHESTPIECE):
+	case(ITEM_GLOVES):
+	case(ITEM_HELMET):
+	case(ITEM_SHOULDERS):
+	case(ITEM_SHIELD):
+		adjustProperty(PROP_DEFENCE, 1);
+		adjustProperty(PROP_ARMOUR_VALUE, MIN(4, 1 + _Property[PROP_ARMOUR_VALUE] / 5));
+		break;
+
+	case(ITEM_QUIVER):
+		adjustProperty(PROP_ACCURACY_MOD, 1);
+		adjustProperty(PROP_BASE_DAMAGE, randint(0, 2));
+		break;
+
+	case(ITEM_WEAPON):
+		adjustProperty(PROP_ACCURACY_MOD, 1);
+		adjustProperty(PROP_BASE_DAMAGE, _Property[PROP_BASE_DAMAGE] / 10);
+		break;
+	}
+}
+
+
 //	Add the given number of available empty sockets.
 void item::adjustMaxSockets(const int adj)
 {

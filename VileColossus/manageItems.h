@@ -81,6 +81,7 @@ void repairEquipmentItem(gamedataPtr gdata);
 
 //	The DEMONFORGE
 
+//	(no longer used)	----
 const pair<MaterialType, int> getCostToForgeItem(const int rarity);
 
 void transmuteMaterial(gamedataPtr gdata, const int num);
@@ -88,6 +89,18 @@ void tryUpgradeDemonforge(gamedataPtr gdata);
 void createWithDemonforge(gamedataPtr gdata, const int rarity);
 
 void selectDemonforgeOption(gamedataPtr gdata, const int num);
+//						----
+
+
+bool hasGemsOfType(gamedataPtr gdata, const GemType gtype, const int tier, const int qty);
+void expendGems(gamedataPtr gdata, const GemType gtype, const int tier, const int qty);
+
+
+const pair<GemType, int> getGemForExalt(const itemPtr it);
+const int getGemQuantityForExalt(const itemPtr it);
+const pair<MaterialType, int> getMaterialForExalt(const itemPtr it);
+
+void tryExaltItem(gamedataPtr gdata);
 
 void openDemonforge(gamedataPtr gdata);
 
