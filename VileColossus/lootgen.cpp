@@ -75,7 +75,7 @@ const vector<ItemEnchantment> lootgen::getEnchantmentsForItemCategory(const Item
 					ENCH_MANALEECH, ENCH_RAGE, ENCH_SHARPNESS, ENCH_SLAYING, ENCH_WOUNDING, };
 
 	case(ITEM_SHIELD):
-		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_MAGIC, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_THORNS, ENCH_WOUNDING, };
+		return { ENCH_ARMOURING, ENCH_DEFENCE, ENCH_FURY,  ENCH_GREED, ENCH_LIFE, ENCH_MAGIC, ENCH_MANALEECH, ENCH_SHARPNESS, ENCH_SPELLPOWER, ENCH_THORNS, ENCH_WOUNDING, };
 
 	case(ITEM_WEAPON):
 		return { ENCH_ACCURACY, ENCH_ARCANE, ENCH_ARMOURING, ENCH_BURNING, ENCH_DEFENCE, ENCH_FURY,
@@ -168,7 +168,7 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_LIGHTNING):		return randint(1, 6);
 	case(ENCH_MAGIC):			return randint(1, 3);
 	case(ENCH_MAGIC_RESTORE):	return randint(1, 6);
-	case(ENCH_MANALEECH):		return randint(1, 2);
+	case(ENCH_MANALEECH):		return randint(2, 3);
 	case(ENCH_POISON_WARD):		return randint(5, 15);
 	case(ENCH_RAGE):			return randint(5, 10);
 	case(ENCH_REGEN):			return randint(4, 8);
@@ -494,7 +494,7 @@ itemPtr lootgen::generateArmourPiece(const int tier, const int rarity)
 {
 	auto it = generateArmourPieceOfType(ARMOUR_CATEGORIES[randrange(ARMOUR_CATEGORIES.size())], tier);
 	it->_rarity = rarity;
-	it->_enhancementLevel = randint(it->_rarity - 1, it->_rarity);
+	it->_enhancementLevel = randint(it->_rarity, it->_rarity + 1);
 	return it;
 }
 
@@ -717,7 +717,7 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 
 	//	complete item
 	it->_rarity = rarity;
-	it->_enhancementLevel = randint(it->_rarity - 1, it->_rarity);
+	it->_enhancementLevel = randint(it->_rarity, it->_rarity + 1);
 
 	return it;
 }

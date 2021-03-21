@@ -146,7 +146,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 
 
 	//	Chance of GEM(s) at higher levels.
-	if (target->_level >= 12)
+	if (target->_level >= 6)
 	{
 		//	decide how many
 		int gems = 0;
@@ -254,19 +254,25 @@ void openLootChest(gamedataPtr gdata, const intpair pt)
 	messages::add(gdata, "You smash open the #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
 
 
-	//	Quality determined by type of chest
-	int quality = 1;
+	//	Rarity determined by type of chest
+	int rarity = 1;
 	switch (tl)
 	{
-	case(MT_CHEST_GLOWING):		quality = 2; break;
-	case(MT_CHEST_LUMINOUS):	quality = 3; break;
-	case(MT_CHEST_RADIANT):		quality = 4; break;
+	case(MT_CHEST_GLOWING):		rarity = 2; break;
+	case(MT_CHEST_LUMINOUS):	rarity = 3; break;
+	case(MT_CHEST_RADIANT):		rarity = 4; break;
 	}
 
 
-	//	Rarity depends on quality (chance for it to be higher)
-	int rarity = quality;
+	//	Chance to get higher-rarity items
 	if (roll_one_in(6)) rarity++;
+
+
+	//	Tier of item
+	int quality;
+	if		(gdata->_depth < 10)	quality = 1;
+	else if (gdata->_depth < 20)	quality = 2;
+	else							quality = 3;
 
 
 	//	Delete the chest

@@ -8,6 +8,8 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
+	make 'u died' screen more prominent
+
 */
 
 
