@@ -41,6 +41,7 @@ namespace lootgen
 	};
 
 	const vector<GemType> BASIC_GEM_TYPES = { GemType::BLACKSTONE, GemType::BOLTSTONE, GemType::FLAMESTONE, GemType::SILVERSTONE, GemType::SPIDERSTONE, };
+	const vector<GemType> SPECIAL_GEM_TYPES = { GemType::BLOODY_FLESHGEM, GemType::DOGOSSAN_BONEGEM, GemType::VIRIDIAN_PALEGEM };
 
 	const vector<Spell> SPELLS_TIER_1 = { Spell::ARCANE_EMANATION, Spell::BLINK, Spell::CALL_LIGHTNING, Spell::CONJURE_FLAME, Spell::SMITE_EVIL, Spell::VENOMFANG, };
 	const vector<Spell> SPELLS_TIER_2 = { Spell::ARCANE_PULSE, Spell::CHAIN_LIGHTNING, Spell::FIREBALL, Spell::TELEPORT, Spell::TOXIC_RADIANCE, };

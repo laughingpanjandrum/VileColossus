@@ -1750,53 +1750,75 @@ void display::drawItemInfoDetailed(gamedataPtr gdata, itemPtr it)
 //	Effects of a gem of the given type, for each type of socket.
 void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int tier, int atx, int aty, const ItemCategory hcat)
 {
-	//	outlines for each
-	string weapon, armour, jewel;
-	switch (gem)
+	//	gems with singular effects
+	if (doesGemHaveSingularEffect(gem))
 	{
-	case(GemType::BLACKSTONE):
-		armour = plusminus(tier * 3) + " #Armour Value";
-		jewel = plusminus(tier * 50) + "% #Critical Damage";
-		weapon = plusminus(tier * 4) + " #Physical Damage";
-		break;
+		switch (gem)
+		{
+		case(GemType::BLOODY_FLESHGEM):
+			_win.writeWrapped(atx, aty, 40, "Increases health leeched on kill by +10 when socketed.", COLOR_MEDIUM);
+			break;
 
-	case(GemType::BOLTSTONE):
-		armour = plusminus(tier * 5) + "% #Electric Resistance";
-		jewel = plusminus(tier * 25) + "% #Spell Power";
-		weapon = plusminus(tier * 3) + " #Electric Damage";
-		break;
+		case(GemType::DOGOSSAN_BONEGEM):
+			_win.writeWrapped(atx, aty, 40, "Increases fragments gained by +50% when socketed.", COLOR_MEDIUM);
+			break;
 
-	case(GemType::FLAMESTONE):
-		armour = plusminus(tier * 5) + "% #Fire Resistance";
-		jewel = plusminus(tier * 25) + " #Max Health";
-		weapon = plusminus(tier * 3) + " #Fire Damage";
-		break;
-
-	case(GemType::SILVERSTONE):
-		armour = plusminus(tier * 5) + "% #Arcane Resistance";
-		jewel = plusminus(tier * 3) + " #Max Magic";
-		weapon = plusminus(tier * 3) + " #Arcane Damage";
-		break;
-
-	case(GemType::SPIDERSTONE):
-		armour = plusminus(tier * 5) + "% #Poison Resistance";
-		jewel = plusminus(tier * 2) + "% #Critical Chance";
-		weapon = plusminus(tier * 3) + " #Poison Damage";
-		break;
+		case(GemType::VIRIDIAN_PALEGEM):
+			_win.writeWrapped(atx, aty, 40, "Increases magic leeched on kill by +4 when socketed.", COLOR_MEDIUM);
+			break;
+		}
 	}
 
-	
-	//	should we highlight one of them?
-	auto ha = (hcat == ITEM_BOOTS || hcat == ITEM_BRACERS || hcat == ITEM_CHESTPIECE || hcat == ITEM_GLOVES || hcat == ITEM_HELMET || hcat == ITEM_SHOULDERS);
-	auto hj = (hcat == ITEM_AMULET || hcat == ITEM_RING);
-	auto hw = (hcat == ITEM_SHIELD || hcat == ITEM_WEAPON);
+	//	outlines for each
+	else
+	{
+		string weapon, armour, jewel;
+		switch (gem)
+		{
+		case(GemType::BLACKSTONE):
+			armour = plusminus(tier * 3) + " #Armour Value";
+			jewel = plusminus(tier * 50) + "% #Critical Damage";
+			weapon = plusminus(tier * 4) + " #Physical Damage";
+			break;
+
+		case(GemType::BOLTSTONE):
+			armour = plusminus(tier * 5) + "% #Electric Resistance";
+			jewel = plusminus(tier * 25) + "% #Spell Power";
+			weapon = plusminus(tier * 3) + " #Electric Damage";
+			break;
+
+		case(GemType::FLAMESTONE):
+			armour = plusminus(tier * 5) + "% #Fire Resistance";
+			jewel = plusminus(tier * 25) + " #Max Health";
+			weapon = plusminus(tier * 3) + " #Fire Damage";
+			break;
+
+		case(GemType::SILVERSTONE):
+			armour = plusminus(tier * 5) + "% #Arcane Resistance";
+			jewel = plusminus(tier * 3) + " #Max Magic";
+			weapon = plusminus(tier * 3) + " #Arcane Damage";
+			break;
+
+		case(GemType::SPIDERSTONE):
+			armour = plusminus(tier * 5) + "% #Poison Resistance";
+			jewel = plusminus(tier * 2) + "% #Critical Chance";
+			weapon = plusminus(tier * 3) + " #Poison Damage";
+			break;
+		}
 
 
-	//	actually write the effects
-	_win.write(atx, aty, "Effect if socketed into:", COLOR_LIGHT);
-	writeFormatted(atx, ++aty, "#ARMOUR #" + armour, { ha ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT, });
-	writeFormatted(atx, ++aty, "#JEWEL  #" + jewel, { hj ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
-	writeFormatted(atx, ++aty, "#WEAPON #" + weapon, { hw ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+		//	should we highlight one of them?
+		auto ha = (hcat == ITEM_BOOTS || hcat == ITEM_BRACERS || hcat == ITEM_CHESTPIECE || hcat == ITEM_GLOVES || hcat == ITEM_HELMET || hcat == ITEM_SHOULDERS);
+		auto hj = (hcat == ITEM_AMULET || hcat == ITEM_RING);
+		auto hw = (hcat == ITEM_SHIELD || hcat == ITEM_WEAPON);
+
+
+		//	actually write the effects
+		_win.write(atx, aty, "Effect if socketed into:", COLOR_LIGHT);
+		writeFormatted(atx, ++aty, "#ARMOUR #" + armour, { ha ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT, });
+		writeFormatted(atx, ++aty, "#JEWEL  #" + jewel, { hj ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+		writeFormatted(atx, ++aty, "#WEAPON #" + weapon, { hw ? COLOR_LIGHT : COLOR_DARK, COLOR_POSITIVE, COLOR_LIGHT });
+	}
 }
 
 

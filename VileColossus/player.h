@@ -30,7 +30,7 @@ public:
 
 	void raiseAttribute(const Attribute attr, const int amt = 1) { _Attributes[attr] += amt; }
 
-	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED) + getPerkBonus(PERK_FRAGMENTS_GAINED); }
+	int getGreedBonus() const { return getTotalEnchantmentBonus(ENCH_GREED) + getPerkBonus(PERK_FRAGMENTS_GAINED) + getTotalGemBonus(GemType::DOGOSSAN_BONEGEM) * 50; }
 
 
 	//	Perks
@@ -132,6 +132,8 @@ public:
 	int getTotalGemBonusFromWeapons(const GemType gem) const;
 	int getTotalGemBonusFromArmour(const GemType gem) const;
 	int getTotalGemBonusFromJewels(const GemType gem) const;
+
+	int getTotalGemBonus(const GemType gem) const;
 
 
 	//	Spells

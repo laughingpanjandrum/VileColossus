@@ -661,11 +661,16 @@ string getGemTypeName(const GemType gem)
 {
 	switch (gem)
 	{
-	case(GemType::BLACKSTONE):		return "blackstone";
-	case(GemType::BOLTSTONE):		return "boltstone";
-	case(GemType::FLAMESTONE):		return "flamestone";
-	case(GemType::SILVERSTONE):		return "silverstone";
-	case(GemType::SPIDERSTONE):		return "spiderstone";
+	case(GemType::BLACKSTONE):			return "blackstone";
+	case(GemType::BOLTSTONE):			return "boltstone";
+	case(GemType::FLAMESTONE):			return "flamestone";
+	case(GemType::SILVERSTONE):			return "silverstone";
+	case(GemType::SPIDERSTONE):			return "spiderstone";
+
+	case(GemType::BLOODY_FLESHGEM):		return "bloody fleshgem";
+	case(GemType::DOGOSSAN_BONEGEM):	return "Dogossan bonegem";
+	case(GemType::VIRIDIAN_PALEGEM):	return "Viridian palegem";
+
 	default:
 		return "gemstone??";
 	}
@@ -674,6 +679,12 @@ string getGemTypeName(const GemType gem)
 string getGemTypeFullName(const GemType gem, const int tier)
 {
 	string name = getGemTypeName(gem);
+
+	//	gems without tiers
+	if (doesGemHaveSingularEffect(gem))
+		return name;
+
+	//	gems with tiers
 	switch (tier)
 	{
 	case(1):	return "broken " + name;
@@ -685,16 +696,28 @@ string getGemTypeFullName(const GemType gem, const int tier)
 	}
 }
 
+
 colorType getGemTypeColor(const GemType gem)
 {
 	switch (gem)
 	{
-	case(GemType::BLACKSTONE):		return TCODColor::purple;
-	case(GemType::BOLTSTONE):		return getDamageTypeColor(DTYPE_ELECTRIC);
-	case(GemType::FLAMESTONE):		return getDamageTypeColor(DTYPE_FIRE);
-	case(GemType::SILVERSTONE):		return getDamageTypeColor(DTYPE_ARCANE);
-	case(GemType::SPIDERSTONE):		return getDamageTypeColor(DTYPE_POISON);
+	case(GemType::BLACKSTONE):			return TCODColor::purple;
+	case(GemType::BOLTSTONE):			return getDamageTypeColor(DTYPE_ELECTRIC);
+	case(GemType::FLAMESTONE):			return getDamageTypeColor(DTYPE_FIRE);
+	case(GemType::SILVERSTONE):			return getDamageTypeColor(DTYPE_ARCANE);
+	case(GemType::SPIDERSTONE):			return getDamageTypeColor(DTYPE_POISON);
+
+	case(GemType::BLOODY_FLESHGEM):		return TCODColor::crimson;
+	case(GemType::DOGOSSAN_BONEGEM):	return TCODColor::sea;
+	case(GemType::VIRIDIAN_PALEGEM):	return TCODColor::cyan;
+
 	default:
 		return TCODColor::darkGrey;
 	}
+}
+
+//	These gems have the same effect regardless of what they're socketed into.
+bool doesGemHaveSingularEffect(const GemType gem)
+{
+	return gem == GemType::BLOODY_FLESHGEM || gem == GemType::DOGOSSAN_BONEGEM || gem == GemType::VIRIDIAN_PALEGEM;
 }

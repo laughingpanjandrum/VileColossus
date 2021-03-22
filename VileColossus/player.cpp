@@ -418,13 +418,14 @@ int player::getLeechOnKill() const
 {
 	int total = getTotalEnchantmentBonus(ENCH_LEECHING);
 	total += getPerkBonus(PERK_HEALTH_ON_KILL);
+	total += getTotalGemBonus(GemType::BLOODY_FLESHGEM) * 10;
 	return total;
 }
 
 //	Magic gained on kill.
 int player::getManaleech() const
 {
-	return 1 + getTotalEnchantmentBonus(ENCH_MANALEECH);
+	return 1 + getTotalEnchantmentBonus(ENCH_MANALEECH) + getTotalGemBonus(GemType::VIRIDIAN_PALEGEM) * 4;
 }
 
 int player::getReprisalDamage() const
@@ -432,8 +433,6 @@ int player::getReprisalDamage() const
 	int total = getTotalEnchantmentBonus(ENCH_THORNS);
 	return total;
 }
-
-
 
 int player::getSmiteEvilDamage() const
 {
@@ -472,6 +471,12 @@ int player::getTotalGemBonusFromArmour(const GemType gem) const
 int player::getTotalGemBonusFromJewels(const GemType gem) const
 {
 	return getTotalGemBonusFromSlots({ SLOT_AMULET, SLOT_LEFT_RING, SLOT_RIGHT_RING  }, gem);
+}
+
+//	Gem bonus from EVERYTHING.
+int player::getTotalGemBonus(const GemType gem) const
+{
+	return getTotalGemBonusFromArmour(gem) + getTotalGemBonusFromJewels(gem) + getTotalGemBonusFromWeapons(gem);
 }
 
 

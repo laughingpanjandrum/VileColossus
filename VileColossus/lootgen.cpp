@@ -327,7 +327,14 @@ itemPtr lootgen::generateGemOfType(const GemType gem, const int tier, const int 
 //	Generate a gem of a random type & the given tier and rarity.
 itemPtr lootgen::generateGem(const int tier, const int rarity)
 {
-	auto gem_type = BASIC_GEM_TYPES[randrange(BASIC_GEM_TYPES.size())];
+	GemType gem_type;
+	
+	//	chance of special gem, if allowed
+	if (rarity >= 3 && roll_one_in(4))
+		gem_type = SPECIAL_GEM_TYPES[randrange(SPECIAL_GEM_TYPES.size())];
+	else
+		gem_type = BASIC_GEM_TYPES[randrange(BASIC_GEM_TYPES.size())];
+
 	return generateGemOfType(gem_type, tier, rarity);
 }
 

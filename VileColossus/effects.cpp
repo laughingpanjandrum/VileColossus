@@ -167,7 +167,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 			auto tier = randint(1, lootgen::getGemTierForMonsterLevel(target->_level));
 			if (tier >= 0)
 			{
-				auto it = lootgen::generateGem(tier, 1);
+				auto it = lootgen::generateGem(tier, rarity);
 				gdata->_map->addItem(it, pts[randrange(pts.size())]);
 			}
 		}

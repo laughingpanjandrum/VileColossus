@@ -202,8 +202,13 @@ string getBuffName(const BuffType bf);
 
 //	Socketables
 
-enum class GemType { BLACKSTONE, BOLTSTONE, FLAMESTONE, SILVERSTONE, SPIDERSTONE, __NONE, };
+enum class GemType { 
+	BLACKSTONE, BOLTSTONE, FLAMESTONE, SILVERSTONE, SPIDERSTONE, 
+	BLOODY_FLESHGEM, DOGOSSAN_BONEGEM, VIRIDIAN_PALEGEM,
+	__NONE, };
 
 string getGemTypeName(const GemType gem);
 string getGemTypeFullName(const GemType gem, const int tier);
 colorType getGemTypeColor(const GemType gem);
+
+bool doesGemHaveSingularEffect(const GemType gem);
