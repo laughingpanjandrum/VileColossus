@@ -279,7 +279,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::CHAIN_LIGHTNING):	return intpair(lvl, lvl * 2);
 	case(Spell::CONJURE_FLAME):		return intpair(lvl, lvl * 2);
 	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 4);
-	case(Spell::FIREBALL):			return intpair(lvl * 2 / 3, lvl * 2);
+	case(Spell::FIREBALL):			return intpair(lvl * 2 / 3, lvl * 3);
 	case(Spell::FIRESTORM):			return intpair(lvl * 2 / 3, lvl * 2);
 	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 2);
 	default:

@@ -524,7 +524,7 @@ void dismantleItem(gamedataPtr gdata, itemPtr it)
 	else if (it->_category == ITEM_SPELLRUNE)
 	{
 		addToStash(gdata, lootgen::generateMaterial(MaterialType::RUNE_SHARD, it->_rarity + it->_spellLevel / 2));
-		if (it->_spellLevel >= 10)
+		if (it->_spellLevel >= 10 || it->_rarity > 2 || roll_one_in(20))
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::BRIGHT_RUNE, it->_rarity));
 	}
 
@@ -1092,8 +1092,8 @@ const int getGemstoneFabricateCost(itemPtr it)
 {
 	switch (it->_enhancementLevel)
 	{
-	case(2):	return 100;
-	case(3):	return 1000;
+	case(2):	return 500;
+	case(3):	return 2500;
 	case(4):	return 10000;
 	default:
 		return 0;
