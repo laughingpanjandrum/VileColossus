@@ -167,8 +167,8 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 	case(ENCH_LIGHT):			return randint(1, 3);
 	case(ENCH_LIGHTNING):		return randint(1, 6);
 	case(ENCH_MAGIC):			return randint(1, 3);
-	case(ENCH_MAGIC_RESTORE):	return randint(1, 6);
-	case(ENCH_MANALEECH):		return randint(2, 3);
+	case(ENCH_MAGIC_RESTORE):	return randint(5, 10);
+	case(ENCH_MANALEECH):		return randint(2, 4);
 	case(ENCH_POISON_WARD):		return randint(5, 15);
 	case(ENCH_RAGE):			return randint(5, 10);
 	case(ENCH_REGEN):			return randint(4, 8);
@@ -195,8 +195,6 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 	switch (en)
 	{
 	case(ENCH_MAGIC):
-	case(ENCH_MAGIC_RESTORE):
-	case(ENCH_MANALEECH):
 	case(ENCH_SHARPNESS):
 		return 1;
 
@@ -214,12 +212,14 @@ int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
 
 	case(ENCH_ARCANE):
 	case(ENCH_LEECHING):
+	case(ENCH_MANALEECH):
 	case(ENCH_THORNS):
 	case(ENCH_WOUNDING):
 		return 3;
 
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
+	case(ENCH_MAGIC_RESTORE):
 	case(ENCH_POISON_WARD):
 	case(ENCH_REGEN):
 	case(ENCH_RESISTANCE):
@@ -963,9 +963,9 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 const int lootgen::rollEnhancementLevel(const int rarity)
 {
 	const int r = randint(1, 100);
-	if		(r <= 25)	return rarity - 2;
-	else if (r <= 75)	return rarity - 1;
-	else				return rarity;
+	if		(r <= 25)	return rarity - 1;
+	else if (r <= 75)	return rarity;
+	else				return rarity + 1;
 }
 
 
