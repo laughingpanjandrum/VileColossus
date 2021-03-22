@@ -667,8 +667,10 @@ string getGemTypeName(const GemType gem)
 	case(GemType::SILVERSTONE):			return "silverstone";
 	case(GemType::SPIDERSTONE):			return "spiderstone";
 
+	case(GemType::ABYSSAL_SPIKEGEM):	return "abyssal spikegem";
 	case(GemType::BLOODY_FLESHGEM):		return "bloody fleshgem";
 	case(GemType::DOGOSSAN_BONEGEM):	return "Dogossan bonegem";
+	case(GemType::LUMINOUS_GEM):		return "luminous gem";
 	case(GemType::VIRIDIAN_PALEGEM):	return "Viridian palegem";
 
 	default:
@@ -707,8 +709,10 @@ colorType getGemTypeColor(const GemType gem)
 	case(GemType::SILVERSTONE):			return getDamageTypeColor(DTYPE_ARCANE);
 	case(GemType::SPIDERSTONE):			return getDamageTypeColor(DTYPE_POISON);
 
+	case(GemType::ABYSSAL_SPIKEGEM):	return TCODColor::darkRed;
 	case(GemType::BLOODY_FLESHGEM):		return TCODColor::crimson;
 	case(GemType::DOGOSSAN_BONEGEM):	return TCODColor::sea;
+	case(GemType::LUMINOUS_GEM):		return TCODColor::silver;
 	case(GemType::VIRIDIAN_PALEGEM):	return TCODColor::cyan;
 
 	default:
@@ -719,5 +723,5 @@ colorType getGemTypeColor(const GemType gem)
 //	These gems have the same effect regardless of what they're socketed into.
 bool doesGemHaveSingularEffect(const GemType gem)
 {
-	return gem == GemType::BLOODY_FLESHGEM || gem == GemType::DOGOSSAN_BONEGEM || gem == GemType::VIRIDIAN_PALEGEM;
+	return gem == GemType::ABYSSAL_SPIKEGEM || gem == GemType::BLOODY_FLESHGEM || gem == GemType::DOGOSSAN_BONEGEM || gem == GemType::LUMINOUS_GEM || gem == GemType::VIRIDIAN_PALEGEM;
 }

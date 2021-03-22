@@ -1755,12 +1755,20 @@ void display::drawGemTypeEffects(gamedataPtr gdata, const GemType gem, const int
 	{
 		switch (gem)
 		{
+		case(GemType::ABYSSAL_SPIKEGEM):
+			_win.writeWrapped(atx, aty, 40, "Increases reprisal damage by +10 when socketed.", COLOR_MEDIUM);
+			break;
+
 		case(GemType::BLOODY_FLESHGEM):
 			_win.writeWrapped(atx, aty, 40, "Increases health leeched on kill by +10 when socketed.", COLOR_MEDIUM);
 			break;
 
 		case(GemType::DOGOSSAN_BONEGEM):
 			_win.writeWrapped(atx, aty, 40, "Increases fragments gained by +50% when socketed.", COLOR_MEDIUM);
+			break;
+
+		case(GemType::LUMINOUS_GEM):
+			_win.writeWrapped(atx, aty, 40, "Increases light radius by +2 when socketed.", COLOR_MEDIUM);
 			break;
 
 		case(GemType::VIRIDIAN_PALEGEM):

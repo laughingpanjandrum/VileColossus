@@ -717,8 +717,10 @@ void game::awaitDebugCommand()
 	}
 	else if (txt == "sgems")
 	{
-		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::BLOODY_FLESHGEM, 1, 4), _gdata->_player->_pos);
+		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::ABYSSAL_SPIKEGEM, 1, 4), _gdata->_player->_pos);
+		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::BLOODY_FLESHGEM, 1, 4), _gdata->_player->_pos); 
 		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::DOGOSSAN_BONEGEM, 1, 4), _gdata->_player->_pos);
+		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::LUMINOUS_GEM, 1, 4), _gdata->_player->_pos);
 		_gdata->_map->addItem(lootgen::generateGemOfType(GemType::VIRIDIAN_PALEGEM, 1, 4), _gdata->_player->_pos);
 	}
 	else if (txt == "materials")

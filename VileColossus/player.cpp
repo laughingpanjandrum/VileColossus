@@ -271,6 +271,7 @@ int player::getAttackEnergyCost() const
 int player::getVisionRadius() const
 {
 	int total = 5 + getTotalEnchantmentBonus(ENCH_LIGHT);
+	total += getTotalGemBonus(GemType::LUMINOUS_GEM) * 2;
 	return total;
 }
 
@@ -431,6 +432,7 @@ int player::getManaleech() const
 int player::getReprisalDamage() const
 {
 	int total = getTotalEnchantmentBonus(ENCH_THORNS);
+	total += getTotalGemBonus(GemType::ABYSSAL_SPIKEGEM) * 10;
 	return total;
 }
 
