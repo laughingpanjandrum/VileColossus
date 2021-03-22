@@ -866,7 +866,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 
 	case(ENCH_DIVINE):
 		it = generateWeapon(maxTier, 4);
-		it->addEnchantment(ENCH_DIVINE, randint(2, 4));
+		it->addEnchantment(ENCH_DIVINE, randint(6, 9));
 		break;
 
 	case(ENCH_KINSLAYER):
@@ -901,7 +901,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_THUNDERSPIKE):
 	case(ENCH_VENOMSPIKE):
 		it = generateArmourPiece(maxTier, 4);
-		it->addEnchantment(en, randint(5, 15));
+		it->addEnchantment(en, randint(5, 10) * maxTier);
 		break;
 
 	case(ENCH_SHADOWSTRIKE):
@@ -911,7 +911,7 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 
 	case(ENCH_SKYSPLITTER):
 		it = generateWeapon(maxTier, 4);
-		it->addEnchantment(ENCH_SKYSPLITTER, randint(4, 9));
+		it->addEnchantment(ENCH_SKYSPLITTER, randint(4, 6) + maxTier);
 		break;
 
 	case(ENCH_SPELLBURN):

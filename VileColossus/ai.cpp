@@ -39,42 +39,52 @@ bool ai::moveAwayFromPoint(gamedataPtr gdata, monsterPtr ai, intpair awayFrom)
 bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, const string spell)
 {
 	//	test accuracy
+	bool is_bullet_anim = true;
+	auto anim_col = COLOR_WHITE;
+
 	if (rollToHit(gdata, ai, target, ai->_level))
 	{
-		auto pts = getBresenhamLine(ai->_pos, target->_pos);
 		if (spell == "arcane_bolt")
 		{
-			addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ARCANE)));
+			anim_col = getDamageTypeColor(DTYPE_ARCANE);
 			inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_ARCANE);
 		}
 		else if (spell == "firebolt")
 		{
-			addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+			anim_col = getDamageTypeColor(DTYPE_FIRE);
 			inflictEnergyDamage(gdata, target, dieRoll(3, ai->_level), DTYPE_FIRE);
 		}
 		else if (spell == "fireblast")
 		{
-			addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+			anim_col = getDamageTypeColor(DTYPE_FIRE); is_bullet_anim = false;
 			inflictEnergyDamage(gdata, target, ai->getWeaponDamage(), DTYPE_FIRE);
 			trySetSurface(gdata, target->_pos, Surface::FIRE);
 		}
 		else if (spell == "lightning")
 		{
-			addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ELECTRIC)));
+			anim_col = getDamageTypeColor(DTYPE_ELECTRIC);
 			inflictEnergyDamage(gdata, target, dieRoll(2, ai->getWeaponDamage() / 2), DTYPE_ELECTRIC);
 		}
 		else if (spell == "poison_spit")
 		{
-			addAnimation(gdata, anim_Projectile(pts, '%', getDamageTypeColor(DTYPE_POISON)));
+			anim_col = getDamageTypeColor(DTYPE_POISON); is_bullet_anim = true;
 			inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_POISON);
 			trySetSurface(gdata, target->_pos, Surface::POISON_OOZE);
 		}
 		else if (spell == "sludge")
 		{
-			addAnimation(gdata, anim_Projectile(pts, '~', TCODColor::lightSepia));
+			anim_col = TCODColor::lightSepia; is_bullet_anim = false;
 			trySetSurface(gdata, target->_pos, Surface::SLUDGE);
 		}
 	}
+
+	//	attack animation
+	auto pts = getBresenhamLine(ai->_pos, target->_pos);
+	if (is_bullet_anim)
+		addAnimation(gdata, anim_BulletPath(pts, anim_col));
+	else
+		addAnimation(gdata, anim_Projectile(pts, '*', anim_col));
+
 	return true;
 }
 
