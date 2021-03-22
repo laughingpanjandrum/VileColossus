@@ -494,7 +494,7 @@ itemPtr lootgen::generateArmourPiece(const int tier, const int rarity)
 {
 	auto it = generateArmourPieceOfType(ARMOUR_CATEGORIES[randrange(ARMOUR_CATEGORIES.size())], tier);
 	it->_rarity = rarity;
-	it->_enhancementLevel = randint(it->_rarity, it->_rarity + 1);
+	it->_enhancementLevel = rollEnhancementLevel(it->_rarity);
 	return it;
 }
 
@@ -717,7 +717,7 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 
 	//	complete item
 	it->_rarity = rarity;
-	it->_enhancementLevel = randint(it->_rarity, it->_rarity + 1);
+	it->_enhancementLevel = rollEnhancementLevel(it->_rarity);
 
 	return it;
 }
@@ -956,6 +956,16 @@ int lootgen::getGemTierForMonsterLevel(const int lvl)
 	else if (lvl <= 24)	return 2;
 	else if (lvl <= 36)	return 3;
 	else				return 4;
+}
+
+
+//	Rolls a no. of active enchants for an item of a given rarity.
+const int lootgen::rollEnhancementLevel(const int rarity)
+{
+	const int r = randint(1, 100);
+	if		(r <= 25)	return rarity - 2;
+	else if (r <= 75)	return rarity - 1;
+	else				return rarity;
 }
 
 
