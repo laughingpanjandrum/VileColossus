@@ -96,22 +96,20 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	case(3):
 		drop_amt = randint(3, 5);
 		if (roll_one_in(20)) rarity++;
-		exalt_odds = 25;
 		break;
 
 	case(4):
 		drop_amt = randint(3, 6);
-		exalt_odds = 75;
 		break;
 
 	case(5):
 		drop_amt = 8 + dieRoll(4, 2);
-		exalt_odds = 90;
+		exalt_odds = 50;
 		break;
 	}
 
-	//	Chance to exalt
-	bool exalt = roll_percent(exalt_odds) && target->_level >= 30;
+	//	does this monster qualify for exaltation?
+	bool can_exalt = target->hasFlag("viledragon") || roll_percent(exalt_odds);
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
@@ -122,7 +120,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	{
 		//	Random point and item
 		auto pt = pts[randrange(pts.size())];
-		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, exalt);
+		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, (can_exalt && roll_percent(exalt_odds)));
 		gdata->_map->addItem(it, pt);
 
 		//	Animation
