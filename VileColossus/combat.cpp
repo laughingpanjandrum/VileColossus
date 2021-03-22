@@ -72,12 +72,11 @@ int applyProtection(gamedataPtr gdata, creaturePtr target, int dam)
 
 
 //	Rolls attacker's Accuracy vs. target's Defence. Returns True on hit, False on miss.
-bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target)
+bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, const int bns_acc)
 {
-	int acc = attacker->getAccuracy();
+	int acc = attacker->getAccuracy() + bns_acc;
 	int def = target->getDefenceValue();
 	int roll = randint(1, 20);
-	//messages::add(gdata, "Attack roll: " + to_string(acc) + " vs " + to_string(def) + ", rolled " + to_string(roll), COLOR_LIGHT);
 	return roll == 20 || roll + acc >= def;
 }
 

@@ -20,7 +20,7 @@ void playerTestForSpellTriggerOnHit(gamedataPtr gdata, creaturePtr target);
 
 int rollWeaponDamage(gamedataPtr gdata, creaturePtr attacker);
 int applyProtection(gamedataPtr gdata, creaturePtr target, int dam);
-bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target);
+bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, const int bns_acc = 0);
 
 void triggerReprisal(gamedataPtr gdata, creaturePtr repriser, creaturePtr target);
 void triggerRiposte(gamedataPtr gdata, creaturePtr riposter, creaturePtr target);

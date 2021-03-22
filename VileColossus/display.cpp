@@ -2095,6 +2095,7 @@ void display::drawMainInterface(gamedataPtr gdata)
 
 	//	Draw the map
 	bool danger_filter = gdata->_player->getHealthPercent() <= 20;
+	bool death_filter = gdata->_player->isDead();
 	for (unsigned x = 0; x < MAP_X_SIZE; x++)
 	{
 		for (unsigned y = 0; y < MAP_Y_SIZE; y++)
@@ -2102,13 +2103,19 @@ void display::drawMainInterface(gamedataPtr gdata)
 			//	apply filters, if any
 			auto col = _visibleColors[x][y];
 			col.scaleHSV(1.0f, BRIGHTEN_AMOUNT);
-			if (danger_filter)
+			if (death_filter)
+				col.scaleHSV(1.0f, 0.3f);
+			else if (danger_filter)
 				col = TCODColor::lerp(col, TCODColor::crimson, 0.3);
 
 			//	actually show this
 			_win.writec(x + MAP_X_OFFSET, y + MAP_Y_OFFSET, _visibleGlyphs[x][y], col, _visibleBgcolors[x][y]);
 		}
 	}
+
+	//	notify of death
+	if (gdata->_player->isDead())
+		_win.write(25, 25, "YOU ARE DEAD", TCODColor::lightRed);
 
 	//	Other interface elements
 	drawSidebar(gdata);

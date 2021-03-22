@@ -38,46 +38,44 @@ bool ai::moveAwayFromPoint(gamedataPtr gdata, monsterPtr ai, intpair awayFrom)
 //	Cast the given spell at the given target.
 bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, const string spell)
 {
-	auto pts = getBresenhamLine(ai->_pos, target->_pos);
-	if (spell == "arcane_bolt")
+	//	test accuracy
+	if (rollToHit(gdata, ai, target, ai->_level))
 	{
-		addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ARCANE)));
-		inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_ARCANE);
-		return true;
+		auto pts = getBresenhamLine(ai->_pos, target->_pos);
+		if (spell == "arcane_bolt")
+		{
+			addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ARCANE)));
+			inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_ARCANE);
+		}
+		else if (spell == "firebolt")
+		{
+			addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+			inflictEnergyDamage(gdata, target, dieRoll(3, ai->_level), DTYPE_FIRE);
+		}
+		else if (spell == "fireblast")
+		{
+			addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
+			inflictEnergyDamage(gdata, target, ai->getWeaponDamage(), DTYPE_FIRE);
+			trySetSurface(gdata, target->_pos, Surface::FIRE);
+		}
+		else if (spell == "lightning")
+		{
+			addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ELECTRIC)));
+			inflictEnergyDamage(gdata, target, dieRoll(2, ai->getWeaponDamage() / 2), DTYPE_ELECTRIC);
+		}
+		else if (spell == "poison_spit")
+		{
+			addAnimation(gdata, anim_Projectile(pts, '%', getDamageTypeColor(DTYPE_POISON)));
+			inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_POISON);
+			trySetSurface(gdata, target->_pos, Surface::POISON_OOZE);
+		}
+		else if (spell == "sludge")
+		{
+			addAnimation(gdata, anim_Projectile(pts, '~', TCODColor::lightSepia));
+			trySetSurface(gdata, target->_pos, Surface::SLUDGE);
+		}
 	}
-	else if (spell == "firebolt")
-	{
-		addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
-		inflictEnergyDamage(gdata, target, dieRoll(3, ai->_level), DTYPE_FIRE);
-		return true;
-	}
-	else if (spell == "fireblast")
-	{
-		addAnimation(gdata, anim_Projectile(pts, '*', getDamageTypeColor(DTYPE_FIRE)));
-		inflictEnergyDamage(gdata, target, ai->getWeaponDamage(), DTYPE_FIRE);
-		trySetSurface(gdata, target->_pos, Surface::FIRE);
-		return true;
-	}
-	else if (spell == "lightning")
-	{
-		addAnimation(gdata, anim_BulletPath(pts, getDamageTypeColor(DTYPE_ELECTRIC)));
-		inflictEnergyDamage(gdata, target, dieRoll(2, ai->getWeaponDamage() / 2), DTYPE_ELECTRIC);
-		return true;
-	}
-	else if (spell == "poison_spit")
-	{
-		addAnimation(gdata, anim_Projectile(pts, '%', getDamageTypeColor(DTYPE_POISON)));
-		inflictEnergyDamage(gdata, target, randint(1, ai->getWeaponDamage()), DTYPE_POISON);
-		trySetSurface(gdata, target->_pos, Surface::POISON_OOZE);
-		return true;
-	}
-	else if (spell == "sludge")
-	{
-		addAnimation(gdata, anim_Projectile(pts, '~', TCODColor::lightSepia));
-		trySetSurface(gdata, target->_pos, Surface::SLUDGE);
-		return true;
-	}
-	return false;
+	return true;
 }
 
 
