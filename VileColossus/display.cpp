@@ -683,7 +683,7 @@ void display::drawAttributePoints(gamedataPtr gdata)
 
 	//	perks
 	y += 6;
-	drawBox(x - 2, y - 1, 61, 16, COLOR_DARK);
+	drawBox(x - 2, y - 1, 61, 18, COLOR_DARK);
 	if (gdata->_player->_PerkLevel > 0)
 		writeFormatted(x - 1, y - 1, "ASCENDANT LEVEL #" + to_string(gdata->_player->_PerkLevel), { COLOR_LIGHT });
 

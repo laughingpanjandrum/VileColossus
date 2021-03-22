@@ -320,6 +320,8 @@ itemPtr lootgen::generateGemOfType(const GemType gem, const int tier, const int 
 	auto it = itemPtr(new item(getGemTypeFullName(gem, tier), ITEM_GEM, rarity));
 	it->_gemType = gem;
 	it->_enhancementLevel = tier;
+	if (doesGemHaveSingularEffect(gem))
+		it->_enhancementLevel = 5;
 	return it;
 }
 
