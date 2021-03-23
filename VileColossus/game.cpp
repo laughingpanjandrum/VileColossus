@@ -710,6 +710,11 @@ void game::awaitDebugCommand()
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, roll_one_in(4)), _gdata->_player->_pos);
 	}
+	else if (txt == "droprune")
+	{
+		for (unsigned i = 0; i < 10; i++)
+			_gdata->_map->addItem(lootgen::generateSpellrune(randint(1, 3), randint(1, 3)), _gdata->_player->_pos);
+	}
 	else if (txt == "dropleg")
 		_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, true), _gdata->_player->_pos);
 	else if (txt == "gems10")

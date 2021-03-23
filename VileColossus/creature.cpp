@@ -85,7 +85,7 @@ void creature::tick()
 	//	Reduce status effect and buff durations.	
 	for (unsigned i = 0; i < STATUS__MAX; i++)
 	{
-		if (_StatusEffects[i] > 0 && i != STATUS_ENTANGLED)
+		if (_StatusEffects[i] > 0 && i != STATUS_ENTANGLED && i != STATUS_PUTREFIED)
 			_StatusEffects[i]--;
 	}
 	for (unsigned i = 0; i < BUFF__MAX; i++)

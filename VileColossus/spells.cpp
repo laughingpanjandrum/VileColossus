@@ -25,6 +25,7 @@ const string getSpellName(const Spell sp)
 
 	case(Spell::CRYSTAL_SPEAR):			return "Crystal Spear";
 	case(Spell::FIRESTORM):				return "Firestorm";
+	case(Spell::PUTRESCENCE):			return "Putrescence";
 	case(Spell::STATIC_FIELD):			return "Static Field";
 
 	default:
@@ -55,6 +56,7 @@ const colorType getSpellColor(const Spell sp)
 	case(Spell::FIRESTORM):
 		return getDamageTypeColor(DTYPE_FIRE);
 
+	case(Spell::PUTRESCENCE):
 	case(Spell::TOXIC_RADIANCE):
 	case(Spell::VENOMFANG):
 		return getDamageTypeColor(DTYPE_POISON);
@@ -89,6 +91,8 @@ const string getSpellDescription(const Spell sp)
 		return "Hurl an exploding ball of flame.";
 	case(Spell::FIRESTORM):
 		return "Release an explosion of fire that ignites the area around you.";
+	case(Spell::PUTRESCENCE):
+		return "A short-range attack that inflicts massive poison damage. The victim poisons nearby enemies on death.";
 	case(Spell::SMITE_EVIL):
 		return "Your next weapon attack inflicts massive bonus damage to an undead target. Lasts for more hits at higher levels.";
 	case(Spell::STATIC_FIELD):
@@ -133,6 +137,7 @@ int getSpellTier(const Spell sp)
 
 	case(Spell::CRYSTAL_SPEAR):
 	case(Spell::FIRESTORM):
+	case(Spell::PUTRESCENCE):
 	case(Spell::STATIC_FIELD):
 		return 3;
 
@@ -157,6 +162,7 @@ bool isSpellTargeted(const Spell sp)
 	case(Spell::CONJURE_FLAME):
 	case(Spell::CRYSTAL_SPEAR):
 	case(Spell::FIREBALL):
+	case(Spell::PUTRESCENCE):
 	case(Spell::TELEPORT):
 		return true;
 
@@ -183,6 +189,9 @@ const int getSpellRange(const Spell sp, const int lvl)
 
 	case(Spell::FIREBALL):
 		return 8 + lvl / 5;
+
+	case(Spell::PUTRESCENCE):
+		return 3;
 
 	case(Spell::TELEPORT):
 		return 3 + lvl / 2;
@@ -261,6 +270,7 @@ const DamageType getSpellDamageType(const Spell sp)
 	case(Spell::FIRESTORM):
 		return DTYPE_FIRE;
 
+	case(Spell::PUTRESCENCE):
 	case(Spell::TOXIC_RADIANCE):
 		return DTYPE_POISON;
 
@@ -281,6 +291,7 @@ const intpair getSpellDamage(const Spell sp, const int lvl)
 	case(Spell::CRYSTAL_SPEAR):		return intpair(1, lvl * 4);
 	case(Spell::FIREBALL):			return intpair(lvl * 2 / 3, lvl * 3);
 	case(Spell::FIRESTORM):			return intpair(lvl * 2 / 3, lvl * 2);
+	case(Spell::PUTRESCENCE):		return intpair(lvl * 3, lvl * 5);
 	case(Spell::TOXIC_RADIANCE):	return intpair(1, lvl * 2);
 	default:
 		return intpair(0, 0);

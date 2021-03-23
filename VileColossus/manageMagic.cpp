@@ -175,6 +175,8 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 			inflictDamageInRadius(gdata, target->_pos, 2, DTYPE_FIRE, intpair(1, dam));
 		else if (sp == Spell::CHAIN_LIGHTNING)
 			chainDamage(gdata, target, dtype, intpair(1, dam), lvl);
+		else if (sp == Spell::PUTRESCENCE)
+			target->addStatusEffect(STATUS_PUTREFIED, 1);
 
 		//	Animation
 		switch (sp)
@@ -198,6 +200,10 @@ void hitTargetWithSpell(gamedataPtr gdata, creaturePtr caster, creaturePtr targe
 		case(Spell::FIREBALL):
 			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '*', getDamageTypeColor(dtype)));
 			addAnimation(gdata, padAnimationFront(anim_Explosion(target->_pos, 2, '#', TCODColor::flame), 5));
+			break;
+
+		case(Spell::PUTRESCENCE):
+			addAnimation(gdata, anim_Projectile(getBresenhamLine(caster->_pos, target->_pos), '%', getDamageTypeColor(dtype)));
 			break;
 		}
 	}

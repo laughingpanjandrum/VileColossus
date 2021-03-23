@@ -388,7 +388,7 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 				addKillXP(gdata, mon);
 			}
 
-			//	corpse?
+			//	corpse/death effects
 			if (mon->hasFlag("poison_burst"))
 				explodeOnDeath(gdata, mon, "poison_burst");
 			else if (mon->hasFlag("fire_burst"))
@@ -397,6 +397,10 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 				tryDropCorpse(gdata, mon->getCorpseType(), mon->_pos);
 			if (mon->hasFlag("infested"))
 				spawnOnDeath(gdata, mon);
+
+			//	from the putrefaction effect
+			if (mon->hasStatusEffect(STATUS_PUTREFIED))
+				inflictDamageInRadius(gdata, mon->_pos, 1, DTYPE_POISON, intpair(1, mon->getStatusEffectDuration(STATUS_POISON) * 10), true);
 
 			//	effects on the player
 			gdata->_player->healDamage(gdata->_player->getLeechOnKill());
