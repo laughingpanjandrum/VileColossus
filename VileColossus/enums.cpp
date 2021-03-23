@@ -44,7 +44,7 @@ const int getPerkBonusPerRank(const Perk pk)
 	case(PERK_FRAGMENTS_GAINED):	return 10;
 	case(PERK_HEALTH):				return 10;
 	case(PERK_HEALTH_ON_KILL):		return 3;
-	case(PERK_MAGIC):				return 1;
+	case(PERK_MAGIC):				return 2;
 	case(PERK_REPRISAL):			return 3;
 	case(PERK_SPELL_POWER):			return 20;
 	case(PERK_WRATH_DAMAGE):		return 25;
@@ -65,7 +65,7 @@ const int getPerkMaxLevel(const Perk pk)
 	case(PERK_FRAGMENTS_GAINED):	return 10;
 	case(PERK_HEALTH):				return 10;
 	case(PERK_HEALTH_ON_KILL):		return 5;
-	case(PERK_MAGIC):				return 5;
+	case(PERK_MAGIC):				return 10;
 	case(PERK_REPRISAL):			return 5;
 	case(PERK_SPELL_POWER):			return 10;
 	case(PERK_WRATH_DAMAGE):		return 10;
