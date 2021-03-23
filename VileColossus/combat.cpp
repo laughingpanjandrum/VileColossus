@@ -77,7 +77,7 @@ bool rollToHit(gamedataPtr gdata, creaturePtr attacker, creaturePtr target, cons
 	int acc = attacker->getAccuracy() + bns_acc;
 	int def = target->getDefenceValue();
 	int roll = randint(1, 20);
-	return roll == 20 || roll + acc >= def;
+	return roll >= 17 || roll + acc >= def;
 }
 
 

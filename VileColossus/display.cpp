@@ -2595,7 +2595,7 @@ int display::get_hit_chance(int acc, int def)
 {
 	int roll_req = (def - acc);
 	int total = (20 - roll_req) * 5;
-	if		(total < 5)		total = 5;
+	if		(total < 20)	total = 20;
 	else if (total > 100)	total = 100;
 	return total;
 }
