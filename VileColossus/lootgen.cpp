@@ -355,7 +355,7 @@ itemPtr lootgen::generateFlask(const int tier, const int rarity)
 
 	//	Generate the actual item
 	auto it = itemPtr(new item(name, ITEM_FLASK, rarity));
-	it->setProperty(PROP_HEAL_ON_USE, randint(2, 6) * tier * 25);
+	it->setProperty(PROP_HEAL_ON_USE, randint(4, 6) * tier * 25);
 	it->setProperty(PROP_MAX_CHARGES, randint(2, 3));
 	it->setProperty(PROP_CHARGES_ON_HIT, randint(2, 5 + tier + rarity));
 	it->setProperty(PROP_CHARGE_REGAIN_RATE, randint(10, 25));
@@ -961,10 +961,9 @@ int lootgen::getLootTierForMonsterLevel(const int lvl)
 //	Gems have more tiers than normal items, so they use a different table
 int lootgen::getGemTierForMonsterLevel(const int lvl)
 {
-	if		(lvl <= 12)	return 1;
-	else if (lvl <= 24)	return 2;
-	else if (lvl <= 36)	return 3;
-	else				return 4;
+	if		(lvl <= 16)	return 1;
+	else if (lvl <= 32)	return 2;
+	else				return 3;
 }
 
 
