@@ -123,8 +123,9 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, (can_exalt && roll_percent(exalt_odds)));
 		gdata->_map->addItem(it, pt);
 
-		//	Animation
-		addAnimation(gdata, anim_FlashGlyph(pt, it->getGlyph(), it->getColor()));
+		//	Animation (for special items)
+		if (it->_rarity == 4)
+			addAnimation(gdata, anim_Spray(pt, { '!', '!', '!', '!', }, TCODColor::orange));
 	}
 
 
