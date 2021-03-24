@@ -79,6 +79,7 @@ const int getMaptileGlyph(const Maptile tl)
 		return '0';
 
 	case(MT_ABYSSAL_GATE):
+	case(MT_DRAINED_SHRINE):
 	case(MT_HELLPORTAL_DOWN):
 	case(MT_HELLPORTAL_UP):
 	case(MT_TEMPLE_PORTAL):
@@ -159,7 +160,6 @@ const int getMaptileGlyph(const Maptile tl)
 	case(MT_STASH):
 		return 254;
 
-	case(MT_DRAINED_SHRINE):
 	case(MT_MEDITATION_SHRINE):
 		return 244;
 

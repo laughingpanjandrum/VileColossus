@@ -183,8 +183,11 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			if (attacker->isPlayer())
 			{
 				//	Divine enchantment
-				if (target->isUndead())
-					dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
+				dam += gdata->_player->getVisionRadius() * gdata->_player->getTotalEnchantmentBonus(ENCH_DIVINE);
+
+				//	Sadist enchantment
+				if (target->hasStatusEffect(STATUS_BURN) || target->hasStatusEffect(STATUS_POISON) || target->hasStatusEffect(STATUS_STAGGER))
+					dam = adjustByPercent(dam, gdata->_player->getTotalEnchantmentBonus(ENCH_SADIST));
 
 				//	Spell triggers
 				playerTestForSpellTriggerOnHit(gdata, target);
