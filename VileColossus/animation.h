@@ -56,6 +56,7 @@ animationPtr anim_Explosion(const intpair ctr, const int size, const int gl, con
 animationPtr anim_FlashGlyph(const intpair pt, const int glyph, const colorType col);
 animationPtr anim_MovingText(const intpair pt, const string txt, const colorType col, const intpair vec);
 animationPtr anim_Projectile(const vector<intpair> path, const int glyph, const colorType col);
+animationPtr anim_Spray(const intpair ctr, const vector<int> glyphs, const colorType col);
 
 
 animationPtr padAnimationFront(animationPtr anim, int frames);

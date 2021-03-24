@@ -24,7 +24,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 	case(MT_TREE_DEAD):
 	case(MT_TOMBSTONE):
 		messages::add(gdata, "You smash the #" + getMaptileName(tl) + "@!", { getMaptileColor(tl) });
-		addAnimation(gdata, anim_FlashGlyph(pt, '!', getMaptileColor(tl)));
+		addAnimation(gdata, anim_Spray(pt, { '%', '*', '#', }, getMaptileColor(tl)));
 		gdata->_map->setTile(MT_RUBBLE, pt);
 		gdata->_map->updateTmapAtPoint(pt.first, pt.second);
 		gdata->_player->spendActionEnergy();
@@ -33,6 +33,7 @@ void playerBumpTile(gamedataPtr gdata, const intpair pt)
 		//	Destructible (alternate)
 	case(MT_WALL_ICE):
 		messages::add(gdata, "You shatter the block of ice!");
+		addAnimation(gdata, anim_Spray(pt, { '~', '~', '~', }, getMaptileColor(tl)));
 		gdata->_map->setTile(MT_WATER, pt);
 		gdata->_map->updateTmapAtPoint(pt.first, pt.second);
 		gdata->_player->spendActionEnergy();

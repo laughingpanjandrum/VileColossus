@@ -106,6 +106,41 @@ animationPtr anim_Projectile(const vector<intpair> path, const int glyph, const 
 }
 
 
+//	Emanates random glyphs from a central point, in a spray or burst-like pattern
+animationPtr anim_Spray(const intpair ctr, const vector<int> glyphs, const colorType col)
+{
+	auto a = animationPtr(new animation());
+
+	//	random direction for each glyph
+	vector<intpair> vecs;
+	vector<intpair> pts;
+	for (unsigned i = 0; i < glyphs.size(); i++)
+	{
+		intpair v(0, 0);
+		while (v.first == 0 && v.second == 0)
+		{
+			v.first = randint(-1, 1);
+			v.second = randint(-1, 1);
+		}
+		vecs.push_back(v);
+		pts.push_back(ctr);
+	}
+
+	//	now move them all out from the centre
+	for (unsigned i = 0; i < 2; i++)
+	{
+			a->addFrame();
+			for (unsigned n = 0; n < vecs.size(); n++)
+			{
+				intpair_add(&pts[n], &vecs[n]);
+				a->addPointToCurrentFrame(pts[n], glyphs[n], col);
+			}
+	}
+
+	return a;
+}
+
+
 //	Adds empty framges to the start of the animation.
 animationPtr padAnimationFront(animationPtr anim, int frames)
 {
