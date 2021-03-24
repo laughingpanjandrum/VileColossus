@@ -161,7 +161,11 @@ bool doPlayerMove(gamedataPtr gdata, const intpair vec, bool allowAttacking)
 
 			//	movement
 			else
+			{
 				playerEnterTile(gdata, pt);
+				if (gdata->_player->getTotalEnchantmentBonus(ENCH_DANCER) > 0)
+					gdata->_player->setBuffDuration(BUFF_DANCER, 2);
+			}
 
 			//	lose energy either way
 			gdata->_player->spendActionEnergy(gdata->_player->getMoveEnergyCost());

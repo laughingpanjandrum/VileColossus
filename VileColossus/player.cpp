@@ -158,6 +158,8 @@ int player::getDefenceValue() const
 	total += getTotalEnchantmentBonus(ENCH_DEFENCE);
 	total += getEquipmentPropertySum(PROP_DEFENCE);
 	total += getPerkBonus(PERK_DEFENCE);
+	if (hasBuff(BUFF_DANCER) > 0)
+		total = adjustByPercent(total, getTotalEnchantmentBonus(ENCH_DANCER));
 	return total;
 }
 

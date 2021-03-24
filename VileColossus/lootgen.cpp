@@ -863,6 +863,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 		it->addEnchantment(ENCH_CUNNING, randint(200, 300));
 		break;
 
+	case(ENCH_DANCER):
+		it = generateArmourPiece(maxTier, 4);
+		it->addEnchantment(ENCH_DANCER, 25);
+		break;
+
 	case(ENCH_DARK_ARCANA):
 		it = generateJewel(maxTier, 4);
 		it->addEnchantment(ENCH_DARK_ARCANA, randint(10, 20));

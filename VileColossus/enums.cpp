@@ -343,6 +343,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Conductor";
 	case(ENCH_CRUCIBLE):		return "Crucible";
+	case(ENCH_DANCER):			return "Dancer";
 	case(ENCH_DERVISH):			return "Dervish";
 	case(ENCH_CUNNING):			return "Rat's Cunning";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
@@ -419,6 +420,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_CONDUCTING):		return "Conduction";
 	case(ENCH_CRUCIBLE):		return "Charge on Crit";
 	case(ENCH_CUNNING):			return "Cunning";
+	case(ENCH_DANCER):			return "DV on Move";
 	case(ENCH_DARK_ARCANA):		return "Dark Arcana";
 	case(ENCH_DERVISH):			return "Wrath Crit Chance";
 	case(ENCH_DIVINE):			return "Divine Damage";
@@ -496,6 +498,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
 	case(ENCH_CRUCIBLE):		return "Regains " + to_string(val) + "% charge when you score a critical hit.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
+	case(ENCH_DANCER):			return "When you move, your Defence Value is briefly increased by " + to_string(val) + "%.";
 	case(ENCH_DARK_ARCANA):		return "Weapon attacks inflict bonus Arcane damage equal to 1/10 of your Spell Power, up to " + plusminus(val) + ".";
 	case(ENCH_DERVISH):			return "While affected by Wrath, your critical hit chance is increased by " + plusminus(val) + "%.";
 	case(ENCH_DIVINE):			return "Inflict +" + to_string(val) + " unblockable damage per hit, multiplied by your Light Radius.";
@@ -541,6 +544,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_CHARGING):
 	case(ENCH_CRUCIBLE):
 	case(ENCH_CUNNING):
+	case(ENCH_DANCER):
 	case(ENCH_DERVISH):
 	case(ENCH_FLAMEWARD):
 	case(ENCH_FURY):
@@ -649,6 +653,7 @@ string getBuffName(const BuffType bf)
 	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
 	case(BUFF_CONDUCTION):		return "Conduction";
 	case(BUFF_CRIT_BONUS):		return "Crit Chance";
+	case(BUFF_DANCER):			return "Dancer";
 	case(BUFF_EMPOWERED):		return "Empowered";
 	case(BUFF_HASTE):			return "Haste";
 	case(BUFF_REGENERATION):	return "Regeneration";
