@@ -321,7 +321,7 @@ itemPtr lootgen::generateGemOfType(const GemType gem, const int tier, const int 
 	it->_gemType = gem;
 	it->_enhancementLevel = tier;
 	if (doesGemHaveSingularEffect(gem))
-		it->_enhancementLevel = 5;
+		it->_enhancementLevel = 4;
 	return it;
 }
 
@@ -841,6 +841,11 @@ itemPtr lootgen::generateLegendaryItem(const int maxTier, ItemEnchantment en)
 	case(ENCH_AVARICE):
 		it = generateJewel(maxTier, 4);
 		it->addEnchantment(ENCH_AVARICE, 1);
+		break;
+
+	case(ENCH_BERSERKER):
+		it = generateArmourPiece(maxTier, 4);
+		it->addEnchantment(ENCH_BERSERKER, randint(5, 10));
 		break;
 
 	case(ENCH_BLACKBLOOD):

@@ -227,6 +227,10 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 			if (attacker->isPlayer())
 				gdata->_player->chargeFlaskOnHit();
 
+			//	Player can gain Wrath on taking damage
+			if (target->isPlayer() && roll_percent(gdata->_player->getTotalEnchantmentBonus(ENCH_BERSERKER)))
+				gdata->_player->addBuff(BUFF_WRATH, randint(2, 3));
+
 			//	Knockback chance
 			if (roll_percent(attacker->getKnockbackChance()))
 				knockback(gdata, target, attacker->_pos, 2);

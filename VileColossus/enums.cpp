@@ -340,6 +340,7 @@ const string getItemEnchantmentName(const ItemEnchantment en)
 	case(ENCH_AFFINITY):		return "Affinity";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Mirror";
 	case(ENCH_AVARICE):			return "Avarice";
+	case(ENCH_BERSERKER):		return "Berserker";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Conductor";
 	case(ENCH_CRUCIBLE):		return "Crucible";
@@ -416,6 +417,7 @@ const string getItemEnchantmentDescription(const ItemEnchantment en)
 	case(ENCH_AFFINITY):		return "Elemental Affinity";
 	case(ENCH_ARCANE_SHIELD):	return "Arcane Shield";
 	case(ENCH_AVARICE):			return "Avarice";
+	case(ENCH_BERSERKER):		return "Berserk Chance";
 	case(ENCH_BLACKBLOOD):		return "Blackblood";
 	case(ENCH_CONDUCTING):		return "Conduction";
 	case(ENCH_CRUCIBLE):		return "Charge on Crit";
@@ -494,6 +496,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_AFFINITY):		return "Elemental bonuses are increased by the value of the associated Resistance.";
 	case(ENCH_ARCANE_SHIELD):	return "Each point of Magic in your pool absorbs " + to_string(val) + " points of elemental damage when you are attacked (Arcane/Electric/Fire/Poison).";
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
+	case(ENCH_BERSERKER):		return "Taking damage from weapon attacks has a " + to_string(val) + "% chance to add Wrath duration.";
 	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
 	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
 	case(ENCH_CRUCIBLE):		return "Regains " + to_string(val) + "% charge when you score a critical hit.";
@@ -541,6 +544,7 @@ const string formatItemEnchantment(const ItemEnchantment en, const int val)
 	case(ENCH_AFF_ELECTRIC):
 	case(ENCH_AFF_FIRE):
 	case(ENCH_AFF_POISON):
+	case(ENCH_BERSERKER):
 	case(ENCH_CHARGING):
 	case(ENCH_CRUCIBLE):
 	case(ENCH_CUNNING):
