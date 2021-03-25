@@ -9,8 +9,6 @@ TODO
 	properly fit monster tags to screen
 
 	allow enhancing exalted flasks 
-
-	first boss shouldn't be able to drop exalts
 */
 
 

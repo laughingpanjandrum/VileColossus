@@ -109,7 +109,7 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	}
 
 	//	does this monster qualify for exaltation?
-	bool can_exalt = target->hasFlag("viledragon") || roll_percent(exalt_odds);
+	bool can_exalt = target->hasFlag("viledragon") || (roll_percent(exalt_odds) && target->_level >= 30);
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
