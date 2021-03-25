@@ -121,7 +121,7 @@ void triggerRiposte(gamedataPtr gdata, creaturePtr riposter, creaturePtr target)
 	if (roll_percent(riposter->getRiposteChance()))
 	{
 		messages::riposte(gdata, riposter, target);
-		attackWithWeapon(gdata, riposter, target, false, riposter->getRiposteDamageMult());
+		attackWithWeapon(gdata, riposter, target, false, riposter->getRiposteDamageMult(), 0, false);
 	}
 }
 
