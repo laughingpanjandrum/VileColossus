@@ -125,6 +125,7 @@ int lootgen::getMaxSocketsForCategory(const ItemCategory cat)
 	switch (cat)
 	{
 	case(ITEM_CHESTPIECE):
+	case(ITEM_QUIVER):
 	case(ITEM_SHIELD):
 	case(ITEM_WEAPON):
 		return 2;
