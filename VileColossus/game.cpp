@@ -9,6 +9,9 @@ TODO
 	properly fit monster tags to screen
 
 	allow enhancing exalted flasks 
+	make 'Conduction' work for all elements
+	why do radiant chest drops suck?
+	allow sockets on quivers
 */
 
 

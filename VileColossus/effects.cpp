@@ -5,8 +5,9 @@
 //	Special effects when we kill a boss.
 void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 {
-	//	turn into down stairs lol
-	gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
+	//	turn into down stairs
+	if (!mon->hasFlag("abysslord") && !mon->hasFlag("avatar"))
+		gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
 
 	//	count up kills
 	switch (mon->getType())
