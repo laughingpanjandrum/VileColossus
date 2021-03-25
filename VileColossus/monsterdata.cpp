@@ -310,9 +310,9 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 	case(MonsterType::OGRE):
 		return { "slow", "ranged_attack", "less_defence", "protected", "more_health" };
 	case(MonsterType::OGRE_BERSERKER):
-		return { "slow", "less_defence", "protected", "more_health", "more_damage", "berserker" };
+		return { "slow", "less_defence", "protected", "more_health", "more_damage", "berserker", "knockback" };
 	case(MonsterType::OGRE_BRUTE):
-		return { "slow", "less_defence", "protected", "more_health", "more_damage" };
+		return { "slow", "less_defence", "protected", "more_health", "more_damage", "knockback" };
 
 	case(MonsterType::OOZE_ELECTRIC):
 		return { "slow", "electric_attack", "immune_electric", };

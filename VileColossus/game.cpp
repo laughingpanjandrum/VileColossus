@@ -9,8 +9,8 @@ TODO
 	properly fit monster tags to screen
 
 	allow enhancing exalted flasks 
-	make sure special gems don't ALWAYS drop from high-tier monsters
 
+	first boss shouldn't be able to drop exalts
 */
 
 
