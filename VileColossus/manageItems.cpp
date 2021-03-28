@@ -659,8 +659,21 @@ const pair<MaterialType, int> getCostToForgeItem(const int rarity)
 //	Turn one material into another; 'num' indicates which type
 void transmuteMaterial(gamedataPtr gdata, const int num)
 {
-	//	Magic Dust => Glowing Powder
+	//	Fragments => Magic Dist
 	if (num == 1)
+	{
+		if (hasMaterial(gdata, MaterialType::FRAGMENTS, 10000))
+		{
+			spendMaterial(gdata, MaterialType::FRAGMENTS, 10000);
+			addToStash(gdata, lootgen::generateMaterial(MaterialType::GLOWING_POWDER, 250));
+			messages::add(gdata, "Transmutation complete!");
+		}
+		else
+			messages::error(gdata, "Not enough materials!");
+	}
+
+	//	Magic Dust => Glowing Powder
+	else if (num == 2)
 	{
 		if (hasMaterial(gdata, MaterialType::MAGIC_DUST, 500))
 		{
@@ -673,11 +686,11 @@ void transmuteMaterial(gamedataPtr gdata, const int num)
 	}
 
 	//	Glowing Powder => Radiant Ash
-	else if (num == 2)
+	else if (num == 3)
 	{
-		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 500))
+		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 200))
 		{
-			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 500);
+			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 200);
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::RADIANT_ASH, 1));
 			messages::add(gdata, "Transmutation complete!");
 		}
@@ -686,11 +699,11 @@ void transmuteMaterial(gamedataPtr gdata, const int num)
 	}
 
 	//	Glowing Powder => Notched Cube
-	else if (num == 3)
+	else if (num == 4)
 	{
-		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 250))
+		if (hasMaterial(gdata, MaterialType::GLOWING_POWDER, 100))
 		{
-			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 250);
+			spendMaterial(gdata, MaterialType::GLOWING_POWDER, 100);
 			addToStash(gdata, lootgen::generateMaterial(MaterialType::NOTCHED_CUBE, 1));
 			messages::add(gdata, "Created a Notched Cube!");
 		}
@@ -1045,8 +1058,10 @@ int getFlaskEnhanceCost(gamedataPtr gdata, itemPtr it)
 	return it->getProperty(PROP_HEAL_ON_USE) * 3 / 2;
 }
 
+
 void openAlchemyMenu(gamedataPtr gdata)
 {
+	autodepositMaterials(gdata);
 	gdata->_state = STATE_ALCHEMY;
 	gdata->_idx = 0;
 }

@@ -1105,16 +1105,16 @@ void display::drawEnchantmentSelect(gamedataPtr gdata)
 //	Mess with our flask.
 void display::drawAlchemy(gamedataPtr gdata)
 {
-	drawItemInfo(gdata, gdata->_player->_currentFlask, 4, 4);
+	drawBox(2, 2, 70, 8, COLOR_DARK);
+	_win.write(3, 2, "ALEMBIC OF ALCHEMY", getMaptileColor(MT_ALCHEMY));
 
-	drawBox(48, 2, 35, 6, COLOR_DARK);
-	writeFormatted(50, 4, "#e @Enhance healing potential", { COLOR_LIGHT });
-	auto mat_cost = gdata->_player->_currentFlask->getEnhanceCost();
-	auto mat_type = gdata->_player->_currentFlask->getEnhanceMaterial();
-	writeFormatted(52, 5, "Requires #x" + to_string(mat_cost) + " " + getMaterialTypeName(mat_type), { getMaterialTypeColor(mat_type) });
-	writeFormatted(52, 6, " and #" + to_string(getFlaskEnhanceCost(gdata, gdata->_player->_currentFlask)) + " fragments", { getMaterialTypeColor(MaterialType::FRAGMENTS) });
+	writeFormatted(4, 4, "#1 @Transmute #10000 fragments @into #250 glowing goo", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::FRAGMENTS), getMaterialTypeColor(MaterialType::MAGIC_DUST) });
+	writeFormatted(4, 5, "#2 @Transmute #500 glowing goo @into #100 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::MAGIC_DUST), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
+	writeFormatted(4, 6, "#3 @Transmute #200 luminous dust @into #1 radiant ash", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::GLOWING_POWDER), getMaterialTypeColor(MaterialType::RADIANT_ASH) });
 
-	drawStashedMaterials(gdata, 50, 13);
+	writeFormatted(4, 8, "#4 @Fabricate a #notched cube @for #100 luminous dust", { COLOR_LIGHT, getMaterialTypeColor(MaterialType::NOTCHED_CUBE), getMaterialTypeColor(MaterialType::GLOWING_POWDER) });
+
+	drawStashedMaterials(gdata, 4, 15);
 	drawMessages(gdata);
 }
 

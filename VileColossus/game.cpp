@@ -458,8 +458,8 @@ void game::processInput()
 
 			//	Alchemy
 		case(STATE_ALCHEMY):
-			if (_ih->isKeyPressed('e'))
-				tryEnhanceFlask(_gdata);
+			if (_ih->isNumberKey())
+				transmuteMaterial(_gdata, _ih->numberKeyToInt());
 			break;
 
 
