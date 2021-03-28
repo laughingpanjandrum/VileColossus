@@ -563,13 +563,15 @@ int player::getElementalAffinity(const DamageType dt) const
 	case(DTYPE_ELECTRIC):
 		//total += getTotalGemBonusFromArmour(GemType::BOLTSTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_ELECTRIC);
-		if (hasBuff(BUFF_CONDUCTION))
+		if (hasBuff(BUFF_CONDUCT_ELECTRIC))
 			total += getTotalEnchantmentBonus(ENCH_CONDUCTING);
 		break;
 
 	case(DTYPE_FIRE):
 		//total += getTotalGemBonusFromArmour(GemType::FLAMESTONE) * 20;
 		total += getTotalEnchantmentBonus(ENCH_AFF_FIRE);
+		if (hasBuff(BUFF_CONDUCT_FIRE))
+			total += getTotalEnchantmentBonus(ENCH_CONDUCTING);
 		break;
 
 	case(DTYPE_POISON):
@@ -577,6 +579,8 @@ int player::getElementalAffinity(const DamageType dt) const
 		total += getTotalEnchantmentBonus(ENCH_AFF_POISON);
 		if (hasBuff(BUFF_TOXIC_RADIANCE))
 			total += 25 + getSpellPower() / 5;
+		if (hasBuff(BUFF_CONDUCT_POISON))
+			total += getTotalEnchantmentBonus(ENCH_CONDUCTING);
 		break;
 	}
 

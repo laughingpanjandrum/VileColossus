@@ -520,8 +520,15 @@ void inflictEnergyDamage(gamedataPtr gdata, creaturePtr target, int dam, const D
 		}
 
 		//	other special effects
-		if (target->isPlayer() && dt == DTYPE_ELECTRIC && gdata->_player->getTotalEnchantmentBonus(ENCH_CONDUCTING) > 0)
-			gdata->_player->setBuffDuration(BUFF_CONDUCTION, 5);
+		if (target->isPlayer() && gdata->_player->getTotalEnchantmentBonus(ENCH_CONDUCTING) > 0)
+		{
+			switch (dt)
+			{
+			case(DTYPE_ELECTRIC):	gdata->_player->setBuffDuration(BUFF_CONDUCT_ELECTRIC, 10); break;
+			case(DTYPE_FIRE):		gdata->_player->setBuffDuration(BUFF_CONDUCT_FIRE, 10); break;
+			case(DTYPE_POISON):		gdata->_player->setBuffDuration(BUFF_CONDUCT_POISON, 10); break;
+			}
+		}
 	}
 }
 

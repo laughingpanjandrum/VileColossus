@@ -498,7 +498,7 @@ const string getItemEnchantmentVerbose(const ItemEnchantment en, const int val)
 	case(ENCH_AVARICE):			return "Your Fragments Gained bonus is also added to your critical damage.";
 	case(ENCH_BERSERKER):		return "Taking damage from weapon attacks has a " + to_string(val) + "% chance to add Wrath duration.";
 	case(ENCH_BLACKBLOOD):		return "Critical hits also inflict " + to_string(val) + " poison damage, scaling with your Poison Bonus.";
-	case(ENCH_CONDUCTING):		return "Taking electric damage temporarily boosts your Electric Bonus by " + to_string(val) + "%.";
+	case(ENCH_CONDUCTING):		return "Taking electric, fire, or poison damage raises the associated damage bonus by " + to_string(val) + "% temporarily.";
 	case(ENCH_CRUCIBLE):		return "Regains " + to_string(val) + "% charge when you score a critical hit.";
 	case(ENCH_CUNNING):			return "Inflict " + to_string(val) + "% more damage when your health is below 30%.";
 	case(ENCH_DANCER):			return "When you move, your Defence Value is briefly increased by " + to_string(val) + "%.";
@@ -654,19 +654,21 @@ string getBuffName(const BuffType bf)
 {
 	switch (bf)
 	{
-	case(BUFF_ARCANE_PULSE):	return "Arcane Pulse";
-	case(BUFF_CONDUCTION):		return "Conduction";
-	case(BUFF_CRIT_BONUS):		return "Crit Chance";
-	case(BUFF_DANCER):			return "Dancer";
-	case(BUFF_EMPOWERED):		return "Empowered";
-	case(BUFF_HASTE):			return "Haste";
-	case(BUFF_REGENERATION):	return "Regeneration";
-	case(BUFF_SMITE_EVIL):		return "Smite Undead";
-	case(BUFF_STATIC_FIELD):	return "Static Field";
-	case(BUFF_STONESKIN):		return "Stoneskin";
-	case(BUFF_TOXIC_RADIANCE):	return "Toxic Radiance";
-	case(BUFF_VENOMFANG):		return "Venomfang";
-	case(BUFF_WRATH):			return "Wrath";
+	case(BUFF_ARCANE_PULSE):		return "Arcane Pulse";
+	case(BUFF_CONDUCT_ELECTRIC):	return "Conduct Electric";
+	case(BUFF_CONDUCT_FIRE):		return "Conduct Fire";
+	case(BUFF_CONDUCT_POISON):		return "Conduct Poison";
+	case(BUFF_CRIT_BONUS):			return "Crit Chance";
+	case(BUFF_DANCER):				return "Dancer";
+	case(BUFF_EMPOWERED):			return "Empowered";
+	case(BUFF_HASTE):				return "Haste";
+	case(BUFF_REGENERATION):		return "Regeneration";
+	case(BUFF_SMITE_EVIL):			return "Smite Undead";
+	case(BUFF_STATIC_FIELD):		return "Static Field";
+	case(BUFF_STONESKIN):			return "Stoneskin";
+	case(BUFF_TOXIC_RADIANCE):		return "Toxic Radiance";
+	case(BUFF_VENOMFANG):			return "Venomfang";
+	case(BUFF_WRATH):				return "Wrath";
 	default:
 		return "buff_" + to_string(bf);
 	}
