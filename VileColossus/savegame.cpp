@@ -61,6 +61,12 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	gdata->_summonedViledragon = read_bool(f);
 
 
+	//	Other metadata
+	gdata->_totalDeaths = read_int(f);
+	gdata->_totalKills = read_int(f);
+	gdata->_victory = read_bool(f);
+
+
 	////		EQUIPMENT			//
 	cout << " Loading equipped items..." << endl;
 	for (unsigned i = 0; i < SLOT__NONE; i++)
@@ -377,6 +383,12 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	//	Current ritual
 	serialize_int(f, static_cast<int>(gdata->_ritualType));
 	serialize_bool(f, gdata->_summonedViledragon);
+
+
+	//	Other metadata
+	serialize_int(f, gdata->_totalDeaths);
+	serialize_int(f, gdata->_totalKills);
+	serialize_bool(f, gdata->_victory);
 
 
 
