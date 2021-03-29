@@ -25,6 +25,7 @@ namespace mapgen
 		int _killedColossus = 0;
 
 		int _abyssLevel = 0;
+		int _killedViledragons = 0;
 	};
 
 	struct metanode
@@ -176,6 +177,7 @@ namespace mapgen
 	gridmapPtr generate_OuterDark(int dl, bool descending);
 
 	gridmapPtr generate_AbyssHeart(game_progress* progress);
+	gridmapPtr generate_ViledragonLair(game_progress* progress, MaterialType ritualType);
 
 
 	//		Boss maps

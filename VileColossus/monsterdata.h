@@ -88,5 +88,6 @@ namespace monsterdata
 	//	Creating monsters
 	monsterPtr generate(MonsterType id, int level);
 	monsterPtr generate_AbyssLord(int level);
+	monsterPtr generate_Viledragon(const int level);
 
 }

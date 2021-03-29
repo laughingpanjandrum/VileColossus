@@ -6,7 +6,7 @@
 void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 {
 	//	turn into down stairs
-	if (!mon->hasFlag("abysslord") && !mon->hasFlag("avatar"))
+	if (!mon->hasFlag("abysslord") && !mon->hasFlag("avatar") && !mon->hasFlag("viledragon"))
 		gdata->_map->setTile(MT_STAIRS_DOWN, mon->_pos);
 
 	//	count up kills
@@ -19,6 +19,7 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 		gdata->_gameProgress._killedRotking++;
 		if (gdata->_gameProgress._killedRotking == 1)
 			mapgen::openHellPortal(gdata->_homeBase);
+		messages::add(gdata, "#*** YOU SLEW THE ROTKING. THE WAY TO HELL IS OPEN. ***", { COLOR_POSITIVE });
 		break;
 
 	case(MonsterType::BOSS_DEMON_LORD):
@@ -26,19 +27,23 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 		gdata->_gameProgress._killedHellboss++;
 		if (gdata->_gameProgress._killedHellboss == 1)
 			mapgen::openTemplePortal(gdata->_homeBase);
+		messages::add(gdata, "#*** YOU SLEW A PRINCE OF HELL. THE WAY TO THE ABYSS IS OPEN. ***", { COLOR_POSITIVE });
 		break;
 
 	case(MonsterType::BOSS_DROWNED_DOGOSSA):
 		gdata->_gameProgress._killedDogossa++;
 		gdata->_gameProgress._abyssLevel++;
+		messages::add(gdata, "#*** YOU SLEW THE AVATAR OF DROWNED DOGOSSA, AND MAY NOW FACE THE VILE COLOSSUS ***", { COLOR_POSITIVE });
 		break;
 	case(MonsterType::BOSS_TOMB_LORD_AMOG):
 		gdata->_gameProgress._killedAmog++;
 		gdata->_gameProgress._abyssLevel++;
+		messages::add(gdata, "#*** YOU SLEW THE AVATAR OF THE TOMB LORD, AND MAY NOW FACE THE VILE COLOSSUS ***", { COLOR_POSITIVE });
 		break;
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
 		gdata->_gameProgress._killedSallowKing++;
 		gdata->_gameProgress._abyssLevel++;
+		messages::add(gdata, "#*** YOU SLEW A PRINCE OF LOST VIDIRIA, AND MAY NOW FACE THE VILE COLOSSUS ***", { COLOR_POSITIVE });
 		break;
 
 	case(MonsterType::BOSS_VILE_COLOSSUS):
@@ -48,6 +53,12 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 			gdata->_state = STATE_GAME_COMPLETED;
 			gdata->_victory = true;
 		}
+		messages::add(gdata, "#*** YOU SLEW THE VILE COLOSSUS ***", { COLOR_POSITIVE });
+		break;
+
+	case(MonsterType::BOSS_VILEDRAGON):
+		gdata->_gameProgress._killedViledragons++;
+		messages::add(gdata, "#*** YOU SLEW A VILEDRAGON ***", { COLOR_POSITIVE });
 		break;
 	}
 }

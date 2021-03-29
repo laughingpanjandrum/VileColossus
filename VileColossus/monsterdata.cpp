@@ -678,3 +678,76 @@ monsterPtr monsterdata::generate_AbyssLord(int level)
 	mon->addFlag("abysslord");
 	return mon;
 }
+
+
+//	ULTIMATE omega endgame bosses.
+monsterPtr monsterdata::generate_Viledragon(const int level)
+{
+	//	damage type (determines associated + name)
+	vector<DamageType> dtypes = { DTYPE_ARCANE, DTYPE_ELECTRIC, DTYPE_FIRE, DTYPE_POISON };
+	auto dt = dtypes[randrange(dtypes.size())];
+
+	//	generate monster name
+	string name = "VILEDRAGON";
+	switch (dt)
+	{
+	case(DTYPE_ARCANE):		name = "INFUSED " + name; break;
+	case(DTYPE_ELECTRIC):	name = "ELECTRIC " + name; break;
+	case(DTYPE_FIRE):		name = "CHARRED " + name; break;
+	case(DTYPE_POISON):		name = "FETID " + name; break;
+	}
+	name = "= " + name + " =";
+
+	//	generate the monster itself
+	auto mon = monsterPtr(new monster(name, 'D', getDamageTypeColor(dt), level, 5, MonsterType::BOSS_VILEDRAGON));
+	mon->addFlag("viledragon");
+
+	//	Choice of special flags.
+	vector<string> flags = { "more_health", "defended", "protected_heavy" };
+	for (unsigned i = 0; i < 2; i++)
+	{
+		auto f = randrange(flags.size());
+		mon->addFlag(flags[f]);
+		flags.erase(flags.begin() + f);
+	}
+
+	//	Elemental association.
+	switch (dt)
+	{
+	case(DTYPE_ARCANE):
+		mon->addFlag("arcane_attack");
+		mon->addFlag("resists_arcane");
+		mon->addFlag("casts_arcane_bolt");
+		break;
+
+	case(DTYPE_ELECTRIC):
+		mon->addFlag("electric_attack");
+		mon->addFlag("immune_electric");
+		mon->addFlag("casts_lightning");
+		break;
+
+	case(DTYPE_FIRE):
+		mon->addFlag("fire_attack");
+		mon->addFlag("immune_fire");
+		mon->addFlag("casts_firebolt");
+		break;
+
+	case(DTYPE_POISON):
+		mon->addFlag("poison_attack");
+		mon->addFlag("immune_poison");
+		mon->addFlag("casts_poison_spit");
+	}
+
+	//	additional abilities, granted at higher levels
+	flags = { "more_damage", "vampiric", "unseen", "fast", };
+	auto bonus_count = (level - 40) / 4;
+	while (bonus_count > 0 && !flags.empty())
+	{
+		auto f = randrange(flags.size());
+		mon->addFlag(flags[f]);
+		flags.erase(flags.begin() + f);
+		bonus_count--;
+	}
+
+	return mon;
+}

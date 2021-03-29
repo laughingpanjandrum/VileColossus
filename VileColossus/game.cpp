@@ -774,9 +774,16 @@ void game::awaitDebugCommand()
 //	Closes the portal and warps us to a special map type.
 void game::useAbyssalGate()
 {
+	//	Clear the portal
 	_gdata->_map->setTile(MT_DRAINED_SHRINE, _gdata->_player->_pos);
-	_gdata->_map = mapgen::generate_Abyssal(_gdata->_gameProgress._abyssLevel, &_gdata->_gameProgress, _gdata->_ritualType);
 
+	//	Generate the map
+	if (_gdata->_summonedViledragon)
+		_gdata->_map = mapgen::generate_ViledragonLair(&_gdata->_gameProgress, _gdata->_ritualType);
+	else
+		_gdata->_map = mapgen::generate_Abyssal(_gdata->_gameProgress._abyssLevel, &_gdata->_gameProgress, _gdata->_ritualType);
+
+	//	Put us on the new map
 	messages::add(_gdata, "#You enter the Abyss!", { TCODColor::lightPurple });
 	auto pt = _gdata->_map->_startPt;
 	_gdata->_map->addCreature(_gdata->_player, pt);

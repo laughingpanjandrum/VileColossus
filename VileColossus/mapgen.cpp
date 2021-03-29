@@ -1525,6 +1525,65 @@ gridmapPtr mapgen::generate_AbyssHeart(game_progress* progress)
 }
 
 
+//	Special lair of a super-boss.
+gridmapPtr mapgen::generate_ViledragonLair(game_progress* progress, MaterialType ritualType)
+{
+	auto m = gridmapPtr(new gridmap(31, 31));
+	m->_name = "Viledragon Lair [Level " + to_string(progress->_killedViledragons) + "]";
+
+	//	basic map layout
+	fillMap(m, { MT_WALL_BLOODY, MT_WALL_STONE });
+	fillRegionCircular(m, { MT_FLOOR_STONE, MT_FLOOR_STONE2, MT_FLOOR_HOT }, 15, 15, 13);
+	for (unsigned x = 5; x <= 25; x += 2)
+	{
+		for (unsigned y = 5; y <= 25; y+= 2)
+		{
+			if (roll_one_in(2))
+				m->setTile(MT_WALL_STONE, x, y);
+		}
+	}
+
+	//	additional stuff
+	vector<MonsterType> mtypes;
+	switch (ritualType)
+	{
+	case(MaterialType::SODDEN_FLESH):
+		scatterTile(m, MT_GRASS, 5, 5, 20, 20, 0.1);
+		scatterTile(m, MT_BUSH, 5, 5, 20, 20, 0.1);
+		scatterTile(m, MT_WATER, 5, 5, 20, 20, 0.1);
+		scatterSurface(m, Surface::SLUDGE, 5, 5, 20, 20, 0.05);
+		mtypes = { MonsterType::CULTIST_DOGGOSAN, MonsterType::TENTACLE };
+		break;
+
+	case(MaterialType::TOMB_IDOL):
+		m->_lightLevel = -2;
+		scatterTile(m, MT_TOMBSTONE, 5, 5, 20, 20, 0.05);
+		scatterTile(m, MT_BUSH, 5, 5, 20, 20, 0.1);
+		mtypes = { MonsterType::BLOOD_BLOB, MonsterType::BONES_BLOODY, MonsterType::DEMON_PUTRESCENT, };
+		break;
+
+	case(MaterialType::VIRIDIAN_GLASS):
+		scatterTile(m, MT_WALL_ICE, 5, 5, 20, 20, 0.05);
+		scatterTile(m, MT_WATER, 5, 5, 20, 20, 0.1);
+		mtypes = { MonsterType::CRAB_TITAN, MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, };
+		break;
+	}
+
+	//	monsters
+	const int dl = 20 + progress->_killedViledragons;
+	addAbyssMonsters(m, mtypes, dl);
+
+	//	boss
+	auto boss = monsterdata::generate_Viledragon(40 + progress->_killedViledragons * 5);
+	m->addCreature(boss, getRandomFree(m));
+
+	//	finalization
+	m->_startPt = getRandomSafe(m);
+	m->updateTmap();
+	return m;
+}
+
+
 
 //	BOSS MAP: The Pallid Rotking
 gridmapPtr mapgen::generate_PallidRotking(int dl, bool descending, int killcount)
