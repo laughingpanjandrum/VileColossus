@@ -198,21 +198,18 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	//	Abyssal lords drop ritual materials.
 	if (target->hasFlag("abysslord"))
 	{
-		auto it = lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1);
-		gdata->_map->addItem(it, pts[randrange(pts.size())]);
+		gdata->_map->addItem(lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1), pts[randrange(pts.size())]);
 		if (roll_one_in(3))
 			gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
 	}
 	else if (target->hasFlag("avatar"))
 	{
-		auto it = lootgen::generateMaterial(MaterialType::DEAD_GODS_EYE, 1);
-		gdata->_map->addItem(it, pts[randrange(pts.size())]);
-		if (roll_one_in(3) != 1)
-			gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
+		gdata->_map->addItem(lootgen::generateMaterial(MaterialType::DEAD_GODS_EYE, 1), pts[randrange(pts.size())]);
+		gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
 	}
 	else if (target->hasFlag("viledragon"))
 	{
-		gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
+		gdata->_map->addItem(lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1), pts[randrange(pts.size())]);
 	}
 }
 
