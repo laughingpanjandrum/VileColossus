@@ -332,6 +332,68 @@ void display::drawHelpScreen(gamedataPtr gdata)
 }
 
 
+//	ENDGAME screen. This is displayed either upon killing the Vile Colossus for the first time, or dying in permadeath mode.
+void display::drawGameCompletionScreen(gamedataPtr gdata)
+{
+	//	What caused the game to end
+	if (gdata->_victory)
+	{
+		_win.write(4, 4, "YOU DEFEATED THE VILE COLOSSUS", COLOR_POSITIVE);
+		_win.write(6, 6, "Game Mode:", COLOR_MEDIUM);
+		switch (gdata->_mode)
+		{
+		case(GameMode::CASUAL):		_win.write(17, 6, "Casual", COLOR_POSITIVE); break;
+		case(GameMode::NORMAL):		_win.write(17, 6, "Normal", COLOR_LIGHT); break;
+		case(GameMode::PERMADEATH):	_win.write(17, 6, "Permadeath", COLOR_NEGATIVE); break;
+		}
+	}
+	else
+	{
+		_win.write(4, 4, "YOUR JOURNEY HAS ENDED", COLOR_NEGATIVE);
+	}
+
+	//	Kill counters
+	writeFormatted(5, 10, "You slew a total of #" + to_string(gdata->_totalKills) + " @monsters.", { COLOR_WHITE });
+	if (gdata->_gameProgress._killedRotking > 0)
+		writeFormatted(6, 11, "You slew the rotten king at the base of the Cathedral #" + to_string(gdata->_gameProgress._killedRotking) + " @times.", { COLOR_WHITE });
+	if (gdata->_gameProgress._killedHellboss > 0)
+		writeFormatted(6, 12, "You slew the foul lord in the dregs of Hell #" + to_string(gdata->_gameProgress._killedHellboss) + " @times.", { COLOR_WHITE });
+
+	if (gdata->_gameProgress._killedAmog > 0)
+		writeFormatted(6, 13, "You slew the Avatar of the Tomb Lord #" + to_string(gdata->_gameProgress._killedAmog) + " @times.", { COLOR_WHITE });
+	if (gdata->_gameProgress._killedDogossa > 0)
+		writeFormatted(6, 14, "You slew the Avatar of Drowned Dogossa #" + to_string(gdata->_gameProgress._killedDogossa) + " @times.", { COLOR_WHITE });
+	if (gdata->_gameProgress._killedSallowKing > 0)
+		writeFormatted(6, 15, "You slew the Lost Prince of Viridia #" + to_string(gdata->_gameProgress._killedSallowKing) + " @times.", { COLOR_WHITE });
+
+	if (gdata->_gameProgress._abyssLevel > 0)
+		writeFormatted(5, 17, "You attained a maximum Abyss level of #" + to_string(gdata->_gameProgress._abyssLevel) + "@.", { COLOR_WHITE });
+
+	//	Death counters
+	if (gdata->_mode == GameMode::PERMADEATH)
+		_win.write(4, 20, "You died once - but that's all it takes!", COLOR_LIGHT);
+	else
+	{
+		if (gdata->_totalDeaths == 0)
+			_win.write(4, 20, "You won without dying!", COLOR_LIGHT);
+		else if (gdata->_totalDeaths == 1)
+			_win.write(4, 20, "You won with a single death!", COLOR_LIGHT);
+		else
+			writeFormatted(4, 20, "You died a total of #" + to_string(gdata->_totalDeaths) + " @times.", { COLOR_WHITE });
+	}
+
+	
+	//	Options to continue.
+	if (gdata->_mode == GameMode::PERMADEATH && !gdata->_victory)
+		writeFormatted(2, 25, "Press #ENTER @to quit.", { COLOR_LIGHT });
+	else
+	{
+		writeFormatted(2, 25, "You can continue to play. Slay #VILEDRAGONS @to grow in power.", { TCODColor::crimson });
+		writeFormatted(2, 26, "Press #ENTER @to continue.", { COLOR_LIGHT });
+	}
+}
+
+
 //	Character info
 void display::drawCharacterSheet(gamedataPtr gdata)
 {

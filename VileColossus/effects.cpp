@@ -28,10 +28,6 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 			mapgen::openTemplePortal(gdata->_homeBase);
 		break;
 
-	/*case(MonsterType::BOSS_ABYSS_LORD):
-		gdata->_gameProgress._abyssLevel++;
-		break;*/
-
 	case(MonsterType::BOSS_DROWNED_DOGOSSA):
 		gdata->_gameProgress._killedDogossa++;
 		gdata->_gameProgress._abyssLevel++;
@@ -43,6 +39,15 @@ void triggerBossKillEffects(gamedataPtr gdata, monsterPtr mon)
 	case(MonsterType::BOSS_VIRIDIAN_PRINCE):
 		gdata->_gameProgress._killedSallowKing++;
 		gdata->_gameProgress._abyssLevel++;
+		break;
+
+	case(MonsterType::BOSS_VILE_COLOSSUS):
+		gdata->_gameProgress._killedColossus++;
+		if (gdata->_gameProgress._killedColossus == 1)
+		{
+			gdata->_state = STATE_GAME_COMPLETED;
+			gdata->_victory = true;
+		}
 		break;
 	}
 }
@@ -354,6 +359,7 @@ void killPlayer(gamedataPtr gdata)
 					it->reduceMaxDurability(1 + it->_maxDurability / 10);
 					it->takePercentDamage(10);
 				}
+				gdata->_totalDeaths++;
 			}
 
 			//	Lose inventory (on normal mode)
@@ -414,6 +420,7 @@ void killCreature(gamedataPtr gdata, creaturePtr target)
 			//	special events when we kill a boss
 			if (mon->_tier == 5)
 				triggerBossKillEffects(gdata, mon);
+			gdata->_totalKills++;
 		}
 	}
 }

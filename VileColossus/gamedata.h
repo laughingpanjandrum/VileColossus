@@ -15,7 +15,7 @@ enum class GameMode { CASUAL, NORMAL, PERMADEATH, };
 
 enum GameState
 {
-	STATE_TITLE, STATE_SELECT_MODE,
+	STATE_TITLE, STATE_SELECT_MODE, STATE_GAME_COMPLETED,
 	STATE_NORMAL,
 	STATE_SAVE_GAME, STATE_VIEW_CONTROLS, STATE_HELP_SCREEN,
 	STATE_CHARACTER_SHEET,
@@ -96,6 +96,11 @@ struct gamedata
 	//	Game progress
 	int _demonforgeTier = 1;
 	mapgen::game_progress _gameProgress;
+
+	//	Other special counters
+	unsigned _totalKills = 0;
+	unsigned _totalDeaths = 0;
+	bool _victory = false;
 
 	//	Game mode
 	GameMode _mode;

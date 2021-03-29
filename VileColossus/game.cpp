@@ -9,7 +9,6 @@ TODO
 	properly fit monster tags to screen
 
 	allow enhancing exalted flasks 
-	add material transmutation option
 */
 
 
@@ -168,6 +167,10 @@ void game::drawScreen()
 	{
 	case(STATE_TITLE):
 		_disp.title();
+		break;
+
+	case(STATE_GAME_COMPLETED):
+		_disp.drawGameCompletionScreen(_gdata);
 		break;
 
 	case(STATE_VIEW_CONTROLS):
@@ -518,6 +521,16 @@ void game::processInput()
 			if (_ih->isKeyPressed(TCODK_ENTER))
 				acceptDeath();
 			break;
+		case(STATE_GAME_COMPLETED):
+			if (_ih->isKeyPressed(TCODK_ENTER))
+			{
+				if (_gdata->_mode == GameMode::PERMADEATH && !_gdata->_victory)
+					_isGameOver = true;
+				else
+					_gdata->_state = STATE_NORMAL;
+			}
+			break;
+
 
 
 			//	Starting the game.
@@ -876,7 +889,7 @@ void game::castTownPortal()
 void game::acceptDeath()
 {
 	if (_gdata->_mode == GameMode::PERMADEATH)
-		_isGameOver = true;
+		_gdata->_state = STATE_GAME_COMPLETED;
 	else
 	{
 		_gdata->_player->_triggeredDeath = false;

@@ -55,6 +55,9 @@ public:
 	void drawHelpScreen(gamedataPtr gdata);
 
 
+	void drawGameCompletionScreen(gamedataPtr gdata);
+
+
 	//	Character information
 
 	void drawCharacterSheet(gamedataPtr gdata);
