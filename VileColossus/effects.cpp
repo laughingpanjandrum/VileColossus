@@ -121,23 +121,28 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 
 	case(5):
 		drop_amt = 8 + dieRoll(4, 2);
-		exalt_odds = 50;
 		break;
 	}
 
-	//	does this monster qualify for exaltation?
-	bool can_exalt = target->hasFlag("viledragon") || (roll_percent(exalt_odds) && target->_level >= 30);
+
+	//	does this monster qualify to drop exalted items?
+	if (target->hasFlag("viledragon"))
+		exalt_odds = 50;
+	else if (target->_tier == 5 && target->_level >= 30)
+		exalt_odds = 10;
+
 
 	//	Get free points in the vicinity.
 	auto pts = getAdjacentWalkable(gdata, target->_pos);
 	pts.push_back(target->_pos);
+
 
 	//	Roll the items to drop.
 	while (drop_amt-- > 0)
 	{
 		//	Random point and item
 		auto pt = pts[randrange(pts.size())];
-		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, (can_exalt && roll_percent(exalt_odds)));
+		auto it = lootgen::rollItemDrop(lootgen::getLootTierForMonsterLevel(target->_level), rarity, false, (roll_percent(exalt_odds)));
 		gdata->_map->addItem(it, pt);
 
 		//	Animation (for special items)
@@ -195,11 +200,19 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 	{
 		auto it = lootgen::generateMaterial(lootgen::rollRitualMaterial(), 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
+		if (roll_one_in(3))
+			gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
 	}
 	else if (target->hasFlag("avatar"))
 	{
 		auto it = lootgen::generateMaterial(MaterialType::DEAD_GODS_EYE, 1);
 		gdata->_map->addItem(it, pts[randrange(pts.size())]);
+		if (roll_one_in(3) != 1)
+			gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
+	}
+	else if (target->hasFlag("viledragon"))
+	{
+		gdata->_map->addItem(lootgen::generateMaterial(MaterialType::VILEDRAGON_SCALE, 1), pts[randrange(pts.size())]);
 	}
 }
 
