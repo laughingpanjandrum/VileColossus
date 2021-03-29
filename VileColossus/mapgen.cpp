@@ -359,6 +359,42 @@ inline void mapgen::fillRegionAndHollow(gridmapPtr m, Maptile outer, vector<Mapt
 }
 
 
+//	Tests adjacent points for walkability. Recursive.
+void mapgen::floodfill_recursive(gridmapPtr m, vector<vector<bool>>* cells, const intpair pt)
+{
+	(*cells)[pt.first][pt.second] = true;
+	for (int x = pt.first - 1; x <= pt.first + 1; x++)
+	{
+		for (int y = pt.second - 1; y <= pt.second + 1; y++)
+		{
+			if (m->isWalkable(x, y) && !(*cells)[x][y])
+				floodfill_recursive(m, cells, intpair(x, y));
+		}
+	}
+}
+
+
+//	Starting from the given point, tests adjacent points for walkability.
+//	Returns a 2d vector of cells; a cell marked 'true' means that it is both walkable AND connected to the initial point.
+const vector<vector<bool>> mapgen::floodfill(gridmapPtr m, const intpair start_pt)
+{
+	//	Create the grid of cells
+	vector<vector<bool>> pts;
+	for (unsigned x = 0; x < m->_xsize; x++)
+	{
+		vector<bool> xpts;
+		for (unsigned y = 0; y < m->_ysize; y++)
+			xpts.push_back(false);
+		pts.push_back(xpts);
+	}
+
+	//	Start the floodfill
+	floodfill_recursive(m, &pts, start_pt);
+
+	return pts;
+}
+
+
 //	Same as 'scatterTile', but won't replace non-walkable tiles like walls
 void mapgen::scatterTileOnWalkable(gridmapPtr m, Maptile tl, int x, int y, int w, int h, float density)
 {

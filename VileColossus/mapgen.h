@@ -94,6 +94,10 @@ namespace mapgen
 	void fillRegionAndHollow(gridmapPtr m, Maptile outer, vector<Maptile> inner, int x, int y, int w, int h);
 
 
+	void floodfill_recursive(gridmapPtr m, vector<vector<bool>>* cells, const intpair pt);
+	const vector<vector<bool>> floodfill(gridmapPtr m, const intpair start_pt);
+
+
 
 	//		Scatterers.
 

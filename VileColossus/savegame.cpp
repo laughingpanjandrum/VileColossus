@@ -53,6 +53,8 @@ void savegame::load_from_file(ifstream& f, gamedataPtr gdata)
 	gdata->_gameProgress._killedSallowKing = read_int(f);
 	gdata->_gameProgress._killedColossus = read_int(f);
 
+	gdata->_gameProgress._killedViledragons = read_int(f);
+
 	gdata->_gameProgress._abyssLevel = read_int(f);
 
 
@@ -376,6 +378,8 @@ void savegame::save_to_file(ofstream& f, gamedataPtr gdata)
 	serialize_int(f, gdata->_gameProgress._killedDogossa);
 	serialize_int(f, gdata->_gameProgress._killedSallowKing);
 	serialize_int(f, gdata->_gameProgress._killedColossus);
+
+	serialize_int(f, gdata->_gameProgress._killedViledragons);
 
 	serialize_int(f, gdata->_gameProgress._abyssLevel);
 
