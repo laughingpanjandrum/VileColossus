@@ -1061,8 +1061,8 @@ void display::drawAnvil(gamedataPtr gdata)
 
 void display::drawEnchantedForge(gamedataPtr gdata)
 {
-	drawBox(2, 2, 40, 31, COLOR_DARK);
-	_win.write(3, 2, "ENCHANTED FORGE", COLOR_LIGHT);
+	drawBox(2, 2, 42, 31, COLOR_DARK);
+	_win.write(3, 2, "ENCHANTED FORGE", getMaptileColor(MT_FORGE));
 	int x = 4, y = 4;
 
 
@@ -1127,7 +1127,8 @@ void display::drawEnchantedForge(gamedataPtr gdata)
 	drawStashedMaterials(gdata, 47, 25);
 
 	//	other stuff we can do
-	writeFormatted(4, 45, "#R @Spend #" + to_string(getCostToRepairEquipment(gdata)) + " @fragments to repair all equipped items", { COLOR_LIGHT, TCODColor::gold });
+	drawBox(2, 36, 60, 2 , COLOR_DARK);
+	writeFormatted(4, 37, "#R @Spend #" + to_string(getCostToRepairEquipment(gdata)) + " @fragments to repair all equipped items", { COLOR_LIGHT, TCODColor::gold });
 	drawMessages(gdata);
 }
 
@@ -1269,8 +1270,8 @@ void display::drawDemonforge(gamedataPtr gdata)
 //	Allows us to socket/unsocket gems.
 void display::drawGemstonePress(gamedataPtr gdata)
 {
-	drawBox(2, 2, 40, 25, COLOR_DARK);
-	_win.write(3, 2, "GEMSTONE PRESS", COLOR_LIGHT);
+	drawBox(2, 2, 42, 25, COLOR_DARK);
+	_win.write(3, 2, "GEMSTONE PRESS", getMaptileColor(MT_GEMSTONE_PRESS));
 	int x = 4, y = 4;
 
 
@@ -1328,6 +1329,7 @@ void display::drawGemstonePress(gamedataPtr gdata)
 			writeFormatted(x, ++y, "#  f @Fabricate gems", { COLOR_LIGHT });
 		}
 	}
+	drawBox(x - 2, 28, 42, 10, COLOR_DARK);
 
 
 	//	Materials
