@@ -123,7 +123,7 @@ void display::drawControls()
 	_win.write(4, 5, "numpad", COLOR_MEDIUM);
 	_win.write(4, 6, "7 8 9", COLOR_LIGHT);
 	_win.write(4, 7, "4   6", COLOR_LIGHT);
-	_win.write(4, 8, "1 2 3", COLOR_MEDIUM);
+	_win.write(4, 8, "1 2 3", COLOR_LIGHT);
 
 	_win.write(15, 5, "vi-keys", COLOR_MEDIUM);
 	_win.write(15, 6, "y k u", COLOR_LIGHT);
@@ -175,6 +175,7 @@ void display::drawControls()
 	_win.write(4, 49, "While in look mode:", COLOR_MEDIUM);
 	writeFormatted(5, 50, "#directional keys @move the cursor around.", { COLOR_LIGHT });
 	writeFormatted(5, 51, "#TAB @cycles between visible enemies.", { COLOR_LIGHT });
+	writeFormatted(5, 52, "#v @toggles monster tags on and off.", { COLOR_LIGHT });
 
 
 	_win.write(3, 54, "OTHER", COLOR_WHITE);

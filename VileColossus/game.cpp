@@ -8,7 +8,10 @@ TODO
 	possible to somehow not die at zero health? just stay invincible?? related to self-immolation
 	properly fit monster tags to screen
 
-	allow enhancing exalted flasks 
+	refresh marked equipment slots on death
+	make legendary gems much less likely at low depths
+	give names to quiver tiers
+	prevent fabricating legendary gems [which is worthless anyway!!]
 */
 
 
@@ -118,7 +121,7 @@ void game::newgame()
 
 	//	test
 	//addToInventory(_gdata, lootgen::generateSpellrune(3, 3));
-	addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_CONDUCTING));
+	//addToInventory(_gdata, lootgen::generateLegendaryItem(1, ENCH_CONDUCTING));
 	/*for (unsigned i = 0; i < 10; i++)
 	{
 		auto it = lootgen::generateSpellrune(2, lootgen::rollRarity(4));
@@ -300,8 +303,10 @@ void game::processInput()
 				cycleCursorTarget(_gdata);
 			else if (_ih->isDirectionalKeyPressed())
 				moveCursor(_gdata, _ih->getVectorFromKeypress());
-			else if (_ih->isKeyPressed('x'))
+			else if (_ih->isKeyPressed('v'))
 				_gdata->_state = (_gdata->_state == STATE_LOOK) ? STATE_HIGHLIGHT_ENEMIES : STATE_LOOK;
+			else if (_ih->isKeyPressed('x'))
+				backOut();
 			break;
 
 
