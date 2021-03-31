@@ -736,7 +736,12 @@ itemPtr lootgen::generateWeapon(const int tier, const int rarity)
 //	Secondary shield-like item to go alongside bows.
 itemPtr lootgen::generateQuiver(const int tier, const int rarity)
 {
-	auto it = itemPtr(new item("quiver", ITEM_QUIVER, rarity));
+	//	name depends on tier
+	string name = "quiver";
+	if		(tier == 3)	name = "grand quiver";
+	else if (tier == 2)	name = "great quiver";
+
+	auto it = itemPtr(new item(name, ITEM_QUIVER, rarity));
 	it->setProperty(PROP_ACCURACY_MOD, randint(1, tier + 1));
 	it->setProperty(PROP_BASE_DAMAGE, randint(1, tier + 1));
 	return it;
@@ -754,6 +759,10 @@ itemPtr lootgen::generateJewel(const int tier, const int rarity)
 		cat = ITEM_AMULET;
 		name = "amulet";
 	}
+
+	//	tier adjusts name
+	if		(tier == 3)	name = "jeweled " + name;
+	else if (tier == 2)	name = "studded " + name;
 
 	//	generate the item
 	auto it = itemPtr(new item(name, cat, rarity));

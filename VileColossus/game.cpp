@@ -9,7 +9,6 @@ TODO
 	properly fit monster tags to screen
 
 	refresh marked equipment slots on death
-	give names to quiver tiers
 */
 
 
