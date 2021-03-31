@@ -1092,7 +1092,7 @@ const vector<itemPtr> getGemstonesWeCanFabricate(gamedataPtr gdata)
 	vector<itemPtr> gems;
 	for (auto it : gdata->_stashedGems)
 	{
-		if (it->_amountLeft >= 3 && it->_enhancementLevel < GEM_MAX_TIER)
+		if (it->_amountLeft >= 3 && it->_enhancementLevel < GEM_MAX_TIER && !doesGemHaveSingularEffect(it->_gemType))
 		{
 			auto gem = lootgen::generateGemOfType(it->_gemType, it->_enhancementLevel + 1, it->_rarity);
 			gems.push_back(gem);

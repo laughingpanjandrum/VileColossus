@@ -11,7 +11,6 @@ TODO
 	refresh marked equipment slots on death
 	make legendary gems much less likely at low depths
 	give names to quiver tiers
-	prevent fabricating legendary gems [which is worthless anyway!!]
 */
 
 
