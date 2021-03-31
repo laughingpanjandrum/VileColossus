@@ -182,13 +182,16 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 		else if (target->_tier == 5)
 			gems = randint(1, 4);
 
+		//	test whether legendary gems are allowed
+		const int gem_rarity_max = (rarity == 4 && target->_level >= 30) ? 4 : 1;
+
 		//	generate the gems
 		while (gems-- > 0)
 		{
 			auto tier = randint(1, lootgen::getGemTierForMonsterLevel(target->_level));
 			if (tier >= 0)
 			{
-				auto it = lootgen::generateGem(tier, randint(1, rarity));
+				auto it = lootgen::generateGem(tier, randint(1, gem_rarity_max));
 				gdata->_map->addItem(it, pts[randrange(pts.size())]);
 			}
 		}

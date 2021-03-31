@@ -9,7 +9,6 @@ TODO
 	properly fit monster tags to screen
 
 	refresh marked equipment slots on death
-	make legendary gems much less likely at low depths
 	give names to quiver tiers
 */
 
