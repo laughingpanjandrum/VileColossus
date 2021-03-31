@@ -289,7 +289,7 @@ void monster::addFlag(const string flag)
 		else if (flag == "ranged_attack")
 			_attackRange = 8;
 		else if (flag == "defended")
-			_defence += _defence / 2;
+			_defence += 5;
 
 
 		//	Sepcial attacks reduce base damage
