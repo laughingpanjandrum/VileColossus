@@ -382,7 +382,7 @@ vector<string> monsterdata::getMonsterFlags(const MonsterType id)
 		return { "more_health", "resists_electric", "resists_fire", "resists_poison", "arcane_attack", "casts_arcane_bolt", };
 
 	case(MonsterType::STAR_VAMPIRE):
-		return { "more_health", "protected", "vampiric", "arcane_attack", "unseen", };
+		return { "vampiric", "arcane_attack", "unseen", };
 
 	case(MonsterType::TENTACLE):
 		return { "less_health", "grapples" };

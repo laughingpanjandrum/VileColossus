@@ -1383,10 +1383,13 @@ void mapgen::addAbyssTreasures(gridmapPtr m)
 void mapgen::addAbyssMonsters(gridmapPtr m, const vector<MonsterType> mtypes, const int dl)
 {
 	auto nodes = createNodeMap(m);
-	for (auto n : nodes)
+	auto count = nodes.size() / 2 + 1;
+	while (count-- > 0)
 	{
+		unsigned n = randrange(nodes.size());
 		auto mlist = rollMonsterGroup(dl, mtypes[randrange(mtypes.size())]);
-		addMonsterGroupToNode(m, &mlist, n);
+		addMonsterGroupToNode(m, &mlist, nodes[n]);
+		nodes.erase(nodes.begin() + n);
 	}
 }
 
