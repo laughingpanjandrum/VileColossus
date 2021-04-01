@@ -21,9 +21,7 @@ void selectRitualMaterial(gamedataPtr gdata)
 	if (gdata->_idx < gdata->_stashedRitualMaterials.size())
 	{
 		auto it = gdata->_stashedRitualMaterials[gdata->_idx];
-		if (it->_material == MaterialType::VILEDRAGON_SCALE)
-			gdata->_summonedViledragon = !gdata->_summonedViledragon;
-		else if (gdata->_ritualType == it->_material)
+		if (gdata->_ritualType == it->_material)
 			gdata->_ritualType = MaterialType::__NONE;
 		else
 			gdata->_ritualType = it->_material;
@@ -37,8 +35,6 @@ void openAbyssGate(gamedataPtr gdata)
 	//	Expend materials.
 	if (gdata->_ritualType != MaterialType::__NONE)
 		spendMaterial(gdata, gdata->_ritualType, 1);
-	if (gdata->_summonedViledragon)
-		spendMaterial(gdata, MaterialType::VILEDRAGON_SCALE, 1);
 
 	//	Open the portal.
 	gdata->_map->setTile(MT_ABYSSAL_GATE, 11, 14);

@@ -90,4 +90,7 @@ namespace monsterdata
 	monsterPtr generate_AbyssLord(int level);
 	monsterPtr generate_Viledragon(const int level);
 
+
+	vector<monsterPtr> generate_ViledragonGang(const int level);
+	
 }

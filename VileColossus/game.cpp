@@ -9,6 +9,14 @@ TODO
 	properly fit monster tags to screen
 
 	refresh marked equipment slots on death
+
+	viledragon concepts:
+		- spawns lots of allies
+		- twins
+		- destroys tiles
+		- teleports
+		- has illusory copies
+		- just very big and strong 
 */
 
 
@@ -780,8 +788,8 @@ void game::useAbyssalGate()
 	_gdata->_map->setTile(MT_DRAINED_SHRINE, _gdata->_player->_pos);
 
 	//	Generate the map
-	if (_gdata->_summonedViledragon)
-		_gdata->_map = mapgen::generate_ViledragonLair(&_gdata->_gameProgress, _gdata->_ritualType);
+	if (_gdata->_ritualType == MaterialType::VILEDRAGON_SCALE)
+		_gdata->_map = mapgen::generate_ViledragonLair(&_gdata->_gameProgress);
 	else
 		_gdata->_map = mapgen::generate_Abyssal(_gdata->_gameProgress._abyssLevel, &_gdata->_gameProgress, _gdata->_ritualType);
 

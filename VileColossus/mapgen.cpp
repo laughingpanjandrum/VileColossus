@@ -1565,7 +1565,7 @@ gridmapPtr mapgen::generate_AbyssHeart(game_progress* progress)
 
 
 //	Special lair of a super-boss.
-gridmapPtr mapgen::generate_ViledragonLair(game_progress* progress, MaterialType ritualType)
+gridmapPtr mapgen::generate_ViledragonLair(game_progress* progress)
 {
 	auto m = gridmapPtr(new gridmap(31, 31));
 	m->_name = "Viledragon Lair [Level " + to_string(progress->_killedViledragons) + "]";
@@ -1583,38 +1583,34 @@ gridmapPtr mapgen::generate_ViledragonLair(game_progress* progress, MaterialType
 	}
 
 	//	additional stuff
-	vector<MonsterType> mtypes;
-	switch (ritualType)
+	const int r = randint(1, 3);
+	switch (r)
 	{
-	case(MaterialType::SODDEN_FLESH):
+	case(1):
 		scatterTile(m, MT_GRASS, 5, 5, 20, 20, 0.1);
 		scatterTile(m, MT_BUSH, 5, 5, 20, 20, 0.1);
 		scatterTile(m, MT_WATER, 5, 5, 20, 20, 0.1);
 		scatterSurface(m, Surface::SLUDGE, 5, 5, 20, 20, 0.05);
-		mtypes = { MonsterType::CULTIST_DOGGOSAN, MonsterType::TENTACLE };
 		break;
 
-	case(MaterialType::TOMB_IDOL):
+	case(2):
 		m->_lightLevel = -2;
 		scatterTile(m, MT_TOMBSTONE, 5, 5, 20, 20, 0.05);
 		scatterTile(m, MT_BUSH, 5, 5, 20, 20, 0.1);
-		mtypes = { MonsterType::BLOOD_BLOB, MonsterType::BONES_BLOODY, MonsterType::DEMON_PUTRESCENT, };
 		break;
 
-	case(MaterialType::VIRIDIAN_GLASS):
+	case(3):
 		scatterTile(m, MT_WALL_ICE, 5, 5, 20, 20, 0.05);
 		scatterTile(m, MT_WATER, 5, 5, 20, 20, 0.1);
-		mtypes = { MonsterType::CRAB_TITAN, MonsterType::PALE_KNIGHT, MonsterType::PALE_SCHOLAR, };
 		break;
 	}
 
-	//	monsters
-	const int dl = 20 + progress->_killedViledragons;
-	addAbyssMonsters(m, mtypes, dl);
 
 	//	boss
-	auto boss = monsterdata::generate_Viledragon(40 + progress->_killedViledragons * 5);
-	m->addCreature(boss, getRandomFree(m));
+	auto mlist = monsterdata::generate_ViledragonGang(40 + progress->_killedViledragons * 2);
+	for (auto mon : mlist)
+		m->addCreature(mon, getRandomFree(m));
+
 
 	//	finalization
 	m->_startPt = getRandomSafe(m);

@@ -2406,8 +2406,6 @@ void display::drawRitualAltar(gamedataPtr gdata)
 		//	mark if being used
 		if (it->_material == gdata->_ritualType)
 			_win.writec(3, y, '*', COLOR_WHITE);
-		else if (it->_material == MaterialType::VILEDRAGON_SCALE && gdata->_summonedViledragon)
-			_win.writec(3, y, '+', COLOR_WHITE);
 
 		//	material description
 		if (selected)

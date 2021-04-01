@@ -208,6 +208,14 @@ const MonsterType monster::rollMonsterToSpawn() const
 	case(MonsterType::BOSS_VILE_COLOSSUS):
 		return MonsterType::VILESPAWN;
 
+	case(MonsterType::BOSS_VILEDRAGON):
+		r = randint(1, 5);
+		if		(r == 1)	return MonsterType::VILESPAWN;
+		else if (r == 2)	return MonsterType::KNIGHT_DREAD;
+		else if (r == 3)	return MonsterType::TENTACLE_HORROR;
+		else if (r == 4)	return MonsterType::DEMON_PUTRESCENT;
+		else if (r == 5)	return MonsterType::PALE_KNIGHT;
+		break;
 
 
 	case(MonsterType::BLOOD_LEECH):

@@ -742,8 +742,8 @@ itemPtr lootgen::generateQuiver(const int tier, const int rarity)
 	else if (tier == 2)	name = "great quiver";
 
 	auto it = itemPtr(new item(name, ITEM_QUIVER, rarity));
-	it->setProperty(PROP_ACCURACY_MOD, randint(1, tier + 1));
-	it->setProperty(PROP_BASE_DAMAGE, randint(1, tier + 1));
+	it->setProperty(PROP_ACCURACY_MOD, randint(tier, tier * 2));
+	it->setProperty(PROP_BASE_DAMAGE, randint(tier, tier * 2));
 	return it;
 }
 

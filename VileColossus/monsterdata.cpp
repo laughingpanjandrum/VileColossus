@@ -751,3 +751,151 @@ monsterPtr monsterdata::generate_Viledragon(const int level)
 
 	return mon;
 }
+
+
+//	Rolls a Viledragon encounter, plus allies if applicable
+vector<monsterPtr> monsterdata::generate_ViledragonGang(const int level)
+{
+	vector<monsterPtr> mlist;
+	vector<MonsterType> mtypes = { MonsterType::VILESPAWN };
+
+	string name = "VILEDRAGON";
+
+	//	base type
+	const int t = randint(1, 5);
+	switch (t)
+	{
+	case(1):	
+		name = "BIRTHING " + name; 
+		mtypes.push_back(MonsterType::VILESPAWN);	
+		break;
+	case(2):	
+		name = "TWIN " + name; 
+		break;
+	case(3):	
+		name = "TITANIC " + name; 
+		mtypes.push_back(MonsterType::CRAB_TITAN);
+		break;
+	case(4):	
+		name = "PHASE " + name; 
+		mtypes.push_back(MonsterType::WRAITH_GREAT);
+		break;
+	case(5):	
+		name = "THIRSTING " + name; 
+		mtypes.push_back(MonsterType::VAMPIRE_SPAWN);
+		break;
+	}
+
+	//	elemental affinity
+	const DamageType dt = (roll_one_in(5)) ? DTYPE_NORMAL : SPECIAL_DAMAGE_TYPES[randrange(SPECIAL_DAMAGE_TYPES.size())];
+	switch (dt)
+	{
+	case(DTYPE_ARCANE):		
+		name = "INFUSED " + name; 
+		mtypes.push_back(MonsterType::QUASIT);
+		break;
+	case(DTYPE_ELECTRIC):	
+		name = "ELECTRIC " + name; 
+		mtypes.push_back(MonsterType::WRAITH_MOON);
+		break;
+	case(DTYPE_FIRE):		
+		name = "CHARRED " + name; 
+		mtypes.push_back(MonsterType::ORB_FLAME);
+		break;
+	case(DTYPE_POISON):		
+		name = "ROTTED " + name;
+		mtypes.push_back(MonsterType::BONES_BLOODY);
+		break;
+	default:				
+		name = "PETRIFIED " + name; 
+		mtypes.push_back(MonsterType::STARSPAWN);
+		break;
+	}
+
+
+	//	QTY of monsters is variable
+	int count = 1;
+	if (t == 2) count = 2;
+
+
+	while (count-- > 0)
+	{
+		//	generate the base viledragon
+		auto mon = monsterPtr(new monster(name, 'D', getDamageTypeColor(dt), level, 5, MonsterType::BOSS_VILEDRAGON));
+		mon->addFlag("viledragon");
+		mon->addFlag("more_health");
+
+		//	elemental association
+		switch (dt)
+		{
+		case(DTYPE_ARCANE):
+			mon->addFlag("resists_arcane");
+			mon->addFlag("arcane_attack");
+			mon->addFlag("casts_arcane_bolt");
+			mon->addFlag("protected");
+			break;
+
+		case(DTYPE_ELECTRIC):
+			mon->addFlag("immune_electric");
+			mon->addFlag("electric_attack");
+			mon->addFlag("casts_lightning");
+			mon->addFlag("protected");
+			break;
+
+		case(DTYPE_FIRE):
+			mon->addFlag("immune_fire");
+			mon->addFlag("fire_attack");
+			mon->addFlag("casts_fireblast");
+			mon->addFlag("protected");
+			break;
+
+		case(DTYPE_POISON):
+			mon->addFlag("immune_poison");
+			mon->addFlag("poison_attack");
+			mon->addFlag("casts_poison_spit");
+			mon->addFlag("protected");
+			break;
+
+		default:
+			mon->addFlag("protected_heavy");
+			mon->addFlag("more_damage");
+			break;
+		}
+
+		//	flags based on type
+		switch (t)
+		{
+		case(1):
+			mon->addFlag("megaspawner");
+			break;
+
+		case(2):
+
+			break;
+
+		case(3):
+			mon->addFlag("defended");
+			mon->addFlag("slow");
+			break;
+
+		case(4):
+			mon->addFlag("teleports");
+			mon->addFlag("flits");
+			break;
+
+		case(5):
+			mon->addFlag("vampiric");
+			break;
+		}
+
+		//	add to list
+		mlist.push_back(mon);
+	}
+
+	//	his gang
+	count = dieRoll(3, 4);
+	while (count-- > 0)
+		mlist.push_back(generate(mtypes[randrange(mtypes.size())], level));
+
+	return mlist;
+}

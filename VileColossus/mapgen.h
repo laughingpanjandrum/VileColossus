@@ -181,7 +181,7 @@ namespace mapgen
 	gridmapPtr generate_OuterDark(int dl, bool descending);
 
 	gridmapPtr generate_AbyssHeart(game_progress* progress);
-	gridmapPtr generate_ViledragonLair(game_progress* progress, MaterialType ritualType);
+	gridmapPtr generate_ViledragonLair(game_progress* progress);
 
 
 	//		Boss maps
