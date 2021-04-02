@@ -344,10 +344,21 @@ bool player::cleaves() const
 	return _Equipped[SLOT_MAIN_HAND] != nullptr && _Equipped[SLOT_MAIN_HAND]->getProperty(PROP_CLEAVE_DAMAGE) > 0;
 }
 
+//	must have a pentrating primary weapon equipped
+bool player::penetrates() const
+{
+	return _Equipped[SLOT_MAIN_HAND] != nullptr && _Equipped[SLOT_MAIN_HAND]->getProperty(PROP_PENETRATION_DAMAGE) > 0;
+}
+
 //  Additional damage per adjacent target when cleaving.
 int player::getCleaveDamageBonus()
 {
 	return getEquipmentPropertySum(PROP_CLEAVE_DAMAGE);
+}
+
+int player::getPenetrationBonus() const
+{
+	return getEquipmentPropertySum(PROP_PENETRATION_DAMAGE);
 }
 
 //  Chance/100 to inflict Stagger on hit.

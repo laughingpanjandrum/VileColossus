@@ -252,6 +252,7 @@ const string getItemPropertyName(const ItemProperty prop)
 	case(PROP_HEAL_ON_USE):				return "Heals";
 	case(PROP_KNOCKBACK_CHANCE):		return "Knockback";
 	case(PROP_MAX_CHARGES):				return "Max Charges";
+	case(PROP_PENETRATION_DAMAGE):		return "Penetration Damage";
 	case(PROP_RESIST_ARCANE):			return "Resist Arcane";
 	case(PROP_RESIST_ELECTRIC):			return "Resist Electric";
 	case(PROP_RESIST_FIRE):				return "Resist Fire";
@@ -279,6 +280,7 @@ const string formatItemProperty(const ItemProperty prop, int val)
 	case(PROP_CHARGE_REGAIN_RATE):
 	case(PROP_CRITICAL_CHANCE):
 	case(PROP_CRITICAL_DAMAGE):
+	case(PROP_PENETRATION_DAMAGE):
 		return plusminus(val) + "%";
 
 	case(PROP_KNOCKBACK_CHANCE):

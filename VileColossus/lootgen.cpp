@@ -29,14 +29,14 @@ const vector<lootgen::BaseWeaponType> lootgen::getWeaponTypesOfTier(const int ti
 	{
 	case(1):
 		return { BaseWeaponType::BASTARD_SWORD, BaseWeaponType::BATTLE_AXE, BaseWeaponType::CROSSBOW, BaseWeaponType::CLUB, BaseWeaponType::DAGGER, BaseWeaponType::GREATCLUB, BaseWeaponType::GREAT_AXE,
-			BaseWeaponType::SHORTBOW, BaseWeaponType::SHORTSWORD, };
+			BaseWeaponType::SHORTBOW, BaseWeaponType::SPEAR, BaseWeaponType::SHORTSWORD, };
 
 	case(2):
 		return { BaseWeaponType::DOUBLE_AXE, BaseWeaponType::GREATHAMMER, BaseWeaponType::GREATSWORD, BaseWeaponType::HEAVY_CROSSBOW, BaseWeaponType::LONGBOW,
-					BaseWeaponType::LONGSWORD, BaseWeaponType::MACE, BaseWeaponType::STILETTO, BaseWeaponType::WAR_AXE, };
+					BaseWeaponType::LONGSWORD, BaseWeaponType::MACE, BaseWeaponType::STILETTO, BaseWeaponType::WAR_AXE, BaseWeaponType::WARPIKE, };
 		
 	case(3):
-		return { BaseWeaponType::BROAD_AXE, BaseWeaponType::DEMON_BLADE, BaseWeaponType::DEMON_GREATBLADE, BaseWeaponType::DOUBLE_AXE, BaseWeaponType::DOUBLE_CROSSBOW,
+		return { BaseWeaponType::BROAD_AXE, BaseWeaponType::DEMON_BLADE, BaseWeaponType::DEMON_GREATBLADE, BaseWeaponType::DEMON_PIKE, BaseWeaponType::DOUBLE_AXE, BaseWeaponType::DOUBLE_CROSSBOW,
 					BaseWeaponType:: GREATBOW, BaseWeaponType:: GREATMAUL, BaseWeaponType:: LONG_KNIFE, BaseWeaponType::TITAN_AXE, BaseWeaponType:: WARHAMMER, };
 
 	default:
@@ -90,12 +90,13 @@ itemPtr lootgen::generateStartingWeapon()
 {
 	//	Randomized type
 	BaseWeaponType bwt;
-	const int r = randint(1, 4);
+	const int r = 4; // randint(1, 5);
 	switch (r)
 	{
 	case(1):	bwt = BaseWeaponType::DAGGER; break;
 	case(2):	bwt = BaseWeaponType::CLUB; break;
 	case(3):	bwt = BaseWeaponType::SHORTSWORD; break;
+	case(4):	bwt = BaseWeaponType::SPEAR; break;
 	default:	bwt = BaseWeaponType::BATTLE_AXE; break;
 	}
 	auto it = generateWeaponOfType(bwt);
@@ -548,6 +549,10 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		name = "ultrablade";
 		dam = 60; var = 18; crit = 5; mult = 100; acc = -1;
 		break;
+	case(BaseWeaponType::DEMON_PIKE):
+		name = "demon pike";
+		dam = 24; var = 5; crit = 5; mult = 100;
+		break;
 	case(BaseWeaponType::DOUBLE_AXE):
 		name = "double axe";
 		dam = 30; var = 5; crit = 3; mult = 150; acc - -5;
@@ -592,6 +597,10 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		name = "longsword";
 		dam = 14; var = 6; crit = 5; mult = 100;
 		break;
+	case(BaseWeaponType::SPEAR):
+		name = "spear";
+		dam = 5; var = 1; crit = 5; mult = 100;
+		break;
 	case(BaseWeaponType::LONG_KNIFE):
 		name = "starknife";
 		dam = 12; var = 3; crit = 15; mult = randint(30, 40) * 10; acc = 2;
@@ -619,6 +628,10 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::WARHAMMER):
 		name = "demon mace";
 		dam = 22; var = 4; crit = 1; mult = 50; acc = -1;
+		break;
+	case(BaseWeaponType::WARPIKE):
+		name = "war pike";
+		dam = 14; var = 4; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::WAR_AXE):
 		name = "war axe";
@@ -665,6 +678,12 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::MACE):
 	case(BaseWeaponType::WARHAMMER):
 		it->setProperty(PROP_STAGGER_CHANCE, randint(25, 75));
+		break;
+
+	case(BaseWeaponType::SPEAR):
+	case(BaseWeaponType::WARPIKE):
+	case(BaseWeaponType::DEMON_PIKE):
+		it->setProperty(PROP_PENETRATION_DAMAGE, 50 + 10 * randint(2, 4));
 		break;
 
 	case(BaseWeaponType::SHORTBOW):

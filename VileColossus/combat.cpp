@@ -290,11 +290,32 @@ void triggerCleaveAttack(gamedataPtr gdata, creaturePtr cleaver)
 }
 
 
+//	Strikes both the primary target AND a creature directly behind them, if possible.
+void triggerPenetrationAttack(gamedataPtr gdata, creaturePtr attacker, creaturePtr target)
+{
+	//	hit primary target
+	attackWithWeapon(gdata, attacker, target);
+
+	//	test for secondary target
+	auto v = get2dVector(attacker->_pos, target->_pos);
+	intpair pt = target->_pos;
+	intpair_add(&pt, &v);
+	if (gdata->_map->inBounds(pt))
+	{
+		auto t2 = gdata->_map->getCreature(pt);
+		if (t2 != nullptr)
+			attackWithWeapon(gdata, attacker, t2, false, attacker->getPenetrationBonus(), 0, false);
+	}
+}
+
+
 //	Player attempts to attack the given creature in melee.
 void playerTriggerMeleeAttack(gamedataPtr gdata, creaturePtr t)
 {
 	if (gdata->_player->cleaves())
 		triggerCleaveAttack(gdata, gdata->_player);
+	else if (gdata->_player->penetrates())
+		triggerPenetrationAttack(gdata, gdata->_player, t);
 	else
 		attackWithWeapon(gdata, gdata->_player, t);
 }

@@ -101,7 +101,9 @@ public:
 	virtual int getRiposteDamageMult() const;
 
 	virtual bool cleaves() const;
+	virtual bool penetrates() const;
 	virtual int getCleaveDamageBonus();
+	virtual int getPenetrationBonus() const;
 
 	virtual int getStaggerChance() const;
 	virtual int getStaggerAttackDuration() const;

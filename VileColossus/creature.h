@@ -81,6 +81,7 @@ public:
 
 	virtual bool cleaves() const { return false; }
 	virtual int getCleaveDamageBonus() const { return 0; }
+	virtual int getPenetrationBonus() const { return 0; }
 
 	virtual int getStaggerChance() const { return 0; }
 	virtual int getStaggerAttackDuration() const { return 0; }

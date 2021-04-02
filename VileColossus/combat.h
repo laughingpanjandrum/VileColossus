@@ -31,6 +31,7 @@ void attackWithWeapon(gamedataPtr gdata, creaturePtr attacker, creaturePtr targe
 //	Player actions
 
 void triggerCleaveAttack(gamedataPtr gdata, creaturePtr cleaver);
+void triggerPenetrationAttack(gamedataPtr gdata, creaturePtr attacker, creaturePtr target);
 
 void playerTriggerMeleeAttack(gamedataPtr gdata, creaturePtr t);
 void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec);
