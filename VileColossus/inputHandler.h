@@ -36,8 +36,9 @@ public:
 	void				waitForKeypress() { TCODSystem::waitForEvent(TCOD_EVENT_KEY_RELEASE, &_key, &_mouse, true); }
 
 	//					modifier keys
+	bool				isAltPressed() const { return _key.lalt || _key.ralt; }
 	bool				isCtrlPressed() const { return _key.lctrl || _key.rctrl; }
-	bool				isShiftKeyPressed() const { return _key.shift; }
+	bool				isShiftKeyPressed() const { return _key.shift || isKeyPressed(TCODK_SHIFT); }
 
 	//					Checking key pressed
 	bool				isKeyPressed() const { return _key.pressed; }

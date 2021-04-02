@@ -586,7 +586,7 @@ void game::mainGameInput()
 	{
 		if (_ih->isCtrlPressed())
 			startAutoMoving(_gdata, _ih->getVectorFromKeypress());
-		else if (_ih->isShiftKeyPressed())
+		else if (_ih->isShiftKeyPressed() || _ih->isAltPressed())
 			playerTryRangedAttack(_gdata, _ih->getVectorFromKeypress());
 		else
 			doPlayerMove(_gdata, _ih->getVectorFromKeypress());

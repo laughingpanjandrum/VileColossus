@@ -1608,8 +1608,8 @@ gridmapPtr mapgen::generate_ViledragonLair(game_progress* progress)
 
 	//	boss
 	auto mlist = monsterdata::generate_ViledragonGang(40 + progress->_killedViledragons * 2);
-	for (auto mon : mlist)
-		m->addCreature(mon, getRandomFree(m));
+	auto n = new TCODBsp(10, 10, 10, 10);
+	addMonsterGroupToNode(m, &mlist, n);
 
 
 	//	finalization

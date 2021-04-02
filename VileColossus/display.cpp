@@ -143,7 +143,7 @@ void display::drawControls()
 	_win.write(3, 15, "COMBAT", COLOR_WHITE);
 
 	writeFormatted(4, 17, "#Bump into enemies @to attack in melee.", { COLOR_LIGHT });
-	writeFormatted(4, 18, "#shift+direction @performs a ranged attack, if available.", { COLOR_LIGHT });
+	writeFormatted(4, 18, "#shift @or #alt+direction @performs a ranged attack, if available.", { COLOR_LIGHT, COLOR_LIGHT, });
 	writeFormatted(4, 20, "#TAB @to auto-attack an adjacent enemy.", { COLOR_LIGHT });
 
 	writeFormatted(4, 22, "#q @to quaff your equipped flask.", { COLOR_LIGHT });
