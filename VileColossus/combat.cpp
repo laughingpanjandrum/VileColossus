@@ -331,7 +331,7 @@ void playerTriggerRangedAttack(gamedataPtr gdata, const intpair vec)
 	const int maxdist = MIN(gdata->_player->getMaxAttackRange(), gdata->_player->getVisionRadius());
 
 	//	Trace the path
-	while (hypot(pt.first - o.first, pt.second - o.second) <= maxdist)
+	while (floor(hypot(pt.first - o.first, pt.second - o.second)) <= maxdist)
 	{
 		//	Walk along the line
 		intpair_add(&pt, &vec);
