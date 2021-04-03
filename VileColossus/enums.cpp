@@ -708,7 +708,7 @@ string getGemTypeFullName(const GemType gem, const int tier)
 	//	gems with tiers
 	switch (tier)
 	{
-	case(1):	return "broken " + name;
+	case(1):	return name + " splinter";
 	case(2):	return "chipped " + name;
 	case(3):	return "whole " + name;
 	case(4):	return "pure " + name;
