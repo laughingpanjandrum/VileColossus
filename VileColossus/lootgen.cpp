@@ -698,7 +698,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 	case(BaseWeaponType::LONGSPEAR):
 	case(BaseWeaponType::HALBERD):
 	case(BaseWeaponType::DEMONGLAIVE):
-		it->setProperty(PROP_PENETRATION_DAMAGE, 50 + 10 * randint(2, 4));
+		it->setProperty(PROP_PENETRATION_DAMAGE, 100 + 20 * randint(3, 5));
 		break;
 
 	case(BaseWeaponType::SHORTBOW):
