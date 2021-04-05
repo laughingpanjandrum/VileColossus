@@ -547,7 +547,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::DEMONGLAIVE):
 		name = "demon glaive";
-		dam = 60; var = 15; crit = 5; mult = 100; acc = -1;
+		dam = 70; var = 15; crit = 5; mult = 100; acc = -1;
 		break;
 	case(BaseWeaponType::DEMON_GREATBLADE):
 		name = "ultrablade";
@@ -555,7 +555,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::DEMON_PIKE):
 		name = "demon pike";
-		dam = 24; var = 5; crit = 5; mult = 100;
+		dam = 28; var = 5; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::DOUBLE_AXE):
 		name = "double axe";
@@ -591,7 +591,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::HALBERD):
 		name = "halberd";
-		dam = 30; var = 5; crit = 5; mult = 100;
+		dam = 35; var = 5; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::HEAVY_CROSSBOW):
 		name = "heavy crossbow";
@@ -603,7 +603,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::LONGSPEAR):
 		name = "longspear";
-		dam = 12; var = 2; crit = 5; mult = 100;
+		dam = 15; var = 2; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::LONGSWORD):
 		name = "longsword";
@@ -611,7 +611,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::SPEAR):
 		name = "spear";
-		dam = 5; var = 1; crit = 5; mult = 100;
+		dam = 8; var = 1; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::LONG_KNIFE):
 		name = "starknife";
@@ -643,7 +643,7 @@ itemPtr lootgen::generateWeaponOfType(const BaseWeaponType bwt)
 		break;
 	case(BaseWeaponType::WARPIKE):
 		name = "war pike";
-		dam = 14; var = 4; crit = 5; mult = 100;
+		dam = 18; var = 4; crit = 5; mult = 100;
 		break;
 	case(BaseWeaponType::WAR_AXE):
 		name = "war axe";
