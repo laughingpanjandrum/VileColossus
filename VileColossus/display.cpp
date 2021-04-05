@@ -519,6 +519,19 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 	case(GameMode::NORMAL):		_win.write(12, 1, "Normal", COLOR_LIGHT); break;
 	case(GameMode::PERMADEATH):	_win.write(12, 1, "Permadeath", TCODColor::darkRed); break;
 	}
+
+
+	//	Kill counts
+	if (gdata->_gameProgress._killedColossus > 0)
+	{
+		_win.write(6, 58, "SLEW THE VILE COLOSSUS", COLOR_POSITIVE);
+		drawBox(4, 57, 26, 2, COLOR_DARK);
+	}
+	if (gdata->_gameProgress._killedViledragons > 0)
+	{
+		writeFormatted(60, 58, "VILEDRAGONS SLAIN: #" + to_string(gdata->_gameProgress._killedViledragons), { COLOR_WHITE });
+		drawBox(58, 57, 26, 2, COLOR_DARK);
+	}
 }
 
 
