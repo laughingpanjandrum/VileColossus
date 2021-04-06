@@ -333,7 +333,7 @@ int item::getChargePercent() const
 //	Adds a charge, but not in excess of the maximum
 void item::gainCharge()
 {
-	_chargesLeft = MIN(getProperty(PROP_MAX_CHARGES), _chargesLeft + 1);
+	_chargesLeft = MIN(getMaxCharges(), _chargesLeft + 1);
 }
 
 
