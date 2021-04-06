@@ -42,7 +42,7 @@ bool ai::castRaySpell(gamedataPtr gdata, monsterPtr ai, creaturePtr target, cons
 	bool is_bullet_anim = true;
 	auto anim_col = COLOR_WHITE;
 
-	if (rollToHit(gdata, ai, target, ai->_level))
+	if (rollToHit(gdata, ai, target, ai->_level / 4))
 	{
 		if (spell == "arcane_bolt")
 		{
