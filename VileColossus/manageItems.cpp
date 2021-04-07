@@ -814,6 +814,11 @@ const pair<GemType, int> getGemForExalt(const itemPtr it)
 		cost.first = GemType::BOLTSTONE;
 		break;
 
+	case(ITEM_AMULET):
+	case(ITEM_RING):
+		cost.first = GemType::SILVERSTONE;
+		break;
+
 	case(ITEM_QUIVER):
 	case(ITEM_SHIELD):
 		cost.first = GemType::FLAMESTONE;
@@ -839,6 +844,10 @@ const int getGemQuantityForExalt(const itemPtr it)
 {
 	switch (it->_category)
 	{
+	case(ITEM_AMULET):
+	case(ITEM_RING):
+		return 2;
+
 	case(ITEM_BOOTS):
 	case(ITEM_BRACERS):
 	case(ITEM_GLOVES):
@@ -1008,7 +1017,7 @@ void selectEnchantmentToApply(gamedataPtr gdata)
 				spendMaterial(gdata, gdata->_viewingItem->getEnhanceMaterial(), gdata->_viewingItem->getEnhanceCost());
 
 				//	add enchantment
-				auto bns = lootgen::rollEnchantmentBonus(en) + lootgen::getEnchantmentIncrement(en) * (gdata->_viewingItem->_tier - 1);
+				auto bns = lootgen::rollEnchantmentBonus(en) + getEnchantmentIncrement(en) * (gdata->_viewingItem->_tier - 1);
 				gdata->_viewingItem->addEnchantment(en, bns);
 				gdata->_viewingItem->_enhancementLevel++;
 

@@ -78,7 +78,6 @@ namespace lootgen
 
 	int getMaxSocketsForCategory(const ItemCategory cat);
 	int rollEnchantmentBonus(const ItemEnchantment en);
-	int getEnchantmentIncrement(const ItemEnchantment en);
 	void enchantItem(itemPtr it, int count);
 
 

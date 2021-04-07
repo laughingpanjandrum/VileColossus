@@ -166,6 +166,7 @@ void game::mainGameLoop()
 	}
 }
 
+
 void game::drawScreen()
 {
 	_disp.clear();
@@ -732,6 +733,11 @@ void game::awaitDebugCommand()
 	{
 		for (unsigned i = 0; i < 10; i++)
 			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, roll_one_in(4)), _gdata->_player->_pos);
+	}
+	else if (txt == "exalt10")
+	{
+		for (unsigned i = 0; i < 10; i++)
+			_gdata->_map->addItem(lootgen::rollItemDrop(3, 4, false, true), _gdata->_player->_pos);
 	}
 	else if (txt == "droprune")
 	{

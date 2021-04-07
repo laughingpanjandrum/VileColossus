@@ -118,6 +118,7 @@ public:
 	int getReinforceCost() const;
 	MaterialType getEnhanceMaterial() const;
 
+	void increaseAllEnchantLevels();
 	void addExaltLevel();
 
 
@@ -199,3 +200,7 @@ struct itemContainer
 	intpair _pos;
 };
 typedef shared_ptr<itemContainer> itemContainerPtr;
+
+
+
+int getEnchantmentIncrement(const ItemEnchantment en);

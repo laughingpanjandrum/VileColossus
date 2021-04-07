@@ -401,6 +401,17 @@ MaterialType item::getEnhanceMaterial() const
 }
 
 
+//	Increases the numerical bonus of all enchantments by a portion of the step value.
+void item::increaseAllEnchantLevels()
+{
+	for (unsigned i = 0; i < _Enchants.size(); i++)
+	{
+		auto v = MAX(1, getEnchantmentIncrement(static_cast<ItemEnchantment>(_Enchants[i])));
+		_EnchantLevels[i] += v;
+	}
+}
+
+
 //	Juices up an item. Effects depend on item type.
 void item::addExaltLevel()
 {
@@ -418,6 +429,11 @@ void item::addExaltLevel()
 	case(ITEM_SHIELD):
 		adjustProperty(PROP_DEFENCE, 1);
 		adjustProperty(PROP_ARMOUR_VALUE, MIN(4, 1 + _Property[PROP_ARMOUR_VALUE] / 5));
+		break;
+
+	case(ITEM_AMULET):
+	case(ITEM_RING):
+		increaseAllEnchantLevels();
 		break;
 
 	case(ITEM_QUIVER):
@@ -517,4 +533,65 @@ void itemContainer::addItem(itemPtr it)
 		}
 	}
 	_items.push_back(it);
+}
+
+
+
+//	Amount of each marginal increase to an enchantment bonus,
+int getEnchantmentIncrement(const ItemEnchantment en)
+{
+	switch (en)
+	{
+	case(ENCH_MAGIC):
+	case(ENCH_SHARPNESS):
+		return 1;
+
+	case(ENCH_ACCURACY):
+	case(ENCH_ARMOURING):
+	case(ENCH_BURNING):
+	case(ENCH_DEFENCE):
+	case(ENCH_HASTE):
+	case(ENCH_LIGHTNING):
+	case(ENCH_RAGE):
+	case(ENCH_STONESKIN):
+	case(ENCH_VENOM):
+	case(ENCH_WRATH):
+		return 2;
+
+	case(ENCH_ARCANE):
+	case(ENCH_LEECHING):
+	case(ENCH_MANALEECH):
+	case(ENCH_THORNS):
+	case(ENCH_WOUNDING):
+		return 3;
+
+	case(ENCH_FLAMEWARD):
+	case(ENCH_FURY):
+	case(ENCH_MAGIC_RESTORE):
+	case(ENCH_POISON_WARD):
+	case(ENCH_REGEN):
+	case(ENCH_RESISTANCE):
+	case(ENCH_SPELLWARD):
+	case(ENCH_STORMWARD):
+		return 5;
+
+	case(ENCH_AFF_ARCANE):
+	case(ENCH_AFF_ELECTRIC):
+	case(ENCH_AFF_FIRE):
+	case(ENCH_AFF_POISON):
+	case(ENCH_LIFE):
+		return 10;
+
+	case(ENCH_CHARGING):
+	case(ENCH_EMPOWERING):
+		return 20;
+
+	case(ENCH_GREED):
+	case(ENCH_SLAYING):
+	case(ENCH_SPELLPOWER):
+		return 25;
+
+	default:
+		return 0;
+	}
 }

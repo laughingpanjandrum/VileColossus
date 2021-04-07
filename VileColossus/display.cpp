@@ -527,6 +527,11 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 		_win.write(6, 58, "SLEW THE VILE COLOSSUS", COLOR_POSITIVE);
 		drawBox(4, 57, 26, 2, COLOR_DARK);
 	}
+	if (gdata->_gameProgress._abyssLevel > 0)
+	{
+		writeFormatted(33, 58, "ABYSS LEVEL REACHED: #" + to_string(gdata->_gameProgress._abyssLevel), { TCODColor::lightBlue });
+		drawBox(31, 57, 26, 2, COLOR_DARK);
+	}
 	if (gdata->_gameProgress._killedViledragons > 0)
 	{
 		writeFormatted(60, 58, "VILEDRAGONS SLAIN: #" + to_string(gdata->_gameProgress._killedViledragons), { COLOR_WHITE });

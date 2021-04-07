@@ -191,65 +191,6 @@ int lootgen::rollEnchantmentBonus(const ItemEnchantment en)
 }
 
 
-//	Amount of each marginal increase to an enchantment bonus,
-int lootgen::getEnchantmentIncrement(const ItemEnchantment en)
-{
-	switch (en)
-	{
-	case(ENCH_MAGIC):
-	case(ENCH_SHARPNESS):
-		return 1;
-
-	case(ENCH_ACCURACY):				
-	case(ENCH_ARMOURING):
-	case(ENCH_BURNING):
-	case(ENCH_DEFENCE):
-	case(ENCH_HASTE):
-	case(ENCH_LIGHTNING):
-	case(ENCH_RAGE):
-	case(ENCH_STONESKIN):
-	case(ENCH_VENOM):
-	case(ENCH_WRATH):
-		return 2;
-
-	case(ENCH_ARCANE):
-	case(ENCH_LEECHING):
-	case(ENCH_MANALEECH):
-	case(ENCH_THORNS):
-	case(ENCH_WOUNDING):
-		return 3;
-
-	case(ENCH_FLAMEWARD):
-	case(ENCH_FURY):
-	case(ENCH_MAGIC_RESTORE):
-	case(ENCH_POISON_WARD):
-	case(ENCH_REGEN):
-	case(ENCH_RESISTANCE):
-	case(ENCH_SPELLWARD):
-	case(ENCH_STORMWARD):
-		return 5;
-
-	case(ENCH_AFF_ARCANE):
-	case(ENCH_AFF_ELECTRIC):
-	case(ENCH_AFF_FIRE):
-	case(ENCH_AFF_POISON):	
-	case(ENCH_LIFE):
-		return 10;
-		
-	case(ENCH_CHARGING):
-	case(ENCH_EMPOWERING):
-		return 20;
-
-	case(ENCH_GREED):
-	case(ENCH_SLAYING):
-	case(ENCH_SPELLPOWER):
-		return 25;
-
-	default:
-		return 0;
-	}
-}
-
 
 //	Adds the given number of random enchantments to an item.
 void lootgen::enchantItem(itemPtr it, int count)
@@ -1102,7 +1043,7 @@ itemPtr lootgen::rollItemDrop(const int maxTier, const int bestRarityAllowed, bo
 
 
 	//	Certain item categories can't be exalted
-	if (it->_category != ITEM_AMULET && it->_category != ITEM_RING && it->_category != ITEM_SPELLRUNE)
+	if (it->_category != ITEM_FLASK && it->_category != ITEM_SPELLRUNE)
 		it->_exalted = exalt;
 
 
