@@ -127,9 +127,9 @@ void doDeathDrops(gamedataPtr gdata, monsterPtr target)
 
 	//	does this monster qualify to drop exalted items?
 	if (target->hasFlag("viledragon"))
-		exalt_odds = 50;
+		exalt_odds = 90;
 	else if (target->_tier == 5 && target->_level >= 30)
-		exalt_odds = 10;
+		exalt_odds = 25;
 
 
 	//	Get free points in the vicinity.
