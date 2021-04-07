@@ -56,4 +56,9 @@ namespace savegame
 
 	bool exists();
 
+
+	//	Deleting upon a permadeath experience
+
+	void delete_save_file();
+
 }

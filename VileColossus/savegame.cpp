@@ -496,3 +496,9 @@ bool savegame::exists()
 	else
 		return false;
 }
+
+void savegame::delete_save_file()
+{
+	const string fname = FILE_PATH + SAVE_FILE_DEFAULT_NAME;
+	remove(fname.c_str());
+}

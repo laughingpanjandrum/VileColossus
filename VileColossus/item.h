@@ -17,6 +17,7 @@
 
 //	offset to convert signed int properties to unsigned char values for save games.
 //	add it to the prop value when saving, subtract when loading.
+//	[NO LONGER USED!!!!]
 #define PROP_VALUE_OFFSET 128
 
 

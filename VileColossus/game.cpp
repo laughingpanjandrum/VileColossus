@@ -912,7 +912,10 @@ void game::castTownPortal()
 void game::acceptDeath()
 {
 	if (_gdata->_mode == GameMode::PERMADEATH)
+	{
 		_gdata->_state = STATE_GAME_COMPLETED;
+		savegame::delete_save_file();
+	}
 	else
 	{
 		_gdata->_player->_triggeredDeath = false;
