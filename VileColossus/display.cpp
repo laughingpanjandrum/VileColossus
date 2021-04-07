@@ -537,6 +537,10 @@ void display::drawCharacterSheet(gamedataPtr gdata)
 		writeFormatted(60, 58, "VILEDRAGONS SLAIN: #" + to_string(gdata->_gameProgress._killedViledragons), { COLOR_WHITE });
 		drawBox(58, 57, 26, 2, COLOR_DARK);
 	}
+
+
+	//	Additional controls.
+	writeFormatted(50, 1, "#shift+d @generates a character dump file", { COLOR_LIGHT });
 }
 
 

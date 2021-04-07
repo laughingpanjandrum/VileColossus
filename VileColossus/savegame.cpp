@@ -502,3 +502,122 @@ void savegame::delete_save_file()
 	const string fname = FILE_PATH + SAVE_FILE_DEFAULT_NAME;
 	remove(fname.c_str());
 }
+
+
+void savegame::generate_character_dump(gamedataPtr gdata)
+{
+	//	File name is based on the current time and date.
+	auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+	string tstamp(30, '\0');
+	strftime(&tstamp[0], tstamp.size(), "%Y-%m-%d_%H-%M-%S", std::localtime(&now));
+	
+	tstamp = "CharacterDump" + tstamp;
+	const string fname = FILE_PATH + tstamp + ".txt";
+	cout << fname << endl;
+
+	//	Create the file.
+	auto p = gdata->_player;
+	ofstream f(fname);
+	f << "VILE COLOSSUS CHARACTER DUMP" << endl;
+	f << "----------------------------" << endl;
+	f << endl;
+	f << "Game Mode: ";
+	switch (gdata->_mode)
+	{
+	case(GameMode::CASUAL):	f << "*Casual*"; break;
+	case(GameMode::NORMAL):	f << "Normal"; break;
+	case(GameMode::PERMADEATH): f << "-PERMADEATH-"; break;
+	}
+	f << endl;
+	f << "XP LEVEL " << gdata->_player->_level << "  -  ASCENDANT LEVEL " << gdata->_player->_PerkLevel << endl;
+	f << "Strength " << gdata->_player->getBaseAttribute(ATTR_STRENGTH) << " - Dexterity " << gdata->_player->getBaseAttribute(ATTR_DEXTERITY) << " - Willpower " << gdata->_player->getBaseAttribute(ATTR_WILLPOWER) << endl;
+
+	f << endl;
+
+	f << "Accuracy: " << p->getAccuracy() << "; Defence Value: " << p->getDefenceValue() << endl;
+	f << "Physical Damage: " << p->getWeaponDamage() << "; Armour Value " << p->getArmourValue() << endl;
+	f << "Arcane Damage: " << p->getWeaponDamageOfType(DTYPE_ARCANE) << "; Resistance " << p->getResistance(DTYPE_ARCANE) << "%" << endl;
+	f << "Electric Damage: " << p->getWeaponDamageOfType(DTYPE_ELECTRIC) << "; Resistance " << p->getResistance(DTYPE_ELECTRIC) << "%" << endl;
+	f << "Fire Damage: " << p->getWeaponDamageOfType(DTYPE_FIRE) << "; Resistance " << p->getResistance(DTYPE_FIRE) << "%" << endl;
+	f << "Poison Damage: " << p->getWeaponDamageOfType(DTYPE_POISON) << "; Resistance " << p->getResistance(DTYPE_POISON) << "%" << endl;
+
+	f << endl;
+
+	f << "Critical Chance: " << p->getCriticalChance() << "%; Critical Damage +" << p->getCriticalMultiplier() << "%" << endl;
+	f << "Wrath on Kill Chance: " << p->getWrathOnKillChance() << "%; Wrath Damage +" << p->getWrathDamageBonus() << "%" << endl;
+	f << "Reprisal Damage: " << p->getReprisalDamage() << endl;
+	f << "Health on Kill: " << p->getLeechOnKill() << "; Magic on Kill: " << p->getManaleech() << endl;
+
+	f << endl;
+
+	f << "Average Damage per Turn: " << expressIntAsFloat(p->estimateDPS(), 1) << endl;
+
+
+	//	Equipment
+	f << endl;
+	f << "=== EQUIPMENT ===" << endl;
+	for (auto eq : gdata->_player->getAllEquippedItems())
+	{
+		if (eq != nullptr)
+		{
+			f << eq->getName();
+			if (eq->_exalted)
+				f << " [Exalt Level " << eq->_exaltLevel << "]";
+			f << endl;
+			f << "  ";
+			for (unsigned i = 0; i < eq->_Enchants.size(); i++)
+			{
+				auto en = static_cast<ItemEnchantment>(eq->_Enchants[i]);
+				auto txt = formatItemEnchantment(en, eq->_EnchantLevels[i]);
+				txt.erase(remove(txt.begin(), txt.end(), '#'), txt.end());
+				f << txt << "  ";
+			}
+			f << endl;
+		}
+	}
+
+
+	//	Spells
+	f << endl;
+	f << "=== SPELLS MEMORIZED === " << endl;
+	for (auto sp : p->_ImprintedRunes)
+	{
+		f << sp->getName() << endl;
+		f << "  ";
+		for (unsigned i = 0; i < sp->_Enchants.size(); i++)
+		{
+			auto en = static_cast<ItemEnchantment>(sp->_Enchants[i]);
+			auto txt = formatItemEnchantment(en, sp->_EnchantLevels[i]);
+			txt.erase(remove(txt.begin(), txt.end(), '#'), txt.end());
+			f << txt << "  ";
+		}
+		f << endl;
+	}
+
+
+	//	Accomplishments
+	f << endl;
+	f << "=== ACCOMPLISHMENTS ===" << endl;
+	if (gdata->_gameProgress._killedRotking > 0)
+		f << " Slew the ROTKING at the base of the cathedral " << gdata->_gameProgress._killedRotking << " times." << endl;
+	if (gdata->_gameProgress._killedHellboss > 0)
+		f << " Slew vile LORDS OF HELL " << gdata->_gameProgress._killedHellboss << " times." << endl;
+	if (gdata->_gameProgress._abyssLevel > 0)
+		f << " Attained level " << gdata->_gameProgress._abyssLevel << " of the ABYSS." << endl;
+	if (gdata->_gameProgress._killedAmog > 0)
+		f << " Slew the AVATAR OF THE TOMB LORD " << gdata->_gameProgress._killedAmog << " times." << endl;
+	if (gdata->_gameProgress._killedDogossa > 0)
+		f << " Slew the AVATAR OF DROWNED DOGOSSA " << gdata->_gameProgress._killedDogossa << " times." << endl;
+	if (gdata->_gameProgress._killedSallowKing > 0)
+		f << " Slew the LOST PRINCE OF VIRIDIA " << gdata->_gameProgress._killedSallowKing << " times." << endl;
+	if (gdata->_gameProgress._killedColossus == 1)
+		f << " Defeated the VILE COLOSSUS at the heart of the Abyss and won the game!" << endl;
+	else if (gdata->_gameProgress._killedColossus > 1)
+		f << " Defeated the VILE COLOSSUS at the heart of the abyss and won the game, and then went back and killed it " << gdata->_gameProgress._killedColossus << " more times!" << endl;
+	if (gdata->_gameProgress._killedViledragons > 0)
+		f << " Sought out and slew a total of " << gdata->_gameProgress._killedViledragons << " foul VILEDRAGONS, attaining power unspeakable!" << endl;
+
+
+	//	Done.
+	f.close();
+}

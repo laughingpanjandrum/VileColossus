@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
+#include <chrono>
+#include <algorithm>
 
 #include "gamedata.h"
 #include "messages.h"
@@ -60,5 +63,11 @@ namespace savegame
 	//	Deleting upon a permadeath experience
 
 	void delete_save_file();
+
+
+	//	Generating a character dump: a bunch of interesting info about the current character.
+	//	Auto-generated on death or victory, and can be manually generated at any time.
+
+	void generate_character_dump(gamedataPtr gdata);
 
 }

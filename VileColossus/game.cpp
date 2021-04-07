@@ -543,6 +543,17 @@ void game::processInput()
 			break;
 
 
+			//	Character sheet.
+		case(STATE_CHARACTER_SHEET):
+			if (_ih->isKeyPressed('D'))
+			{
+				savegame::generate_character_dump(_gdata);
+				messages::add(_gdata, "Generated character dump file in /data/saves/.");
+				backOut();
+			}
+			break;
+
+
 
 			//	Starting the game.
 		case(STATE_TITLE):
@@ -915,6 +926,7 @@ void game::acceptDeath()
 	{
 		_gdata->_state = STATE_GAME_COMPLETED;
 		savegame::delete_save_file();
+		savegame::generate_character_dump(_gdata);
 	}
 	else
 	{
