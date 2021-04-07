@@ -275,7 +275,7 @@ itemPtr lootgen::generateGem(const int tier, const int rarity)
 	GemType gem_type;
 	
 	//	chance of special gem, if allowed
-	if (rarity >= 3 && roll_one_in(4))
+	if (rarity >= 3 && roll_one_in(2))
 		gem_type = SPECIAL_GEM_TYPES[randrange(SPECIAL_GEM_TYPES.size())];
 	else
 		gem_type = BASIC_GEM_TYPES[randrange(BASIC_GEM_TYPES.size())];
